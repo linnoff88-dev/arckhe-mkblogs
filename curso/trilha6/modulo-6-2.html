@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 6.2 - Domínio, HTTPS, reverse proxy | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Rose (T6) */
+    html:not(.dark) .text-rose-400 { color: #9f1239; }
+    html:not(.dark) .bg-rose-500\/20 { background-color: rgba(159, 18, 57, 0.12); }
+    html:not(.dark) .bg-rose-500\/10 { background-color: rgba(159, 18, 57, 0.08); }
+    html:not(.dark) .bg-rose-900\/20 { background-color: rgba(159, 18, 57, 0.08); }
+    html:not(.dark) .bg-rose-900\/30 { background-color: rgba(159, 18, 57, 0.10); }
+    html:not(.dark) .border-rose-500\/30 { border-color: rgba(159, 18, 57, 0.25); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(159, 18, 57, 0.08); }
+    html:not(.dark) .hover\:bg-rose-500\/30:hover { background-color: rgba(159, 18, 57, 0.18); }
+    html:not(.dark) .bg-rose-600 { background-color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500:hover { background-color: #be123c; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Módulo 6.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔒 Domínio, HTTPS, reverse proxy</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Do A record ao cadeado verde: DNS para a VPS, comparativo de reverse proxies, Caddyfile com auto-HTTPS, subdomínios, headers de segurança e renovação automática do Let's Encrypt.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌐 DNS apontando para a VPS</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        HTTPS começa no DNS. Sem o domínio resolvendo para o IP da VPS, o Caddy não consegue completar o desafio <strong class="text-rose-400">ACME HTTP-01</strong> do Let's Encrypt e o cadeado nunca aparece. O registro essencial é o <strong class="text-rose-400">A record</strong> (IPv4); se a VPS tem IPv6, adicione também um <strong class="text-rose-400">AAAA</strong>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-rose-400">TTL</strong> (time-to-live) controla quanto tempo resolvers fazem cache da resposta. Em mudança de IP, baixe para <code class="text-rose-400 font-mono text-sm">300</code> antes; em produção estável, <code class="text-rose-400 font-mono text-sm">3600</code> ou mais. A <strong class="text-rose-400">propagação</strong> global leva de minutos a algumas horas — depende do provider e do TTL anterior.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Registros no painel do provider (Cloudflare, Registro.br, etc.)
+# Tipo  Nome              Valor              TTL
+# A     postiz.exemplo    203.0.113.42       300
+# AAAA  postiz.exemplo    2001:db8::1        300
+# A     api.postiz.exemplo 203.0.113.42       300
+# A     app.postiz.exemplo 203.0.113.42       300
+
+# Confirmar resolução (IPv4)
+dig +short postiz.exemplo.com A
+# 203.0.113.42
+
+# IPv6
+dig +short postiz.exemplo.com AAAA
+# 2001:db8::1
+
+# Resolver específico para ver propagação em outro DNS
+dig @1.1.1.1 postiz.exemplo.com +short
+dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Antes de tentar emitir certificado, confirme que o domínio resolve para o IP <strong>certo</strong> a partir de fora — use <a href="https://dnschecker.org" target="_blank" class="text-primary hover:underline">dnschecker.org</a> ou rode <code class="text-primary font-mono text-sm">dig</code> contra múltiplos resolvers. Let's Encrypt valida do datacenter deles, não do seu laptop.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">A record</div>
+          <p class="text-xs text-neutral-400">Mapeia hostname → IPv4 da VPS.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">AAAA</div>
+          <p class="text-xs text-neutral-400">Versão IPv6 do A record.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">TTL</div>
+          <p class="text-xs text-neutral-400">Segundos que resolvers guardam o resultado em cache.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Propagação</div>
+          <p class="text-xs text-neutral-400">Tempo até a mudança aparecer em todos os resolvers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔄 Caddy vs Traefik vs nginx-proxy</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Três caminhos para o mesmo objetivo: terminar TLS na borda e fazer reverse proxy para os containers. A escolha depende de quanto <strong class="text-rose-400">automatismo</strong> você quer e quão familiar é com cada ecossistema.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 border border-rose-500/30 rounded-xl p-6">
+          <h4 class="font-bold text-rose-400 mb-3">Caddy</h4>
+          <p class="text-sm text-neutral-300 mb-3">Auto-HTTPS por padrão. Caddyfile lê como receita. Zero configuração para o caso comum.</p>
+          <p class="text-xs text-neutral-400"><strong class="text-rose-400">Use quando:</strong> quer o menor caminho até o cadeado, stack pequeno ou médio.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+          <h4 class="font-bold text-rose-400 mb-3">Traefik</h4>
+          <p class="text-sm text-neutral-300 mb-3">Configuração por labels do Docker — containers se anunciam sozinhos. Dashboard nativo.</p>
+          <p class="text-xs text-neutral-400"><strong class="text-rose-400">Use quando:</strong> muitos serviços dinâmicos, Swarm ou Kubernetes na frente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
+          <h4 class="font-bold text-rose-400 mb-3">nginx-proxy</h4>
+          <p class="text-sm text-neutral-300 mb-3">nginx + acme-companion. Máximo controle, sintaxe nginx tradicional, ecossistema enorme.</p>
+          <p class="text-xs text-neutral-400"><strong class="text-rose-400">Use quando:</strong> já domina nginx, precisa de tuning fino ou módulos específicos.</p>
+        </div>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para o Postiz em uma VPS, <strong class="text-rose-400">Caddy</strong> é a escolha óbvia: emite e renova certificado sozinho, suporta HTTP/2 e HTTP/3 sem flags, e o arquivo de config cabe em 10 linhas.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Comparativo rápido (linhas de config para o caso "1 domínio → 1 backend")
+# Caddy        ~3 linhas
+# Traefik      ~25 linhas (labels) + traefik.yml estático
+# nginx-proxy  ~20 linhas + Dockerfile de acme-companion
+
+# Footprint de memória (idle, médio)
+# Caddy        ~30 MB
+# Traefik      ~50 MB
+# nginx        ~10 MB (sem acme-companion)</code></pre>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Reverse proxy</div>
+          <p class="text-xs text-neutral-400">Recebe na porta 443 e encaminha para o backend interno.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Auto-HTTPS</div>
+          <p class="text-xs text-neutral-400">Emite, instala e renova certificado sem intervenção.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Service discovery</div>
+          <p class="text-xs text-neutral-400">Traefik descobre containers por labels.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">TLS termination</div>
+          <p class="text-xs text-neutral-400">HTTPS termina na borda; backend fala HTTP no interno.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📝 Caddyfile mínimo + auto-HTTPS</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Caddy adiciona à stack como <strong class="text-rose-400">mais um serviço</strong> no <code class="text-rose-400 font-mono text-sm">docker-compose.yml</code>. Ele assume as portas 80 e 443 do host, e fala com o Postiz pela network interna — sem expor <code class="text-rose-400 font-mono text-sm">5000</code> publicamente.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/Caddyfile
+postiz.exemplo.com {
+    reverse_proxy postiz:5000
+    encode gzip zstd
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Três linhas. O Caddy faz o resto: ACME challenge, certificado, redirect 80→443, HTTP/2, HTTP/3. Adicione o serviço ao compose e remova o <code class="text-rose-400 font-mono text-sm">ports: ["5000:5000"]</code> do Postiz — ele não precisa mais ser acessível direto.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/docker-compose.yml (recorte do serviço caddy)
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 (QUIC)
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data         # certificados (NÃO PERDER!)
+      - caddy-config:/config
+    networks: [postiz-net]
+    depends_on:
+      - postiz
+
+volumes:
+  caddy-data:
+  caddy-config:</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O volume <code class="text-primary font-mono text-sm">caddy-data</code> guarda os certificados emitidos. Apagá-lo força o Caddy a pedir certificado novo — e o Let's Encrypt tem <strong>rate limit de 5 emissões por hostname por semana</strong>. Trate esse volume como banco de dados.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Caddyfile</div>
+          <p class="text-xs text-neutral-400">Sintaxe declarativa, um site por bloco.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">reverse_proxy</div>
+          <p class="text-xs text-neutral-400">Encaminha requests para um backend interno.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">ACME</div>
+          <p class="text-xs text-neutral-400">Protocolo do Let's Encrypt para emissão automática.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">HTTP/3</div>
+          <p class="text-xs text-neutral-400">Transporte sobre QUIC/UDP — porta 443 UDP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🌍 Subdomínios (api., app.)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Frontend e backend em <strong class="text-rose-400">subdomínios separados</strong> dá clareza operacional: <code class="text-rose-400 font-mono text-sm">app.exemplo.com</code> serve a UI, <code class="text-rose-400 font-mono text-sm">api.exemplo.com</code> a API. Cada subdomínio é um bloco no Caddyfile com seu próprio certificado.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/Caddyfile com subdomínios
+app.exemplo.com {
+    reverse_proxy postiz:5000
+    encode gzip zstd
+}
+
+api.exemplo.com {
+    reverse_proxy postiz:3000
+    encode gzip zstd
+
+    # CORS para o frontend
+    header {
+        Access-Control-Allow-Origin "https://app.exemplo.com"
+        Access-Control-Allow-Credentials "true"
+    }
+}
+
+# Redirect raiz → app
+exemplo.com {
+    redir https://app.exemplo.com{uri} permanent
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Ajuste as variáveis do Postiz para refletir os subdomínios — <code class="text-rose-400 font-mono text-sm">FRONTEND_URL=https://app.exemplo.com</code>, <code class="text-rose-400 font-mono text-sm">NEXT_PUBLIC_BACKEND_URL=https://api.exemplo.com</code>. Sem isso o frontend tenta chamar <code class="text-rose-400 font-mono text-sm">localhost</code> e quebra no browser do usuário.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar DNS A para CADA subdomínio antes do <code class="font-mono">caddy reload</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Atualizar <code class="font-mono">FRONTEND_URL</code> e <code class="font-mono">NEXT_PUBLIC_BACKEND_URL</code> no <code class="font-mono">.env</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Restringir <code class="font-mono">Access-Control-Allow-Origin</code> ao domínio do frontend.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar redirect 308 do apex para o subdomínio canônico.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Liberar <code class="font-mono">Access-Control-Allow-Origin: *</code> com credenciais.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar HTTP e HTTPS — sempre force HTTPS no canônico.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer wildcard quando há mais de 3-4 subdomínios.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardcodar URLs no frontend — sempre via env var.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Subdomínio</div>
+          <p class="text-xs text-neutral-400">Hostname filho do domínio principal.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">CORS</div>
+          <p class="text-xs text-neutral-400">Browser bloqueia origens cruzadas sem header explícito.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Redirect 308</div>
+          <p class="text-xs text-neutral-400">Permanente, preserva método HTTP original.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Apex</div>
+          <p class="text-xs text-neutral-400">Domínio sem subdomínio (<code class="font-mono">exemplo.com</code>).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛡️ Headers de segurança</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Certificado é só metade do trabalho. Sem headers de segurança, o browser ainda permite ataques que TLS sozinho não cobre: downgrade para HTTP, clickjacking, sniffing de MIME, XSS via scripts injetados.
+      </p>
+
+      <div class="bg-rose-900/20 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🧱</span> Os 4 headers que toda app web deve ter
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-rose-400">Strict-Transport-Security (HSTS):</strong> obriga o browser a usar HTTPS pelos próximos N segundos, mesmo se o usuário digitar <code class="font-mono">http://</code>.</li>
+          <li><strong class="text-rose-400">X-Frame-Options:</strong> impede que seu site seja carregado dentro de um <code class="font-mono">&lt;iframe&gt;</code> em outro domínio (clickjacking).</li>
+          <li><strong class="text-rose-400">X-Content-Type-Options:</strong> <code class="font-mono">nosniff</code> impede o browser de adivinhar o tipo MIME e executar scripts disfarçados.</li>
+          <li><strong class="text-rose-400">Content-Security-Policy (CSP):</strong> whitelist do que pode ser carregado (scripts, styles, imagens, etc.) — defesa em profundidade contra XSS.</li>
+        </ul>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/Caddyfile com headers de segurança
+app.exemplo.com {
+    reverse_proxy postiz:5000
+    encode gzip zstd
+
+    header {
+        # HTTPS obrigatório por 1 ano, incluindo subdomínios
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+        # Anti-clickjacking
+        X-Frame-Options "DENY"
+
+        # Anti-MIME-sniffing
+        X-Content-Type-Options "nosniff"
+
+        # Referrer só para mesma origem
+        Referrer-Policy "strict-origin-when-cross-origin"
+
+        # CSP básico — ajuste conforme assets externos do app
+        Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+
+        # Remove header que vaza versão do servidor
+        -Server
+    }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">preload</code> do HSTS é <strong>irreversível por meses</strong> — só ative depois de confirmar que TUDO funciona em HTTPS, inclusive subdomínios futuros. Comece com <code class="text-primary font-mono text-sm">max-age=300</code> em teste e suba aos poucos.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">HSTS</div>
+          <p class="text-xs text-neutral-400">Force HTTPS no browser por tempo determinado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Clickjacking</div>
+          <p class="text-xs text-neutral-400">Site embutido em iframe inimigo para roubar cliques.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">CSP</div>
+          <p class="text-xs text-neutral-400">Whitelist de origens permitidas para cada tipo de asset.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">MIME sniffing</div>
+          <p class="text-xs text-neutral-400">Browser adivinhando tipo do conteúdo — bloqueado por nosniff.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔁 Renovação automática Let's Encrypt</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Certificado do Let's Encrypt dura <strong class="text-rose-400">90 dias</strong>. O Caddy renova automaticamente quando faltam ~30 dias — sem cron, sem script, sem intervenção. O que pode dar errado é o desafio ACME falhar em silêncio; o jeito de saber é olhar os logs.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Acompanhar logs do Caddy (boot + renovações)
+docker compose logs -f caddy
+
+# Procurar especificamente eventos de certificado
+docker compose logs caddy | grep -iE "certificate|acme|renew"
+
+# Inspecionar certificado emitido (data de expiração)
+echo | openssl s_client -servername app.exemplo.com -connect app.exemplo.com:443 2>/dev/null \
+  | openssl x509 -noout -dates -issuer
+
+# Forçar reload do Caddyfile sem reiniciar (zero downtime)
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+
+# Caso renovação falhe: limpar e tentar de novo (cuidado com rate limit!)
+docker compose restart caddy</code></pre>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Volume <code class="font-mono">caddy-data</code> persistente</h4>
+            <p class="text-sm text-neutral-400">Sem ele, cada restart pede certificado novo e bate no rate limit do Let's Encrypt.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Portas 80 e 443 abertas no firewall</h4>
+            <p class="text-sm text-neutral-400">ACME HTTP-01 precisa de <code class="font-mono">80</code>; TLS precisa de <code class="font-mono">443</code>. Bloquear qualquer uma quebra renovação.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">DNS continuando a apontar para o IP correto</h4>
+            <p class="text-sm text-neutral-400">Trocou de VPS? Atualize o A record <strong>antes</strong> de tentar renovar.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Monitorar logs ao menos 1x/mês</h4>
+            <p class="text-sm text-neutral-400">Procure por <code class="font-mono">obtained certificate</code> ou <code class="font-mono">renewed certificate</code> nos últimos 30 dias.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🚨</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Configure um alerta externo (UptimeRobot, healthchecks.io) que bate em <code class="text-primary font-mono text-sm">https://app.exemplo.com</code> a cada 5 min. Se o cert vencer ou a config quebrar, você descobre <strong>antes</strong> dos usuários — não pelo print no WhatsApp dizendo "site fora do ar".</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Let's Encrypt</div>
+          <p class="text-xs text-neutral-400">CA gratuita, certs de 90 dias via protocolo ACME.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">HTTP-01</div>
+          <p class="text-xs text-neutral-400">Desafio servindo arquivo em <code class="font-mono">/.well-known/acme-challenge/</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Rate limit</div>
+          <p class="text-xs text-neutral-400">5 emissões/semana/hostname no Let's Encrypt prod.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Zero downtime</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">caddy reload</code> troca config sem dropar conexões.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">DNS apontando para a VPS</strong><span class="text-neutral-400"> — A record (e AAAA, se IPv6), TTL baixo durante mudança, propagação confirmada via <code class="font-mono">dig</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Reverse proxy escolhido</strong><span class="text-neutral-400"> — Caddy para o caso comum, Traefik para stacks dinâmicos, nginx-proxy quando precisa de tuning fino.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Caddyfile mínimo no ar</strong><span class="text-neutral-400"> — 3 linhas + serviço no compose, volume <code class="font-mono">caddy-data</code> persistente.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Subdomínios separados</strong><span class="text-neutral-400"> — <code class="font-mono">app.</code> e <code class="font-mono">api.</code> em blocos próprios, CORS restrito ao frontend.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Headers de segurança</strong><span class="text-neutral-400"> — HSTS, X-Frame-Options, X-Content-Type-Options e CSP básico ativos.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Renovação automática</strong><span class="text-neutral-400"> — Caddy renova a cada ~60 dias, logs monitorados e alerta externo configurado.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">6.3 — Backup, monitoramento e logs</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-6-3.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

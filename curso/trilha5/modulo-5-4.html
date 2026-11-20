@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.4 - Fila e agendamento | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Teal (T5) */
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/30 { background-color: rgba(13, 148, 136, 0.10); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .bg-teal-600 { background-color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500:hover { background-color: #14b8a6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⏰ Fila e agendamento</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">BullMQ na prática: Queue, Worker, QueueEvents, jobs com delay, retry com backoff exponencial, dead letter queue e quando migrar para Temporal.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📚 BullMQ basics</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-teal-400">BullMQ</strong> é a fila padrão do ecossistema Node — sucessora do Bull, baseada em Redis. Três classes formam a base: <code class="text-teal-400 font-mono text-sm">Queue</code> (produz jobs), <code class="text-teal-400 font-mono text-sm">Worker</code> (consome) e <code class="text-teal-400 font-mono text-sm">QueueEvents</code> (escuta lifecycle de qualquer processo). Toda comunicação acontece via Redis — nenhum processo conhece o outro diretamente.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para agendamento de posts, a fila resolve dois problemas que <code class="text-teal-400 font-mono text-sm">setTimeout</code> não resolve: <strong class="text-teal-400">durabilidade</strong> (sobreviver a restart do processo) e <strong class="text-teal-400">distribuição</strong> (vários workers consumindo em paralelo).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/queue/connection.ts
+import { Queue, Worker, QueueEvents } from 'bullmq';
+import IORedis from 'ioredis';
+
+// Conexão dedicada — BullMQ exige maxRetriesPerRequest: null
+export const connection = new IORedis(process.env.REDIS_URL!, {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+});
+
+// Queue: produtor. Adicione jobs com queue.add()
+export const publishQueue = new Queue('publish', { connection });
+
+// QueueEvents: escuta lifecycle (completed, failed, delayed...)
+export const publishEvents = new QueueEvents('publish', { connection });
+
+publishEvents.on('completed', ({ jobId }) => {
+  console.log(`[queue] job ${jobId} completed`);
+});
+
+publishEvents.on('failed', ({ jobId, failedReason }) => {
+  console.error(`[queue] job ${jobId} failed: ${failedReason}`);
+});</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Nunca compartilhe a mesma <code class="text-primary font-mono text-sm">IORedis</code> entre Queue e código de aplicação. BullMQ exige <code class="text-primary font-mono text-sm">maxRetriesPerRequest: null</code> para suportar comandos blocking (<code class="text-primary font-mono text-sm">BRPOPLPUSH</code>) — se sua API usar a mesma instância para cache, vai quebrar.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Queue</div>
+          <p class="text-xs text-neutral-400">Produtor. Adiciona jobs no Redis.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Worker</div>
+          <p class="text-xs text-neutral-400">Consumidor. Processa jobs em paralelo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">QueueEvents</div>
+          <p class="text-xs text-neutral-400">Pub/sub de lifecycle, opcional mas útil.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Connection</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">IORedis</code> com config específica.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⏱️ Job com delay (agendado)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para agendar um post para "daqui a 2 horas", calcule o delta em milissegundos e passe em <code class="text-teal-400 font-mono text-sm">{ delay }</code>. BullMQ guarda o job num sorted set do Redis ordenado pelo timestamp de processamento — quando o relógio bate, o job vai para a fila ativa.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Sempre use <strong class="text-teal-400">jobId determinístico</strong> (ex: <code class="text-teal-400 font-mono text-sm">post:${post.id}</code>). Isso evita agendar o mesmo post duas vezes se o usuário clicar "salvar" rápido — BullMQ rejeita duplicatas com mesmo ID.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/scheduler/schedulePost.ts
+import { publishQueue } from '../queue/connection';
+
+export async function schedulePost(post: {
+  id: string;
+  providerId: string;
+  scheduledFor: Date;
+  payload: Record&lt;string, unknown&gt;;
+}) {
+  const delay = post.scheduledFor.getTime() - Date.now();
+
+  if (delay &lt; 0) {
+    throw new Error('scheduledFor está no passado');
+  }
+
+  const job = await publishQueue.add(
+    'publish',
+    {
+      postId: post.id,
+      providerId: post.providerId,
+      payload: post.payload,
+    },
+    {
+      jobId: `post:${post.id}`,        // idempotente
+      delay,                            // ms até processar
+      attempts: 5,                      // ver tópico 4
+      backoff: { type: 'exponential', delay: 60_000 },
+      removeOnComplete: { age: 86_400 }, // mantém 24h após sucesso
+      removeOnFail: { age: 7 * 86_400 }, // 7 dias para investigar
+    }
+  );
+
+  return { jobId: job.id, runAt: post.scheduledFor };
+}
+
+// Cancelar agendamento (usuário editou ou deletou)
+export async function cancelPost(postId: string) {
+  const job = await publishQueue.getJob(`post:${postId}`);
+  if (job) await job.remove();
+}</code></pre>
+
+      <div class="bg-teal-900/20 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">⚙️</span> Anatomia das opções de job
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-teal-400">delay:</strong> ms até o job ficar elegível. Aceita até 24 dias (limite do Redis sorted set).</li>
+          <li><strong class="text-teal-400">jobId:</strong> ID custom — chave da idempotência. Sem ele, BullMQ gera um numérico sequencial.</li>
+          <li><strong class="text-teal-400">attempts:</strong> número total de tentativas (incluindo a primeira).</li>
+          <li><strong class="text-teal-400">removeOnComplete / removeOnFail:</strong> TTL no Redis. Sem isso a fila incha indefinidamente.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">delay</div>
+          <p class="text-xs text-neutral-400">Milissegundos até o job ser elegível.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">jobId</div>
+          <p class="text-xs text-neutral-400">Chave única — base da idempotência.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Sorted set</div>
+          <p class="text-xs text-neutral-400">Estrutura Redis que ordena jobs por timestamp.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400">Mesmo jobId não duplica execução.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">👷 Worker que publica</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <code class="text-teal-400 font-mono text-sm">Worker</code> é um processo separado da API. Ele faz <code class="text-teal-400 font-mono text-sm">BRPOPLPUSH</code> no Redis, pega o próximo job e chama o handler. <strong class="text-teal-400">Concurrency</strong> controla quantos jobs cada instância processa em paralelo — comece com 5 e ajuste medindo.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O handler resolve o <code class="text-teal-400 font-mono text-sm">Provider</code> certo via factory (módulo 5.3), chama <code class="text-teal-400 font-mono text-sm">publish()</code> e retorna o resultado. Qualquer <code class="text-teal-400 font-mono text-sm">throw</code> dentro do handler dispara o retry — não engula erros.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/workers/publish.worker.ts
+import { Worker } from 'bullmq';
+import { connection } from '../queue/connection';
+import { getProvider } from '../providers/registry';
+import { prisma } from '../db/client';
+
+type PublishJob = {
+  postId: string;
+  providerId: string;        // 'twitter' | 'linkedin' | ...
+  payload: Record&lt;string, unknown&gt;;
+};
+
+export const publishWorker = new Worker&lt;PublishJob&gt;(
+  'publish',
+  async (job) =&gt; {
+    const { postId, providerId, payload } = job.data;
+
+    // 1. Recuperar credenciais do BD (não passar token via payload!)
+    const account = await prisma.account.findUniqueOrThrow({
+      where: { id: postId },
+      include: { credentials: true },
+    });
+
+    // 2. Resolver provider e publicar
+    const provider = getProvider(providerId);
+    const result = await provider.publish(payload, account.credentials);
+
+    // 3. Persistir resultado para auditoria
+    await prisma.post.update({
+      where: { id: postId },
+      data: {
+        status: 'published',
+        externalId: result.externalId,
+        publishedAt: new Date(),
+      },
+    });
+
+    return result; // vira job.returnvalue
+  },
+  {
+    connection,
+    concurrency: 5,            // 5 jobs em paralelo por instância
+    limiter: {                  // rate limit global da fila
+      max: 60,
+      duration: 60_000,         // 60 jobs/min
+    },
+  }
+);
+
+publishWorker.on('failed', (job, err) =&gt; {
+  console.error(`[worker] ${job?.id} failed:`, err.message);
+});
+
+publishWorker.on('completed', (job) =&gt; {
+  console.log(`[worker] ${job.id} ok in ${job.processedOn! - job.timestamp}ms`);
+});</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Rode o worker num processo Node <strong>separado</strong> da API (<code class="text-primary font-mono text-sm">node dist/workers/publish.worker.js</code>). Worker bloqueando o event loop da API web é o jeito mais rápido de derrubar o serviço — e impede escalar horizontalmente.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Handler</div>
+          <p class="text-xs text-neutral-400">Função async chamada por job.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Concurrency</div>
+          <p class="text-xs text-neutral-400">Jobs paralelos por instância.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Limiter</div>
+          <p class="text-xs text-neutral-400">Rate limit global da fila.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">returnvalue</div>
+          <p class="text-xs text-neutral-400">Valor retornado fica armazenado no job.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔄 Retry com backoff</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        APIs de redes sociais caem, dão <code class="text-teal-400 font-mono text-sm">429</code> e <code class="text-teal-400 font-mono text-sm">5xx</code> transiente. Retry imediato piora a situação — <strong class="text-teal-400">backoff exponencial</strong> espalha as tentativas: 1min, 2min, 4min, 8min, 16min. Cinco tentativas cobrem ~30min de instabilidade.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Distinga <strong class="text-teal-400">erros recuperáveis</strong> (timeout, 429, 503) dos <strong class="text-teal-400">permanentes</strong> (401 token revogado, 400 payload inválido). Para os permanentes, lance <code class="text-teal-400 font-mono text-sm">UnrecoverableError</code> — BullMQ pula os retries restantes e manda direto pra failed.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/workers/publish.worker.ts (handler refinado)
+import { UnrecoverableError } from 'bullmq';
+
+async (job) =&gt; {
+  try {
+    const provider = getProvider(job.data.providerId);
+    return await provider.publish(job.data.payload, credentials);
+  } catch (err: any) {
+    // 401/403: token quebrado — não adianta tentar de novo
+    if (err.status === 401 || err.status === 403) {
+      await prisma.post.update({
+        where: { id: job.data.postId },
+        data: { status: 'auth_failed' },
+      });
+      throw new UnrecoverableError(`auth: ${err.message}`);
+    }
+
+    // 400: payload errado — usuário precisa corrigir
+    if (err.status === 400) {
+      throw new UnrecoverableError(`invalid: ${err.message}`);
+    }
+
+    // 429: respeitar Retry-After do provider
+    if (err.status === 429 &amp;&amp; err.retryAfter) {
+      await job.moveToDelayed(Date.now() + err.retryAfter * 1000, job.token!);
+      throw new Error('rate limited, delayed');
+    }
+
+    // Timeout, 5xx: retry com backoff
+    throw err;
+  }
+}
+
+// Job options já definidas no produtor:
+// attempts: 5
+// backoff: { type: 'exponential', delay: 60_000 }
+// Resultado: 1min → 2min → 4min → 8min → 16min</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Backoff exponencial com base ≥ 30s (evita martelar API).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">UnrecoverableError</code> em 4xx que não é 429.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Respeitar <code class="font-mono">Retry-After</code> do header.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logar tentativa atual (<code class="font-mono">job.attemptsMade</code>).</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry fixo de 1 segundo — DDOS no provider.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><code class="font-mono">attempts: Infinity</code> — job zumbi para sempre.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Engolir erro com <code class="font-mono">catch {}</code> vazio.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry em 401 — só queima rate limit.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">attempts</div>
+          <p class="text-xs text-neutral-400">Total de tentativas incluindo a primeira.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Backoff</div>
+          <p class="text-xs text-neutral-400">Espera crescente entre retries.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Unrecoverable</div>
+          <p class="text-xs text-neutral-400">Erro que pula retries restantes.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Retry-After</div>
+          <p class="text-xs text-neutral-400">Header HTTP que diz quando voltar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">💀 Dead letter queue</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando um job esgota todas as <code class="text-teal-400 font-mono text-sm">attempts</code>, ele vai para o estado <code class="text-teal-400 font-mono text-sm">failed</code> — esse é o equivalente nativo de DLQ no BullMQ. <strong class="text-teal-400">Falha final = humano precisa olhar</strong>. Sem alerta, o post simplesmente não publica e o usuário descobre na semana seguinte.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <code class="text-teal-400 font-mono text-sm">QueueEvents</code> num processo de monitoramento, ou hook <code class="text-teal-400 font-mono text-sm">on('failed')</code> com <code class="text-teal-400 font-mono text-sm">job.attemptsMade === job.opts.attempts</code> para disparar alerta apenas no esgotamento (não em cada tentativa).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/workers/dlq-monitor.ts
+import { QueueEvents } from 'bullmq';
+import { connection, publishQueue } from '../queue/connection';
+import { sendAlert } from '../alerts/send';
+
+const events = new QueueEvents('publish', { connection });
+
+events.on('failed', async ({ jobId, failedReason, prev }) =&gt; {
+  const job = await publishQueue.getJob(jobId);
+  if (!job) return;
+
+  const final = job.attemptsMade &gt;= (job.opts.attempts ?? 1);
+  if (!final) return; // ainda vai tentar de novo
+
+  // 1. Marcar post como falho no BD
+  await prisma.post.update({
+    where: { id: job.data.postId },
+    data: { status: 'failed', errorMessage: failedReason },
+  });
+
+  // 2. Alertar humano (Slack, e-mail, etc)
+  await sendAlert({
+    severity: 'high',
+    title: `Post ${job.data.postId} falhou em definitivo`,
+    body: `Provider: ${job.data.providerId}\nErro: ${failedReason}\nTentativas: ${job.attemptsMade}`,
+    action: `Reprocessar manualmente após investigar`,
+  });
+});
+
+// Reprocessar jobs failed (operação manual via admin)
+export async function retryFailedJob(jobId: string) {
+  const job = await publishQueue.getJob(jobId);
+  if (!job) throw new Error('job não existe');
+  await job.retry();
+}
+
+// Listar todos os failed para dashboard
+export async function listFailedJobs(limit = 50) {
+  return publishQueue.getJobs(['failed'], 0, limit - 1);
+}</code></pre>
+
+      <div class="bg-teal-900/20 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🚨</span> Por que alerta importa
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-teal-400">Job silencioso = post perdido:</strong> sem alerta, ninguém sabe que falhou.</li>
+          <li><strong class="text-teal-400">Token revogado em massa:</strong> 200 posts falhando em 5 minutos é incidente, não bug.</li>
+          <li><strong class="text-teal-400">Padrões revelam bugs:</strong> mesmo provider falhando sempre = problema no adapter.</li>
+          <li><strong class="text-teal-400">Reprocesso manual:</strong> admin precisa de UI para listar failed e fazer <code class="font-mono">job.retry()</code>.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">DLQ</div>
+          <p class="text-xs text-neutral-400">Estado <code class="font-mono">failed</code> = dead letter no BullMQ.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Alerta</div>
+          <p class="text-xs text-neutral-400">Notificação humana só na falha final.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">job.retry()</div>
+          <p class="text-xs text-neutral-400">Move failed → waiting de novo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Auditoria</div>
+          <p class="text-xs text-neutral-400">Mantenha failed jobs por dias para investigar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🚀 Migrar para Temporal</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        BullMQ resolve o caso "agendar e republicar com retry". Mas quando o fluxo cresce — <strong class="text-teal-400">approval em múltiplas etapas</strong>, <strong class="text-teal-400">timers de dias</strong>, <strong class="text-teal-400">cancelamento condicional</strong>, <strong class="text-teal-400">compensação</strong> (postou no Twitter mas falhou no LinkedIn, o que fazer?) — você está reimplementando workflows em cima de jobs. É hora de olhar para <strong class="text-teal-400">Temporal</strong>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Temporal oferece <strong class="text-teal-400">workflows duráveis</strong>: o código do workflow é replayed do log de eventos a cada falha, então variáveis locais, <code class="text-teal-400 font-mono text-sm">await sleep('7 days')</code> e signals "simplesmente funcionam" mesmo com restart do worker no meio.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Exemplo Temporal — workflow de publicação multi-provider
+// src/workflows/publishPost.workflow.ts
+import { proxyActivities, sleep, defineSignal, setHandler } from '@temporalio/workflow';
+import type * as activities from '../activities';
+
+const { publishToProvider, markPublished, markFailed } = proxyActivities&lt;typeof activities&gt;({
+  startToCloseTimeout: '2 minutes',
+  retry: { initialInterval: '1m', backoffCoefficient: 2, maximumAttempts: 5 },
+});
+
+export const cancelSignal = defineSignal('cancel');
+
+export async function publishPostWorkflow(input: {
+  postId: string;
+  providers: string[];
+  scheduledFor: string;
+}) {
+  let cancelled = false;
+  setHandler(cancelSignal, () =&gt; { cancelled = true; });
+
+  // Espera durável — sobrevive a restarts de worker
+  const delay = new Date(input.scheduledFor).getTime() - Date.now();
+  await sleep(delay);
+
+  if (cancelled) return { status: 'cancelled' };
+
+  // Publicar em paralelo, capturar falhas individuais
+  const results = await Promise.allSettled(
+    input.providers.map((p) =&gt; publishToProvider(input.postId, p))
+  );
+
+  const ok = results.filter((r) =&gt; r.status === 'fulfilled');
+  const fail = results.filter((r) =&gt; r.status === 'rejected');
+
+  if (fail.length === 0) {
+    await markPublished(input.postId);
+    return { status: 'published', count: ok.length };
+  }
+
+  await markFailed(input.postId, fail.map((f: any) =&gt; f.reason.message));
+  return { status: 'partial', ok: ok.length, fail: fail.length };
+}</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6" style="background-color: rgba(13, 148, 136, 0.08); border-color: rgba(13, 148, 136, 0.25);">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">⚖️</span> BullMQ vs Temporal
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <h4 class="font-semibold text-teal-400 mb-2">Continue com BullMQ se…</h4>
+            <ul class="space-y-2 text-neutral-300">
+              <li>• Jobs são single-step (publicar e acabou).</li>
+              <li>• Delays até dias, não meses.</li>
+              <li>• Time já conhece Redis.</li>
+              <li>• Sem necessidade de orquestração entre múltiplas atividades.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-teal-400 mb-2">Migre para Temporal se…</h4>
+            <ul class="space-y-2 text-neutral-300">
+              <li>• Workflows com múltiplas etapas e signals.</li>
+              <li>• Timers longos (7 dias, 30 dias) precisam ser duráveis.</li>
+              <li>• Compensação/saga entre serviços externos.</li>
+              <li>• Visibilidade temporal de eventos é requisito.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🧭</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Não migre por hype. Temporal adiciona um cluster inteiro (history, matching, frontend, worker) e uma curva de aprendizado real. <strong>Comece com BullMQ</strong>, e migre quando você se pegar implementando "estado de workflow numa tabela do Postgres" — esse é o sinal claro de que cruzou a fronteira.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Workflow</div>
+          <p class="text-xs text-neutral-400">Função durável replayed do event log.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Activity</div>
+          <p class="text-xs text-neutral-400">Side effect (chamada externa, BD).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Signal</div>
+          <p class="text-xs text-neutral-400">Mensagem assíncrona para workflow rodando.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Durabilidade</div>
+          <p class="text-xs text-neutral-400">Estado preservado a restarts e crashes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">BullMQ basics</strong><span class="text-neutral-400"> — Queue, Worker e QueueEvents conectados a Redis com <code class="font-mono">maxRetriesPerRequest: null</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Job com delay</strong><span class="text-neutral-400"> — <code class="font-mono">queue.add('publish', data, { delay, jobId })</code> com TTL e idempotência.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Worker que publica</strong><span class="text-neutral-400"> — handler async, <code class="font-mono">getProvider()</code>, concurrency e rate limit.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Retry com backoff</strong><span class="text-neutral-400"> — <code class="font-mono">attempts: 5</code>, exponential delay e <code class="font-mono">UnrecoverableError</code> para 4xx fatais.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Dead letter queue</strong><span class="text-neutral-400"> — failed = humano, alerta na falha final e <code class="font-mono">job.retry()</code> manual.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Quando migrar para Temporal</strong><span class="text-neutral-400"> — workflows duráveis, timers longos, signals e compensação.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">5.5 — Multi-tenancy, billing e operação em produção</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-5-5.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

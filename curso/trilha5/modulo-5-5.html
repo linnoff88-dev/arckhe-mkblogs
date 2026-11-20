@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.5 - Upload de mídia | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Teal (T5) */
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/30 { background-color: rgba(13, 148, 136, 0.10); }
+    html:not(.dark) .bg-teal-900\/40 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .bg-teal-600 { background-color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500:hover { background-color: #14b8a6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🖼️ Upload de mídia</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Receber arquivos no NestJS, persistir no S3/R2, servir via URL assinada, otimizar com sharp e manter o bucket limpo de mídia órfã.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📤 Multer + multipart/form-data</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O NestJS recebe upload via <strong class="text-teal-400">FileInterceptor</strong>, que por baixo usa o <strong class="text-teal-400">Multer</strong> para parsear <code class="text-teal-400 font-mono text-sm">multipart/form-data</code>. O segredo é nunca aceitar o arquivo em disco — fique sempre em <strong class="text-teal-400">memoryStorage</strong> para conseguir validar antes de gravar em qualquer lugar.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Combine <code class="text-teal-400 font-mono text-sm">MaxFileSizeValidator</code> e <code class="text-teal-400 font-mono text-sm">FileTypeValidator</code> via <code class="text-teal-400 font-mono text-sm">ParseFilePipe</code> para falhar cedo, antes do controller começar a trabalhar.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/media.controller.ts
+import {
+  Controller, Post, UploadedFile, UseInterceptors,
+  ParseFilePipe, MaxFileSizeValidator, FileTypeValidator,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
+import { MediaService } from './media.service';
+
+@Controller('media')
+export class MediaController {
+  constructor(private readonly media: MediaService) {}
+
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: memoryStorage(),
+      limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+    }),
+  )
+  async upload(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10 * 1024 * 1024 }),
+          new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp)$/ }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.media.handle(file);
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Nunca use <code class="text-primary font-mono text-sm">diskStorage</code> em produção. Arquivo em disco precisa de cleanup manual em caso de falha — e em ambientes com múltiplas réplicas, o arquivo "some" se o load balancer mandar a próxima request para outro pod.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">multipart/form-data</div>
+          <p class="text-xs text-neutral-400">Encoding HTTP para enviar arquivos + campos juntos.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">FileInterceptor</div>
+          <p class="text-xs text-neutral-400">Decorator Nest que injeta o arquivo no handler.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">memoryStorage</div>
+          <p class="text-xs text-neutral-400">Buffer em RAM — valida antes de qualquer escrita.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">ParseFilePipe</div>
+          <p class="text-xs text-neutral-400">Pipeline de validadores nativos do Nest.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">☁️ Salvar no S3 (ou R2)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use o <strong class="text-teal-400">AWS SDK v3</strong> com <code class="text-teal-400 font-mono text-sm">PutObjectCommand</code>. Funciona igual no S3 da AWS e no <strong class="text-teal-400">Cloudflare R2</strong> — basta trocar o <code class="text-teal-400 font-mono text-sm">endpoint</code> e a região para <code class="text-teal-400 font-mono text-sm">auto</code>. R2 é zero egress, ideal para servir mídia.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A geração da <strong class="text-teal-400">key</strong> precisa ser previsível e única. Combine prefixo lógico + UUID + extensão: <code class="text-teal-400 font-mono text-sm">posts/2026/05/&lt;uuid&gt;.webp</code>. Evita colisão e facilita auditoria.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/s3.client.ts
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { randomUUID } from 'crypto';
+
+export const s3 = new S3Client({
+  region: process.env.S3_REGION ?? 'auto',
+  endpoint: process.env.S3_ENDPOINT, // R2: https://&lt;acc&gt;.r2.cloudflarestorage.com
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+  },
+  forcePathStyle: true, // R2 e MinIO exigem
+});
+
+export function buildKey(prefix: string, ext: string): string {
+  const now = new Date();
+  const yyyy = now.getUTCFullYear();
+  const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+  return `${prefix}/${yyyy}/${mm}/${randomUUID()}.${ext}`;
+}
+
+export async function putObject(
+  key: string,
+  body: Buffer,
+  contentType: string,
+) {
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.S3_BUCKET!,
+    Key: key,
+    Body: body,
+    ContentType: contentType,
+    CacheControl: 'public, max-age=31536000, immutable',
+  }));
+  return key;
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Defina <code class="text-primary font-mono text-sm">CacheControl: immutable</code> nos uploads. Como a key contém UUID e nunca muda, o navegador e CDN podem cachear para sempre. Reduz custo de egress em 80%+.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">SDK v3</div>
+          <p class="text-xs text-neutral-400">Modular, tree-shakable, async/await nativo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">PutObjectCommand</div>
+          <p class="text-xs text-neutral-400">Operação atômica de escrita no bucket.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">R2 vs S3</div>
+          <p class="text-xs text-neutral-400">R2 = mesma API, zero egress, region <code class="font-mono">auto</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Key strategy</div>
+          <p class="text-xs text-neutral-400">Prefixo + data + UUID + ext = único e legível.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔗 Gerar URL pública assinada</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Buckets privados são o default — você não quer expor todos os objetos. Para servir mídia ao frontend, gere <strong class="text-teal-400">URLs assinadas</strong> com <code class="text-teal-400 font-mono text-sm">getSignedUrl</code>. A URL carrega credenciais temporárias no query string e expira automaticamente.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <strong class="text-teal-400">expirations curtas</strong> (15min - 1h) para mídia em painel admin e <strong class="text-teal-400">cache CDN público</strong> para imagens de posts já publicados. Cada propósito tem seu padrão.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/signed-url.ts
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { s3 } from './s3.client';
+
+type Purpose = 'preview' | 'download' | 'public';
+
+const EXPIRY: Record&lt;Purpose, number&gt; = {
+  preview: 60 * 15,         // 15 min - admin UI
+  download: 60 * 5,         // 5 min - link de download
+  public: 60 * 60 * 24 * 7, // 7 dias - imagem de post publicado
+};
+
+export async function signGet(key: string, purpose: Purpose): Promise&lt;string&gt; {
+  const command = new GetObjectCommand({
+    Bucket: process.env.S3_BUCKET!,
+    Key: key,
+    ResponseContentDisposition: purpose === 'download'
+      ? `attachment; filename="${key.split('/').pop()}"`
+      : 'inline',
+  });
+  return getSignedUrl(s3, command, { expiresIn: EXPIRY[purpose] });
+}
+
+// uso no controller
+@Get(':id/url')
+async getUrl(@Param('id') id: string): Promise&lt;{ url: string }&gt; {
+  const media = await this.media.findById(id);
+  return { url: await signGet(media.key, 'preview') };
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔒</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Para imagens públicas (capas de post já publicado), considere um <strong>bucket público com CDN</strong> em vez de URL assinada. Cache hit é maior e o custo de assinatura por request some.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Presigned URL</div>
+          <p class="text-xs text-neutral-400">URL temporária com credenciais embutidas via HMAC.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">expiresIn</div>
+          <p class="text-xs text-neutral-400">TTL em segundos — curto p/ privado, longo p/ público.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">ContentDisposition</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">inline</code> exibe; <code class="font-mono">attachment</code> baixa.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Purpose</div>
+          <p class="text-xs text-neutral-400">Cada uso (preview, download, share) tem TTL próprio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎨 Resize / optimize (sharp)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Subir o JPEG original do iPhone (4MB, 4032x3024) é desperdício. Use o <strong class="text-teal-400">sharp</strong> para redimensionar, converter para <strong class="text-teal-400">WebP</strong> e ajustar qualidade — economizando 70-90% de bytes sem perda visível.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Pipeline padrão: limite à largura máxima (ex.: 1600px), preserve aspect ratio, força WebP com qualidade 82. Para thumbnails, gere uma segunda variante 400px e suba ambas.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/image.optimizer.ts
+import sharp from 'sharp';
+
+export interface OptimizedImage {
+  buffer: Buffer;
+  width: number;
+  height: number;
+  contentType: 'image/webp';
+}
+
+export async function optimize(
+  input: Buffer,
+  opts: { maxWidth?: number; quality?: number } = {},
+): Promise&lt;OptimizedImage&gt; {
+  const maxWidth = opts.maxWidth ?? 1600;
+  const quality = opts.quality ?? 82;
+
+  const pipeline = sharp(input, { failOn: 'error' })
+    .rotate() // respeita EXIF orientation
+    .resize({ width: maxWidth, withoutEnlargement: true })
+    .webp({ quality, effort: 4 });
+
+  const { data, info } = await pipeline.toBuffer({ resolveWithObject: true });
+  return {
+    buffer: data,
+    width: info.width,
+    height: info.height,
+    contentType: 'image/webp',
+  };
+}
+
+// gera thumbnail 400px para listagens
+export async function thumbnail(input: Buffer): Promise&lt;OptimizedImage&gt; {
+  return optimize(input, { maxWidth: 400, quality: 75 });
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">📐</span> Dica prática
+        </h3>
+        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">.rotate()</code> sem argumento aplica a rotação EXIF e depois remove o metadado. Sem isso, fotos do celular aparecem deitadas no navegador em alguns browsers.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">sharp</div>
+          <p class="text-xs text-neutral-400">Lib C nativa (libvips) — 10x mais rápida que Jimp.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">WebP</div>
+          <p class="text-xs text-neutral-400">25-35% menor que JPEG na mesma qualidade visual.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">withoutEnlargement</div>
+          <p class="text-xs text-neutral-400">Nunca aumenta imagem pequena — evita perda.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">EXIF rotate</div>
+          <p class="text-xs text-neutral-400">Corrige orientação de fotos de celular automaticamente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">✅ Validação de mime/size</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <code class="text-teal-400 font-mono text-sm">Content-Type</code> que o cliente envia é <strong class="text-teal-400">mentiroso</strong> — qualquer pessoa pode renomear <code class="text-teal-400 font-mono text-sm">virus.exe</code> para <code class="text-teal-400 font-mono text-sm">foto.png</code> e mandar header forjado. Valide os <strong class="text-teal-400">magic bytes</strong> reais do buffer com <code class="text-teal-400 font-mono text-sm">file-type</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Combine três camadas: <strong class="text-teal-400">whitelist de extensão</strong> (rápido), <strong class="text-teal-400">size limit</strong> (10MB cobre 99% dos casos legítimos) e <strong class="text-teal-400">magic byte sniff</strong> (verdade absoluta).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/validator.ts
+import { BadRequestException } from '@nestjs/common';
+import { fileTypeFromBuffer } from 'file-type';
+
+const ALLOWED_MIMES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+]);
+
+const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
+
+export async function validateImage(file: Express.Multer.File): Promise&lt;void&gt; {
+  // 1. Tamanho
+  if (file.size &gt; MAX_SIZE) {
+    throw new BadRequestException(`Arquivo maior que ${MAX_SIZE / 1024 / 1024}MB`);
+  }
+
+  // 2. Mime declarado (sanity check)
+  if (!ALLOWED_MIMES.has(file.mimetype)) {
+    throw new BadRequestException(`Mime ${file.mimetype} não permitido`);
+  }
+
+  // 3. Magic bytes (verdade)
+  const detected = await fileTypeFromBuffer(file.buffer);
+  if (!detected || !ALLOWED_MIMES.has(detected.mime)) {
+    throw new BadRequestException(
+      `Conteúdo real (${detected?.mime ?? 'desconhecido'}) não confere com tipo declarado`,
+    );
+  }
+}</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar <strong>magic bytes</strong> com <code class="font-mono">file-type</code>, não confiar no header.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Whitelist de extensões — nunca blacklist.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Limite global de 10MB no Multer + checagem manual.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Reprocessar com sharp — destrói qualquer payload escondido.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar só no <code class="font-mono">Content-Type</code> do request.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aceitar SVG sem sanitização (pode ter <code class="font-mono">&lt;script&gt;</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Servir o arquivo do mesmo domínio do app (XSS).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logar o buffer inteiro em erro — vai estourar APM.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Magic bytes</div>
+          <p class="text-xs text-neutral-400">Primeiros bytes do arquivo identificam o tipo real.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Whitelist</div>
+          <p class="text-xs text-neutral-400">Permitir só o que conhece — bloquear o resto.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Defesa em camadas</div>
+          <p class="text-xs text-neutral-400">Size + mime + magic + reprocess.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">file-type</div>
+          <p class="text-xs text-neutral-400">Lib que sniff o buffer e retorna mime real.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧹 Cleanup de mídia órfã</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Toda mídia uploadeada começa como <strong class="text-teal-400">órfã</strong>: existe no bucket mas não está vinculada a nenhum post ainda. Se o usuário abandona o rascunho, o arquivo vira lixo pago. Marque com <code class="text-teal-400 font-mono text-sm">postId: null</code> e rode um <strong class="text-teal-400">cron job</strong> que limpa os órfãos com mais de N dias.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando um post é deletado, marque as mídias dele com <code class="text-teal-400 font-mono text-sm">deletedAt</code> em vez de apagar imediato — assim você recupera em caso de erro do usuário. O cron varre e remove definitivamente após 7-30 dias.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/cleanup.cron.ts
+import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { PrismaService } from '../prisma/prisma.service';
+import { s3 } from './s3.client';
+
+const ORPHAN_DAYS = 1;   // upload sem post associado
+const DELETED_DAYS = 7;  // post foi apagado
+
+@Injectable()
+export class MediaCleanupCron {
+  private readonly logger = new Logger(MediaCleanupCron.name);
+
+  constructor(private readonly prisma: PrismaService) {}
+
+  @Cron(CronExpression.EVERY_DAY_AT_3AM)
+  async sweep(): Promise&lt;void&gt; {
+    const now = Date.now();
+    const orphanCutoff = new Date(now - ORPHAN_DAYS * 86400_000);
+    const deletedCutoff = new Date(now - DELETED_DAYS * 86400_000);
+
+    const stale = await this.prisma.media.findMany({
+      where: {
+        OR: [
+          { postId: null, createdAt: { lt: orphanCutoff } },
+          { deletedAt: { lt: deletedCutoff, not: null } },
+        ],
+      },
+      take: 500, // batch
+    });
+
+    this.logger.log(`Cleanup: ${stale.length} mídias`);
+
+    for (const m of stale) {
+      try {
+        await s3.send(new DeleteObjectCommand({
+          Bucket: process.env.S3_BUCKET!,
+          Key: m.key,
+        }));
+        await this.prisma.media.delete({ where: { id: m.id } });
+      } catch (err) {
+        this.logger.error(`Falha ao limpar ${m.key}`, err);
+      }
+    }
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💸</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Monitore o tamanho total do bucket por prefixo. Se <code class="text-primary font-mono text-sm">posts/</code> cresce 10MB/dia mas você só publica 2MB/dia, o cron não está pegando algum caminho de órfão — investigue antes da conta do mês doer.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Mídia órfã</div>
+          <p class="text-xs text-neutral-400">Upload sem vínculo a post — vira lixo se ignorado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Soft delete</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">deletedAt</code> permite undo antes do purge físico.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@Cron</div>
+          <p class="text-xs text-neutral-400">Decorator do <code class="font-mono">@nestjs/schedule</code> para tarefas agendadas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Batch delete</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">take: 500</code> evita timeout em buckets grandes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Upload via FileInterceptor</strong><span class="text-neutral-400"> — <code class="font-mono">memoryStorage</code>, <code class="font-mono">ParseFilePipe</code> com size + mime, limite de 10MB.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Persistência em S3/R2</strong><span class="text-neutral-400"> — AWS SDK v3, <code class="font-mono">PutObjectCommand</code>, key estruturada por prefixo + data + UUID.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">URLs assinadas</strong><span class="text-neutral-400"> — <code class="font-mono">getSignedUrl</code> com TTL por propósito (preview, download, public).</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Otimização com sharp</strong><span class="text-neutral-400"> — resize 1600px, WebP qualidade 82, rotate EXIF, thumbnail 400px.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Validação em camadas</strong><span class="text-neutral-400"> — size + mime declarado + magic bytes via <code class="font-mono">file-type</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Cleanup automatizado</strong><span class="text-neutral-400"> — cron diário remove órfãos (&gt;1d) e soft-deletes (&gt;7d).</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-teal-400 mb-2">🏁 Fim da Trilha 5 — Do Zero</h3>
+          <p class="text-neutral-300">Você construiu o MVP: schema, auth, posts, agendamento e mídia. Hora de colocar no ar de verdade — Trilha 6 cobre containerização, CI/CD, observabilidade e deploy em VPS / Railway / Fly.io.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="../trilha6/index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Próxima Trilha → T6 Deploy</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

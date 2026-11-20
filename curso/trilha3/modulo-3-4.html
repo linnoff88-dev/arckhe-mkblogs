@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.4 - LinkedIn API | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Purple (T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .bg-purple-600 { background-color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500:hover { background-color: #8b5cf6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💼 LinkedIn API</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Conectar Postiz ao LinkedIn: criar app, vincular Page, pedir produto, escolher scopes, OAuth 2.0, upload de imagem e renovar refresh token de 60 dias.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🏢 LinkedIn Developer App</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Diferente das outras APIs da trilha, o LinkedIn <strong class="text-purple-400">exige uma Company Page</strong> para criar um app — não dá pra usar perfil pessoal como dono. Sem Page, nem o botão "Create app" aparece. Crie uma Page placeholder se for o caso (pode ser da sua marca pessoal).
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Acesse <a href="https://www.linkedin.com/developers/apps" target="_blank" class="text-purple-400 hover:underline">linkedin.com/developers/apps</a>, clique em <strong class="text-purple-400">Create app</strong> e preencha nome, Page vinculada, logo (PNG quadrado) e aceite os termos. O app nasce em modo <strong class="text-purple-400">Development</strong> — só você consegue autenticar nele.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Campos obrigatórios ao criar o app
+App name:           Postiz Self-Hosted
+LinkedIn Page:      [sua Company Page]    # vínculo permanente
+Privacy policy URL: https://seu-dominio/privacy
+App logo:           logo-100x100.png       # PNG mínimo 100x100
+Legal agreement:    ✓ aceitar              # API Terms of Use
+
+# Após criar, anote credenciais em Auth tab:
+Client ID:     77abc123def456
+Client Secret: WPL_AP1.xxxxxxxxxxxxxxxx     # tratar como senha
+Redirect URLs: http://localhost:5000/integrations/social/linkedin</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">A Page vinculada vira o "verificador" do app — quem for admin da Page consegue aprovar produtos. Se você perder admin da Page, perde controle do app. Mantenha pelo menos dois admins na Page para evitar lock-out.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Developer Portal</div>
+          <p class="text-xs text-neutral-400">Console oficial em <code class="font-mono">linkedin.com/developers</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Company Page</div>
+          <p class="text-xs text-neutral-400">Página de empresa — pré-requisito obrigatório.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Client ID/Secret</div>
+          <p class="text-xs text-neutral-400">Identifica o app no OAuth — Secret é como senha.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Redirect URI</div>
+          <p class="text-xs text-neutral-400">Endpoint que recebe o <code class="font-mono">code</code> do OAuth.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📦 Produto "Share on LinkedIn"</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        App criado não significa app utilizável. Cada API do LinkedIn é entregue como <strong class="text-purple-400">produto</strong> que você precisa requisitar separado. Para publicar posts, o produto obrigatório é <strong class="text-purple-400">Share on LinkedIn</strong> (perfil pessoal) e/ou <strong class="text-purple-400">Community Management API</strong> (Page).
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na aba <strong class="text-purple-400">Products</strong> do app, clique em <strong class="text-purple-400">Request access</strong>. Share on LinkedIn é auto-aprovado em minutos. Community Management exige formulário detalhado e pode levar dias a semanas.
+      </p>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">📋</span> Produtos relevantes para Postiz
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-purple-400">Sign In with LinkedIn using OpenID Connect:</strong> autentica usuários (login). Auto-aprovado.</li>
+          <li><strong class="text-purple-400">Share on LinkedIn:</strong> publica em <em>perfil pessoal</em>. Auto-aprovado. É o mínimo viável.</li>
+          <li><strong class="text-purple-400">Community Management API:</strong> publica em <em>Company Pages</em>. Aprovação manual, review humano.</li>
+          <li><strong class="text-purple-400">Marketing Developer Platform:</strong> Ads e analytics. Restrito a partners.</li>
+        </ul>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Checar status do produto via dashboard
+# Products → Status pode ser:
+#   Pending    → aguardando review
+#   Added      → liberado, scopes disponíveis
+#   Rejected   → revisão necessária
+
+# Validar scopes liberados (depois de Added)
+curl -X GET "https://api.linkedin.com/v2/me" \
+  -H "Authorization: Bearer $ACCESS_TOKEN"
+# 200 OK → scope w_member_social ativo
+# 403 ACCESS_DENIED → produto não liberado ainda</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏳</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Comece com <strong>Share on LinkedIn</strong> só. Configure tudo no Postiz, valide o fluxo, e só depois peça Community Management. Pedir tudo de uma vez é tentação — mas se o review da Community recusar, atrasa também o resto.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Product</div>
+          <p class="text-xs text-neutral-400">Conjunto de endpoints + scopes liberáveis.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Auto-approved</div>
+          <p class="text-xs text-neutral-400">Liberação imediata sem review humano.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Review manual</div>
+          <p class="text-xs text-neutral-400">Time do LinkedIn avalia uso e libera.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Pending</div>
+          <p class="text-xs text-neutral-400">Estado intermediário — endpoints ainda fechados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎫 Scopes: pessoal vs organização</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Scope é a permissão granular que o usuário concede no consent screen. O LinkedIn separa rigidamente <strong class="text-purple-400">perfil pessoal</strong> de <strong class="text-purple-400">Company Page</strong> — são scopes distintos, endpoints distintos e produtos distintos. Pedir o errado retorna <code class="text-purple-400 font-mono text-sm">403</code> sem mensagem clara.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Scopes essenciais para o Postiz
+
+# === Perfil pessoal (Share on LinkedIn) ===
+openid                  # identidade básica (sub claim)
+profile                 # nome, foto, headline
+email                   # endereço de e-mail
+w_member_social         # publicar como pessoa física
+
+# === Company Page (Community Management API) ===
+w_organization_social   # publicar na Page
+r_organization_social   # ler posts da Page
+rw_organization_admin   # gerenciar settings da Page
+
+# === Composição final do parâmetro scope ===
+# Pessoa só:
+scope=openid%20profile%20email%20w_member_social
+
+# Pessoa + Page:
+scope=openid%20profile%20email%20w_member_social%20w_organization_social</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pedir apenas os scopes que o app realmente usa.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Separar espaços entre scopes com <code class="font-mono">%20</code> na URL.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar scope concedido lendo <code class="font-mono">scope</code> da resposta de token.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Documentar pra que serve cada scope no consent.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">w_organization_social</code> sem ter Community Management aprovado.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar scopes deprecados (<code class="font-mono">r_liteprofile</code>) com OIDC.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que scope pedido = scope concedido (usuário pode negar).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardcodar scopes — colocar em config para evoluir sem rebuild.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Scope</div>
+          <p class="text-xs text-neutral-400">Permissão atômica concedida pelo usuário.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">w_ vs r_</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">w_</code> escreve; <code class="font-mono">r_</code> lê. Pode combinar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">OIDC</div>
+          <p class="text-xs text-neutral-400">OpenID Connect — login via <code class="font-mono">openid</code>+<code class="font-mono">profile</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Least privilege</div>
+          <p class="text-xs text-neutral-400">Pedir o mínimo aumenta taxa de aceite.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔐 OAuth 2.0 — fluxo completo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O LinkedIn usa <strong class="text-purple-400">Authorization Code Flow</strong> padrão do OAuth 2.0. Três etapas: enviar usuário para <code class="text-purple-400 font-mono text-sm">/authorization</code>, receber <code class="text-purple-400 font-mono text-sm">code</code> no callback e trocar <code class="text-purple-400 font-mono text-sm">code</code> por <code class="text-purple-400 font-mono text-sm">access_token</code> + <code class="text-purple-400 font-mono text-sm">refresh_token</code>.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Redirecionar para autorização</h4>
+            <p class="text-sm text-neutral-400 mb-3">Postiz monta a URL e redireciona o browser do usuário. O <code class="font-mono">state</code> é anti-CSRF.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">https://www.linkedin.com/oauth/v2/authorization
+  ?response_type=code
+  &client_id=77abc123def456
+  &redirect_uri=http://localhost:5000/integrations/social/linkedin
+  &state=$RANDOM_NONCE
+  &scope=openid%20profile%20email%20w_member_social</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Callback recebe o code</h4>
+            <p class="text-sm text-neutral-400 mb-3">LinkedIn redireciona o browser com <code class="font-mono">code</code> + <code class="font-mono">state</code> na query. Valide o <code class="font-mono">state</code>.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">GET /integrations/social/linkedin
+    ?code=AQT8x_abc123...    # válido por ~30s
+    &state=$RANDOM_NONCE     # deve bater com o enviado</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Trocar code por token</h4>
+            <p class="text-sm text-neutral-400 mb-3">POST server-to-server com <code class="font-mono">client_secret</code>. Nunca exponha o secret no frontend.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">curl -X POST "https://www.linkedin.com/oauth/v2/accessToken" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=authorization_code" \
+  -d "code=$CODE" \
+  -d "client_id=77abc123def456" \
+  -d "client_secret=$CLIENT_SECRET" \
+  -d "redirect_uri=http://localhost:5000/integrations/social/linkedin"
+
+# Resposta:
+# {
+#   "access_token":  "AQVx...",    # válido 60 dias
+#   "expires_in":    5184000,
+#   "refresh_token": "AQW...",     # válido 1 ano
+#   "refresh_token_expires_in": 31536000,
+#   "scope": "openid,profile,email,w_member_social"
+# }</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔒</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">state</code> nonce deve ser único por tentativa de auth e amarrado à sessão (ex: hash do <code class="text-primary font-mono text-sm">session_id</code>). Se o callback vier com <code class="text-primary font-mono text-sm">state</code> diferente do guardado, rejeite — é tentativa de CSRF.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Authorization Code</div>
+          <p class="text-xs text-neutral-400">Fluxo padrão server-side do OAuth 2.0.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">state nonce</div>
+          <p class="text-xs text-neutral-400">Protege contra CSRF entre <code class="font-mono">/authorize</code> e callback.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">code</div>
+          <p class="text-xs text-neutral-400">Token de uso único, expira em ~30s.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">access_token</div>
+          <p class="text-xs text-neutral-400">Bearer enviado em chamadas à API.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🖼️ Upload de imagem (/rest/images)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Diferente do X, o LinkedIn faz upload em <strong class="text-purple-400">três passos</strong>: <code class="text-purple-400 font-mono text-sm">initializeUpload</code> retorna URL pré-assinada, você <strong class="text-purple-400">PUT</strong> o binário direto nela, depois referencia o <code class="text-purple-400 font-mono text-sm">image URN</code> no post. Esse modelo evita upload pelo proxy da API.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Passo 1 — initialize: pede slot de upload
+curl -X POST "https://api.linkedin.com/rest/images?action=initializeUpload" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "LinkedIn-Version: 202405" \
+  -H "X-Restli-Protocol-Version: 2.0.0" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "initializeUploadRequest": {
+      "owner": "urn:li:person:abc123XYZ"
+    }
+  }'
+
+# Resposta:
+# {
+#   "value": {
+#     "uploadUrl": "https://api.linkedin.com/mediaUpload/...",
+#     "image": "urn:li:image:C5622AQ..."     # guardar este URN
+#   }
+# }
+
+# Passo 2 — PUT binário direto na uploadUrl
+curl -X PUT "$UPLOAD_URL" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  --data-binary @foto.jpg
+
+# Passo 3 — usar o image URN no post
+curl -X POST "https://api.linkedin.com/rest/posts" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "LinkedIn-Version: 202405" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "author": "urn:li:person:abc123XYZ",
+    "commentary": "Subindo conteúdo via Postiz 🚀",
+    "visibility": "PUBLIC",
+    "distribution": { "feedDistribution": "MAIN_FEED" },
+    "content": {
+      "media": {
+        "id": "urn:li:image:C5622AQ..."
+      }
+    },
+    "lifecycleState": "PUBLISHED"
+  }'</code></pre>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">⚠️</span> Pegadinhas comuns do upload
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-purple-400">Header <code class="font-mono">LinkedIn-Version</code>:</strong> obrigatório em <code class="font-mono">/rest/</code>. Use formato <code class="font-mono">YYYYMM</code> de release válida.</li>
+          <li><strong class="text-purple-400">Owner URN:</strong> <code class="font-mono">urn:li:person:ID</code> para pessoa, <code class="font-mono">urn:li:organization:ID</code> para Page. Misturar = 403.</li>
+          <li><strong class="text-purple-400">Tamanho máximo:</strong> 20MB por imagem. Acima disso o PUT retorna erro silencioso.</li>
+          <li><strong class="text-purple-400">Vídeo é outro endpoint:</strong> <code class="font-mono">/rest/videos</code> com fluxo similar, mas tem upload em chunks pra arquivos grandes.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Upload em 3 fases</div>
+          <p class="text-xs text-neutral-400">Init → PUT binário → referenciar URN.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">URN</div>
+          <p class="text-xs text-neutral-400">Identificador estável: <code class="font-mono">urn:li:image:...</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Pre-signed URL</div>
+          <p class="text-xs text-neutral-400">Endpoint temporário e autenticado para PUT.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">LinkedIn-Version</div>
+          <p class="text-xs text-neutral-400">Versionamento mensal — fixe ao integrar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">♻️ Refresh token (60 dias)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <code class="text-purple-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-purple-400">60 dias</strong>. Quando expira, qualquer chamada retorna <code class="text-purple-400 font-mono text-sm">401</code>. O <code class="text-purple-400 font-mono text-sm">refresh_token</code> permite renovar sem nova autorização do usuário — <strong class="text-purple-400">por até 1 ano</strong>. Depois disso, o usuário precisa autenticar de novo.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Postiz precisa de uma rotina que <strong class="text-purple-400">checa expiração</strong> e renova proativamente — não esperar a chamada de publicar falhar. Salvar <code class="text-purple-400 font-mono text-sm">expires_at</code> calculado (<code class="text-purple-400 font-mono text-sm">now + expires_in</code>) e refrescar 7 dias antes é o padrão seguro.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Renovar access_token
+curl -X POST "https://www.linkedin.com/oauth/v2/accessToken" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=refresh_token" \
+  -d "refresh_token=$REFRESH_TOKEN" \
+  -d "client_id=77abc123def456" \
+  -d "client_secret=$CLIENT_SECRET"
+
+# Resposta:
+# {
+#   "access_token":  "AQVx_novo...",       # +60 dias
+#   "expires_in":    5184000,
+#   "refresh_token": "AQW_pode_rotacionar...",
+#   "refresh_token_expires_in": 31536000   # janela rola
+# }
+
+# Heurística simples (pseudo-Node):
+if (Date.now() &gt; expiresAt - 7 * 24 * 3600 * 1000) {
+  await refreshLinkedInToken(account);
+}
+
+# Verificar saúde do token a qualquer momento
+curl -X GET "https://api.linkedin.com/v2/userinfo" \
+  -H "Authorization: Bearer $ACCESS_TOKEN"
+# 200 → token válido
+# 401 INVALID_ACCESS_TOKEN → renove agora</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir <code class="font-mono">expires_at</code> calculado (não só <code class="font-mono">expires_in</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Renovar proativamente em job cron — antes de publicar.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Salvar o novo <code class="font-mono">refresh_token</code> a cada refresh (rotaciona).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Notificar usuário aos 11 meses para re-autenticar.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que <code class="font-mono">refresh_token</code> é eterno — vence em 1 ano.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar 401 pra renovar — post agendado falha calado.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Guardar tokens em texto plano — use criptografia at-rest.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar refresh em paralelo pra mesma conta — gera race e revogação.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">📅</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Crie um job semanal que percorre todas as integrações LinkedIn e renova qualquer token com menos de 14 dias para expirar. Loga falhas em canal de alerta — token revogado pelo usuário só dá pra detectar nesse momento, antes do post agendado quebrar.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Token TTL</div>
+          <p class="text-xs text-neutral-400">60 dias para access, 365 para refresh.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Proactive refresh</div>
+          <p class="text-xs text-neutral-400">Renovar antes de expirar, não depois.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Token rotation</div>
+          <p class="text-xs text-neutral-400">Salvar refresh novo a cada uso.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Encryption at-rest</div>
+          <p class="text-xs text-neutral-400">Tokens cifrados no banco com chave separada.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">App criado no Developer Portal</strong><span class="text-neutral-400"> — vinculado a uma Company Page com Client ID/Secret em mãos.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Produto Share on LinkedIn requisitado</strong><span class="text-neutral-400"> — auto-aprovado; Community Management deixado para depois.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Scopes mapeados</strong><span class="text-neutral-400"> — <code class="font-mono">w_member_social</code> para perfil; <code class="font-mono">w_organization_social</code> para Page.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">OAuth 2.0 implementado</strong><span class="text-neutral-400"> — authorize, callback com <code class="font-mono">state</code>, troca de <code class="font-mono">code</code> por token.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Upload de imagem em três fases</strong><span class="text-neutral-400"> — initialize, PUT na URL pré-assinada, referenciar URN no post.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Refresh token gerenciado</strong><span class="text-neutral-400"> — renovação proativa, rotação salva, alerta antes dos 365 dias.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">3.5 — Próxima rede social da trilha</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-3-5.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

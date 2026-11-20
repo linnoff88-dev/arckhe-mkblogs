@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1.2 - Arquitetura multi-plataforma | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Emerald (T1) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(5, 150, 105, 0.10); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .bg-emerald-600 { background-color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500:hover { background-color: #10b981; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - red para grids Evitar */
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a>
+      <span>/</span>
+      <span class="text-emerald-400">Módulo 1.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ Arquitetura multi-plataforma</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">As peças que toda ferramenta de agendamento multi-rede precisa ter: adapters, filas, storage, banco, frontend e webhooks. O mapa antes do código.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">45</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Teoria</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔌 Padrão Adapter/Provider</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Cada rede social tem uma API diferente: <strong class="text-emerald-400">X usa OAuth 2.0 PKCE</strong>, <strong class="text-emerald-400">LinkedIn pede UGC posts</strong>, <strong class="text-emerald-400">Instagram exige container ID</strong>. Sem abstração, o código vira um <em>switch</em> gigante. O padrão <strong class="text-emerald-400">Adapter</strong> resolve isso: uma classe por rede, todas implementando a mesma interface.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O resto da aplicação fala com a interface, não com a API específica. Adicionar TikTok amanhã = criar <code class="text-emerald-400 font-mono text-sm">TikTokProvider</code> e registrar no factory — zero mudança no agendador, na fila ou no frontend.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Interface comum — contrato que TODA rede implementa
+export interface SocialProvider {
+  readonly platform: 'x' | 'linkedin' | 'instagram' | 'facebook' | 'tiktok';
+
+  authenticate(code: string): Promise&lt;AuthResult&gt;;
+  refreshToken(refreshToken: string): Promise&lt;AuthResult&gt;;
+  post(account: SocialAccount, payload: PostPayload): Promise&lt;PostResult&gt;;
+  delete(account: SocialAccount, externalId: string): Promise&lt;void&gt;;
+  getMetrics(account: SocialAccount, externalId: string): Promise&lt;Metrics&gt;;
+}
+
+// Implementação concreta — uma por rede
+export class XProvider implements SocialProvider {
+  readonly platform = 'x' as const;
+
+  async authenticate(code: string) { /* OAuth 2.0 PKCE */ }
+  async post(account, payload) {
+    // chama POST /2/tweets com bearer token
+  }
+  // ...
+}
+
+// Factory escolhe o provider certo em runtime
+export function getProvider(platform: string): SocialProvider {
+  return providers[platform]; // { x: new XProvider(), linkedin: ... }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Mantenha a interface <strong>pequena</strong>. Se uma rede tiver feature exclusiva (ex: enquetes no X), não polua a interface comum — exponha via método específico no provider (<code class="text-primary font-mono text-sm">XProvider.createPoll()</code>) e cheque <code class="text-primary font-mono text-sm">instanceof</code> no caller. Interface inchada vira lixo de <code class="text-primary font-mono text-sm">throw new Error("not supported")</code>.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Interface</div>
+          <p class="text-xs text-neutral-400">Contrato que define quais métodos toda rede deve ter.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Adapter</div>
+          <p class="text-xs text-neutral-400">Traduz API específica para a interface comum.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Factory</div>
+          <p class="text-xs text-neutral-400">Resolve qual provider instanciar em runtime.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Open/Closed</div>
+          <p class="text-xs text-neutral-400">Aberto para extensão (nova rede), fechado para mudança.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚙️ Fila com retry (BullMQ / Temporal)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Publicar post não é uma chamada síncrona. O usuário aperta "agendar para amanhã 9h" e o sistema precisa <strong class="text-emerald-400">lembrar</strong> de publicar, <strong class="text-emerald-400">tentar de novo se falhar</strong>, e <strong class="text-emerald-400">não derrubar a app</strong> quando a API da rede estiver lenta. Filas resolvem os três.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-emerald-400">BullMQ</strong> (Redis) cobre 95% dos casos: delay nativo, retry com backoff exponencial, jobs agendados via cron. <strong class="text-emerald-400">Temporal</strong> entra quando você precisa de workflows duradouros (ex: thread no X com 10 tweets sequenciais com falha parcial).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Agendar publicação para horário futuro
+await postQueue.add(
+  'publish-post',
+  { postId: '42', target: 'linkedin' },
+  {
+    delay: scheduledAt.getTime() - Date.now(), // ms até disparar
+    attempts: 5,
+    backoff: { type: 'exponential', delay: 30_000 }, // 30s, 60s, 120s...
+    removeOnComplete: { age: 86_400 }, // mantém logs 24h
+  }
+);
+
+// Worker que processa
+new Worker('post-queue', async (job) =&gt; {
+  const provider = getProvider(job.data.target);
+  return await provider.post(account, payload);
+}, { concurrency: 4 });</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">backoff: exponential</code> — evita martelar API caída.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Limitar <code class="font-mono">concurrency</code> por worker para respeitar rate limits.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tornar handlers <strong>idempotentes</strong> (mesmo job 2x = mesmo efeito).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir status no DB depois de cada tentativa.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar <code class="font-mono">setTimeout</code> em memória — morre no restart.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry infinito sem backoff — quebra o Redis e a API.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar erro 4xx como retryable — refaz o mesmo erro 5x.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar lógica de negócio no worker — dificulta teste.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Job</div>
+          <p class="text-xs text-neutral-400">Unidade de trabalho enfileirada para execução posterior.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Delay</div>
+          <p class="text-xs text-neutral-400">Tempo antes do job ficar elegível para processar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Backoff exponencial</div>
+          <p class="text-xs text-neutral-400">Intervalo dobra a cada falha — protege APIs.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400">Mesmo job executado N vezes = mesmo resultado final.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🖼️ Storage de imagem (S3 / Cloudinary)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quase nenhuma API aceita imagem em base64. <strong class="text-emerald-400">X, LinkedIn e Instagram exigem URL pública</strong> ou upload prévio com multipart. Resultado: você precisa de um <strong class="text-emerald-400">object storage</strong> antes de chamar o provider. Sem isso, qualquer post com foto falha.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O fluxo padrão é: usuário sobe arquivo → backend gera <strong class="text-emerald-400">signed URL</strong> → frontend faz PUT direto no S3/R2/Cloudinary → backend salva a URL final no Post. Nada de proxy pela aplicação — desperdiça banda e timeout.
+      </p>
+
+      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Provedores e quando usar
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-emerald-400">AWS S3:</strong> padrão da indústria, barato, integra com CloudFront. Ideal para volume alto e equipe que já está na AWS.</li>
+          <li><strong class="text-emerald-400">Cloudflare R2:</strong> compatível com API S3, <strong>sem egress fee</strong>. Vence em custo se você serve muita imagem via CDN.</li>
+          <li><strong class="text-emerald-400">Cloudinary:</strong> além de armazenar, transforma (resize, crop, format) via URL. Útil para gerar mil tamanhos sem pipeline próprio.</li>
+          <li><strong class="text-emerald-400">Local (dev):</strong> <code class="font-mono">/uploads</code> em volume Docker. Zero infra para começar, mas não serve em produção multi-réplica.</li>
+        </ul>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Backend gera signed URL — válida por 5 min, só PUT
+const command = new PutObjectCommand({
+  Bucket: 'mkblogs-media',
+  Key: `${userId}/${nanoid()}.jpg`,
+  ContentType: 'image/jpeg',
+});
+const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 300 });
+
+// Frontend faz upload direto, sem passar pelo backend
+await fetch(uploadUrl, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'image/jpeg' },
+  body: file,
+});
+
+// Depois, ao postar:
+// - X: media_id obtido via /1.1/media/upload.json
+// - LinkedIn: registerUpload + PUT no asset URL
+// - Instagram: image_url DEVE ser HTTPS público acessível por Meta</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Instagram <strong>baixa</strong> a imagem do seu storage no momento da publicação. Se você usa bucket privado com signed URL curta, a URL pode expirar antes do Meta puxar — gere com <code class="text-primary font-mono text-sm">expiresIn</code> de pelo menos 1h, ou marque o objeto como público com ACL fixa.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Object storage</div>
+          <p class="text-xs text-neutral-400">Armazena blobs (imagens, vídeos) acessíveis via HTTP.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Signed URL</div>
+          <p class="text-xs text-neutral-400">URL temporária com permissão embutida na query string.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Direct upload</div>
+          <p class="text-xs text-neutral-400">Cliente sobe direto no storage, sem proxy pelo backend.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">CDN</div>
+          <p class="text-xs text-neutral-400">Cache de borda que entrega a mídia rápido global.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🗄️ Banco de dados (Prisma + Postgres)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A modelagem certa torna features futuras (cross-post, analytics, rascunhos) triviais. A errada te força a refatorar tudo no segundo mês. Cinco tabelas formam o núcleo: <strong class="text-emerald-400">User</strong>, <strong class="text-emerald-400">SocialAccount</strong>, <strong class="text-emerald-400">Post</strong>, <strong class="text-emerald-400">PostTarget</strong> e <strong class="text-emerald-400">Media</strong>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A separação <code class="text-emerald-400 font-mono text-sm">Post</code> (conteúdo lógico) × <code class="text-emerald-400 font-mono text-sm">PostTarget</code> (publicação por rede) é o que permite <strong class="text-emerald-400">um post → várias redes</strong> com status independente em cada uma.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// schema.prisma — núcleo da modelagem
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  accounts  SocialAccount[]
+  posts     Post[]
+}
+
+model SocialAccount {
+  id           String   @id @default(cuid())
+  userId       String
+  platform     String   // 'x', 'linkedin', 'instagram'...
+  externalId   String   // ID da conta na rede
+  accessToken  String   // criptografado em rest
+  refreshToken String?
+  expiresAt    DateTime?
+  user         User     @relation(fields: [userId], references: [id])
+  targets      PostTarget[]
+  @@unique([userId, platform, externalId])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  userId      String
+  content     String   // markdown / texto base
+  scheduledAt DateTime
+  status      String   // 'draft' | 'scheduled' | 'partial' | 'done' | 'failed'
+  user        User     @relation(fields: [userId], references: [id])
+  targets     PostTarget[]
+  media       Media[]
+}
+
+model PostTarget {
+  id              String   @id @default(cuid())
+  postId          String
+  socialAccountId String
+  status          String   // 'pending' | 'publishing' | 'published' | 'failed'
+  externalPostId  String?  // ID retornado pela rede após publicar
+  error           String?
+  publishedAt     DateTime?
+  post            Post @relation(fields: [postId], references: [id])
+  account         SocialAccount @relation(fields: [socialAccountId], references: [id])
+}
+
+model Media {
+  id     String @id @default(cuid())
+  postId String
+  url    String // S3/R2/Cloudinary
+  type   String // 'image' | 'video'
+  post   Post   @relation(fields: [postId], references: [id])
+}</code></pre>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Relacional</div>
+          <p class="text-xs text-neutral-400">Joins fortes entre User, Post e Target com FK.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Fan-out</div>
+          <p class="text-xs text-neutral-400">Um Post → N PostTarget, cada um com status próprio.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Migrations</div>
+          <p class="text-xs text-neutral-400">Prisma versiona schema, replay garante consistência.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Encryption at rest</div>
+          <p class="text-xs text-neutral-400">Tokens OAuth nunca em texto plano no banco.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🎨 Frontend de agendamento</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O frontend é o lugar onde o usuário sente se a ferramenta é boa. Quatro componentes definem a experiência: <strong class="text-emerald-400">editor com contagem de chars por rede</strong>, <strong class="text-emerald-400">preview fiel</strong> ao look de cada plataforma, <strong class="text-emerald-400">calendário</strong> visual e <strong class="text-emerald-400">drag-drop</strong> para reagendar sem clicar em menu.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Editor multi-rede com contador</h4>
+            <p class="text-sm text-neutral-400">X tem 280 chars, LinkedIn 3000, Instagram 2200. Mostre o limite da rede ativa em tempo real e destaque excesso em vermelho.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Preview fiel por plataforma</h4>
+            <p class="text-sm text-neutral-400">Card que imita o feed: avatar, nome, tempo, conteúdo e imagem renderizados com o CSS da rede. Reduz ansiedade de "como vai sair".</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Calendário semanal/mensal</h4>
+            <p class="text-sm text-neutral-400">Cada slot mostra um chip colorido por rede. Bibliotecas: FullCalendar, react-big-calendar ou um grid custom com CSS Grid.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Drag-and-drop para reagendar</h4>
+            <p class="text-sm text-neutral-400">Arrastar o card no calendário dispara PATCH no Post, que reagenda o job na fila. Optimistic UI: muda na tela antes de confirmar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Sempre ofereça <strong>"texto base + override por rede"</strong>. O usuário escreve uma versão geral, e pode customizar (mais hashtags no Instagram, formato thread no X) sem perder o resto. UX que diferencia ferramenta amadora de profissional.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">SSR/CSR</div>
+          <p class="text-xs text-neutral-400">Next.js renderiza server, hidrata cliente — SEO + UX.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Optimistic UI</div>
+          <p class="text-xs text-neutral-400">Atualiza tela antes do servidor confirmar — sensação fluida.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Componentização</div>
+          <p class="text-xs text-neutral-400">Editor, preview, calendário cada um isolado e reutilizável.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Acessibilidade</div>
+          <p class="text-xs text-neutral-400">Drag-drop deve ter alternativa via teclado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔔 Webhooks de callback</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Algumas redes (Meta principalmente) confirmam publicação de forma <strong class="text-emerald-400">assíncrona</strong>: você manda o post, recebe um ID temporário, e só algum tempo depois um webhook avisa "publicou OK" ou "rejeitou por política de conteúdo". Sem expor um endpoint de webhook, você fica adivinhando status.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O fluxo é: rede social → POST no seu <code class="text-emerald-400 font-mono text-sm">/webhooks/instagram</code> com payload assinado → você valida assinatura HMAC → atualiza <code class="text-emerald-400 font-mono text-sm">PostTarget.status</code> e notifica o frontend via WebSocket/SSE.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Endpoint público para receber callbacks
+app.post('/webhooks/instagram', async (req, res) =&gt; {
+  // 1. Validar assinatura HMAC (NÃO confiar no payload sem isso)
+  const sig = req.headers['x-hub-signature-256'];
+  const expected = 'sha256=' + crypto
+    .createHmac('sha256', process.env.META_APP_SECRET)
+    .update(req.rawBody)
+    .digest('hex');
+  if (sig !== expected) return res.status(401).end();
+
+  // 2. Processar evento
+  for (const entry of req.body.entry) {
+    await handleEvent(entry); // atualiza PostTarget
+  }
+
+  // 3. Responder 200 RÁPIDO — Meta retenta se demorar &gt;5s
+  res.status(200).end();
+});</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Sempre</strong> validar assinatura HMAC antes de processar.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Responder 200 em &lt;2s — enfileirar processamento pesado.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tornar handler idempotente — webhooks chegam duplicados.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logar payload bruto por 7 dias para debug.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em IP de origem como autenticação.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fazer chamada síncrona ao DB lento no handler.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retornar 500 quando o evento é desconhecido — vira retry storm.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de expor o endpoint via HTTPS público.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Webhook</div>
+          <p class="text-xs text-neutral-400">HTTP callback que a rede faz no seu endpoint.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">HMAC</div>
+          <p class="text-xs text-neutral-400">Assinatura com chave secreta — prova autenticidade.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">At-least-once</div>
+          <p class="text-xs text-neutral-400">Webhook pode chegar duplicado — handler aguenta repetição.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Real-time UI</div>
+          <p class="text-xs text-neutral-400">SSE/WebSocket empurra status novo pro browser.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Adapters por rede</strong><span class="text-neutral-400"> — uma classe por plataforma, interface comum, factory para resolver em runtime.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Fila com retry</strong><span class="text-neutral-400"> — BullMQ/Temporal com delay, backoff exponencial e jobs idempotentes.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Object storage</strong><span class="text-neutral-400"> — S3/R2/Cloudinary com signed URL e upload direto do cliente.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Modelagem Prisma</strong><span class="text-neutral-400"> — User, SocialAccount, Post, PostTarget, Media com fan-out por rede.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Frontend de agendamento</strong><span class="text-neutral-400"> — editor multi-rede, preview, calendário e drag-drop com optimistic UI.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Webhooks de callback</strong><span class="text-neutral-400"> — HMAC validado, 200 rápido, handler idempotente para confirmar status.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">1.3 — Trade-offs: self-hosted vs SaaS, build vs buy</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-1-3.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

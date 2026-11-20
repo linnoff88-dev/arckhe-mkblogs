@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.2 - Setup com Docker Compose | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Blue (T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .bg-blue-600 { background-color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500:hover { background-color: #3b82f6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Setup com Docker Compose</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Subir o Postiz do zero em 50 minutos: ambiente, compose.yml, variáveis, primeiro boot, diagnóstico e smoke test.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">50</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📋 Preparando o ambiente</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de qualquer <code class="text-blue-400 font-mono text-sm">docker compose up</code>, confirme que o host tem o que precisa: <strong class="text-blue-400">Docker Engine 24+</strong> e <strong class="text-blue-400">Compose v2</strong>. Compose v1 (<code class="text-blue-400 font-mono text-sm">docker-compose</code> com hífen) está deprecado e não suporta features que o Postiz usa.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Rode os dois comandos abaixo. Se falhar, instale via <a href="https://docs.docker.com/engine/install/" target="_blank" class="text-blue-400 hover:underline">docs oficiais</a> — nunca via <code class="text-blue-400 font-mono text-sm">apt install docker.io</code> em distros antigas, vem desatualizado.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Verificar runtime
+docker --version
+# Docker version 27.3.1, build ce12230
+
+docker compose version
+# Docker Compose version v2.29.7
+
+# Criar diretório de trabalho
+mkdir -p ~/postiz && cd ~/postiz
+mkdir -p data/postgres data/uploads
+touch docker-compose.yml .env .env.example</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Adicione seu usuário ao grupo <code class="text-primary font-mono text-sm">docker</code> (<code class="text-primary font-mono text-sm">sudo usermod -aG docker $USER</code>) e faça logout. Isso evita ter que escrever <code class="text-primary font-mono text-sm">sudo</code> antes de cada comando — e impede o reflexo perigoso de rodar containers como root.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Docker Engine</div>
+          <p class="text-xs text-neutral-400">Runtime de containers que executa as imagens.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Compose v2</div>
+          <p class="text-xs text-neutral-400">Plugin nativo (<code class="font-mono">docker compose</code>, sem hífen).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Isolamento</div>
+          <p class="text-xs text-neutral-400">Cada serviço roda em seu container com FS e rede isolados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400">Rodar <code class="font-mono">up</code> várias vezes converge ao mesmo estado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📄 Escrevendo o docker-compose.yml</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O stack mínimo do Postiz tem <strong class="text-blue-400">três serviços</strong>: a aplicação Postiz (Node + Next), o <strong class="text-blue-400">Postgres</strong> (persistência de posts/contas) e o <strong class="text-blue-400">Redis</strong> (filas BullMQ que disparam o agendamento). Sem o Redis nada agenda; sem o Postgres nada persiste.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <strong class="text-blue-400">volumes nomeados</strong> (não bind mounts para dados de banco) e uma <strong class="text-blue-400">network interna</strong> para que Postgres/Redis nunca fiquem expostos no host.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/docker-compose.yml
+services:
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app:latest
+    container_name: postiz
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - postiz-uploads:/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks: [postiz-net]
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postiz-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postiz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postiz
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postiz"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [postiz-net]
+
+  redis:
+    image: redis:7-alpine
+    container_name: postiz-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+    networks: [postiz-net]
+
+volumes:
+  postgres-data:
+  postiz-uploads:
+
+networks:
+  postiz-net:
+    driver: bridge</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Note o <code class="text-primary font-mono text-sm">depends_on: condition: service_healthy</code>. Sem isso, o Postiz tenta rodar migrations antes do Postgres aceitar conexão e morre no primeiro boot — o erro mais comum em setup novo.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">services</div>
+          <p class="text-xs text-neutral-400">Cada bloco vira um container independente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">volumes</div>
+          <p class="text-xs text-neutral-400">Persistem dados além do ciclo de vida do container.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">networks</div>
+          <p class="text-xs text-neutral-400">Bridge interna isola Postgres/Redis do host.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">depends_on</div>
+          <p class="text-xs text-neutral-400">Garante ordem de boot via healthcheck.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔐 Variáveis de ambiente (.env)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz lê configuração via <strong class="text-blue-400">variáveis de ambiente</strong> — não tem arquivo de config. As essenciais para subir o stack são URLs (backend/frontend), conexões (Postgres/Redis), o <strong class="text-blue-400">JWT_SECRET</strong> e, opcionalmente, <strong class="text-blue-400">storage</strong> + <strong class="text-blue-400">Resend</strong> para e-mails.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env (NUNCA commitar)
+# URLs públicas — ajuste se for usar domínio
+MAIN_URL=http://localhost:5000
+FRONTEND_URL=http://localhost:5000
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5000/api
+BACKEND_INTERNAL_URL=http://localhost:3000
+
+# Segredo de assinatura JWT — GERE UM NOVO
+JWT_SECRET=cole_aqui_o_resultado_de_openssl_rand_hex_64
+
+# Banco e fila (host = nome do serviço no compose)
+POSTGRES_PASSWORD=troque_essa_senha_forte
+DATABASE_URL=postgresql://postiz:troque_essa_senha_forte@postgres:5432/postiz
+REDIS_URL=redis://redis:6379
+
+# Storage (local p/ começar; S3/R2 em prod)
+STORAGE_PROVIDER=local
+
+# E-mail transacional (opcional no dev)
+RESEND_API_KEY=re_xxx_opcional_no_dev</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Gere o <code class="text-blue-400 font-mono text-sm">JWT_SECRET</code> com entropia real. Nunca invente uma string "parece aleatória" — o segredo assina os tokens de sessão de TODAS as contas conectadas.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># 64 bytes hex = 512 bits de entropia
+openssl rand -hex 64</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Manter <code class="font-mono">.env.example</code> no repo com chaves vazias.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Adicionar <code class="font-mono">.env</code> ao <code class="font-mono">.gitignore</code> imediatamente.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar nomes de serviço (<code class="font-mono">postgres</code>, <code class="font-mono">redis</code>) como host nas URLs.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rotacionar <code class="font-mono">JWT_SECRET</code> se houver suspeita de vazamento.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar <code class="font-mono">.env</code> no git — mesmo "só por um minuto".</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reaproveitar <code class="font-mono">JWT_SECRET</code> entre projetos.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apontar <code class="font-mono">DATABASE_URL</code> para <code class="font-mono">localhost</code> dentro do container.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardcodar segredos no <code class="font-mono">docker-compose.yml</code>.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Secrets</div>
+          <p class="text-xs text-neutral-400">Valores sensíveis nunca no código-fonte.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">12-factor</div>
+          <p class="text-xs text-neutral-400">Config via ambiente, código mesmo entre dev/prod.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">env_file</div>
+          <p class="text-xs text-neutral-400">Compose injeta as vars no container automaticamente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Entropia</div>
+          <p class="text-xs text-neutral-400">Aleatoriedade real, gerada por CSPRNG do SO.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">▶️ Primeiro <code class="font-mono">docker compose up</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Com o <code class="text-blue-400 font-mono text-sm">.env</code> preenchido e o <code class="text-blue-400 font-mono text-sm">docker-compose.yml</code> salvo, o boot inicial é uma sequência de seis passos. Não pule a verificação de logs — é onde aparecem os erros silenciosos de configuração.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Baixar imagens</h4>
+            <p class="text-sm text-neutral-400 mb-3">Pré-baixar evita race entre pull e start no <code class="font-mono">up</code>.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">docker compose pull</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Subir em background</h4>
+            <p class="text-sm text-neutral-400 mb-3">A flag <code class="font-mono">-d</code> destaca os containers do terminal.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">docker compose up -d</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Acompanhar boot</h4>
+            <p class="text-sm text-neutral-400 mb-3">No primeiro boot, ver os logs do Postiz é obrigatório — migrations rodam aqui.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">docker compose logs -f postiz</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Confirmar containers</h4>
+            <p class="text-sm text-neutral-400 mb-3">Os três serviços devem aparecer com status <code class="font-mono">Up</code> e healthcheck <code class="font-mono">healthy</code>.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">docker compose ps</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Aguardar healthcheck</h4>
+            <p class="text-sm text-neutral-400 mb-3">Postgres leva 5-15s. Redis quase instantâneo. Postiz só sobe depois.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">docker compose ps --format "{{.Name}}\t{{.Status}}"</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Abrir no browser</h4>
+            <p class="text-sm text-neutral-400 mb-3">Se a tela de signup aparecer, o stack está saudável.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">xdg-open http://localhost:5000</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏱️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">-d</code> para detach, mas <strong>sempre</strong> acompanhe <code class="text-primary font-mono text-sm">logs -f postiz</code> no primeiro boot. As migrations do Prisma rolam aqui e qualquer erro de <code class="text-primary font-mono text-sm">DATABASE_URL</code> aparece nos primeiros 10 segundos.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Detached mode</div>
+          <p class="text-xs text-neutral-400">Containers seguem rodando após fechar o terminal.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Logs</div>
+          <p class="text-xs text-neutral-400">Stream do stdout/stderr dos containers.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Healthcheck</div>
+          <p class="text-xs text-neutral-400">Sonda que confirma o serviço pronto para tráfego.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Port mapping</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">5000:5000</code> expõe a porta do container no host.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔍 Diagnóstico quando algo dá errado</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quase todo problema de setup do Postiz cai em quatro famílias. Antes de googlar o stack trace, leia os logs — eles dizem qual família é.
+      </p>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Problemas comuns no primeiro boot
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">Porta 5000 ocupada:</strong> outro serviço já segura a porta. Confirme com <code class="font-mono">lsof -i :5000</code> e mude o mapeamento para <code class="font-mono">8080:5000</code>.</li>
+          <li><strong class="text-blue-400">Postgres não sobe:</strong> volume corrompido de boot anterior ou senha trocada. <code class="font-mono">docker compose logs postgres</code> mostra o motivo exato.</li>
+          <li><strong class="text-blue-400">Redis connection refused:</strong> a aplicação está num network diferente ou <code class="font-mono">REDIS_URL</code> aponta para <code class="font-mono">localhost</code> em vez de <code class="font-mono">redis</code>.</li>
+          <li><strong class="text-blue-400">Permission denied em volume:</strong> bind mount com dono errado. Use volume nomeado ou faça <code class="font-mono">chown</code> com o UID do container.</li>
+        </ul>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Logs de um serviço específico (últimas 100 linhas)
+docker compose logs --tail=100 postiz
+
+# Status detalhado de todos os containers
+docker compose ps -a
+
+# Entrar no Postgres para inspecionar
+docker exec -it postiz-postgres psql -U postiz -d postiz -c "\dt"
+
+# Testar conexão Redis de dentro do container Postiz
+docker exec -it postiz sh -c "nc -zv redis 6379"
+
+# Reset completo (APAGA volumes — só em dev!)
+docker compose down -v</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ler os logs SEMPRE antes de googlar o erro.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">down -v</code> para reset completo em dev.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Conferir <code class="font-mono">docker compose config</code> para ver o YAML resolvido.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Isolar o problema: subir Postgres sozinho, depois Redis, depois Postiz.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apagar volumes em produção sem backup recente.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar containers como root (<code class="font-mono">user: root</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Restart até funcionar" sem ler nenhuma linha de log.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Editar <code class="font-mono">.env</code> e esquecer de <code class="font-mono">up -d</code> de novo.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">logs</div>
+          <p class="text-xs text-neutral-400">Stdout/stderr do processo principal do container.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">exec</div>
+          <p class="text-xs text-neutral-400">Roda um comando dentro de um container ativo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Exit codes</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">0</code> ok; <code class="font-mono">1+</code> erro; <code class="font-mono">137</code> = OOM kill.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Troubleshooting</div>
+          <p class="text-xs text-neutral-400">Isolar variáveis, reproduzir, ler logs, hipótese.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">✅ Verificando que subiu</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        "Container <code class="text-blue-400 font-mono text-sm">Up</code>" não é o mesmo que "aplicação funciona". Faça um <strong class="text-blue-400">smoke test</strong> de seis pontos antes de declarar vitória.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Browser em <code class="font-mono">http://localhost:5000</code></h4>
+            <p class="text-sm text-neutral-300">A página deve carregar — não um erro de conexão recusada, não um 502, não branco.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Tela de signup aparece</h4>
+            <p class="text-sm text-neutral-300">Sem ela, o frontend não conseguiu falar com o backend — confirme <code class="font-mono">NEXT_PUBLIC_BACKEND_URL</code>.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Criar conta admin</h4>
+            <p class="text-sm text-neutral-300">O primeiro usuário cadastrado vira admin. Se o POST falhar, o problema é Postgres (escrita).</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Login funciona</h4>
+            <p class="text-sm text-neutral-300">Token JWT é gerado e persistido em cookie. Sessão deve sobreviver a F5.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">UI carrega completa</h4>
+            <p class="text-sm text-neutral-300">Dashboard sem ícones quebrados e sem chamadas 500 no DevTools / Network.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Endpoint de health</h4>
+            <p class="text-sm text-neutral-300">Resposta <code class="font-mono">200 OK</code> indica que app + DB + Redis estão saudáveis.</p>
+          </div>
+        </div>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Smoke test rápido via CLI
+curl -i http://localhost:5000/api/health
+# HTTP/1.1 200 OK
+# {"status":"ok","db":"up","redis":"up"}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💾</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Configure backup do volume <code class="text-primary font-mono text-sm">postgres-data</code> <strong>ANTES</strong> de adicionar contas reais de redes sociais. Os tokens OAuth ficam ali e regenerá-los é trabalhoso. <code class="text-primary font-mono text-sm">docker run --rm -v postiz_postgres-data:/data -v $(pwd):/backup alpine tar czf /backup/pg-$(date +%F).tar.gz /data</code>.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Smoke test</div>
+          <p class="text-xs text-neutral-400">Verificação rápida de que o sistema sobe e responde.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Health check</div>
+          <p class="text-xs text-neutral-400">Endpoint que reporta saúde de dependências.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Primeiro acesso</div>
+          <p class="text-xs text-neutral-400">Conta admin inicial — proteja com senha forte.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Próximos passos</div>
+          <p class="text-xs text-neutral-400">Domínio, HTTPS, backup, primeira integração.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Ambiente preparado</strong><span class="text-neutral-400"> — Docker 24+ e Compose v2 confirmados, diretório <code class="font-mono">~/postiz</code> criado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">docker-compose.yml escrito</strong><span class="text-neutral-400"> — três serviços (Postiz, Postgres, Redis), volumes nomeados e network isolada.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">.env configurado</strong><span class="text-neutral-400"> — URLs, JWT_SECRET gerado com <code class="font-mono">openssl rand</code>, secrets fora do git.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Primeiro boot executado</strong><span class="text-neutral-400"> — <code class="font-mono">pull</code>, <code class="font-mono">up -d</code>, logs acompanhados e containers healthy.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Diagnóstico dominado</strong><span class="text-neutral-400"> — sabe identificar porta ocupada, falha de DB, network e permissões.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Smoke test validado</strong><span class="text-neutral-400"> — signup, login, dashboard e <code class="font-mono">/api/health</code> respondendo 200.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">2.3 — Configuração inicial e primeira conta conectada</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-2-3.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

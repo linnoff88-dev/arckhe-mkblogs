@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 4.2 - Ghost Admin API | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Amber (T4) */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .bg-amber-900\/30 { background-color: rgba(217, 119, 6, 0.10); }
+    html:not(.dark) .bg-amber-900\/40 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .bg-amber-600 { background-color: #d97706; }
+    html:not(.dark) .hover\:bg-amber-500:hover { background-color: #f59e0b; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Módulo 4.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">👻 Ghost Admin API</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Conectar no Ghost via Admin API: Custom Integration, chaves <code class="font-mono">id:secret</code>, JWT HS256, publicação de posts em HTML/Markdown e configuração de feature image + SEO.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">⚙️ Criar Custom Integration</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-amber-400">Admin API</strong> do Ghost só responde a quem se identifica como uma <strong class="text-amber-400">Custom Integration</strong>. Não dá pra usar a senha de admin nem o token do dashboard — toda automação precisa de uma integração própria, com escopo isolado e revogável em um clique.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        No painel do Ghost vá em <code class="text-amber-400 font-mono text-sm">Settings → Integrations → Add custom integration</code>. Dê um nome descritivo (ex.: <code class="text-amber-400 font-mono text-sm">MkBlogs Publisher</code>) — esse nome aparece no histórico de cada post publicado pela API.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Abrir Settings → Integrations</h4>
+            <p class="text-sm text-neutral-300">No menu lateral do admin do Ghost, role até <code class="font-mono">Integrations</code>. A seção "Custom integrations" fica abaixo das integrações nativas (Zapier, Slack, etc.).</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Clicar em "Add custom integration"</h4>
+            <p class="text-sm text-neutral-300">Apenas <strong>Owners</strong> e <strong>Admins</strong> conseguem criar integrações. Editors/Authors não enxergam o botão.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Nomear e salvar</h4>
+            <p class="text-sm text-neutral-300">Use nomes que identifiquem origem e propósito: <code class="font-mono">MkBlogs Publisher</code>, <code class="font-mono">CI Auto-publish</code>, <code class="font-mono">n8n Pipeline</code>. Facilita auditoria depois.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Crie <strong>uma integração por automação</strong>. Se um script vazar a chave, você revoga só aquela integração sem derrubar o resto. Uma chave única compartilhada vira ponto único de falha.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Custom Integration</div>
+          <p class="text-xs text-neutral-400">Identidade de aplicação para chamar a Admin API.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Escopo</div>
+          <p class="text-xs text-neutral-400">Cada integração tem chaves próprias e revogáveis.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Auditoria</div>
+          <p class="text-xs text-neutral-400">Nome aparece no histórico de cada ação automatizada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Permissões</div>
+          <p class="text-xs text-neutral-400">Só Owner/Admin cria; Editor/Author não enxerga.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔑 Admin API Key (id:secret)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Cada integração gera <strong class="text-amber-400">duas chaves</strong>: a <strong class="text-amber-400">Content API Key</strong> (read-only, para apps públicos) e a <strong class="text-amber-400">Admin API Key</strong> (read/write, para publicar). Para escrever posts você precisa da segunda.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A Admin Key vem no formato <code class="text-amber-400 font-mono text-sm">id:secret</code> — duas strings hex separadas por dois-pontos. O <code class="text-amber-400 font-mono text-sm">id</code> identifica a integração (24 chars), o <code class="text-amber-400 font-mono text-sm">secret</code> é o segredo HMAC de 64 chars hex usado para assinar JWTs.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Formato da Admin API Key
+# &lt;id 24 hex&gt;:&lt;secret 64 hex&gt;
+6582f1c4a3e9b7d8f201e3a4:0f2b9c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+
+# Estrutura
+# ├─ id     → cola na claim "kid" do JWT
+# └─ secret → assina o JWT com HS256 (precisa ser convertido de hex p/ bytes)</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar a chave em variável de ambiente (<code class="font-mono">GHOST_ADMIN_KEY</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Regenerar imediatamente se cair em log/git/Slack.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar uma integração diferente por ambiente (dev/staging/prod).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rotacionar via botão <strong>Regenerate</strong> no painel a cada 90 dias.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar a chave no repositório — nem em <code class="font-mono">.env.example</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar uma chave entre múltiplas aplicações.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confundir <strong>Content Key</strong> (32 hex) com <strong>Admin Key</strong> (<code class="font-mono">id:secret</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Embutir a chave no frontend (browser/mobile) — é segredo de servidor.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-3 flex items-center">
+          <span class="mr-2">🔄</span> Regenerar chave comprometida
+        </h3>
+        <p class="text-neutral-300 text-sm">No painel da integração existe um botão <strong>Regenerate</strong> ao lado da Admin API Key. Clicar invalida a chave antiga <em>na hora</em> — qualquer pipeline rodando com ela passa a retornar <code class="font-mono">401 Unauthorized</code>. Tenha o pipeline pronto para receber a nova antes de clicar.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">id</div>
+          <p class="text-xs text-neutral-400">24 hex chars. Vai na claim <code class="font-mono">kid</code> do JWT.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">secret</div>
+          <p class="text-xs text-neutral-400">64 hex chars. Chave HMAC para assinar o JWT.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Content vs Admin</div>
+          <p class="text-xs text-neutral-400">Content = leitura pública; Admin = leitura+escrita.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Rotação</div>
+          <p class="text-xs text-neutral-400">Trocar a chave periodicamente reduz janela de exposição.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📦 Lib <code class="font-mono">@tryghost/admin-api</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Dá pra falar com a Admin API "na mão" (montar JWT + <code class="text-amber-400 font-mono text-sm">fetch</code>), mas o jeito recomendado pela própria Ghost é a lib oficial <strong class="text-amber-400">@tryghost/admin-api</strong>. Ela cuida da geração do JWT, do versionamento de endpoint e do parsing das respostas.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Instale via npm/pnpm e importe em Node ≥ 18. A lib é puramente server-side — não funciona no browser porque expõe o <code class="text-amber-400 font-mono text-sm">secret</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalação
+npm install @tryghost/admin-api
+# ou
+pnpm add @tryghost/admin-api
+
+# Versão mínima recomendada: ^1.13.0 (suporta Ghost 5.x)</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// init.js — inicializar o client
+import GhostAdminAPI from '@tryghost/admin-api';
+
+const api = new GhostAdminAPI({
+  url: process.env.GHOST_URL,           // ex: https://meublog.com
+  key: process.env.GHOST_ADMIN_KEY,     // formato id:secret
+  version: 'v5.0'                       // versão da API
+});
+
+// Teste rápido — listar últimos 3 posts
+const posts = await api.posts.browse({ limit: 3 });
+console.log(posts.map(p =&gt; p.title));</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">A lib aceita o campo <code class="text-primary font-mono text-sm">version</code> com valores tipo <code class="text-primary font-mono text-sm">'v5.0'</code> ou <code class="text-primary font-mono text-sm">'canary'</code>. Trave a versão (não use <code class="text-primary font-mono text-sm">canary</code>) em produção — endpoints canary podem mudar formato sem aviso.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">SDK oficial</div>
+          <p class="text-xs text-neutral-400">Mantido pela Ghost Foundation; segue a API.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Server-only</div>
+          <p class="text-xs text-neutral-400">Nunca no browser — o secret expõe sua conta.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Recursos</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">posts</code>, <code class="font-mono">pages</code>, <code class="font-mono">tags</code>, <code class="font-mono">members</code>, <code class="font-mono">images</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Versionamento</div>
+          <p class="text-xs text-neutral-400">Trave em <code class="font-mono">v5.0</code>; evite <code class="font-mono">canary</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎫 JWT auth (HS256)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Por baixo dos panos, cada chamada à Admin API vai com um header <code class="text-amber-400 font-mono text-sm">Authorization: Ghost &lt;token&gt;</code>. O token é um <strong class="text-amber-400">JWT</strong> assinado com <strong class="text-amber-400">HS256</strong>, usando o <code class="text-amber-400 font-mono text-sm">secret</code> da Admin Key como chave HMAC.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O JWT tem expiração <strong class="text-amber-400">curtíssima — 5 minutos</strong>. A ideia é que cada request gere um token novo. Tokens "eternos" são anti-padrão aqui; se vazarem, comprometem por muito tempo.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Gerar token JWT manualmente (a lib oficial já faz isso por você)
+import jwt from 'jsonwebtoken';
+
+function ghostToken(adminKey) {
+  const [id, secret] = adminKey.split(':');
+
+  // O secret vem em hex — precisa virar Buffer
+  const secretBuffer = Buffer.from(secret, 'hex');
+
+  return jwt.sign({}, secretBuffer, {
+    keyid: id,             // claim "kid" — identifica a integração
+    algorithm: 'HS256',
+    expiresIn: '5m',       // expiração curta (recomendado)
+    audience: '/admin/'    // audiência fixa exigida pelo Ghost
+  });
+}
+
+// Uso
+const token = ghostToken(process.env.GHOST_ADMIN_KEY);
+const res = await fetch('https://meublog.com/ghost/api/admin/posts/', {
+  headers: { Authorization: `Ghost ${token}` }
+});</code></pre>
+
+      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Claims obrigatórias do JWT
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-amber-400">kid:</strong> o <code class="font-mono">id</code> da Admin Key. Liga o token à integração certa no banco do Ghost.</li>
+          <li><strong class="text-amber-400">iat / exp:</strong> emissão e expiração. <code class="font-mono">exp - iat ≤ 5min</code> — JWTs longos são recusados.</li>
+          <li><strong class="text-amber-400">aud:</strong> sempre <code class="font-mono">/admin/</code>. Outras audiências dão 401.</li>
+          <li><strong class="text-amber-400">alg:</strong> sempre <code class="font-mono">HS256</code>. <code class="font-mono">none</code> e RS* são rejeitados.</li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏱️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Erro mais comum: esquecer de converter o <code class="text-primary font-mono text-sm">secret</code> de hex para <code class="text-primary font-mono text-sm">Buffer</code> antes de passar pro <code class="text-primary font-mono text-sm">jwt.sign</code>. Sem <code class="text-primary font-mono text-sm">Buffer.from(secret, 'hex')</code>, a assinatura sai usando os caracteres ASCII e o Ghost devolve <code class="text-primary font-mono text-sm">401</code> em todas as chamadas.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">HS256</div>
+          <p class="text-xs text-neutral-400">HMAC-SHA256: assina com segredo compartilhado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">expiresIn 5m</div>
+          <p class="text-xs text-neutral-400">Token de vida curta; gere um por request.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">kid</div>
+          <p class="text-xs text-neutral-400">Claim que liga o token à Admin Integration.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Bearer Ghost</div>
+          <p class="text-xs text-neutral-400">Prefixo do header é <code class="font-mono">Ghost</code>, não <code class="font-mono">Bearer</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📝 Publicar post em Markdown/HTML</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O endpoint <code class="text-amber-400 font-mono text-sm">posts.add</code> aceita conteúdo em <strong class="text-amber-400">HTML</strong> (padrão) ou em <strong class="text-amber-400">Mobiledoc/Lexical</strong> (formato interno do Ghost). Para automação a partir de Markdown, o caminho mais simples é converter MD → HTML no seu lado e mandar como HTML, sinalizando <code class="text-amber-400 font-mono text-sm">source: 'html'</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O campo <code class="text-amber-400 font-mono text-sm">status</code> controla o destino: <code class="text-amber-400 font-mono text-sm">draft</code> (rascunho, default), <code class="text-amber-400 font-mono text-sm">published</code> (publica na hora) ou <code class="text-amber-400 font-mono text-sm">scheduled</code> (combinado com <code class="text-amber-400 font-mono text-sm">published_at</code> futuro).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// publish.js — publicar post a partir de HTML
+import GhostAdminAPI from '@tryghost/admin-api';
+
+const api = new GhostAdminAPI({
+  url: process.env.GHOST_URL,
+  key: process.env.GHOST_ADMIN_KEY,
+  version: 'v5.0'
+});
+
+const html = `
+  &lt;h2&gt;Primeira automação no Ghost&lt;/h2&gt;
+  &lt;p&gt;Esse post foi criado via Admin API.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;JWT gerado pela lib&lt;/li&gt;
+    &lt;li&gt;Markdown convertido para HTML&lt;/li&gt;
+    &lt;li&gt;Status: published&lt;/li&gt;
+  &lt;/ul&gt;
+`;
+
+const post = await api.posts.add(
+  {
+    title: 'Olá Ghost via API',
+    html,
+    status: 'published',
+    tags: ['automação', 'api'],
+    excerpt: 'Primeiro post automatizado no blog.'
+  },
+  { source: 'html' }  // 👈 diz ao Ghost para parsear o campo `html`
+);
+
+console.log('Publicado:', post.url);</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Markdown → HTML antes de mandar (usando `marked`)
+import { marked } from 'marked';
+
+const md = `
+## Título
+
+Texto com **negrito** e [link](https://exemplo.com).
+
+- item 1
+- item 2
+`;
+
+const html = marked.parse(md);
+await api.posts.add({ title: 'Post MD', html, status: 'draft' }, { source: 'html' });</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Comece sempre com <code class="text-primary font-mono text-sm">status: 'draft'</code> nos primeiros testes. O post aparece no admin como rascunho e você confere se a formatação ficou certa antes de publicar pra audiência. Trocar para <code class="text-primary font-mono text-sm">'published'</code> é um simples <code class="text-primary font-mono text-sm">posts.edit</code>.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">source: 'html'</div>
+          <p class="text-xs text-neutral-400">Sinaliza que o corpo veio em HTML, não Mobiledoc.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">status</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">draft</code>, <code class="font-mono">published</code>, <code class="font-mono">scheduled</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">tags</div>
+          <p class="text-xs text-neutral-400">Array de strings; criadas automaticamente se não existirem.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">excerpt</div>
+          <p class="text-xs text-neutral-400">Resumo curto exibido em listagens e feeds.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🖼️ Feature image e SEO meta</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Um post "completo" no Ghost não é só título + corpo. Ele tem <strong class="text-amber-400">feature image</strong> (capa exibida no topo e em cards sociais), <strong class="text-amber-400">meta_title / meta_description</strong> (SEO e Open Graph) e <strong class="text-amber-400">og_image / twitter_image</strong> (override por canal).
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A feature image precisa ser uma <strong class="text-amber-400">URL pública</strong> — ou você faz upload via <code class="text-amber-400 font-mono text-sm">api.images.upload()</code> e usa a URL retornada, ou aponta para um CDN externo (Unsplash, S3, R2).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Post completo com capa + SEO
+const post = await api.posts.add(
+  {
+    title: 'Como configurar seu blog em 2026',
+    html: '&lt;p&gt;Conteúdo do post...&lt;/p&gt;',
+    status: 'published',
+
+    // Capa
+    feature_image: 'https://cdn.meublog.com/capas/setup-blog-2026.jpg',
+    feature_image_alt: 'Tela de configuração do Ghost',
+    feature_image_caption: 'Painel de Settings do Ghost 5.x',
+
+    // SEO base (usado em &lt;title&gt; e meta description)
+    meta_title: 'Configurar Blog em 2026 — Guia Prático',
+    meta_description: 'Passo a passo de setup de blog com Ghost, Admin API e CI.',
+
+    // Open Graph (Facebook/LinkedIn) — opcional, herda dos meta_*
+    og_title: 'Guia: configurar seu blog em 2026',
+    og_description: 'Setup completo de blog moderno em menos de uma hora.',
+    og_image: 'https://cdn.meublog.com/og/setup-blog-2026.jpg',
+
+    // Twitter Card — opcional, herda dos og_*
+    twitter_title: 'Configurar Blog em 2026',
+    twitter_description: 'Setup prático de blog em 2026.',
+    twitter_image: 'https://cdn.meublog.com/twitter/setup-blog-2026.jpg'
+  },
+  { source: 'html' }
+);</code></pre>
+
+      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">📐</span> Tamanhos recomendados
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-amber-400">feature_image:</strong> 1920×1080 (16:9), JPEG/WebP, &lt; 500 KB.</li>
+          <li><strong class="text-amber-400">og_image:</strong> 1200×630 px — formato canônico do Facebook/LinkedIn.</li>
+          <li><strong class="text-amber-400">twitter_image:</strong> 1200×675 (16:9) para Twitter Card Large.</li>
+          <li><strong class="text-amber-400">meta_title:</strong> ≤ 60 chars para não truncar no Google.</li>
+          <li><strong class="text-amber-400">meta_description:</strong> 140–160 chars; única por post.</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sempre preencher <code class="font-mono">feature_image_alt</code> (acessibilidade + SEO).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Servir capas por CDN (cache-friendly, baixa latência).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar URL das imagens com <code class="font-mono">HEAD</code> antes de enviar.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Deixar <code class="font-mono">og_*</code> herdar de <code class="font-mono">meta_*</code> quando o copy é o mesmo.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apontar para imagens em <code class="font-mono">localhost</code> ou rede privada.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reutilizar a mesma capa em todos os posts da série.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Subir PNGs gigantes (&gt; 2 MB) — derruba o LCP.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer <code class="font-mono">meta_description</code> — o Google inventa um trecho ruim.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">feature_image</div>
+          <p class="text-xs text-neutral-400">Capa do post; URL pública obrigatória.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">meta_*</div>
+          <p class="text-xs text-neutral-400">Base de SEO; alimenta <code class="font-mono">&lt;title&gt;</code> e <code class="font-mono">description</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">og_*</div>
+          <p class="text-xs text-neutral-400">Override para Open Graph (Facebook/LinkedIn).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">twitter_*</div>
+          <p class="text-xs text-neutral-400">Override para Twitter Card.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Custom Integration criada</strong><span class="text-neutral-400"> — uma integração nomeada por automação em Settings → Integrations.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Admin API Key entendida</strong><span class="text-neutral-400"> — formato <code class="font-mono">id:secret</code>, guardada em env var, com plano de rotação.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Lib oficial instalada</strong><span class="text-neutral-400"> — <code class="font-mono">@tryghost/admin-api</code> inicializada com URL, key e versão travada em <code class="font-mono">v5.0</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">JWT HS256 dominado</strong><span class="text-neutral-400"> — token curto (5min) com claims <code class="font-mono">kid</code>, <code class="font-mono">aud=/admin/</code> e secret convertido de hex.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Post publicado via API</strong><span class="text-neutral-400"> — HTML (ou Markdown convertido) enviado com <code class="font-mono">source: 'html'</code> e <code class="font-mono">status</code> correto.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">SEO e capa configurados</strong><span class="text-neutral-400"> — <code class="font-mono">feature_image</code>, <code class="font-mono">meta_*</code>, <code class="font-mono">og_*</code> e <code class="font-mono">twitter_*</code> preenchidos.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">4.3 — WordPress REST API e Application Passwords</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-4-3.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

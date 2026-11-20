@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.5 - API e Webhooks | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Blue (T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .bg-blue-600 { background-color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500:hover { background-color: #3b82f6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 API e webhooks</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Transformar o Postiz em um motor de publicação programável: REST API, API keys, POST de posts via <code class="font-mono">curl</code>, webhooks de status e integração com n8n/Make.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔓 Habilitar a API REST do Postiz</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Por padrão, a <strong class="text-blue-400">API pública</strong> do Postiz vem <strong class="text-blue-400">desligada</strong>. Para evitar que alguém abuse do seu endpoint, é preciso ativar via flag no <code class="text-blue-400 font-mono text-sm">.env</code> e reiniciar o stack. Depois disso, todos os endpoints ficam disponíveis em <code class="text-blue-400 font-mono text-sm">/api</code> na mesma porta do app.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O endpoint base segue o padrão <strong class="text-blue-400">{MAIN_URL}/api</strong>. Em dev local, vira <code class="text-blue-400 font-mono text-sm">http://localhost:5000/api</code>. Em produção atrás de domínio, <code class="text-blue-400 font-mono text-sm">https://postiz.seudominio.com/api</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env — adicione (ou descomente)
+API_LIMIT=30
+NX_ADD_PLUGINS=false
+
+# Habilitar API pública
+IS_GENERAL=true
+DISABLE_REGISTRATION=false
+
+# (Opcional) restringir CORS a um domínio específico
+FRONTEND_URL=http://localhost:5000</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Aplicar e reiniciar
+docker compose up -d --force-recreate postiz
+
+# Smoke test do endpoint base
+curl -i http://localhost:5000/api/health
+# HTTP/1.1 200 OK
+# {"status":"ok"}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se sua instância do Postiz está em domínio público, considere colocar a rota <code class="text-primary font-mono text-sm">/api</code> atrás de <strong>rate limiting no proxy</strong> (Caddy, Traefik, Nginx). A flag <code class="text-primary font-mono text-sm">API_LIMIT</code> ajuda, mas defesa em camadas é mais segura.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">REST</div>
+          <p class="text-xs text-neutral-400">Recursos expostos via HTTP, verbos padrão (GET/POST/PUT/DELETE).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Feature flag</div>
+          <p class="text-xs text-neutral-400">Var de ambiente que liga/desliga funcionalidades sem rebuild.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Base URL</div>
+          <p class="text-xs text-neutral-400">Prefixo comum a todos os endpoints (<code class="font-mono">/api</code>).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Rate limit</div>
+          <p class="text-xs text-neutral-400">Teto de requisições por janela de tempo por chave/IP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔑 Gerar uma API key</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A API do Postiz autentica via <strong class="text-blue-400">Bearer token</strong> no header <code class="text-blue-400 font-mono text-sm">Authorization</code>. Cada chave fica vinculada a um usuário e herda os <strong class="text-blue-400">scopes</strong> dele — ou seja, só consegue publicar nas contas de redes sociais que aquele usuário conectou.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na UI: <code class="text-blue-400 font-mono text-sm">Settings → API Keys → Create new key</code>. Copie o valor <strong class="text-blue-400">na hora</strong> — depois que a modal fecha, o token nunca mais aparece (só o hash fica no banco).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo de chave gerada (formato real)
+pk_live_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+
+# Guarde em variável de ambiente, nunca no código
+export POSTIZ_API_KEY="pk_live_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+export POSTIZ_API_URL="http://localhost:5000/api"
+
+# Testar a chave (lista contas conectadas)
+curl -s -H "Authorization: Bearer $POSTIZ_API_KEY" \
+  $POSTIZ_API_URL/integrations \
+  | jq '.[].name'</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar uma chave <strong>por integração</strong> (n8n, app próprio, script de bot).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Nomear cada chave com contexto: <code class="font-mono">n8n-prod</code>, <code class="font-mono">app-mobile</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar em <strong>secret manager</strong> (1Password, Vault, env do orquestrador).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Regenerar imediatamente se houver suspeita de vazamento.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar uma chave única entre múltiplos sistemas.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar a chave no git — mesmo em repo privado.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mandar a chave pra frontend público (vaza no DevTools).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Deixar chave de teste ativa após o desenvolvimento.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Bearer token</div>
+          <p class="text-xs text-neutral-400">Token portador enviado no header <code class="font-mono">Authorization</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Scope</div>
+          <p class="text-xs text-neutral-400">Conjunto de permissões herdadas do usuário dono da chave.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Hash one-way</div>
+          <p class="text-xs text-neutral-400">O banco guarda só o hash; o segredo não pode ser recuperado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Rotação</div>
+          <p class="text-xs text-neutral-400">Trocar a chave periodicamente reduz impacto de vazamento.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📤 POST /posts via <code class="font-mono">curl</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O endpoint <code class="text-blue-400 font-mono text-sm">POST /api/posts</code> é o coração da API. Você manda um JSON descrevendo <strong class="text-blue-400">o conteúdo</strong>, em <strong class="text-blue-400">quais integrações</strong> publicar e <strong class="text-blue-400">quando</strong>. O Postiz responde com o <code class="text-blue-400 font-mono text-sm">postId</code> e enfileira o trabalho no BullMQ.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Os três campos obrigatórios são <code class="text-blue-400 font-mono text-sm">type</code> (<code class="text-blue-400 font-mono text-sm">draft</code>, <code class="text-blue-400 font-mono text-sm">schedule</code> ou <code class="text-blue-400 font-mono text-sm">now</code>), <code class="text-blue-400 font-mono text-sm">date</code> (ISO 8601 em UTC) e <code class="text-blue-400 font-mono text-sm">posts</code> — array com um item por integração.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Body JSON: agendar um post no LinkedIn e no X
+cat &gt; payload.json &lt;&lt;'EOF'
+{
+  "type": "schedule",
+  "date": "2026-06-01T14:30:00.000Z",
+  "shortLink": false,
+  "tags": ["lançamento", "produto"],
+  "posts": [
+    {
+      "integration": { "id": "ckxlinkedin123" },
+      "value": [
+        {
+          "content": "Lançamos uma feature nova: agendamento em massa via API. Quem usa Postiz, vai amar.",
+          "image": []
+        }
+      ],
+      "group": null,
+      "settings": {}
+    },
+    {
+      "integration": { "id": "ckxtwitter456" },
+      "value": [
+        { "content": "Postiz agora aceita agendamento via API REST. 🚀", "image": [] },
+        { "content": "Detalhes no thread abaixo 👇", "image": [] }
+      ],
+      "group": null,
+      "settings": {}
+    }
+  ]
+}
+EOF</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Disparar o POST
+curl -X POST "$POSTIZ_API_URL/posts" \
+  -H "Authorization: Bearer $POSTIZ_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d @payload.json
+
+# Resposta esperada (201 Created)
+# {
+#   "postId": "ckxpost789abc",
+#   "scheduledFor": "2026-06-01T14:30:00.000Z",
+#   "status": "QUEUED",
+#   "integrations": ["ckxlinkedin123", "ckxtwitter456"]
+# }</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Para descobrir os <code class="text-primary font-mono text-sm">integration.id</code> certos, chame <code class="text-primary font-mono text-sm">GET /api/integrations</code> uma vez e cache os IDs no seu lado. Não dá pra usar o nome da rede — o Postiz precisa do ID da conta específica conectada.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Idempotency</div>
+          <p class="text-xs text-neutral-400">Re-enviar o mesmo POST não deve duplicar — use <code class="font-mono">tags</code> únicas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">ISO 8601</div>
+          <p class="text-xs text-neutral-400">Formato padrão de data em UTC: <code class="font-mono">YYYY-MM-DDTHH:mm:ssZ</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Job queue</div>
+          <p class="text-xs text-neutral-400">O 201 só significa "enfileirado", não "publicado".</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Multi-rede</div>
+          <p class="text-xs text-neutral-400">Um POST pode fanout para várias integrações simultaneamente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔔 Webhooks de status</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Como o POST inicial só enfileira o trabalho, o jeito limpo de saber o resultado é receber um <strong class="text-blue-400">webhook</strong>. O Postiz dispara um <code class="text-blue-400 font-mono text-sm">POST</code> para a URL que você cadastrar sempre que um post muda de estado — <code class="text-blue-400 font-mono text-sm">PUBLISHED</code>, <code class="text-blue-400 font-mono text-sm">FAILED</code> ou <code class="text-blue-400 font-mono text-sm">DELETED</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Cadastre o callback em <code class="text-blue-400 font-mono text-sm">Settings → Webhooks → Add URL</code>. Cada webhook tem um <strong class="text-blue-400">secret</strong> usado para assinar o payload no header <code class="text-blue-400 font-mono text-sm">X-Postiz-Signature</code> — valide isso no seu lado pra confirmar que a requisição veio mesmo do Postiz.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Payload que o Postiz envia para sua URL
+{
+  "event": "post.published",
+  "timestamp": "2026-06-01T14:30:12.482Z",
+  "data": {
+    "postId": "ckxpost789abc",
+    "status": "PUBLISHED",
+    "integration": {
+      "id": "ckxlinkedin123",
+      "provider": "linkedin",
+      "name": "Minha Página LinkedIn"
+    },
+    "publishedAt": "2026-06-01T14:30:12.000Z",
+    "remoteId": "urn:li:share:7203451829",
+    "remoteUrl": "https://www.linkedin.com/feed/update/urn:li:share:7203451829/",
+    "tags": ["lançamento", "produto"]
+  }
+}</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Payload de falha (mesma estrutura, status diferente)
+{
+  "event": "post.failed",
+  "timestamp": "2026-06-01T14:30:09.117Z",
+  "data": {
+    "postId": "ckxpost789abc",
+    "status": "FAILED",
+    "integration": { "id": "ckxtwitter456", "provider": "x" },
+    "error": {
+      "code": "RATE_LIMITED",
+      "message": "X API: 429 too many requests; retry after 900s"
+    },
+    "willRetry": true,
+    "retryAt": "2026-06-01T14:45:09.000Z"
+  }
+}</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📡</span> Eventos suportados
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">post.queued:</strong> trabalho aceito e na fila — útil para auditoria.</li>
+          <li><strong class="text-blue-400">post.published:</strong> publicação concluída — guarde o <code class="font-mono">remoteUrl</code> para deep-link.</li>
+          <li><strong class="text-blue-400">post.failed:</strong> erro na API da rede; inspecione <code class="font-mono">error.code</code> para alertar.</li>
+          <li><strong class="text-blue-400">post.deleted:</strong> alguém removeu via UI ou API — sincronize seu lado.</li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🛡️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Responda <code class="text-primary font-mono text-sm">200 OK</code> rápido (&lt;2s) e processe o evento em fila do seu lado. Se demorar, o Postiz reenvia — e você processa o mesmo evento duas vezes. Use o <code class="text-primary font-mono text-sm">postId</code> + <code class="text-primary font-mono text-sm">event</code> como chave de deduplicação.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Callback</div>
+          <p class="text-xs text-neutral-400">URL do seu sistema que o Postiz chama assincronamente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Signature</div>
+          <p class="text-xs text-neutral-400">HMAC do payload assinado com o secret do webhook.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">At-least-once</div>
+          <p class="text-xs text-neutral-400">Garantia de entrega — pode chegar duas vezes; deduplicar no consumidor.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Retry</div>
+          <p class="text-xs text-neutral-400">Postiz reenvia em backoff se você não responder 2xx.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔗 Integração com n8n e Make</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Tanto n8n quanto Make.com têm <strong class="text-blue-400">nodes nativos do Postiz</strong> (community node no n8n; módulo oficial no Make). Eles encapsulam a autenticação Bearer e expõem ações como <em>Create Post</em>, <em>List Integrations</em>, <em>Delete Post</em>. Se preferir, use o <strong class="text-blue-400">HTTP Request node</strong> genérico — funciona igual.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para receber webhooks no n8n, use o <strong class="text-blue-400">Webhook node</strong> como trigger e cole a URL gerada no painel de webhooks do Postiz. No Make, use o módulo <strong class="text-blue-400">Custom Webhook</strong>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo: n8n HTTP Request node configurado manualmente
+{
+  "method": "POST",
+  "url": "={{ $env.POSTIZ_API_URL }}/posts",
+  "authentication": "genericCredentialType",
+  "genericAuthType": "httpHeaderAuth",
+  "sendHeaders": true,
+  "headerParameters": {
+    "parameters": [
+      { "name": "Authorization", "value": "Bearer {{ $env.POSTIZ_API_KEY }}" },
+      { "name": "Content-Type", "value": "application/json" }
+    ]
+  },
+  "sendBody": true,
+  "bodyContentType": "json",
+  "jsonBody": "={{ JSON.stringify($json.payload) }}"
+}</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">🔄</span> Fluxo completo no n8n
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">1. Trigger</strong> — Schedule (diário 09:00), Webhook (form externo) ou Postgres trigger (novo registro).</li>
+          <li><strong class="text-blue-400">2. Preparar conteúdo</strong> — node de IA (OpenAI/Claude) gera texto + imagem com base no input.</li>
+          <li><strong class="text-blue-400">3. Montar payload</strong> — Function node monta o JSON com <code class="font-mono">posts[]</code> e datas.</li>
+          <li><strong class="text-blue-400">4. POST Postiz</strong> — HTTP Request node ou Postiz node enfileira o post.</li>
+          <li><strong class="text-blue-400">5. Webhook de retorno</strong> — outro workflow escuta <code class="font-mono">post.published</code> e atualiza um Google Sheet ou Notion.</li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🧠</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">No n8n self-hosted, suba o Postiz e o n8n na <strong>mesma docker network</strong>. Aí o webhook do Postiz pode apontar para <code class="text-primary font-mono text-sm">http://n8n:5678/webhook/...</code> sem precisar de domínio público — mais rápido e mais seguro.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Community node</div>
+          <p class="text-xs text-neutral-400">Plugin de terceiros que adiciona suporte a uma API ao n8n.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">HTTP genérico</div>
+          <p class="text-xs text-neutral-400">Fallback que sempre funciona — qualquer API REST.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Trigger</div>
+          <p class="text-xs text-neutral-400">Primeiro node de um workflow; inicia a execução.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Function node</div>
+          <p class="text-xs text-neutral-400">JavaScript inline para transformar dados entre passos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Fluxo: app próprio → API Postiz → redes</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O grande motivo de usar a API do Postiz em vez de integrar direto com cada rede é <strong class="text-blue-400">não reinventar OAuth, renovação de tokens, rate limit e idempotência</strong> N vezes. Seu app fala com <em>uma</em> API consistente; o Postiz cuida do resto.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Arquitetura recomendada
+[ Seu App ]
+     |
+     | (1) POST /api/posts  — Bearer token
+     v
+[ Postiz API ]
+     |
+     | (2) enfileira no Redis (BullMQ)
+     v
+[ Worker Postiz ]
+     |
+     | (3) chama API de cada rede (OAuth gerenciado pelo Postiz)
+     v
+[ LinkedIn ] [ X ] [ Instagram ] [ Bluesky ] ...
+     |
+     | (4) sucesso/erro
+     v
+[ Postiz ]
+     |
+     | (5) POST webhook  → https://seuapp.com/webhooks/postiz
+     v
+[ Seu App ]  (atualiza DB, dispara notificação ao usuário)</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Vantagens vs integrar direto</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma única autenticação (Bearer) em vez de OAuth por rede.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Refresh de tokens, retry e rate limit já implementados.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agendamento e fila prontos — não precisa de cron/BullMQ próprio.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Quando o Postiz adiciona uma rede nova, você ganha de graça.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Quando NÃO usar a API</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você precisa de uma feature exótica que a rede X tem mas Postiz não expõe.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Volume gigantesco (milhões/dia) — pode bater no rate limit interno.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Latência crítica em tempo real — passa por fila, não é instantâneo.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você já tem integração direta madura e estável.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🚀</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Pense no Postiz como um <strong>broker de publicação</strong>: seu app trata regra de negócio (quem pode postar o quê, quando, com qual aprovação) e o Postiz trata o <em>last mile</em> técnico de chegar nas redes. Essa separação é o que torna a arquitetura escalável.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Broker</div>
+          <p class="text-xs text-neutral-400">Camada intermediária que isola producers de consumers.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Fanout</div>
+          <p class="text-xs text-neutral-400">Uma entrada → várias saídas (uma por rede social).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Decoupling</div>
+          <p class="text-xs text-neutral-400">Seu app não conhece detalhes de cada API de rede.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Eventual consistency</div>
+          <p class="text-xs text-neutral-400">Publicação é assíncrona; estado final chega via webhook.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">API habilitada</strong><span class="text-neutral-400"> — flag <code class="font-mono">IS_GENERAL=true</code> no <code class="font-mono">.env</code>, endpoint base em <code class="font-mono">/api</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">API key gerada</strong><span class="text-neutral-400"> — uma chave por integração, guardada em secret manager, autenticando via Bearer token.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">POST /posts dominado</strong><span class="text-neutral-400"> — payload JSON com <code class="font-mono">type</code>, <code class="font-mono">date</code> e array <code class="font-mono">posts</code> multi-rede.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Webhooks configurados</strong><span class="text-neutral-400"> — eventos <code class="font-mono">published</code>/<code class="font-mono">failed</code> com assinatura HMAC e deduplicação.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">n8n/Make integrado</strong><span class="text-neutral-400"> — node nativo ou HTTP Request genérico, com webhook node escutando retornos.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Arquitetura clara</strong><span class="text-neutral-400"> — Postiz como broker que isola seu app do <em>last mile</em> de cada rede social.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Trilha concluída! 🎉</h3>
+          <p class="text-neutral-300">Você dominou o Postiz: do Docker ao agendamento, das contas conectadas à API programática. A próxima trilha foca em <strong>redes sociais</strong> — algoritmos, formatos, melhores horários, estratégia de conteúdo por plataforma.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próxima Trilha → T3 Redes Sociais</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

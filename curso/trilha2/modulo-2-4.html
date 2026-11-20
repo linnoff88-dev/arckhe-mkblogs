@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.4 - Conectando contas | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Blue (T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .bg-blue-600 { background-color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500:hover { background-color: #3b82f6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Conectando contas</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Plugar Bluesky, X, LinkedIn e Mastodon no Postiz, agendar o primeiro post multicanal e validar que o agendador está mesmo trabalhando.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- BOX DICA INICIAL -->
+    <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-12">
+      <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+        <span class="mr-2">🎯</span> Por onde começar
+      </h3>
+      <p class="text-neutral-300"><strong class="text-blue-400">Comece pelo Bluesky pra validar</strong> o fluxo end-to-end. É a rede mais simples (handle + App Password, sem OAuth, sem dashboard de developer), então qualquer falha que aparecer aqui é problema do Postiz — não do provider. Depois que um agendamento Bluesky chegar publicado, aí sim parta para X, LinkedIn e Mastodon.</p>
+    </div>
+
+    <!-- FLUXO GERAL DE CONEXÃO -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 flex items-center">
+        <span class="mr-3">🗺️</span> Fluxo geral de conexão
+      </h2>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Independente da rede, conectar uma conta no Postiz segue cinco passos. As variações (OAuth vs. App Password, scopes, custos) entram nos detalhes — mas a coluna vertebral é sempre essa.
+      </p>
+
+      <div class="space-y-4">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Settings → Channels → Add channel</h4>
+            <p class="text-sm text-neutral-400">No dashboard do Postiz, escolha a rede social na grade de providers. Cada uma exibe seu fluxo próprio.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Autenticar</h4>
+            <p class="text-sm text-neutral-400">Login direto (Bluesky, Mastodon) ou redirect OAuth (X, LinkedIn) para o provider autorizar o Postiz a postar em seu nome.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Aprovar scopes</h4>
+            <p class="text-sm text-neutral-400">Confirmar permissões mínimas: ler perfil, publicar posts, anexar mídia. Recusar scope extra que a rede não exigir.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Token persistido</h4>
+            <p class="text-sm text-neutral-400">Postiz grava <code class="font-mono">access_token</code> + <code class="font-mono">refresh_token</code> criptografados no Postgres.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Canal aparece como ativo</h4>
+            <p class="text-sm text-neutral-400">A conta vira opção no compositor de posts. Status verde = pronta para agendar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 1 - BLUESKY -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🦋 Adicionar conta Bluesky</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Bluesky é o caminho mais curto: <strong class="text-blue-400">handle</strong> (algo como <code class="text-blue-400 font-mono text-sm">seunome.bsky.social</code>) mais um <strong class="text-blue-400">App Password</strong> gerado nas configurações da própria rede. Não tem OAuth, não tem developer portal, não tem aprovação. Login direto via API ATProto.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Gere o App Password em <code class="text-blue-400 font-mono text-sm">bsky.app → Settings → App Passwords → Add App Password</code>. Use um nome reconhecível tipo <code class="text-blue-400 font-mono text-sm">postiz-prod</code>. Nunca cole sua senha principal.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Dados pedidos pelo Postiz
+Handle:       seunome.bsky.social
+App Password: xxxx-xxxx-xxxx-xxxx   # gerado no bsky.app
+
+# O que acontece internamente
+POST https://bsky.social/xrpc/com.atproto.server.createSession
+  { "identifier": "seunome.bsky.social", "password": "xxxx-xxxx-xxxx-xxxx" }
+# → retorna accessJwt + refreshJwt, que o Postiz armazena</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🦋</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Crie um App Password <strong>por ferramenta</strong>. Assim, se quiser desconectar só o Postiz no futuro, revoga aquele App Password específico e suas outras integrações continuam vivas. Senha principal jamais é tocada.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">ATProto</div>
+          <p class="text-xs text-neutral-400">Protocolo aberto que serve de base para o Bluesky.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Handle</div>
+          <p class="text-xs text-neutral-400">Identificador público no formato de domínio.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">App Password</div>
+          <p class="text-xs text-neutral-400">Senha escopada por aplicação, revogável a qualquer hora.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">createSession</div>
+          <p class="text-xs text-neutral-400">Endpoint de login que devolve JWT de acesso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 - X -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🐦 Conectar X via OAuth</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        X (ex-Twitter) usa <strong class="text-blue-400">OAuth 2.0 com PKCE</strong>. Clica em "Connect X" no Postiz, é redirecionado para <code class="text-blue-400 font-mono text-sm">x.com/i/oauth2/authorize</code>, autoriza o app e volta com um <code class="text-blue-400 font-mono text-sm">code</code> que o backend troca por tokens.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O detalhe que assusta: postar via API exige o <strong class="text-blue-400">Basic plan</strong>, que custa <strong class="text-blue-400">US$ 200/mês</strong> e libera 3.000 posts mensais — ou usar provedores <strong class="text-blue-400">pay-per-use</strong> que revendem cotas. O Free tier só lê dados, não publica.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Avaliar se US$ 200/mês compensam pelo volume real.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Considerar pay-per-use se posta menos de 100/mês.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Confirmar o callback URL no developer portal.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar <code class="font-mono">client_id</code>/<code class="font-mono">client_secret</code> só no <code class="font-mono">.env</code>.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar postar com o Free tier — não publica.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reusar tokens de uma app antiga do Twitter v1.1.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Setar callback como <code class="font-mono">localhost</code> em prod.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Estourar rate limit sem backoff (vira ban temporário).</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># .env adicional
+X_API_KEY=seu_client_id
+X_API_SECRET=seu_client_secret
+
+# Callback URL registrado no developer.x.com
+https://seu-dominio.com/api/auth/callback/x</code></pre>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">OAuth 2.0</div>
+          <p class="text-xs text-neutral-400">Padrão de autorização delegada via redirect.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">PKCE</div>
+          <p class="text-xs text-neutral-400">Proof Key — proteção contra interceptação do code.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Basic plan</div>
+          <p class="text-xs text-neutral-400">US$ 200/mês, 3k posts, write habilitado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Pay-per-use</div>
+          <p class="text-xs text-neutral-400">Provedores revendem cota por post avulso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 - LINKEDIN -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">💼 Conectar LinkedIn</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        LinkedIn usa o produto <strong class="text-blue-400">Sign in with LinkedIn using OpenID Connect</strong> + <strong class="text-blue-400">Share on LinkedIn</strong>. Crie um app em <code class="text-blue-400 font-mono text-sm">linkedin.com/developers</code>, habilite os dois produtos, configure o callback e capture <code class="text-blue-400 font-mono text-sm">Client ID</code> + <code class="text-blue-400 font-mono text-sm">Client Secret</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Pegadinha: o <code class="text-blue-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-blue-400">60 dias</strong>, e o <code class="text-blue-400 font-mono text-sm">refresh_token</code> precisa do produto <strong class="text-blue-400">Marketing Developer Platform</strong> (aprovação manual). Sem ele, o Postiz força reconexão a cada dois meses.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Scopes mínimos para postar como pessoa
+openid
+profile
+email
+w_member_social      # publicar no feed pessoal
+
+# Scopes extras para postar em Company Page
+r_organization_social
+w_organization_social
+rw_organization_admin</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏰</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Anote no calendário a data de expiração do token LinkedIn (60 dias após conectar). O Postiz avisa via dashboard, mas se você só checa o app uma vez por semana, perde a janela e seu post agendado falha em silêncio. Reconecte uns 5 dias antes.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">OIDC</div>
+          <p class="text-xs text-neutral-400">OpenID Connect — identidade sobre OAuth 2.0.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Scopes</div>
+          <p class="text-xs text-neutral-400">Granularidade do que o app pode fazer pela conta.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Token expiry</div>
+          <p class="text-xs text-neutral-400">60 dias por padrão sem refresh aprovado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Company Page</div>
+          <p class="text-xs text-neutral-400">Requer scopes <code class="font-mono">organization</code> e admin role.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 - MASTODON -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐘 Adicionar Mastodon</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Mastodon é federado: não tem "um Mastodon", tem milhares de <strong class="text-blue-400">instâncias</strong> (mastodon.social, fosstodon.org, hachyderm.io...). Cada uma é um servidor independente com seu próprio OAuth. O Postiz pede a URL da sua instância <strong class="text-blue-400">antes</strong> do login.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O fluxo é dinâmico: Postiz registra um <strong class="text-blue-400">app OAuth na instância que você informou</strong> via <code class="text-blue-400 font-mono text-sm">/api/v1/apps</code>, recebe credenciais efêmeras e redireciona para o <code class="text-blue-400 font-mono text-sm">/oauth/authorize</code> daquela instância. Tudo automático — você só cola a URL.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># O que Postiz pede
+Instance URL:  https://mastodon.social
+               # ou https://fosstodon.org, https://hachyderm.io, etc.
+
+# Scopes solicitados
+read           # ler timeline e perfil
+write          # publicar toots
+push           # notificações (opcional)
+
+# Caracteres por post na maioria das instâncias
+500            # (algumas instâncias customizam pra 1000+)</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🐘</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Não confunda seu <strong>handle federado</strong> (<code class="text-primary font-mono text-sm">@voce@fosstodon.org</code>) com a <strong>URL da instância</strong> (<code class="text-primary font-mono text-sm">https://fosstodon.org</code>). Postiz pede a URL — a instância onde sua conta vive, não o identificador público.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Fediverso</div>
+          <p class="text-xs text-neutral-400">Rede de servidores que conversam via ActivityPub.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Instância</div>
+          <p class="text-xs text-neutral-400">Servidor Mastodon individual, com regras próprias.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Dynamic app</div>
+          <p class="text-xs text-neutral-400">App registrado on-the-fly via API da instância.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Toot</div>
+          <p class="text-xs text-neutral-400">O "post" do Mastodon, equivalente ao tweet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 - PRIMEIRO POST -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📅 Programar primeiro post</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Com pelo menos dois canais conectados, abra o <strong class="text-blue-400">compositor</strong> (botão <code class="text-blue-400 font-mono text-sm">+ New Post</code>). Escreva texto curto, anexe uma imagem, marque dois ou mais canais e agende para <strong class="text-blue-400">amanhã às 9h</strong> — horário em que você consegue conferir se publicou de verdade.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Escrever o conteúdo</h4>
+            <p class="text-sm text-neutral-400">Texto que caiba no menor limite (280 do X). O Postiz mostra contador por canal e avisa estouro.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Anexar imagem</h4>
+            <p class="text-sm text-neutral-400">Drag-and-drop ou clique no clipe. JPG/PNG até ~8MB. Postiz redimensiona se algum provider exigir.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Selecionar canais</h4>
+            <p class="text-sm text-neutral-400">Marque os badges das contas (Bluesky + Mastodon recomendados pro primeiro teste — não consomem cota paga).</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Definir data/hora</h4>
+            <p class="text-sm text-neutral-400">"Schedule" → calendário → amanhã 9h. Confirme o fuso horário no canto do compositor.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Confirmar agendamento</h4>
+            <p class="text-sm text-neutral-400">Job entra na fila Redis/BullMQ. Aparece no calendário com cor por canal e status <code class="font-mono">scheduled</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🕘</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">No dia seguinte, faça as três checagens: 1) o calendário do Postiz mudou o status para <code class="text-primary font-mono text-sm">posted</code>; 2) a URL pública do post aparece como link no cartão; 3) você consegue clicar e ver o conteúdo na rede social real. Sem os três, não confie no agendador ainda.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Compositor</div>
+          <p class="text-xs text-neutral-400">Editor unificado que adapta o conteúdo a cada canal.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">BullMQ</div>
+          <p class="text-xs text-neutral-400">Fila baseada em Redis que dispara o post na hora certa.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Timezone</div>
+          <p class="text-xs text-neutral-400">Conferir no perfil — agendamento usa o fuso do usuário.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Multicanal</div>
+          <p class="text-xs text-neutral-400">Um draft, várias APIs — cada canal com seu render.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 - ANALYTICS -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📊 Ver analytics básico</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Depois que o post sair, o Postiz puxa métricas via API de cada provider. A aba <strong class="text-blue-400">Analytics</strong> agrega <strong class="text-blue-400">clicks</strong>, <strong class="text-blue-400">impressions</strong>, <strong class="text-blue-400">engagement</strong> e o <strong class="text-blue-400">status de entrega</strong> por plataforma.
+      </p>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📈</span> Métricas disponíveis por rede
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">Bluesky:</strong> likes, reposts, replies. Sem impressions na API pública — só engajamento absoluto.</li>
+          <li><strong class="text-blue-400">X:</strong> impressions, likes, reposts, replies, bookmarks. Requer plano Basic+ para puxar via API.</li>
+          <li><strong class="text-blue-400">LinkedIn:</strong> impressions, reactions, comments, shares. Métricas detalhadas só em Company Pages.</li>
+          <li><strong class="text-blue-400">Mastodon:</strong> favourites, boosts, replies. Sem impressions — o protocolo não rastreia visualização.</li>
+        </ul>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Status que aparecem no dashboard de cada post
+scheduled    # na fila, ainda não saiu
+posting      # job rodando agora
+posted       # publicado com sucesso, URL disponível
+failed       # erro do provider — clique para ver stack trace
+expired      # token expirou antes do horário (reconectar)</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Olhar a aba Analytics 24h após o post (números amadurecem).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Comparar engagement absoluto, não taxas entre redes diferentes.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investigar todo status <code class="font-mono">failed</code> — não ignore.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Exportar CSV mensalmente para arquivo histórico.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em impressions logo após postar — atrasa horas.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar X (write pago) com Bluesky em valor absoluto.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar <code class="font-mono">expired</code> como erro do Postiz — é token do provider.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Otimizar pra métrica antes de ter 30 posts de baseline.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Impressions</div>
+          <p class="text-xs text-neutral-400">Quantas vezes o post entrou na tela de alguém.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Clicks</div>
+          <p class="text-xs text-neutral-400">Cliques em links ou no próprio post.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Engagement</div>
+          <p class="text-xs text-neutral-400">Reações, comentários e compartilhamentos somados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Status</div>
+          <p class="text-xs text-neutral-400">Estado do job no agendador (scheduled → posted).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Bluesky conectado</strong><span class="text-neutral-400"> — handle + App Password, sem OAuth, validação rápida do fluxo end-to-end.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">X via OAuth</strong><span class="text-neutral-400"> — redirect, PKCE, callback registrado, decisão consciente de Basic US$ 200/mês vs. pay-per-use.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">LinkedIn integrado</strong><span class="text-neutral-400"> — Sign in with LinkedIn + Share, scopes mínimos, ciência da expiração de 60 dias.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Mastodon plugado</strong><span class="text-neutral-400"> — URL da instância correta, app dinâmico via <code class="font-mono">/api/v1/apps</code>, OAuth federado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Primeiro post agendado</strong><span class="text-neutral-400"> — texto + imagem, multicanal, fila BullMQ, amanhã 9h confirmado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Analytics inspecionado</strong><span class="text-neutral-400"> — clicks, impressions, engagement e status por plataforma na aba Analytics.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">2.5 — Agendamento avançado, calendário editorial e automações</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-2-5.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.3 - Primeiro acesso e configuração | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Blue (T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .bg-blue-600 { background-color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500:hover { background-color: #3b82f6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+
+    /* Screenshot placeholder */
+    .screenshot {
+      background: repeating-linear-gradient(45deg, rgba(37,99,235,0.06), rgba(37,99,235,0.06) 10px, rgba(37,99,235,0.10) 10px, rgba(37,99,235,0.10) 20px);
+    }
+    html:not(.dark) .screenshot {
+      background: repeating-linear-gradient(45deg, rgba(37,99,235,0.05), rgba(37,99,235,0.05) 10px, rgba(37,99,235,0.10) 10px, rgba(37,99,235,0.10) 20px);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 Primeiro acesso e configuração</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Da tela em branco ao Postiz pronto para conectar redes: conta admin, tour da UI, storage S3, e-mail SMTP, organização e time.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">👤 Criar conta admin</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na primeira vez que <code class="text-blue-400 font-mono text-sm">http://localhost:5000</code> abre, o Postiz mostra uma tela de <strong class="text-blue-400">signup</strong> e nada de login social. Isso é proposital: o <strong class="text-blue-400">primeiro usuário criado vira super-admin</strong> da instância. Não há "criar admin pelo CLI" — é literalmente quem chega primeiro.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Por isso, a primeira tela é a janela de ouro: crie já a conta admin com e-mail corporativo e senha forte. Se alguém da rede interna abrir antes de você, vira admin no seu lugar.
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] flex items-center justify-center p-6">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg p-6 w-full max-w-md text-center">
+            <div class="text-3xl mb-2">🚀</div>
+            <div class="font-bold text-blue-400 mb-4">Bem-vindo ao Postiz</div>
+            <div class="space-y-2 text-left text-xs text-neutral-400">
+              <div class="bg-dark-900 rounded px-3 py-2 border border-dark-600">📧 admin@empresa.com</div>
+              <div class="bg-dark-900 rounded px-3 py-2 border border-dark-600">🔒 ••••••••••••••••</div>
+              <div class="bg-blue-600 text-white rounded px-3 py-2 text-center font-semibold mt-3">Criar conta admin</div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: tela de signup inicial. Sem cadastro anterior, o primeiro POST vira super-admin.</figcaption>
+      </figure>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Atenção: senha forte de verdade
+        </h3>
+        <p class="text-neutral-300">O admin tem poder sobre organizações, integrações OAuth e tokens das redes sociais. Use pelo menos <strong class="text-red-400">16 caracteres</strong>, gerados por gerenciador de senhas. Nunca <code class="font-mono">admin123</code>, nunca a senha do e-mail. Considere ativar 2FA assim que disponível na sua versão.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Super-admin</div>
+          <p class="text-xs text-neutral-400">Conta com todos os privilégios da instância.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">First-run</div>
+          <p class="text-xs text-neutral-400">Estado inicial sem usuários — porta aberta uma única vez.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Senha forte</div>
+          <p class="text-xs text-neutral-400">16+ caracteres aleatórios, gerados por password manager.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Bootstrap</div>
+          <p class="text-xs text-neutral-400">Processo de inicialização que prepara o sistema para uso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🧭 UI do Postiz: tour</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Logado, a interface do Postiz é dividida em quatro zonas. Conhecer cada uma antes de configurar evita perder tempo procurando opção.
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] p-4">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg h-full flex">
+            <div class="w-40 bg-dark-900 border-r border-dark-600 p-3 text-xs space-y-2">
+              <div class="text-blue-400 font-bold">📅 Calendar</div>
+              <div class="text-neutral-400">📊 Analytics</div>
+              <div class="text-neutral-400">🔗 Channels</div>
+              <div class="text-neutral-400">🤖 Agent</div>
+              <div class="text-neutral-400">⚙️ Settings</div>
+            </div>
+            <div class="flex-1 p-3">
+              <div class="text-xs text-neutral-400 mb-2">Maio 2026 • Vista semanal</div>
+              <div class="grid grid-cols-7 gap-1 text-xs">
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Seg</div>
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Ter</div>
+                <div class="bg-dark-900 border border-blue-500/30 rounded p-2 text-center text-blue-400">Qua</div>
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Qui</div>
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Sex</div>
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Sáb</div>
+                <div class="bg-dark-900 border border-dark-600 rounded p-2 text-center text-neutral-400">Dom</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: layout principal. Sidebar à esquerda, calendar view dominando o centro.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">📅 Calendar view</h4>
+          <p class="text-sm text-neutral-300">Eixo central do produto. Cada card é um post agendado; arrastar reagenda. Filtros por canal e status.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">🧭 Sidebar</h4>
+          <p class="text-sm text-neutral-300">Navegação principal: Calendar, Analytics, Channels, Agent (AI), Settings, Billing. Recolhe em telas pequenas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">🔗 Channels</h4>
+          <p class="text-sm text-neutral-300">Lista de redes conectadas (X, LinkedIn, Instagram, etc.). Status, próximo refresh de token e estatísticas básicas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">⚙️ Settings</h4>
+          <p class="text-sm text-neutral-300">Storage, e-mail, organização, membros, providers OAuth, integrações. Tudo que não é "agendar post" mora aqui.</p>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Sidebar</div>
+          <p class="text-xs text-neutral-400">Navegação vertical persistente entre telas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Calendar</div>
+          <p class="text-xs text-neutral-400">Linha do tempo visual dos posts agendados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Channels</div>
+          <p class="text-xs text-neutral-400">Conexões OAuth ativas com cada rede social.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Settings</div>
+          <p class="text-xs text-neutral-400">Painel de configuração de infraestrutura e time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">☁️ Configurar storage S3 na UI</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz precisa guardar mídias (imagens, vídeos curtos) em algum lugar. Em dev, <code class="text-blue-400 font-mono text-sm">STORAGE_PROVIDER=local</code> grava em volume. Em prod, você quer <strong class="text-blue-400">S3 ou compatível</strong> (Cloudflare R2, MinIO, Backblaze B2) — barato, durável e acessível pelas redes sociais via URL pública.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Em <strong class="text-blue-400">Settings → Storage</strong>, cinco campos: endpoint, access key, secret, bucket e região. Cloudflare R2 é a escolha mais comum: sem taxa de egress.
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] flex items-center justify-center p-6">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg p-6 w-full max-w-lg">
+            <div class="font-bold text-blue-400 mb-4">⚙️ Settings → Storage</div>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Provider</span><span class="text-blue-400">S3 (R2)</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Endpoint</span><span class="text-neutral-300">https://&lt;account&gt;.r2.cloudflarestorage.com</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Bucket</span><span class="text-neutral-300">postiz-media</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Region</span><span class="text-neutral-300">auto</span></div>
+              <div class="bg-blue-600 text-white rounded px-3 py-2 text-center font-semibold mt-2">Salvar e testar upload</div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: formulário de Storage. Botão "testar" valida credenciais antes de salvar.</figcaption>
+      </figure>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Se preferir <strong class="text-blue-400">configurar via .env</strong> (recomendado para reprodutibilidade), edite o arquivo e reinicie o container:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env — bloco de storage S3/R2
+STORAGE_PROVIDER=s3
+CLOUDFLARE_ACCOUNT_ID=abc123def456
+CLOUDFLARE_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxx
+CLOUDFLARE_SECRET_ACCESS_KEY=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+CLOUDFLARE_BUCKETNAME=postiz-media
+CLOUDFLARE_BUCKET_URL=https://media.seudominio.com
+CLOUDFLARE_REGION=auto</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Aplicar mudanças
+docker compose up -d --force-recreate postiz
+
+# Validar: subir uma imagem qualquer pela UI
+# e conferir que a URL gerada aponta para o bucket
+docker compose logs --tail=50 postiz | grep -i s3</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Configure <strong>CORS no bucket</strong> antes de testar — sem isso, o upload do navegador morre com erro silencioso. Permita <code class="text-primary font-mono text-sm">PUT</code> e <code class="text-primary font-mono text-sm">POST</code> do domínio do Postiz. No R2: aba <strong>Settings → CORS Policy</strong>.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">S3 API</div>
+          <p class="text-xs text-neutral-400">Padrão de object storage adotado por vários providers.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Bucket</div>
+          <p class="text-xs text-neutral-400">Container de objetos com namespace próprio.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Endpoint</div>
+          <p class="text-xs text-neutral-400">URL base da API S3 do provider escolhido.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">CORS</div>
+          <p class="text-xs text-neutral-400">Permissão cross-origin para upload via browser.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📨 E-mail / SMTP</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Convites de equipe, recuperação de senha e notificações de falha de post precisam sair por e-mail. O Postiz usa <strong class="text-blue-400">Resend</strong> por padrão (API simples, free tier de 3k/mês), mas aceita qualquer SMTP via variáveis equivalentes.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Três passos: criar API key no Resend, validar o domínio remetente (DKIM + SPF) e colar a key no <code class="text-blue-400 font-mono text-sm">.env</code>.
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] flex items-center justify-center p-6">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg p-6 w-full max-w-lg">
+            <div class="font-bold text-blue-400 mb-4">⚙️ Settings → Email</div>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Provider</span><span class="text-blue-400">Resend</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">API Key</span><span class="text-neutral-300">re_••••••••••••</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">From</span><span class="text-neutral-300">no-reply@seudominio.com</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">DKIM</span><span class="text-emerald-400">✓ verificado</span></div>
+              <div class="bg-blue-600 text-white rounded px-3 py-2 text-center font-semibold mt-2">Enviar e-mail de teste</div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: tela de e-mail com API key, domínio remetente e botão de teste.</figcaption>
+      </figure>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env — bloco de e-mail
+EMAIL_FROM_NAME=MkBlogs
+EMAIL_FROM_ADDRESS=no-reply@seudominio.com
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Alternativa: SMTP genérico (Postmark, SendGrid, Amazon SES)
+EMAIL_PROVIDER=smtp
+SMTP_HOST=smtp.postmarkapp.com
+SMTP_PORT=587
+SMTP_USER=apikey
+SMTP_PASSWORD=ZZZZZZZZ
+SMTP_SECURE=false</code></pre>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Domínio não verificado = caixa de spam
+        </h3>
+        <p class="text-neutral-300">Sem <strong class="text-red-400">SPF + DKIM + DMARC</strong> configurados no DNS do domínio remetente, Gmail e Outlook jogam tudo no spam. O painel do Resend mostra os registros TXT exatos — adicione no DNS antes de mandar o primeiro convite real.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Resend</div>
+          <p class="text-xs text-neutral-400">API moderna de e-mail transacional com SDK simples.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">SMTP</div>
+          <p class="text-xs text-neutral-400">Protocolo padrão de envio, suportado por todo provider.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">DKIM/SPF</div>
+          <p class="text-xs text-neutral-400">Registros DNS que provam autenticidade do remetente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Transacional</div>
+          <p class="text-xs text-neutral-400">E-mail disparado por evento, não marketing em massa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🏢 Criar primeira Organization</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz é <strong class="text-blue-400">multi-tenant</strong>: uma instância pode atender várias marcas. A unidade que separa contas, canais e calendários é a <strong class="text-blue-400">Organization</strong>. Mesmo se você só tem um cliente hoje, crie uma org bem nomeada — migrar depois dá trabalho.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Cada organização tem branding próprio (nome, logo, cor de destaque) que aparece para os membros convidados. Para agências, é o ponto onde o cliente "se sente em casa".
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] flex items-center justify-center p-6">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg p-6 w-full max-w-lg">
+            <div class="font-bold text-blue-400 mb-4">🏢 Nova organização</div>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Nome</span><span class="text-neutral-300">Acme Studio</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Slug</span><span class="text-neutral-300">acme</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Logo</span><span class="text-neutral-300">acme-logo.svg ↑</span></div>
+              <div class="flex justify-between bg-dark-900 rounded px-3 py-2 border border-dark-600"><span class="text-neutral-400">Cor primária</span><span class="text-blue-400">#2563eb</span></div>
+              <div class="bg-blue-600 text-white rounded px-3 py-2 text-center font-semibold mt-2">Criar organização</div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: form de criação de organização. Slug vira parte da URL (multi-tenant).</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma organização por marca/cliente, mesmo que pequena.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Slug curto, lowercase e estável (vira parte de URL e logs).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logo SVG ou PNG transparente, com fundo neutro.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Documentar quem é o owner de cada organização.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar canais de duas marcas na mesma org.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Renomear o slug depois — quebra links e webhooks.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar "default" ou "teste" como nome real.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Subir logo JPG pesado (10MB+) — degrada a UI.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Multi-tenant</div>
+          <p class="text-xs text-neutral-400">Uma instância serve várias contas isoladas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Organization</div>
+          <p class="text-xs text-neutral-400">Unidade lógica que agrupa canais e membros.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Slug</div>
+          <p class="text-xs text-neutral-400">Identificador legível usado em URLs.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Branding</div>
+          <p class="text-xs text-neutral-400">Logo, cor e nome que personalizam a experiência.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">👥 Convidar membros da equipe</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Com e-mail funcionando e organização criada, convidar o time é instantâneo. Cada convite carrega uma <strong class="text-blue-400">role</strong> que define o que aquele usuário pode (e não pode) fazer dentro da organização.
+      </p>
+
+      <!-- SCREENSHOT -->
+      <figure class="mb-6 rounded-xl border border-blue-500/30 overflow-hidden">
+        <div class="screenshot aspect-[16/9] flex items-center justify-center p-6">
+          <div class="bg-dark-800/80 border border-dark-600 rounded-lg p-6 w-full max-w-lg">
+            <div class="font-bold text-blue-400 mb-4">👥 Members → Convidar</div>
+            <div class="space-y-2 text-xs">
+              <div class="bg-dark-900 rounded px-3 py-2 border border-dark-600">📧 designer@acme.com</div>
+              <div class="flex space-x-2">
+                <div class="flex-1 bg-dark-900 rounded px-3 py-2 border border-blue-500/30 text-blue-400">Editor</div>
+                <div class="flex-1 bg-dark-900 rounded px-3 py-2 border border-dark-600 text-neutral-400">Admin</div>
+                <div class="flex-1 bg-dark-900 rounded px-3 py-2 border border-dark-600 text-neutral-400">Viewer</div>
+              </div>
+              <div class="bg-blue-600 text-white rounded px-3 py-2 text-center font-semibold mt-2">Enviar convite</div>
+              <div class="text-neutral-500 text-[10px] mt-1">O convite expira em 7 dias.</div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="bg-dark-800 border-t border-dark-600 px-4 py-2 text-xs text-neutral-400">Screenshot: modal de convite. Role escolhida no momento do envio, alterável depois.</figcaption>
+      </figure>
+
+      <h3 class="text-lg font-semibold mb-4">Linha do tempo do convite</h3>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Admin preenche e-mail + role</h4>
+            <p class="text-sm text-neutral-400">Em <code class="font-mono">Settings → Members → Invite</code>. Cada e-mail é uma linha; role default = Editor.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Convidado recebe e-mail</h4>
+            <p class="text-sm text-neutral-400">Link com token único, válido por 7 dias. Sem e-mail SMTP configurado, este passo simplesmente não acontece.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Convidado cria senha</h4>
+            <p class="text-sm text-neutral-400">Clica no link → tela de signup pré-preenchida → escolhe senha → entra direto na organização certa.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Acesso ativo</h4>
+            <p class="text-sm text-neutral-400">Membro vê o calendar com as permissões da role. Admin pode trocar role ou revogar a qualquer momento.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Roles e permissões</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">👑 Admin</h4>
+          <p class="text-xs text-neutral-400 mb-2">Configura organização, conecta canais, gerencia membros, vê faturamento.</p>
+          <p class="text-xs text-neutral-500">Use para owners e gestores de conta.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">✏️ Editor</h4>
+          <p class="text-xs text-neutral-400 mb-2">Cria, edita, agenda e publica posts nos canais conectados. Não mexe em settings.</p>
+          <p class="text-xs text-neutral-500">Default para social media e copywriters.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-5">
+          <h4 class="font-semibold text-blue-400 mb-2">👀 Viewer</h4>
+          <p class="text-xs text-neutral-400 mb-2">Vê o calendar, comentários e analytics. Não publica nada.</p>
+          <p class="text-xs text-neutral-500">Stakeholders e aprovadores.</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔐</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Convide cada pessoa com a <strong>menor role suficiente</strong> e suba se necessário. Promover é fácil; rebaixar depois de um incidente é constrangedor. Audite a lista de Admins trimestralmente — gente que saiu da empresa não pode continuar com acesso de admin.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Role</div>
+          <p class="text-xs text-neutral-400">Conjunto pré-definido de permissões.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Invitation</div>
+          <p class="text-xs text-neutral-400">Token único e expirável que vincula e-mail à organização.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Least privilege</div>
+          <p class="text-xs text-neutral-400">Princípio de dar o mínimo de acesso necessário.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Audit</div>
+          <p class="text-xs text-neutral-400">Revisão periódica de quem ainda precisa de acesso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Conta admin criada</strong><span class="text-neutral-400"> — primeiro usuário virou super-admin, senha forte e fora do alcance da rede interna.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Tour da UI completo</strong><span class="text-neutral-400"> — sidebar, calendar, channels e settings localizados; navegação sem desperdício.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Storage S3 configurado</strong><span class="text-neutral-400"> — endpoint, bucket, region e CORS no R2 (ou compatível); mídias persistidas fora do container.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">E-mail saindo</strong><span class="text-neutral-400"> — Resend (ou SMTP) com domínio verificado em DKIM/SPF; convites e recuperação funcionam.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Organização criada</strong><span class="text-neutral-400"> — nome, slug e branding definidos; pronta para receber canais e membros.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Time convidado</strong><span class="text-neutral-400"> — membros com roles adequadas (Admin/Editor/Viewer), princípio de menor privilégio aplicado.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">2.4 — Conectando a primeira rede social via OAuth</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

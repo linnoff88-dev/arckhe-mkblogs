@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.2 - Schema do banco | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Teal (T5) */
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/30 { background-color: rgba(13, 148, 136, 0.10); }
+    html:not(.dark) .bg-teal-900\/40 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .bg-teal-600 { background-color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500:hover { background-color: #14b8a6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🗄️ Schema do banco</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Modelar o domínio de um agendador de redes sociais em Prisma: User, SocialAccount, Post, PostTarget, Media e migrations.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">👤 Modelo User</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-teal-400">User</strong> é a raiz do grafo. Tudo (contas sociais, posts, mídia) pertence a um usuário. Use <code class="text-teal-400 font-mono text-sm">uuid</code> como id — IDs sequenciais expõem volume de cadastros e facilitam enumeração. O <code class="text-teal-400 font-mono text-sm">email</code> precisa de <code class="text-teal-400 font-mono text-sm">@unique</code> e o <code class="text-teal-400 font-mono text-sm">passwordHash</code> nunca é exposto na API — só o servidor lê.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de escrever modelos, declare o <strong class="text-teal-400">datasource</strong> e o <strong class="text-teal-400">generator</strong>. O Prisma só sabe gerar o client se essa configuração existir no topo do <code class="text-teal-400 font-mono text-sm">schema.prisma</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  socialAccounts SocialAccount[]
+  posts          Post[]
+  media          Media[]
+
+  @@index([createdAt])
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Nunca chame a coluna de <code class="text-primary font-mono text-sm">password</code>. O nome <code class="text-primary font-mono text-sm">passwordHash</code> serve de lembrete: o valor armazenado é sempre o hash (argon2/bcrypt), nunca a senha em claro. Se o nome estiver errado, vai aparecer "password" em log, em select, em response — e um dia vaza.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@id</div>
+          <p class="text-xs text-neutral-400">Marca a chave primária do modelo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@unique</div>
+          <p class="text-xs text-neutral-400">Garante unicidade no banco via constraint.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">uuid()</div>
+          <p class="text-xs text-neutral-400">Default gera UUID v4 — não sequencial, sem leak.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Relações</div>
+          <p class="text-xs text-neutral-400">Listas (<code class="font-mono">Post[]</code>) declaram one-to-many.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔑 Modelo SocialAccount</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Cada usuário conecta N contas — Twitter, LinkedIn, Instagram. O <strong class="text-teal-400">SocialAccount</strong> guarda o token OAuth de cada uma. Os campos <code class="text-teal-400 font-mono text-sm">accessToken</code> e <code class="text-teal-400 font-mono text-sm">refreshToken</code> são <strong class="text-teal-400">criptografados em repouso</strong> (AES-GCM com chave fora do banco) antes do INSERT — o Prisma só vê o ciphertext.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <code class="text-teal-400 font-mono text-sm">enum Platform</code> em vez de string livre. Enum previne typo (<code class="text-teal-400 font-mono text-sm">"twiter"</code> vs <code class="text-teal-400 font-mono text-sm">"twitter"</code>) e dá autocomplete no client gerado.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">enum Platform {
+  TWITTER
+  LINKEDIN
+  INSTAGRAM
+  FACEBOOK
+  THREADS
+  BLUESKY
+}
+
+model SocialAccount {
+  id           String   @id @default(uuid())
+  userId       String
+  platform     Platform
+  handle       String
+  accessToken  String   // ciphertext AES-GCM
+  refreshToken String?  // ciphertext AES-GCM
+  expiresAt    DateTime?
+  scope        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targets PostTarget[]
+
+  @@unique([userId, platform, handle])
+  @@index([userId])
+  @@index([expiresAt])
+}</code></pre>
+
+      <div class="bg-teal-900/20 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🔐</span> Por que criptografar em repouso?
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-teal-400">Backup vazado:</strong> dump de Postgres sem ciphertext entrega todas as contas conectadas.</li>
+          <li><strong class="text-teal-400">SQL injection:</strong> mesmo se um SELECT vaze, o atacante recebe lixo.</li>
+          <li><strong class="text-teal-400">Princípio do menor privilégio:</strong> a chave AES vive em KMS/secret manager, não no banco.</li>
+          <li><strong class="text-teal-400">expiresAt indexado:</strong> permite scan barato de tokens vencendo para refresh em batch.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">enum</div>
+          <p class="text-xs text-neutral-400">Valores fechados validados no banco e no TS.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">onDelete</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">Cascade</code> apaga contas quando o user é apagado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@@unique composto</div>
+          <p class="text-xs text-neutral-400">Mesmo handle no mesmo user+platform só uma vez.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@@index</div>
+          <p class="text-xs text-neutral-400">Índice físico para queries frequentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📝 Modelo Post</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-teal-400">Post</strong> é o conteúdo na visão do usuário — não na visão da rede. Um único Post pode disparar publicações em várias plataformas (isso é o <code class="text-teal-400 font-mono text-sm">PostTarget</code>, próximo tópico). O campo <code class="text-teal-400 font-mono text-sm">mediaUrls</code> é <code class="text-teal-400 font-mono text-sm">String[]</code> nativo do Postgres — array é mais barato que tabela de junção quando só importa ordem.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <code class="text-teal-400 font-mono text-sm">status</code> é um <strong class="text-teal-400">enum de máquina de estado</strong>: <code class="text-teal-400 font-mono text-sm">DRAFT → SCHEDULED → PUBLISHING → PUBLISHED</code>, com <code class="text-teal-400 font-mono text-sm">FAILED</code> como ramo de erro. <code class="text-teal-400 font-mono text-sm">scheduledAt</code> indexado é o que o worker lê a cada minuto.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHING
+  PUBLISHED
+  FAILED
+  CANCELLED
+}
+
+model Post {
+  id          String     @id @default(uuid())
+  userId      String
+  text        String     @db.Text
+  mediaUrls   String[]
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  status      PostStatus @default(DRAFT)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targets PostTarget[]
+
+  @@index([userId, status])
+  @@index([scheduledAt])
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">@db.Text</code> em vez do default <code class="text-primary font-mono text-sm">VARCHAR</code>. Twitter/X cresceu para 25 mil chars em conta paga; Threads tem 500; LinkedIn 3 mil. <code class="text-primary font-mono text-sm">TEXT</code> no Postgres não tem custo extra vs <code class="text-primary font-mono text-sm">VARCHAR(n)</code> e te livra de migration quando algum limite mudar.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">String[]</div>
+          <p class="text-xs text-neutral-400">Array nativo Postgres — ordem preservada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Enum status</div>
+          <p class="text-xs text-neutral-400">Estado finito impede combinações inválidas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">@db.Text</div>
+          <p class="text-xs text-neutral-400">Tipo nativo Postgres sem limite de chars.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Índice composto</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">[userId, status]</code> serve listagem por aba.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎯 Modelo PostTarget</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Esse é o modelo que separa <strong class="text-teal-400">amador</strong> de <strong class="text-teal-400">produção</strong>. Um <code class="text-teal-400 font-mono text-sm">Post</code> dispara <strong class="text-teal-400">N</strong> publicações reais — uma por rede. Cada <strong class="text-teal-400">PostTarget</strong> tem seu próprio <code class="text-teal-400 font-mono text-sm">status</code>, sua mensagem de erro e o <code class="text-teal-400 font-mono text-sm">platformPostId</code> retornado pela API da rede.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Sem essa tabela, falha no Twitter cascateia para o LinkedIn no log do mesmo Post — e fica impossível fazer retry seletivo. <code class="text-teal-400 font-mono text-sm">1 Post → N PostTarget</code> é o jeito certo.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">enum TargetStatus {
+  PENDING
+  PUBLISHING
+  PUBLISHED
+  FAILED
+  SKIPPED
+}
+
+model PostTarget {
+  id              String       @id @default(uuid())
+  postId          String
+  socialAccountId String
+  status          TargetStatus @default(PENDING)
+  platformPostId  String?      // id retornado pela rede (ex.: tweet id)
+  platformUrl     String?      // URL pública do post na rede
+  error           String?      @db.Text
+  attempts        Int          @default(0)
+  lastAttemptAt   DateTime?
+  publishedAt     DateTime?
+
+  post          Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  socialAccount SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, socialAccountId])
+  @@index([status])
+  @@index([postId])
+}</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar <code class="font-mono">platformPostId</code> — é o que permite editar/deletar lá depois.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Contar <code class="font-mono">attempts</code> para corte de retry exponencial.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Salvar <code class="font-mono">error</code> completo — o stack trace explica rate limit vs auth.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">@@unique([postId, socialAccountId])</code> impede publicação dupla.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar status do Post com status do Target — quebra retry parcial.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Colocar <code class="font-mono">platform</code> aqui — vem do <code class="font-mono">socialAccountId</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apagar <code class="font-mono">error</code> ao tentar de novo — perde histórico.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Indexar tudo: índice extra custa em INSERT (e isso é a hot path).</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Tabela de junção rica</div>
+          <p class="text-xs text-neutral-400">Many-to-many com atributos próprios.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">platformPostId</div>
+          <p class="text-xs text-neutral-400">Ponte entre o seu mundo e o da rede.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">attempts</div>
+          <p class="text-xs text-neutral-400">Contador para backoff e dead-letter.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">@@unique</code> evita duplicata no retry.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🖼️ Modelo Media</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Imagens e vídeos <strong class="text-teal-400">não vão no banco</strong>. Vão para <strong class="text-teal-400">S3</strong> (ou R2/Spaces) e o banco guarda só a <code class="text-teal-400 font-mono text-sm">url</code>, o <code class="text-teal-400 font-mono text-sm">mimeType</code> e o <code class="text-teal-400 font-mono text-sm">size</code>. Persistir bytes de mídia no Postgres custa caro: backup explode, MVCC sofre, vacuum trava.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <code class="text-teal-400 font-mono text-sm">Media</code> aqui é o registro do upload feito pelo usuário. O <code class="text-teal-400 font-mono text-sm">Post.mediaUrls</code> referencia essas URLs, mas <strong class="text-teal-400">não há FK</strong> — o usuário pode anexar a mesma mídia em N posts e excluir o Post sem perder a Media.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">model Media {
+  id        String   @id @default(uuid())
+  userId    String
+  url       String   // s3://bucket/uploads/uuid.jpg ou https://cdn.../...
+  key       String   // chave S3 — usar para delete
+  mimeType  String   // image/jpeg, video/mp4, image/png
+  size      Int      // bytes
+  width     Int?
+  height    Int?
+  duration  Int?     // segundos, só vídeo
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([key])
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🧹</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Guarde <code class="text-primary font-mono text-sm">key</code> separado da <code class="text-primary font-mono text-sm">url</code>. A URL pode mudar (CDN nova, domínio próprio), mas a chave S3 é estável e é o que você usa no <code class="text-primary font-mono text-sm">DeleteObject</code>. Sem isso, garbage collection de mídia órfã vira parsing de URL — frágil.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Object storage</div>
+          <p class="text-xs text-neutral-400">S3/R2 guarda binários; banco guarda ponteiros.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">mimeType</div>
+          <p class="text-xs text-neutral-400">Permite filtrar imagem vs vídeo sem baixar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Dimensions</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">width/height</code> evita 2ª chamada na UI.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Sem FK no Post</div>
+          <p class="text-xs text-neutral-400">Reuso entre posts e delete independente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🚀 Migrations com Prisma</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Schema escrito não vira tabela sozinho. <code class="text-teal-400 font-mono text-sm">prisma migrate</code> gera SQL versionado em <code class="text-teal-400 font-mono text-sm">prisma/migrations/</code> — arquivos que você <strong class="text-teal-400">commita</strong> e que rodam idênticos em dev, staging e produção.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Primeira migration em dev</h4>
+            <p class="text-sm text-neutral-400 mb-3">Compara schema com o banco, gera SQL, aplica e regenera o client TypeScript.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate dev --name init</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Adicionar uma coluna</h4>
+            <p class="text-sm text-neutral-400 mb-3">Edita o schema, roda <code class="font-mono">migrate dev</code> com nome descritivo, commita.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate dev --name add_post_scheduled_index</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Aplicar em produção</h4>
+            <p class="text-sm text-neutral-400 mb-3"><code class="font-mono">deploy</code> só executa migrations já existentes — nunca gera nem modifica.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate deploy</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Reset (só dev)</h4>
+            <p class="text-sm text-neutral-400 mb-3">Apaga TUDO, recria do zero e roda seed. Comando perigoso — bloqueado em prod por default.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate reset</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Status e drift</h4>
+            <p class="text-sm text-neutral-400 mb-3">Mostra se há migration pendente ou se alguém mexeu manualmente no banco.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate status</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">6</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Inspecionar dados</h4>
+            <p class="text-sm text-neutral-400 mb-3">GUI web local para ler/editar registros sem precisar de pgAdmin.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma studio</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Fluxo típico após editar schema.prisma
+npx prisma format                    # arruma indentação
+npx prisma validate                  # checa sintaxe
+npx prisma migrate dev --name xxx    # gera SQL + aplica
+git add prisma/migrations/ prisma/schema.prisma
+git commit -m "feat(db): xxx"
+
+# No CI/CD da produção (no entrypoint do container)
+npx prisma migrate deploy
+npx prisma generate</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">NUNCA edite uma migration depois que ela já rodou em qualquer ambiente — nem de virgula. O Prisma calcula um checksum e qualquer mudança quebra o <code class="text-primary font-mono text-sm">migrate deploy</code> em produção. Errou? Crie uma migration NOVA que corrige (ALTER, DROP, novo INDEX).</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">migrate dev</div>
+          <p class="text-xs text-neutral-400">Gera + aplica em dev; nunca em prod.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">migrate deploy</div>
+          <p class="text-xs text-neutral-400">Aplica migrations existentes em prod.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Shadow database</div>
+          <p class="text-xs text-neutral-400">DB temporário que o Prisma usa em dev.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Drift</div>
+          <p class="text-xs text-neutral-400">Diff entre schema, migrations e banco real.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">User modelado</strong><span class="text-neutral-400"> — uuid, email unique, passwordHash, timestamps automáticos e relações para o resto.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">SocialAccount com OAuth</strong><span class="text-neutral-400"> — tokens criptografados em repouso, enum Platform, expiresAt indexado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Post com agendamento</strong><span class="text-neutral-400"> — texto, array de mídias, scheduledAt e enum PostStatus de máquina de estado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">PostTarget fan-out</strong><span class="text-neutral-400"> — 1 Post → N redes, com status, platformPostId, error e attempts independentes.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Media em S3</strong><span class="text-neutral-400"> — banco guarda url, key, mimeType e size; binários ficam no object storage.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Migrations versionadas</strong><span class="text-neutral-400"> — <code class="font-mono">migrate dev</code> em dev, <code class="font-mono">migrate deploy</code> em prod, nunca editar migration aplicada.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">5.3 — Autenticação e gestão de usuários</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-5-3.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

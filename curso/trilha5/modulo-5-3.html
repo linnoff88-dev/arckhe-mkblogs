@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 5.3 - Padrão Provider | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Teal (T5) */
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/20 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .bg-teal-900\/30 { background-color: rgba(13, 148, 136, 0.10); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .bg-teal-600 { background-color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500:hover { background-color: #14b8a6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a>
+      <span>/</span>
+      <span class="text-teal-400">Módulo 5.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Padrão Provider</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Arquitetura plug-and-play para múltiplas redes sociais: contrato, factory, implementações reais (Bluesky e X), erros e testes.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">50</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🧩 Interface <code class="font-mono">SocialProvider</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O coração da arquitetura é um <strong class="text-teal-400">contrato TypeScript</strong> que toda rede social precisa cumprir. Bluesky, X, Mastodon, LinkedIn — todos implementam a mesma interface, e o código que agenda posts <strong class="text-teal-400">nunca conhece os detalhes</strong> de cada API.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Três métodos bastam para 95% dos casos: <code class="text-teal-400 font-mono text-sm">authenticate</code> (OAuth/login), <code class="text-teal-400 font-mono text-sm">refreshToken</code> (renovar credencial expirada) e <code class="text-teal-400 font-mono text-sm">post</code> (publicar conteúdo).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/types.ts
+export type Platform = 'bluesky' | 'x' | 'mastodon' | 'linkedin';
+
+export interface AuthCredentials {
+  accessToken: string;
+  refreshToken?: string;
+  expiresAt?: Date;
+  metadata?: Record&lt;string, unknown&gt;;
+}
+
+export interface PostPayload {
+  text: string;
+  media?: MediaAttachment[];
+  replyTo?: string;        // ID do post pai (threads)
+  scheduledAt?: Date;
+}
+
+export interface MediaAttachment {
+  buffer: Buffer;
+  mimeType: string;        // image/png, image/jpeg, video/mp4
+  altText?: string;
+}
+
+export interface PostResult {
+  platformPostId: string;  // ID retornado pela API da rede
+  url: string;             // URL pública do post
+  postedAt: Date;
+}
+
+export interface SocialProvider {
+  readonly platform: Platform;
+
+  authenticate(code: string): Promise&lt;AuthCredentials&gt;;
+  refreshToken(creds: AuthCredentials): Promise&lt;AuthCredentials&gt;;
+  post(creds: AuthCredentials, payload: PostPayload): Promise&lt;PostResult&gt;;
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Mantenha a interface <strong>mínima</strong>. Toda vez que aparecer um método "só pro X" ou "só pro Bluesky", resista: ou ele cabe via <code class="text-primary font-mono text-sm">metadata</code>, ou vira um método opcional. Interface inchada vira código morto em 3 das 4 implementações.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Interface</div>
+          <p class="text-xs text-neutral-400">Contrato puro, sem implementação.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">DTOs</div>
+          <p class="text-xs text-neutral-400">Tipos isolam payloads de cada rede.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Discriminated union</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">Platform</code> habilita exhaustive checks.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Promise</div>
+          <p class="text-xs text-neutral-400">Toda I/O é assíncrona — sem exceção.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🏭 Factory de providers</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Com o contrato pronto, falta o <strong class="text-teal-400">despachante</strong>: dada uma <code class="text-teal-400 font-mono text-sm">Platform</code>, devolva a instância certa. Um <code class="text-teal-400 font-mono text-sm">switch</code> faz o serviço, mas um <strong class="text-teal-400">registry</strong> com <code class="text-teal-400 font-mono text-sm">Map</code> escala melhor — basta registrar novos providers sem editar a factory.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/factory.ts
+import { SocialProvider, Platform } from './types';
+import { BlueskyProvider } from './bluesky.provider';
+import { XProvider } from './x.provider';
+
+const registry = new Map&lt;Platform, () =&gt; SocialProvider&gt;();
+
+export function registerProvider(
+  platform: Platform,
+  factory: () =&gt; SocialProvider,
+): void {
+  registry.set(platform, factory);
+}
+
+export function getProvider(platform: Platform): SocialProvider {
+  const factory = registry.get(platform);
+  if (!factory) {
+    throw new Error(`No provider registered for platform: ${platform}`);
+  }
+  return factory();
+}
+
+// Bootstrap — chamar uma vez no boot da app
+export function registerAllProviders(): void {
+  registerProvider('bluesky', () =&gt; new BlueskyProvider());
+  registerProvider('x', () =&gt; new XProvider());
+  // mastodon e linkedin entram aqui sem tocar em getProvider()
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Uso típico no serviço de publicação:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/services/publish.service.ts
+import { getProvider } from '../providers/factory';
+import { Platform, AuthCredentials, PostPayload } from '../providers/types';
+
+export class PublishService {
+  async publish(
+    platform: Platform,
+    creds: AuthCredentials,
+    payload: PostPayload,
+  ) {
+    const provider = getProvider(platform);
+    return provider.post(creds, payload);
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔁</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">A factory devolve uma <strong>nova instância por chamada</strong>. Se a sua implementação for stateless (e deve ser), isso é grátis. Se carregar SDK pesado, troque por singleton com lazy init — mas só depois de medir.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Factory pattern</div>
+          <p class="text-xs text-neutral-400">Centraliza a criação de instâncias.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Registry</div>
+          <p class="text-xs text-neutral-400">Map plataforma → construtor.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Open/Closed</div>
+          <p class="text-xs text-neutral-400">Aberto para extensão, fechado p/ modificação.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Bootstrap</div>
+          <p class="text-xs text-neutral-400">Registro de providers no boot da app.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🦋 Implementar <code class="font-mono">BlueskyProvider</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Bluesky usa <strong class="text-teal-400">AT Protocol</strong> e expõe o SDK oficial <code class="text-teal-400 font-mono text-sm">@atproto/api</code>. A autenticação é por <strong class="text-teal-400">app password</strong> (não OAuth) — o usuário gera em <code class="text-teal-400 font-mono text-sm">bsky.app/settings/app-passwords</code>. Upload de mídia exige etapa extra (<code class="text-teal-400 font-mono text-sm">uploadBlob</code>) antes de anexar ao post.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/bluesky.provider.ts
+import { BskyAgent, RichText } from '@atproto/api';
+import {
+  SocialProvider, AuthCredentials,
+  PostPayload, PostResult, Platform,
+} from './types';
+
+export class BlueskyProvider implements SocialProvider {
+  readonly platform: Platform = 'bluesky';
+
+  private agent(): BskyAgent {
+    return new BskyAgent({ service: 'https://bsky.social' });
+  }
+
+  async authenticate(code: string): Promise&lt;AuthCredentials&gt; {
+    // No Bluesky, "code" = "handle:app-password" (formato definido pelo app)
+    const [identifier, password] = code.split(':');
+    const agent = this.agent();
+    await agent.login({ identifier, password });
+
+    return {
+      accessToken: agent.session!.accessJwt,
+      refreshToken: agent.session!.refreshJwt,
+      metadata: { did: agent.session!.did, handle: agent.session!.handle },
+    };
+  }
+
+  async refreshToken(creds: AuthCredentials): Promise&lt;AuthCredentials&gt; {
+    const agent = this.agent();
+    await agent.resumeSession({
+      accessJwt: creds.accessToken,
+      refreshJwt: creds.refreshToken!,
+      did: creds.metadata!.did as string,
+      handle: creds.metadata!.handle as string,
+      active: true,
+    });
+    return {
+      accessToken: agent.session!.accessJwt,
+      refreshToken: agent.session!.refreshJwt,
+      metadata: creds.metadata,
+    };
+  }
+
+  async post(
+    creds: AuthCredentials,
+    payload: PostPayload,
+  ): Promise&lt;PostResult&gt; {
+    const agent = this.agent();
+    await agent.resumeSession({
+      accessJwt: creds.accessToken,
+      refreshJwt: creds.refreshToken!,
+      did: creds.metadata!.did as string,
+      handle: creds.metadata!.handle as string,
+      active: true,
+    });
+
+    // Detecta menções e links automaticamente
+    const rt = new RichText({ text: payload.text });
+    await rt.detectFacets(agent);
+
+    // Upload de mídia (se houver)
+    const embed = payload.media?.length
+      ? await this.uploadImages(agent, payload.media)
+      : undefined;
+
+    const res = await agent.post({
+      text: rt.text,
+      facets: rt.facets,
+      embed,
+      createdAt: new Date().toISOString(),
+    });
+
+    return {
+      platformPostId: res.uri,
+      url: `https://bsky.app/profile/${creds.metadata!.handle}/post/${res.uri.split('/').pop()}`,
+      postedAt: new Date(),
+    };
+  }
+
+  private async uploadImages(agent: BskyAgent, media: PostPayload['media']) {
+    const images = await Promise.all(
+      media!.map(async (m) =&gt; {
+        const upload = await agent.uploadBlob(m.buffer, { encoding: m.mimeType });
+        return { image: upload.data.blob, alt: m.altText ?? '' };
+      }),
+    );
+    return { $type: 'app.bsky.embed.images', images };
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">📎</span> Dica prática
+        </h3>
+        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">RichText.detectFacets()</code> é o que transforma <code class="text-primary font-mono text-sm">@user.bsky.social</code> em menção clicável e URL em link. Sem isso seus posts viram texto puro — e a API ainda aceita, mas o usuário acha que sua app está bugada.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">BskyAgent</div>
+          <p class="text-xs text-neutral-400">Client oficial do AT Protocol.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">App password</div>
+          <p class="text-xs text-neutral-400">Credencial escopada, sem expor a senha real.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">uploadBlob</div>
+          <p class="text-xs text-neutral-400">Sobe binário e retorna ref para o post.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">RichText</div>
+          <p class="text-xs text-neutral-400">Detecta menções, hashtags e links.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐦 Implementar <code class="font-mono">XProvider</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O X (ex-Twitter) usa <strong class="text-teal-400">OAuth 2.0 com PKCE</strong> e o SDK <code class="text-teal-400 font-mono text-sm">twitter-api-v2</code>. Diferente do Bluesky, threads são feitas encadeando posts via <code class="text-teal-400 font-mono text-sm">reply.in_reply_to_tweet_id</code>. Upload de mídia passa pelo endpoint v1.1 — limitação histórica da API.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/x.provider.ts
+import { TwitterApi, TwitterApiTokens } from 'twitter-api-v2';
+import {
+  SocialProvider, AuthCredentials,
+  PostPayload, PostResult, Platform,
+} from './types';
+
+interface XOAuthState {
+  codeVerifier: string;
+  redirectUri: string;
+}
+
+export class XProvider implements SocialProvider {
+  readonly platform: Platform = 'x';
+
+  private clientId = process.env.X_CLIENT_ID!;
+  private clientSecret = process.env.X_CLIENT_SECRET!;
+
+  async authenticate(code: string): Promise&lt;AuthCredentials&gt; {
+    // "code" carrega { authCode, codeVerifier, redirectUri } serializado
+    const { authCode, codeVerifier, redirectUri } = JSON.parse(code) as
+      { authCode: string } &amp; XOAuthState;
+
+    const tmp = new TwitterApi({ clientId: this.clientId, clientSecret: this.clientSecret });
+    const { accessToken, refreshToken, expiresIn } = await tmp.loginWithOAuth2({
+      code: authCode,
+      codeVerifier,
+      redirectUri,
+    });
+
+    return {
+      accessToken,
+      refreshToken,
+      expiresAt: new Date(Date.now() + expiresIn * 1000),
+    };
+  }
+
+  async refreshToken(creds: AuthCredentials): Promise&lt;AuthCredentials&gt; {
+    if (!creds.refreshToken) {
+      throw new Error('Missing refresh token for X provider');
+    }
+    const tmp = new TwitterApi({ clientId: this.clientId, clientSecret: this.clientSecret });
+    const { accessToken, refreshToken, expiresIn } =
+      await tmp.refreshOAuth2Token(creds.refreshToken);
+
+    return {
+      accessToken,
+      refreshToken,
+      expiresAt: new Date(Date.now() + expiresIn * 1000),
+    };
+  }
+
+  async post(
+    creds: AuthCredentials,
+    payload: PostPayload,
+  ): Promise&lt;PostResult&gt; {
+    const client = new TwitterApi(creds.accessToken);
+    const v2 = client.v2;
+
+    // Upload via v1.1 (limitação da API)
+    const mediaIds: string[] = [];
+    if (payload.media?.length) {
+      for (const m of payload.media) {
+        const id = await client.v1.uploadMedia(m.buffer, { mimeType: m.mimeType });
+        mediaIds.push(id);
+      }
+    }
+
+    const res = await v2.tweet({
+      text: payload.text,
+      media: mediaIds.length ? { media_ids: mediaIds as [string] } : undefined,
+      reply: payload.replyTo ? { in_reply_to_tweet_id: payload.replyTo } : undefined,
+    });
+
+    const me = await v2.me();
+    return {
+      platformPostId: res.data.id,
+      url: `https://x.com/${me.data.username}/status/${res.data.id}`,
+      postedAt: new Date(),
+    };
+  }
+
+  // Helper: publica thread em sequência
+  async postThread(
+    creds: AuthCredentials,
+    tweets: string[],
+  ): Promise&lt;PostResult[]&gt; {
+    const out: PostResult[] = [];
+    let parentId: string | undefined;
+    for (const text of tweets) {
+      const r = await this.post(creds, { text, replyTo: parentId });
+      out.push(r);
+      parentId = r.platformPostId;
+    }
+    return out;
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O tier gratuito do X tem <strong>limite agressivo</strong> (1.500 posts/mês) e rate limits que mordem em testes. Crie um <code class="text-primary font-mono text-sm">XProviderMock</code> para CI/local e injete via DI — você não vai querer queimar quota em test runs.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">OAuth 2.0</div>
+          <p class="text-xs text-neutral-400">Authorization code + PKCE.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">PKCE</div>
+          <p class="text-xs text-neutral-400">Proof Key for Code Exchange — protege o code.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Thread</div>
+          <p class="text-xs text-neutral-400">Posts encadeados via <code class="font-mono">reply</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Rate limit</div>
+          <p class="text-xs text-neutral-400">Headers <code class="font-mono">x-rate-limit-*</code> guiam backoff.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚠️ Tratamento de erro e <code class="font-mono">RefreshTokenError</code></h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        APIs sociais erram por <strong class="text-teal-400">quatro motivos principais</strong>: token expirado, rate limit, payload inválido e indisponibilidade. Cada um exige resposta diferente — e <code class="text-teal-400 font-mono text-sm">try/catch</code> genérico esconde mais do que resolve. Crie <strong class="text-teal-400">classes de erro tipadas</strong> e trate cada caso na camada certa.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/errors.ts
+export class ProviderError extends Error {
+  constructor(
+    message: string,
+    public readonly platform: string,
+    public readonly cause?: unknown,
+  ) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+export class RefreshTokenError extends ProviderError {}
+export class RateLimitError extends ProviderError {
+  constructor(message: string, platform: string, public retryAfterSec: number, cause?: unknown) {
+    super(message, platform, cause);
+  }
+}
+export class InvalidPayloadError extends ProviderError {}
+export class ProviderUnavailableError extends ProviderError {}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Wrapper que <strong class="text-teal-400">renova o token e re-tenta</strong> uma única vez quando o erro é de expiração. Mais de uma retry vira loop infinito — token quebrado é estado terminal.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/services/publish-with-retry.ts
+import { SocialProvider, AuthCredentials, PostPayload, PostResult } from '../providers/types';
+import { RefreshTokenError, RateLimitError } from '../providers/errors';
+import { CredentialsRepo } from '../repos/credentials.repo';
+
+export class PublishWithRetry {
+  constructor(private readonly repo: CredentialsRepo) {}
+
+  async run(
+    provider: SocialProvider,
+    accountId: string,
+    creds: AuthCredentials,
+    payload: PostPayload,
+  ): Promise&lt;PostResult&gt; {
+    try {
+      return await provider.post(creds, payload);
+    } catch (err) {
+      if (err instanceof RefreshTokenError) {
+        const fresh = await provider.refreshToken(creds);
+        await this.repo.update(accountId, fresh);
+        return provider.post(fresh, payload);   // retry ÚNICO
+      }
+      if (err instanceof RateLimitError) {
+        // Reagenda na fila — não bloqueia o worker
+        throw err;
+      }
+      throw err;
+    }
+  }
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        E o ponto onde o SDK joga erro cru, traduzimos para a hierarquia tipada:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// dentro de XProvider.post(), envolvendo a chamada
+try {
+  return await v2.tweet({ /* ... */ });
+} catch (err: any) {
+  if (err?.code === 401) throw new RefreshTokenError('X token expired', 'x', err);
+  if (err?.code === 429) {
+    const retry = Number(err?.headers?.['x-rate-limit-reset']) - Math.floor(Date.now() / 1000);
+    throw new RateLimitError('X rate limit', 'x', Math.max(retry, 1), err);
+  }
+  if (err?.code &gt;= 400 &amp;&amp; err?.code &lt; 500) {
+    throw new InvalidPayloadError(err?.data?.detail ?? 'Bad request', 'x', err);
+  }
+  throw new ProviderUnavailableError('X unavailable', 'x', err);
+}</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Traduzir erros do SDK para classes próprias na borda do provider.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir o token novo <strong>antes</strong> da retry.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Respeitar <code class="font-mono">retryAfterSec</code> na fila de jobs.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logar com <code class="font-mono">platform</code> e <code class="font-mono">cause</code> para debug.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry em loop sem limite — token expirado de verdade não volta.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Engolir erro com <code class="font-mono">catch {}</code> vazio.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar 4xx como falha temporária — payload errado não melhora.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Vazar instância do SDK no <code class="font-mono">cause</code> sem sanitizar.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Error hierarchy</div>
+          <p class="text-xs text-neutral-400">Classes tipadas habilitam <code class="font-mono">instanceof</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Token refresh</div>
+          <p class="text-xs text-neutral-400">Renovar e persistir antes de retry.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Backoff</div>
+          <p class="text-xs text-neutral-400">Respeitar <code class="font-mono">Retry-After</code> ou exponencial.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400">Retry seguro só se o post não foi publicado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧪 Testes unitários por provider</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Não dá pra bater na API real em CI: rate limit, custo, posts vazando para timeline pública. Use <strong class="text-teal-400">Vitest</strong> com mock do SDK e <strong class="text-teal-400">fixtures</strong> que reproduzem respostas reais capturadas uma vez. Cada provider tem seu arquivo de teste, cobrindo: <em>happy path</em>, refresh, rate limit e payload inválido.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// tests/fixtures/x.fixtures.ts
+export const X_TWEET_OK = {
+  data: { id: '1789012345678901234', text: 'Olá mundo' },
+};
+
+export const X_TWEET_429 = {
+  code: 429,
+  headers: { 'x-rate-limit-reset': String(Math.floor(Date.now() / 1000) + 60) },
+  data: { detail: 'Too Many Requests' },
+};
+
+export const X_TWEET_401 = { code: 401, data: { detail: 'Unauthorized' } };</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// tests/providers/x.provider.spec.ts
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { TwitterApi } from 'twitter-api-v2';
+import { XProvider } from '../../src/providers/x.provider';
+import { RateLimitError, RefreshTokenError } from '../../src/providers/errors';
+import { X_TWEET_OK, X_TWEET_429, X_TWEET_401 } from '../fixtures/x.fixtures';
+
+vi.mock('twitter-api-v2');
+
+describe('XProvider.post', () =&gt; {
+  const creds = { accessToken: 'access-abc', refreshToken: 'refresh-xyz' };
+  const payload = { text: 'Olá mundo' };
+  let tweetSpy: ReturnType&lt;typeof vi.fn&gt;;
+  let meSpy: ReturnType&lt;typeof vi.fn&gt;;
+
+  beforeEach(() =&gt; {
+    tweetSpy = vi.fn();
+    meSpy = vi.fn().mockResolvedValue({ data: { username: 'mkblogs' } });
+    (TwitterApi as unknown as vi.Mock).mockImplementation(() =&gt; ({
+      v2: { tweet: tweetSpy, me: meSpy },
+      v1: { uploadMedia: vi.fn() },
+    }));
+  });
+
+  it('publica tweet e retorna PostResult', async () =&gt; {
+    tweetSpy.mockResolvedValueOnce(X_TWEET_OK);
+    const provider = new XProvider();
+    const res = await provider.post(creds, payload);
+
+    expect(res.platformPostId).toBe('1789012345678901234');
+    expect(res.url).toBe('https://x.com/mkblogs/status/1789012345678901234');
+    expect(tweetSpy).toHaveBeenCalledOnce();
+  });
+
+  it('lança RefreshTokenError em 401', async () =&gt; {
+    tweetSpy.mockRejectedValueOnce(X_TWEET_401);
+    const provider = new XProvider();
+    await expect(provider.post(creds, payload)).rejects.toBeInstanceOf(RefreshTokenError);
+  });
+
+  it('lança RateLimitError com retryAfterSec em 429', async () =&gt; {
+    tweetSpy.mockRejectedValueOnce(X_TWEET_429);
+    const provider = new XProvider();
+    try {
+      await provider.post(creds, payload);
+      expect.fail('should have thrown');
+    } catch (err) {
+      expect(err).toBeInstanceOf(RateLimitError);
+      expect((err as RateLimitError).retryAfterSec).toBeGreaterThan(0);
+    }
+  });
+});</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// tests/providers/bluesky.provider.spec.ts
+import { describe, it, expect, vi } from 'vitest';
+import { BskyAgent } from '@atproto/api';
+import { BlueskyProvider } from '../../src/providers/bluesky.provider';
+
+vi.mock('@atproto/api', () =&gt; ({
+  BskyAgent: vi.fn().mockImplementation(() =&gt; ({
+    login: vi.fn().mockResolvedValue(undefined),
+    session: {
+      accessJwt: 'jwt-access',
+      refreshJwt: 'jwt-refresh',
+      did: 'did:plc:abc',
+      handle: 'mkblogs.bsky.social',
+    },
+    resumeSession: vi.fn(),
+    post: vi.fn().mockResolvedValue({ uri: 'at://did:plc:abc/app.bsky.feed.post/3kabc' }),
+    uploadBlob: vi.fn(),
+  })),
+  RichText: vi.fn().mockImplementation(() =&gt; ({
+    text: 'oi',
+    facets: [],
+    detectFacets: vi.fn(),
+  })),
+}));
+
+describe('BlueskyProvider.authenticate', () =&gt; {
+  it('retorna credenciais a partir de handle:password', async () =&gt; {
+    const provider = new BlueskyProvider();
+    const creds = await provider.authenticate('mkblogs.bsky.social:app-pw-1234');
+    expect(creds.accessToken).toBe('jwt-access');
+    expect(creds.metadata?.handle).toBe('mkblogs.bsky.social');
+  });
+});</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🎯</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Capture fixtures <strong>uma vez</strong> contra a API real e versione no repo (sanitize tokens!). É infinitamente mais confiável que mocks inventados — quando a API muda formato, seu teste quebra de propósito.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Vitest</div>
+          <p class="text-xs text-neutral-400">Runner moderno, compatível com Jest.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">vi.mock</div>
+          <p class="text-xs text-neutral-400">Substitui módulo inteiro do SDK.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Fixtures</div>
+          <p class="text-xs text-neutral-400">Respostas reais capturadas e versionadas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-teal-400 mb-1">Cobertura</div>
+          <p class="text-xs text-neutral-400">Happy + refresh + rate + payload inválido.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Interface SocialProvider definida</strong><span class="text-neutral-400"> — contrato mínimo com <code class="font-mono">authenticate</code>, <code class="font-mono">refreshToken</code> e <code class="font-mono">post</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Factory com registry</strong><span class="text-neutral-400"> — <code class="font-mono">getProvider(platform)</code> despacha sem acoplar o serviço de publicação.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">BlueskyProvider implementado</strong><span class="text-neutral-400"> — <code class="font-mono">BskyAgent</code>, login por app-password, <code class="font-mono">uploadBlob</code> e <code class="font-mono">RichText</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">XProvider implementado</strong><span class="text-neutral-400"> — <code class="font-mono">twitter-api-v2</code>, OAuth2 com PKCE, refresh e helper de thread.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Erros tipados</strong><span class="text-neutral-400"> — <code class="font-mono">RefreshTokenError</code>, <code class="font-mono">RateLimitError</code> e retry única após renovar token.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Testes com Vitest</strong><span class="text-neutral-400"> — mocks de SDK, fixtures versionadas e cobertura dos quatro cenários críticos.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">5.4 — Agendamento, filas BullMQ e workers de publicação</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-5-4.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

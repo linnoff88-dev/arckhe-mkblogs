@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 2 - Postiz Self-Hosted | MkBlogs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acento trilha Blue */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - outras cores de trilha (nav) */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER TRILHA -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">TRILHA 2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🐳 Postiz Self-Hosted</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Suba sua própria instância do Postiz com Docker Compose: agendador open-source de posts para X, Bluesky, LinkedIn, Mastodon e mais. Do VPS ao primeiro post programado via API.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">5</div>
+          <div class="text-xs text-neutral-400">Módulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">30</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">~4h</div>
+          <div class="text-xs text-neutral-400">Duração</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="#modulo-2-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-blue-400 font-bold text-sm">2.1</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">📋 Pré-requisitos</h3>
+          <p class="text-xs text-neutral-400">VPS, Docker, domínio, email</p>
+        </a>
+        <a href="#modulo-2-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-blue-400 font-bold text-sm">2.2</span>
+            <span class="text-xs text-neutral-500">~50 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🚀 Setup com Docker Compose</h3>
+          <p class="text-xs text-neutral-400">docker compose up e pronto</p>
+        </a>
+        <a href="#modulo-2-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-blue-400 font-bold text-sm">2.3</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🔧 Primeiro acesso</h3>
+          <p class="text-xs text-neutral-400">Admin, UI e organização</p>
+        </a>
+        <a href="#modulo-2-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-blue-400 font-bold text-sm">2.4</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🔌 Conectando contas</h3>
+          <p class="text-xs text-neutral-400">Bluesky, X, LinkedIn, Mastodon</p>
+        </a>
+        <a href="#modulo-2-5" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-blue-400 font-bold text-sm">2.5</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🔗 API e webhooks</h3>
+          <p class="text-xs text-neutral-400">Posts via curl e n8n</p>
+        </a>
+      </div>
+    </section>
+
+    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+
+    <!-- MODULO 2.1 -->
+    <div id="modulo-2-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📋 Pré-requisitos</h3>
+        <p class="text-neutral-400 text-sm">Tudo que você precisa ter pronto antes de tocar no docker-compose: máquina, rede, email e armazenamento.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">☁️</span>
+            <div><span class="font-medium">VPS recomendada</span><span class="text-neutral-500 text-sm ml-2">- DigitalOcean / Hetzner ~$6/mês</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Servidor virtual Linux (Ubuntu 22.04+) com pelo menos 2 GB de RAM e 1 vCPU. Postiz + Postgres + Redis cabem confortavelmente em CX22 da Hetzner (~€4) ou Droplet básico ($6) da DigitalOcean.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Self-hosted exige máquina sempre ligada com IP público. Escolher mal o tamanho gera OOM kill do Postgres; escolher caro demais é desperdício para uso pessoal/pequena equipe.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">2 GB RAM mínimo, 20 GB SSD, IPv4 público, snapshots semanais, firewall (UFW) liberando 22/80/443.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐳</span>
+            <div><span class="font-medium">Docker e Docker Compose</span><span class="text-neutral-500 text-sm ml-2">- Engine + plugin compose v2</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Docker Engine roda os containers; Docker Compose v2 (integrado como plugin) orquestra múltiplos serviços via <code class="font-mono text-blue-400">docker-compose.yml</code>. Instalação oficial: <code class="font-mono text-blue-400">curl -fsSL https://get.docker.com | sh</code>.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Postiz oficialmente recomenda compose como deploy padrão. Sem isso, você teria que rodar Postgres, Redis, frontend e workers separadamente — dor de cabeça desnecessária.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">docker --version ≥ 24, plugin compose v2 (<code class="font-mono text-blue-400">docker compose</code> sem hífen), usuário no grupo <code class="font-mono text-blue-400">docker</code>, restart policies.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🌐</span>
+            <div><span class="font-medium">Domínio próprio e DNS</span><span class="text-neutral-500 text-sm ml-2">- postiz.seudominio.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Subdomínio apontando (registro A) para o IP do seu VPS. Necessário para HTTPS via Let's Encrypt e para OAuth funcionar (X e LinkedIn exigem callback HTTPS).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem domínio, callbacks OAuth quebram, cookies de sessão falham em produção e você fica preso a HTTP em IP cru — inseguro e impossível de usar com X/LinkedIn.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Registro A, TTL baixo durante setup, Cloudflare proxy desligado para gerar cert, propagação DNS (5-30 min).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📧</span>
+            <div><span class="font-medium">Email transacional</span><span class="text-neutral-500 text-sm ml-2">- Resend (free tier 3.000/mês)</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Provedor SMTP/API para Postiz mandar email de boas-vindas, reset de senha e convites de membros. Resend é grátis até 3.000 emails/mês e tem API key simples.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem email configurado você não consegue convidar ninguém pra organização nem recuperar senha — efeitos só aparecem quando você precisa.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">SMTP host, porta 587 (STARTTLS), API key Resend, registros SPF/DKIM no DNS, FROM_EMAIL_ADDRESS no .env.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🪣</span>
+            <div><span class="font-medium">Storage S3-compatible</span><span class="text-neutral-500 text-sm ml-2">- Cloudflare R2 ou MinIO local</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Bucket S3-compatible para armazenar imagens e vídeos dos posts. R2 da Cloudflare não cobra egress; MinIO roda no próprio compose e fica em <code class="font-mono text-blue-400">/var/lib/minio</code>.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Postiz precisa servir mídia via URL pública para X/Bluesky baixarem. Salvar local no container quebra em reinicializações e estoura disco rápido.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Access key, secret key, endpoint URL, bucket público, CORS liberando o domínio do Postiz.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💻</span>
+            <div><span class="font-medium">Conhecimento mínimo de terminal</span><span class="text-neutral-500 text-sm ml-2">- SSH, vim/nano, journalctl</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Conforto para abrir SSH, editar arquivos (.env, docker-compose.yml), ler logs (<code class="font-mono text-blue-400">docker compose logs -f</code>) e reiniciar serviços (<code class="font-mono text-blue-400">docker compose restart postiz</code>).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Self-hosted = você é o sysadmin. Quando algo quebra (e vai quebrar uma vez), saber ler log e editar variável é a diferença entre 10 min e 3h.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">SSH com chave (não senha), <code class="font-mono text-blue-400">tail -f</code>, <code class="font-mono text-blue-400">grep ERROR</code>, screen/tmux para sessões longas.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-2-1.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 2.2 -->
+    <div id="modulo-2-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.2</span>
+          <span class="text-xs text-neutral-500">~50 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Setup com Docker Compose</h3>
+        <p class="text-neutral-400 text-sm">Do <code class="font-mono text-blue-400">git clone</code> ao <code class="font-mono text-blue-400">docker compose up -d</code>: o módulo exemplar com cada arquivo dissecado.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">docker-compose.yml do Postiz</span><span class="text-neutral-500 text-sm ml-2">- Imagem oficial ghcr.io/gitroomhq/postiz-app</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Arquivo YAML que declara 3 serviços: <code class="font-mono text-blue-400">postiz</code> (app), <code class="font-mono text-blue-400">postgres</code> e <code class="font-mono text-blue-400">redis</code>. Imagem oficial em <code class="font-mono text-blue-400">ghcr.io/gitroomhq/postiz-app:latest</code>, porta 5000 exposta internamente e mapeada para 5000 do host (ou via reverse proxy).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Saber editar esse arquivo é o que separa "instalei o Postiz" de "rodo Postiz em produção". Healthchecks, volumes nomeados e depends_on evitam corrida de start-up.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">services, volumes nomeados (<code class="font-mono text-blue-400">postgres-data</code>), depends_on com condition: service_healthy, restart: unless-stopped, env_file: .env.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Variáveis de ambiente .env</span><span class="text-neutral-500 text-sm ml-2">- JWT_SECRET, MAIN_URL, DATABASE_URL</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Arquivo <code class="font-mono text-blue-400">.env</code> com segredos e configuração: <code class="font-mono text-blue-400">JWT_SECRET</code> (gerar com <code class="font-mono text-blue-400">openssl rand -hex 32</code>), <code class="font-mono text-blue-400">MAIN_URL=https://postiz.seudominio.com</code>, <code class="font-mono text-blue-400">DATABASE_URL=postgresql://postiz:senha@postgres:5432/postiz</code>, <code class="font-mono text-blue-400">REDIS_URL=redis://redis:6379</code>, credenciais S3 e SMTP.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">90% dos erros de "Postiz não sobe" são variável faltando ou URL errada (http vs https, localhost vs nome do service). Dominar o .env é dominar 80% do troubleshooting.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">.env nunca no git (use .env.example), nome do service Docker é o hostname dentro da rede, NEXT_PUBLIC_* vai pro browser, secrets em 32+ caracteres.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🗄️</span>
+            <div><span class="font-medium">Postgres + Redis no compose</span><span class="text-neutral-500 text-sm ml-2">- Persistência e sessão</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Postgres 14+ guarda contas conectadas, posts agendados e organizações. Redis (7+) faz filas BullMQ dos jobs de publicação e cache de sessão. Ambos como containers irmãos do Postiz com volumes nomeados.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem volume nomeado, você perde TODOS os posts agendados no primeiro <code class="font-mono text-blue-400">docker compose down -v</code>. Sem Redis, jobs de publicação não rodam — posts ficam "scheduled" para sempre.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Volumes <code class="font-mono text-blue-400">postgres-data:/var/lib/postgresql/data</code>, healthcheck <code class="font-mono text-blue-400">pg_isready</code>, Redis sem persistência (efêmero ok), backup diário do volume.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">▶️</span>
+            <div><span class="font-medium">Primeiro <code class="font-mono">docker compose up</code></span><span class="text-neutral-500 text-sm ml-2">- A subida inaugural</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Comando <code class="font-mono text-blue-400">docker compose up -d</code> em modo detached. Na primeira execução baixa imagens (~1.5 GB), cria volumes, sobe Postgres, roda migrations Prisma automaticamente e inicia o frontend na porta 5000.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Saber a sequência esperada (pull → create volume → start postgres → wait healthy → migrate → start postiz) ajuda a identificar onde travou se algo der errado.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Flag <code class="font-mono text-blue-400">-d</code> (detached), <code class="font-mono text-blue-400">--build</code> para imagem custom, <code class="font-mono text-blue-400">--force-recreate</code> após editar .env, primeira subida demora 3-5 min.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📜</span>
+            <div><span class="font-medium">Logs e diagnóstico</span><span class="text-neutral-500 text-sm ml-2">- docker compose logs -f postiz</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Comandos <code class="font-mono text-blue-400">docker compose logs -f postiz</code> (follow), <code class="font-mono text-blue-400">--tail 200</code> para últimas linhas, <code class="font-mono text-blue-400">docker compose ps</code> para estado e <code class="font-mono text-blue-400">docker stats</code> para uso de CPU/RAM por container.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Erros comuns na primeira subida: <code class="font-mono text-blue-400">ECONNREFUSED</code> (Redis ainda subindo), migration falhou (DB credentials), porta 5000 já em uso. Todos visíveis no log.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Filtrar por service, separar stdout/stderr, exportar log com <code class="font-mono text-blue-400">&gt; postiz.log</code>, log rotation no daemon.json.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Verificando que subiu</span><span class="text-neutral-500 text-sm ml-2">- curl, /api/health e UI</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Três checks: (a) <code class="font-mono text-blue-400">docker compose ps</code> mostra 3 serviços <code class="font-mono text-blue-400">Up (healthy)</code>; (b) <code class="font-mono text-blue-400">curl http://localhost:5000</code> devolve HTML do Next.js; (c) abrir <code class="font-mono text-blue-400">https://postiz.seudominio.com</code> mostra tela de login.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">"Está rodando" é diferente de "está funcionando". Validar saúde antes de chamar a tropa garante que você não vai descobrir erro só quando o primeiro usuário tentar logar.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Endpoint <code class="font-mono text-blue-400">/api/health</code>, status code 200, conexão DB OK no log, screenshot da tela de signup salvo.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-2-2.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 2.3 -->
+    <div id="modulo-2-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.3</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔧 Primeiro acesso e configuração</h3>
+        <p class="text-neutral-400 text-sm">Container subiu — agora é hora de criar usuário, configurar storage na UI e montar a primeira organização.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">👤</span>
+            <div><span class="font-medium">Criar conta admin</span><span class="text-neutral-500 text-sm ml-2">- Primeiro usuário vira owner</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Postiz não tem "admin global" — o primeiro signup vira automaticamente owner da primeira organização criada. Abra <code class="font-mono text-blue-400">/auth/register</code>, preencha email, senha e confirme via email (se SMTP estiver configurado).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Quem cria primeiro tem o controle. Em deploy interno, registre você antes de divulgar a URL para a equipe, ou alguém vira owner por engano.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">DISABLE_REGISTRATION=true após primeiro user, role owner ≠ admin, recuperação de senha via email transacional.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🗺️</span>
+            <div><span class="font-medium">UI do Postiz: tour</span><span class="text-neutral-500 text-sm ml-2">- Launches, Analytics, Settings</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">3 áreas principais: <strong>Launches</strong> (calendário visual e agendamento), <strong>Analytics</strong> (métricas por rede e por post), <strong>Settings</strong> (organização, integrações, billing). Sidebar à esquerda navega entre elas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Conhecer o mapa da UI poupa minutos por dia. Calendário arrastável é o ponto forte do Postiz e está no Launches.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Drag-and-drop no calendário, modal de "novo post" multi-rede, dark mode nativo, switch entre organizações no topo.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🪣</span>
+            <div><span class="font-medium">Configurar storage S3 na UI</span><span class="text-neutral-500 text-sm ml-2">- Settings → Storage Provider</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Em Settings → Storage Provider, escolha entre <code class="font-mono text-blue-400">local</code> (não recomendado) ou <code class="font-mono text-blue-400">cloudflare</code>. Cole endpoint R2, access key, secret key, bucket name e a URL pública. Teste upload de imagem.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Storage mal configurado = posts com imagem ficam sem mídia. X retorna 400 silenciosamente quando URL da imagem é privada.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_ACCESS_KEY, CLOUDFLARE_BUCKETNAME, CLOUDFLARE_BUCKET_URL, CORS allow-origin.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✉️</span>
+            <div><span class="font-medium">Email/SMTP</span><span class="text-neutral-500 text-sm ml-2">- Resend API ou SMTP nativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">No .env: <code class="font-mono text-blue-400">EMAIL_PROVIDER=resend</code> + <code class="font-mono text-blue-400">RESEND_API_KEY=re_xxx</code> + <code class="font-mono text-blue-400">EMAIL_FROM_NAME=Postiz</code> + <code class="font-mono text-blue-400">EMAIL_FROM_ADDRESS=noreply@seudominio.com</code>. Reinicie e teste mandando convite para si mesmo.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem email, "convidar membro" só gera link manual. SPF/DKIM faltando = email vai pra spam ou nem entrega.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Resend domain verification, SPF TXT record, DKIM CNAME, FROM com domínio próprio (não @gmail).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏢</span>
+            <div><span class="font-medium">Criar primeira Organization</span><span class="text-neutral-500 text-sm ml-2">- Workspace que agrupa contas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Organization é o "workspace" do Postiz: agrupa contas de redes sociais, membros e posts. Você pode ter várias (ex: "Pessoal" e "ClienteX"). Criada automaticamente no primeiro signup; novas em Settings → Organizations.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Separação por organização é o que permite gerenciar múltiplos clientes/projetos sem misturar contas conectadas e analytics.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Org = boundary de billing, role no nível da org, switch via dropdown, slug único.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">👥</span>
+            <div><span class="font-medium">Convidar membros da equipe</span><span class="text-neutral-500 text-sm ml-2">- Roles: admin, user, viewer</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Em Settings → Team Members, click "Invite", informe email e role. Postiz envia email com link de aceite que cria a conta vinculada à org. Roles: <code class="font-mono text-blue-400">admin</code> (tudo menos billing), <code class="font-mono text-blue-400">user</code> (cria/edita posts), <code class="font-mono text-blue-400">viewer</code> (só lê).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Compartilhar credencial é antipattern. Cada pessoa com login próprio gera histórico auditável de quem publicou o quê.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Convite expira em 7 dias, role editável depois, remover membro não apaga posts dele, audit log por usuário.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-2-3.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 2.4 -->
+    <div id="modulo-2-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.4</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔌 Conectando contas</h3>
+        <p class="text-neutral-400 text-sm">A parte que importa: plugar X, Bluesky, LinkedIn e Mastodon — e ver o primeiro post sair pra cada rede.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🦋</span>
+            <div><span class="font-medium">Adicionar conta Bluesky</span><span class="text-neutral-500 text-sm ml-2">- Sem OAuth: handle + app password</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Bluesky usa ATProto, não OAuth. Em Launches → "+", escolha Bluesky, informe handle (ex: <code class="font-mono text-blue-400">você.bsky.social</code>) e um <strong>app password</strong> criado em bsky.app/settings/app-passwords. Conexão é instantânea, sem callback.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a conta mais fácil de plugar — bom primeiro teste end-to-end. Se Bluesky funciona, o pipeline (DB → fila → publisher) está ok.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">App password ≠ senha principal, revogável independentemente, sem rate limit agressivo, 300 chars por post.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐦</span>
+            <div><span class="font-medium">Conectar X via OAuth</span><span class="text-neutral-500 text-sm ml-2">- Developer Portal + callback HTTPS</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Crie app no <code class="font-mono text-blue-400">developer.x.com</code>, copie Client ID/Secret para <code class="font-mono text-blue-400">X_API_KEY</code> e <code class="font-mono text-blue-400">X_API_SECRET</code> no .env, configure callback <code class="font-mono text-blue-400">https://postiz.seudominio.com/integrations/social/x</code>. No Postiz, click "Connect X" e autorize.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">X é a rede mais quebradiça: callback URL exata, scopes específicos (<code class="font-mono text-blue-400">tweet.write</code>, <code class="font-mono text-blue-400">users.read</code>), API v2 paga limita free tier.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">OAuth 2.0 com PKCE, refresh token rotativo, free tier = 1.500 posts/mês, callback case-sensitive.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">💼</span>
+            <div><span class="font-medium">Conectar LinkedIn</span><span class="text-neutral-500 text-sm ml-2">- Profile vs Company Page</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Crie app em <code class="font-mono text-blue-400">linkedin.com/developers</code>, peça produtos "Share on LinkedIn" e "Sign In with LinkedIn using OpenID Connect". Configure <code class="font-mono text-blue-400">LINKEDIN_CLIENT_ID</code> / <code class="font-mono text-blue-400">LINKEDIN_CLIENT_SECRET</code> no .env. No Postiz, escolha entre conta pessoal e Company Page (admin obrigatório).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">LinkedIn é a rede com maior fricção: aprovação manual de "Share on LinkedIn" pode demorar dias. Iniciar cedo no curso.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Scope <code class="font-mono text-blue-400">w_member_social</code>, <code class="font-mono text-blue-400">w_organization_social</code> para páginas, token expira em 60 dias.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🐘</span>
+            <div><span class="font-medium">Adicionar Mastodon</span><span class="text-neutral-500 text-sm ml-2">- Instância + OAuth por server</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Mastodon é federado: cada instância (ex: <code class="font-mono text-blue-400">mastodon.social</code>, <code class="font-mono text-blue-400">tech.lgbt</code>) tem OAuth próprio. No Postiz, informe a URL da sua instância, ele cria app via API, redireciona e finaliza. Sem developer portal centralizado.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a única rede onde você não depende de aprovação da big tech. Ótimo para teste sem risco e para audiência tech.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Endpoint <code class="font-mono text-blue-400">/api/v1/apps</code> registra app dinamicamente, scopes <code class="font-mono text-blue-400">read write</code>, 500 chars padrão (varia por instância).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📅</span>
+            <div><span class="font-medium">Programar primeiro post</span><span class="text-neutral-500 text-sm ml-2">- Multi-rede, 1 conteúdo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">No calendário Launches, click em um horário futuro, selecione TODAS as contas conectadas, escreva o post, opcionalmente customize por rede (botão "Customize per channel"), confirme. Postiz cria N jobs Redis (um por rede) com publish_at futuro.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Este é o "Hello World" do Postiz. Funcionou em 4 redes simultâneas = self-host está validado.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Per-channel content (X tem 280, LinkedIn 3000), upload de mídia uma vez, timezone do user, retry automático em falha temporária.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Ver analytics básico</span><span class="text-neutral-500 text-sm ml-2">- Impressões, cliques, engajamento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Aba Analytics agrega métricas que cada rede expõe via API: impressões (X, LinkedIn), reposts (Bluesky), favorites (Mastodon). Atualização ~6h após publicar. Filtros por rede, por período e por post.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem dados, "agendar" é só automação cega. Cruzar horário × engajamento revela quando vale postar.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Métricas variam por rede (LinkedIn não dá impressão fora de Pages), cache de 6h, export CSV, comparação org-wide.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-2-4.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 2.5 -->
+    <div id="modulo-2-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.5</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔗 API e webhooks</h3>
+        <p class="text-neutral-400 text-sm">Postar pela UI é manual. A API REST do Postiz transforma sua instância em um endpoint pra qualquer app que você quiser.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔓</span>
+            <div><span class="font-medium">Habilitar API REST do Postiz</span><span class="text-neutral-500 text-sm ml-2">- API_KEY_AUTH=true no .env</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Postiz expõe rotas <code class="font-mono text-blue-400">/public/v1/*</code> protegidas por API key. Habilitar via <code class="font-mono text-blue-400">API_LIMIT=30</code> (req/min) e <code class="font-mono text-blue-400">DISABLE_PUBLIC_API=false</code> no .env. Reinicie o container após.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem API, Postiz é só dashboard. Com API, vira backend headless de publicação para seus apps.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Rate limit por API key, escopo por org, Swagger disponível em <code class="font-mono text-blue-400">/docs</code>, versionamento via prefix.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🗝️</span>
+            <div><span class="font-medium">Gerar API key</span><span class="text-neutral-500 text-sm ml-2">- Settings → API Keys</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Em Settings → API, click "Generate new key", dê um label (ex: "n8n-prod") e copie o token mostrado UMA vez (formato <code class="font-mono text-blue-400">pk_live_...</code>). Postiz armazena hash, não o token cru — perdeu = gera outro.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Uma chave por integração permite revogar uma sem afetar as outras quando algo vazar.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Token visible only once, vinculado à org, sem expiração default, last_used_at para auditoria.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📮</span>
+            <div><span class="font-medium">POST /posts via curl</span><span class="text-neutral-500 text-sm ml-2">- Hello World da API</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Comando: <code class="font-mono text-blue-400">curl -X POST https://postiz.seudominio.com/public/v1/posts -H "Authorization: pk_live_xxx" -H "Content-Type: application/json" -d '{"type":"schedule","date":"2026-06-01T15:00:00Z","posts":[{"integration":{"id":"INT_ID"},"value":[{"content":"Hello from API"}]}]}'</code>. Resposta 201 com ID do post.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Se curl funciona, qualquer linguagem funciona. É o teste irredutível de que a API está acessível e a key é válida.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Header Authorization sem "Bearer", integration ID obtido em GET /integrations, type=schedule|now|draft, date em ISO 8601 UTC.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🪝</span>
+            <div><span class="font-medium">Webhooks de status</span><span class="text-neutral-500 text-sm ml-2">- post.published, post.failed</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Em Settings → Webhooks, cadastre uma URL HTTPS sua. Postiz POSTa JSON quando eventos ocorrem: <code class="font-mono text-blue-400">post.published</code> (com URL final na rede), <code class="font-mono text-blue-400">post.failed</code> (com mensagem de erro), <code class="font-mono text-blue-400">post.scheduled</code>.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Polling /posts/:id pra saber se publicou é gambiarra. Webhook = sua app reage em tempo real ao sucesso/falha sem desperdiçar request.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Retry com backoff exponencial em 5xx, assinatura HMAC opcional, idempotency key no payload, timeout 10s.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔁</span>
+            <div><span class="font-medium">Integração com n8n / Make</span><span class="text-neutral-500 text-sm ml-2">- HTTP node + Postiz API</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">No n8n, HTTP Request node com método POST, URL da sua instância, header Authorization (credential reutilizável), body JSON dinâmico via expressões. Make idem com módulo HTTP. Zero plugin específico necessário — REST puro.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É o caminho mais rápido para automatizar "post toda terça às 10h com últimos posts do RSS" sem escrever uma linha de código.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Credential type "Header Auth", trigger por cron/RSS/Airtable, tratamento de erro com IF node, logs em Supabase.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Fluxo: app próprio → API Postiz → redes</span><span class="text-neutral-500 text-sm ml-2">- Arquitetura completa</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Pipeline típico: (1) seu CMS/Notion/Airtable cria conteúdo → (2) trigger (webhook/cron) chama <code class="font-mono text-blue-400">POST /public/v1/posts</code> com agendamento → (3) Postiz coloca na fila Redis → (4) na hora marcada publica em N redes → (5) webhook avisa sua app com URL final → (6) sua app guarda histórico.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a arquitetura que separa "ferramenta isolada" de "componente do meu stack". Vale para SaaS, blog automation, agência multi-cliente.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Idempotência por external_id, dead-letter queue para falhas persistentes, retry com circuit breaker, observabilidade end-to-end (request_id propagado).</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-2-5.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO ENTRE TRILHAS -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha1/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 1: Fundamentos</a>
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">Início</a>
+      <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Trilha 3: Redes →</a>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs 🚀 — 2026 · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        // fallback: navegar para a página do módulo
+        const map = { 'modal-2-1':'modulo-2-1.html','modal-2-2':'modulo-2-2.html','modal-2-3':'modulo-2-3.html','modal-2-4':'modulo-2-4.html','modal-2-5':'modulo-2-5.html' };
+        if (map[modalId]) window.location.href = map[modalId];
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

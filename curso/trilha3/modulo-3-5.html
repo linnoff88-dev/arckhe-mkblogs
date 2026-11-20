@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.5 - Instagram & Threads (Meta) | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Purple (T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .bg-purple-600 { background-color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500:hover { background-color: #8b5cf6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📷 Instagram & Threads (Meta)</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">O ecossistema mais burocrático do mercado: Business obrigatório, App Review obrigatório e fluxo 2-step de publicação. Vale a pena pelo alcance — mas você precisa sobreviver às 4-6 semanas de review.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">45</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">💼 Conta Business obrigatória</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A Graph API do Instagram <strong class="text-purple-400">não publica em conta pessoal</strong>. Para postar via API você precisa de uma conta <strong class="text-purple-400">Business</strong> (ou <em>Creator</em> em casos pontuais, mas o caminho seguro é Business) <strong class="text-purple-400">vinculada a uma Facebook Page</strong>. Sem esses dois requisitos, nenhum endpoint de publicação responde — sempre <code class="text-purple-400 font-mono text-sm">400 Bad Request</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Conversão é gratuita e leva minutos no app do Instagram. O ponto crítico é o <strong class="text-purple-400">vínculo com a Page</strong>: a permissão de publicação flui da Page → Instagram, não direto na conta IG.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Passo a passo no app do Instagram
+# 1. Configurações → Conta → Mudar para conta profissional
+# 2. Escolher categoria (ex: "Software", "Mídia")
+# 3. Selecionar "Empresa" (NÃO "Criador de conteúdo")
+# 4. Vincular Facebook Page existente OU criar uma nova
+
+# Verificar via Graph API que o vínculo existe
+curl -G "https://graph.facebook.com/v21.0/me/accounts" \
+  -d "access_token=USER_TOKEN" \
+  -d "fields=id,name,instagram_business_account"
+# {
+#   "data": [{
+#     "id": "1234567890",
+#     "name": "Minha Page",
+#     "instagram_business_account": { "id": "17841405822304914" }
+#   }]
+# }</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se o campo <code class="text-primary font-mono text-sm">instagram_business_account</code> vier vazio, o vínculo Page↔IG <strong>não foi feito corretamente</strong>. Volte no <strong>Meta Business Suite</strong> (business.facebook.com) e refaça o link em <em>Configurações → Contas → Contas do Instagram</em>. Esse é o erro #1 de quem tenta postar pela primeira vez.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Business Account</div>
+          <p class="text-xs text-neutral-400">Tipo de conta IG com acesso à Graph API.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Facebook Page</div>
+          <p class="text-xs text-neutral-400">Ponte de permissão entre IG e a API.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">IG Business ID</div>
+          <p class="text-xs text-neutral-400">ID numérico usado em todas as chamadas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Business Suite</div>
+          <p class="text-xs text-neutral-400">Painel Meta que gerencia o vínculo Page↔IG.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🏢 Meta App + App Review</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Toda chamada à Graph API exige um <strong class="text-purple-400">Meta App</strong> registrado em <a href="https://developers.facebook.com" target="_blank" class="text-purple-400 hover:underline">developers.facebook.com</a>. Para Instagram + Threads, o tipo correto é <strong class="text-purple-400">Business</strong> — não escolha "Consumer", as permissões necessárias nem aparecem lá.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Após criar o app, adicione os <strong class="text-purple-400">produtos</strong>: <em>Instagram Graph API</em>, <em>Facebook Login for Business</em> e, se for usar Threads, <em>Threads API</em>. Cada um tem suas próprias permissões e cada permissão sensível passa por <strong class="text-purple-400">App Review</strong> antes de funcionar para usuários que não sejam Admin/Dev/Tester do app.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Roteiro de criação do app
+# 1. developers.facebook.com → Meus Apps → Criar App
+# 2. Tipo: "Business" (NÃO Consumer, NÃO Gaming)
+# 3. Nome do app: ex. "Postiz Self-Hosted"
+# 4. E-mail de contato + Business Account
+# 5. Adicionar produtos:
+#    - Instagram Graph API
+#    - Facebook Login for Business
+#    - Threads API (se aplicável)
+
+# Os identificadores ficam em Configurações → Básico
+# App ID:     1234567890123456
+# App Secret: nunca-exponha-isso-no-front
+
+# Modo do app: Development (só Admin/Dev/Tester usa)
+#               → Live (após App Review aprovado)</code></pre>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">📌</span> Modo Development vs Live
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-purple-400">Development:</strong> só funciona para contas adicionadas como Admin, Developer ou Tester no app. Útil para desenvolver e testar sem App Review.</li>
+          <li><strong class="text-purple-400">Live:</strong> qualquer usuário pode conectar, mas <strong>todas as permissões avançadas precisam estar aprovadas no App Review</strong>.</li>
+          <li><strong class="text-purple-400">Transição:</strong> só é possível mudar para Live após <em>Business Verification</em> completa.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Meta App</div>
+          <p class="text-xs text-neutral-400">Container de credenciais e permissões.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">App ID / Secret</div>
+          <p class="text-xs text-neutral-400">Par usado no OAuth — secret só no backend.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Produtos</div>
+          <p class="text-xs text-neutral-400">APIs específicas que você ativa no app.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Business Verification</div>
+          <p class="text-xs text-neutral-400">Validação da empresa (CNPJ, documentos).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎫 Permissões essenciais</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A Meta separa cada capacidade em uma <strong class="text-purple-400">permission scope</strong> distinta. Para um caso de uso típico de agendamento (publicar feed, ler insights, gerenciar a Page), você vai pedir <strong class="text-purple-400">5 a 7 escopos</strong> — e cada um precisa de justificativa própria no App Review.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Escopos OAuth para Instagram Business
+# Mínimo viável para publicar feed:
+pages_show_list                    # listar Pages do usuário
+pages_read_engagement              # ler dados da Page
+pages_manage_posts                 # publicar na Page
+instagram_basic                    # ler perfil/posts IG
+instagram_content_publish          # PUBLICAR no IG via API
+
+# Insights / métricas (opcional mas comum):
+instagram_manage_insights
+
+# URL de autorização (Facebook Login for Business)
+https://www.facebook.com/v21.0/dialog/oauth
+  ?client_id=APP_ID
+  &redirect_uri=https://seu-host/oauth/callback
+  &scope=pages_show_list,pages_read_engagement,pages_manage_posts,
+         instagram_basic,instagram_content_publish
+  &response_type=code
+
+# Troca code → long-lived token (server-side, usa App Secret)
+curl -G "https://graph.facebook.com/v21.0/oauth/access_token" \
+  -d "client_id=APP_ID" \
+  -d "client_secret=APP_SECRET" \
+  -d "redirect_uri=https://seu-host/oauth/callback" \
+  -d "code=CODE_RECEBIDO"</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pedir <strong>apenas</strong> escopos que você realmente vai usar.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Trocar o <code class="font-mono">code</code> por token <strong>no backend</strong>, nunca no front.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Converter para <em>long-lived token</em> (60 dias) e renovar antes de expirar.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Documentar justificativa de cada escopo para o App Review.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">ads_management</code> "só por garantia" — review nega.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expor o <code class="font-mono">App Secret</code> em código que vai pro browser.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em short-lived token (1h) em produção.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar OAuth tradicional — Meta migrou para <em>Login for Business</em>.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Scope</div>
+          <p class="text-xs text-neutral-400">Permissão granular pedida no OAuth.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Long-lived token</div>
+          <p class="text-xs text-neutral-400">Token de 60 dias, renovável server-side.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Page Access Token</div>
+          <p class="text-xs text-neutral-400">Token específico da Page para publicar IG.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Advanced Access</div>
+          <p class="text-xs text-neutral-400">Estado pós-review que libera o escopo no Live.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔄 Fluxo 2-step: container + publish</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Diferente de quase todas as outras APIs, o Instagram <strong class="text-purple-400">não publica em uma chamada só</strong>. O fluxo é: <strong class="text-purple-400">(1)</strong> criar um <em>media container</em> com a mídia + caption → <strong class="text-purple-400">(2)</strong> aguardar processamento → <strong class="text-purple-400">(3)</strong> chamar <code class="text-purple-400 font-mono text-sm">media_publish</code> com o ID do container. Pular o passo 2 em vídeos é o erro mais comum.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># STEP 1 — Criar container (imagem)
+curl -X POST "https://graph.facebook.com/v21.0/{IG_BUSINESS_ID}/media" \
+  -d "image_url=https://cdn.exemplo.com/foto.jpg" \
+  -d "caption=Lançamento de hoje! #produto" \
+  -d "access_token=PAGE_TOKEN"
+# { "id": "17889455560051234" }   ← container_id
+
+# STEP 2 — (Para VÍDEO/REEL) checar status até FINISHED
+curl -G "https://graph.facebook.com/v21.0/17889455560051234" \
+  -d "fields=status_code" \
+  -d "access_token=PAGE_TOKEN"
+# { "status_code": "IN_PROGRESS" }   ← aguardar
+# { "status_code": "FINISHED" }      ← pronto para publicar
+# { "status_code": "ERROR" }         ← falhou (ver status)
+
+# STEP 3 — Publicar
+curl -X POST "https://graph.facebook.com/v21.0/{IG_BUSINESS_ID}/media_publish" \
+  -d "creation_id=17889455560051234" \
+  -d "access_token=PAGE_TOKEN"
+# { "id": "17912345678901234" }   ← ID do post publicado</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏳</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Para vídeo/Reel, faça <strong>polling com backoff</strong>: cheque <code class="text-primary font-mono text-sm">status_code</code> a cada 3-5s, até <strong>60 segundos</strong> de espera máxima. Se publicar antes de <code class="text-primary font-mono text-sm">FINISHED</code>, a API retorna <code class="text-primary font-mono text-sm">9007</code> ("Media not ready") e o post entra em estado fantasma — não aparece no feed mas ocupa cota.</p>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para <strong class="text-purple-400">carrossel</strong>, repita o STEP 1 para cada slide (com <code class="text-purple-400 font-mono text-sm">is_carousel_item=true</code>), depois crie um container-pai do tipo <code class="text-purple-400 font-mono text-sm">CAROUSEL</code> referenciando os filhos e só então faça o <code class="text-purple-400 font-mono text-sm">media_publish</code>.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Media container</div>
+          <p class="text-xs text-neutral-400">Rascunho temporário antes da publicação.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">creation_id</div>
+          <p class="text-xs text-neutral-400">ID retornado no STEP 1, consumido no STEP 3.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">status_code</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">IN_PROGRESS</code> / <code class="font-mono">FINISHED</code> / <code class="font-mono">ERROR</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Rate limit</div>
+          <p class="text-xs text-neutral-400">25 publicações / 24h por conta IG.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🧵 Threads API (mesmo ecossistema)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Threads herda a infraestrutura do Instagram: <strong class="text-purple-400">mesmo Meta App</strong>, mesmo fluxo OAuth, mesmo modelo 2-step. A diferença é o <strong class="text-purple-400">host da API</strong> — <code class="text-purple-400 font-mono text-sm">graph.threads.net</code> — e o conjunto de permissões próprias começando com <code class="text-purple-400 font-mono text-sm">threads_</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Escopos Threads
+threads_basic              # ler perfil
+threads_content_publish    # publicar threads
+threads_manage_replies     # responder
+threads_read_replies       # ler respostas
+threads_manage_insights    # métricas
+
+# STEP 1 — Criar container Threads
+curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
+  -d "media_type=TEXT" \
+  -d "text=Primeira thread via API 🧵" \
+  -d "access_token=THREADS_TOKEN"
+# { "id": "1234567890" }
+
+# STEP 2 — Publicar
+curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads_publish" \
+  -d "creation_id=1234567890" \
+  -d "access_token=THREADS_TOKEN"
+# { "id": "9876543210" }
+
+# Encadear reply na mesma thread
+curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
+  -d "media_type=TEXT" \
+  -d "text=Segunda parte do thread..." \
+  -d "reply_to_id=9876543210" \
+  -d "access_token=THREADS_TOKEN"</code></pre>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Particularidades do Threads
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-purple-400">Conta Threads:</strong> não exige Business — basta uma conta Threads ativa (vinculada ao Instagram).</li>
+          <li><strong class="text-purple-400">Host diferente:</strong> <code class="font-mono">graph.threads.net</code> (não <code class="font-mono">graph.facebook.com</code>).</li>
+          <li><strong class="text-purple-400">Rate limit:</strong> 250 publicações/24h por usuário — mais generoso que IG.</li>
+          <li><strong class="text-purple-400">Tipos de mídia:</strong> <code class="font-mono">TEXT</code>, <code class="font-mono">IMAGE</code>, <code class="font-mono">VIDEO</code> e <code class="font-mono">CAROUSEL</code>.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">graph.threads.net</div>
+          <p class="text-xs text-neutral-400">Endpoint próprio do Threads.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">media_type</div>
+          <p class="text-xs text-neutral-400">TEXT / IMAGE / VIDEO / CAROUSEL.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">reply_to_id</div>
+          <p class="text-xs text-neutral-400">Encadeia respostas em thread.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">App único</div>
+          <p class="text-xs text-neutral-400">Mesma app cobre IG + Threads.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚡ Dicas para acelerar o App Review</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O App Review da Meta é <strong class="text-purple-400">o gargalo</strong>. Em média leva <strong class="text-purple-400">4 a 6 semanas</strong> entre submissão e Advanced Access. Boa parte das rejeições é por <em>screencast ruim</em> ou justificativa genérica — e cada rejeição reseta o relógio.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-4">⏱️ Timeline realista do App Review</h3>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 0 — Preparação <span class="text-xs text-neutral-400">(2-5 dias)</span></h4>
+            <p class="text-sm text-neutral-400">Criar app, configurar produtos, escrever Privacy Policy e Terms, hospedar em URL pública estável.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 1 — Business Verification <span class="text-xs text-neutral-400">(3-10 dias)</span></h4>
+            <p class="text-sm text-neutral-400">Submeter CNPJ + documentos no Business Manager. Sem isso, App Review nem começa.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 2 — Submissão do Review <span class="text-xs text-neutral-400">(1-2 dias preparando)</span></h4>
+            <p class="text-sm text-neutral-400">Gravar screencast por permissão, escrever descrição detalhada, submeter no painel.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semanas 3-4 — Análise da Meta <span class="text-xs text-neutral-400">(10-20 dias)</span></h4>
+            <p class="text-sm text-neutral-400">Revisor humano avalia o fluxo. Tempo varia muito com fila e qualidade da submissão.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semanas 4-5 — Resposta <span class="text-xs text-neutral-400">(Aprovado ou Rejeitado)</span></h4>
+            <p class="text-sm text-neutral-400">Se aprovado → Advanced Access habilitado. Se rejeitado → leia o motivo e re-submeta (reseta o ciclo).</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">6</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 6 — App em Live <span class="text-xs text-neutral-400">(imediato após aprovação)</span></h4>
+            <p class="text-sm text-neutral-400">Mudar app de Development para Live no painel — qualquer usuário externo pode conectar.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">🎥 Anatomia de um screencast aprovado</h3>
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Checklist do screencast (1 vídeo por permissão)
+# Duração: 1-3 minutos por permissão
+
+[00:00-00:10]  Tela inicial do produto + login do usuário
+[00:10-00:30]  Clique em "Conectar Instagram" → tela OAuth da Meta
+[00:30-00:50]  Mostrar EXATAMENTE quais permissões são pedidas
+[00:50-01:30]  Demonstrar o USO REAL da permissão
+                (ex: publicar um post de teste se for content_publish)
+[01:30-02:00]  Mostrar o resultado (post no feed do IG)
+[02:00-02:30]  Narração explicando POR QUE o usuário se beneficia
+
+# Pontos críticos
+- Áudio com narração em INGLÊS (review é global)
+- Resolução mínima 720p
+- Mostrar a UI do SEU app, não terminal/Postman
+- Cada permissão = vídeo separado</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que ACELERA o review</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Screencast em <strong>inglês</strong>, com narração clara.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Justificativa específica: "publica posts agendados em nome do usuário, autenticado via OAuth".</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Privacy Policy + Terms em URL pública e estável.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Business Verification <strong>antes</strong> da submissão.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Conta de teste com dados reais já populados.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que GARANTE rejeição</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Screencast em terminal/Postman sem mostrar UI.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Quero a permissão X para futuras features" — sem caso de uso atual.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>App ainda em <code class="font-mono">localhost</code> ou domínio temporário.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">ads_*</code> ou escopos que você não precisa.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Privacy Policy genérica copiada de template.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">App Review</div>
+          <p class="text-xs text-neutral-400">Auditoria humana das permissões pedidas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Screencast</div>
+          <p class="text-xs text-neutral-400">Vídeo demonstrando uso real de cada escopo.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Standard Access</div>
+          <p class="text-xs text-neutral-400">Pré-review — só Admin/Dev/Tester usa.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Advanced Access</div>
+          <p class="text-xs text-neutral-400">Pós-review — qualquer usuário pode conectar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Conta Business + Page</strong><span class="text-neutral-400"> — pré-requisito não-negociável; vínculo verificável via <code class="font-mono">/me/accounts</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Meta App tipo Business</strong><span class="text-neutral-400"> — criado em developers.facebook.com com produtos Instagram + Threads ativos.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Escopos certos</strong><span class="text-neutral-400"> — <code class="font-mono">pages_manage_posts</code>, <code class="font-mono">instagram_content_publish</code> e companhia, sem excessos.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Fluxo 2-step internalizado</strong><span class="text-neutral-400"> — container → status FINISHED → media_publish, com polling em vídeo.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Threads no mesmo app</strong><span class="text-neutral-400"> — host <code class="font-mono">graph.threads.net</code>, escopos <code class="font-mono">threads_*</code>, modelo análogo ao IG.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">App Review domado</strong><span class="text-neutral-400"> — screencast em inglês, justificativa específica, Business Verification antes.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">3.6 — Mastodon, Bluesky e Fediverse (o lado simples da força)</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-3-6.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

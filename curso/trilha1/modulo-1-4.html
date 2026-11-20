@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1.4 - Custo, limites e estratégia | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Emerald (T1) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(5, 150, 105, 0.10); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .bg-emerald-600 { background-color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500:hover { background-color: #10b981; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - red para grids Fazer/Evitar */
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+
+    /* Tabelas */
+    table { border-collapse: collapse; }
+    table th, table td { padding: 0.65rem 0.85rem; text-align: left; }
+    table thead th { font-weight: 600; }
+    .dark table thead { background-color: rgba(5, 150, 105, 0.15); }
+    .dark table tbody tr { border-top: 1px solid #374151; }
+    html:not(.dark) table thead { background-color: rgba(5, 150, 105, 0.10); }
+    html:not(.dark) table tbody tr { border-top: 1px solid #e5e7eb; }
+    html:not(.dark) table thead th { color: #059669; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a>
+      <span>/</span>
+      <span class="text-emerald-400">Módulo 1.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💰 Custo, limites e estratégia</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Preços reais por plataforma em 2026, rate limits que importam, decisão self-hosted vs SaaS, comparativo das principais ferramentas e o roadmap prático para começar sem queimar dinheiro.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Estratégia</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">💵 Tabela de custo por plataforma (2026)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A maior surpresa pra quem começa: <strong class="text-emerald-400">a maior parte das APIs de rede social é gratuita</strong>. A exceção é o X (antigo Twitter), que cobra desde 2023. As outras ainda exigem app review e autenticação OAuth, mas não cobram pelas requisições dentro dos limites.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-emerald-400">custo real do seu projeto</strong> não está na API — está em infraestrutura (servidor, banco), tempo de desenvolvimento e, se for o caso, no plano X Basic ($200/mês) ou Pro ($5.000/mês).
+      </p>
+
+      <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Plataforma</th>
+              <th>Plano gratuito</th>
+              <th>Pago (entrada)</th>
+              <th>Custo aprox. por post</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-300">
+            <tr>
+              <td><strong class="text-emerald-400">X (Twitter)</strong></td>
+              <td>Free (limitado a leitura)</td>
+              <td>Basic $200/mês</td>
+              <td>~$0,01 (no Basic)</td>
+              <td>Único pago obrigatório pra postar via API.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">LinkedIn</strong></td>
+              <td>Grátis (após app review)</td>
+              <td>—</td>
+              <td>$0</td>
+              <td>App review demora 5-15 dias.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Meta (FB/IG)</strong></td>
+              <td>Grátis (Business app)</td>
+              <td>—</td>
+              <td>$0</td>
+              <td>IG exige conta Business + página FB.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">TikTok</strong></td>
+              <td>Grátis (Content Posting)</td>
+              <td>—</td>
+              <td>$0</td>
+              <td>App review obrigatório, restrito a contas próprias.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Bluesky</strong></td>
+              <td>Grátis (AT Protocol)</td>
+              <td>—</td>
+              <td>$0</td>
+              <td>Sem app review. Mais aberto do mercado.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">WordPress</strong></td>
+              <td>Grátis (auto-hospedado)</td>
+              <td>WP.com Business $25/mês</td>
+              <td>$0</td>
+              <td>API REST nativa, OAuth ou App Password.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">YouTube</strong></td>
+              <td>Grátis (10k unidades/dia)</td>
+              <td>Sob negociação</td>
+              <td>$0</td>
+              <td>Upload custa 1.600 unidades — limite ~6 vídeos/dia.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Threads</strong></td>
+              <td>Grátis (Meta Graph)</td>
+              <td>—</td>
+              <td>$0</td>
+              <td>API estável desde 2024, herda OAuth do IG.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se você está validando uma ideia, <strong>comece sem X</strong>. Bluesky + LinkedIn + WordPress já cobrem 80% dos casos de uso e custam zero. O X Basic só vale a pena se Twitter for canal-chave do público que você atende.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Tier free</div>
+          <p class="text-xs text-neutral-400">Nível gratuito com limites de chamadas/dia.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">App review</div>
+          <p class="text-xs text-neutral-400">Aprovação manual antes de usar escopos sensíveis.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Unidades de quota</div>
+          <p class="text-xs text-neutral-400">Cada endpoint custa N unidades (YouTube).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Custo marginal</div>
+          <p class="text-xs text-neutral-400">Quanto custa cada post adicional além do fixo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🚦 Rate limits típicos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-emerald-400">Rate limit</strong> é o teto de chamadas permitido em uma janela de tempo. Estourar significa <code class="text-emerald-400 font-mono text-sm">429 Too Many Requests</code> — e algumas plataformas penalizam reincidência com bans temporários ou permanentes.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para 99% dos casos, os limites são generosos: nenhum projeto saudável posta 300 vezes em 15 minutos. O perigo é em <strong class="text-emerald-400">loops bugados</strong>, retries mal configurados ou scraping mascarado de "agendamento".
+      </p>
+
+      <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Plataforma</th>
+              <th>Limite de publicação</th>
+              <th>Janela</th>
+              <th>Erro ao estourar</th>
+              <th>Estratégia</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-300">
+            <tr>
+              <td><strong class="text-emerald-400">X (Basic)</strong></td>
+              <td>300 posts</td>
+              <td>15 minutos / app</td>
+              <td>429 + reset header</td>
+              <td>Backoff exponencial, ler <code class="font-mono">x-rate-limit-reset</code>.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">LinkedIn</strong></td>
+              <td>~100 posts</td>
+              <td>24h / usuário</td>
+              <td>429</td>
+              <td>Fila com throttle simples.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Meta (FB/IG)</strong></td>
+              <td>200 chamadas</td>
+              <td>1h / usuário</td>
+              <td>4 (subcode 17)</td>
+              <td>Respeitar <code class="font-mono">x-app-usage</code>.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Instagram</strong></td>
+              <td>25 posts</td>
+              <td>24h / conta IG Business</td>
+              <td>Erro 9 / sub 2207051</td>
+              <td>Limite duro — não há recurso.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">TikTok</strong></td>
+              <td>6 vídeos</td>
+              <td>24h / usuário</td>
+              <td>rate_limit_exceeded</td>
+              <td>Espalhar pelo dia.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Bluesky</strong></td>
+              <td>5.000 pontos</td>
+              <td>1h / DID</td>
+              <td>RateLimitExceeded</td>
+              <td>Praticamente irrelevante na prática.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">WordPress</strong></td>
+              <td>Sem teto oficial</td>
+              <td>—</td>
+              <td>Depende do host</td>
+              <td>Self-host: você define.</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">YouTube</strong></td>
+              <td>10.000 unidades</td>
+              <td>24h / projeto</td>
+              <td>quotaExceeded</td>
+              <td>Upload = 1.600 unid; ~6 vídeos/dia.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Padrão correto: respeitar o header de reset
+HTTP/1.1 429 Too Many Requests
+x-rate-limit-limit: 300
+x-rate-limit-remaining: 0
+x-rate-limit-reset: 1735689600   # epoch — esperar até esse instante
+
+# Pseudocódigo de retry
+if (response.status === 429) {
+  const resetAt = Number(response.headers['x-rate-limit-reset']) * 1000;
+  const waitMs  = Math.max(0, resetAt - Date.now()) + 500; // +500ms jitter
+  await sleep(waitMs);
+  return retry();
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Nunca faça retry imediato em <code class="text-primary font-mono text-sm">429</code>. Sempre leia o header de reset e adicione <strong>jitter</strong> (300-1000ms aleatórios) para evitar que múltiplos workers retomem ao mesmo tempo e estourem o limite de novo.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Janela</div>
+          <p class="text-xs text-neutral-400">Período em que o contador acumula.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Backoff</div>
+          <p class="text-xs text-neutral-400">Aumentar o intervalo entre retries.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Jitter</div>
+          <p class="text-xs text-neutral-400">Aleatoriedade pra evitar tempestade de retries.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Quota global</div>
+          <p class="text-xs text-neutral-400">Limite que vale pra todo o app, não por usuário.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🏠 Self-hosted vs SaaS</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A escolha não é técnica — é de <strong class="text-emerald-400">prioridade</strong>. SaaS troca dinheiro por tempo e dor de cabeça. Self-hosted troca dinheiro por controle e dados.
+      </p>
+
+      <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Critério</th>
+              <th>Self-hosted (Postiz, Mixpost)</th>
+              <th>SaaS (Buffer, Ayrshare, Hootsuite)</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-300">
+            <tr>
+              <td><strong class="text-emerald-400">Custo mensal fixo</strong></td>
+              <td>$5-20 (VPS) + tempo</td>
+              <td>$15-99 / usuário</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Setup inicial</strong></td>
+              <td>1-3 horas (Docker)</td>
+              <td>5 minutos</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Manutenção</strong></td>
+              <td>Você (updates, backup, monitor)</td>
+              <td>Fornecedor</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Customização</strong></td>
+              <td>Total — código aberto</td>
+              <td>Limitada ao que o produto expõe</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Dados</strong></td>
+              <td>Ficam contigo</td>
+              <td>Ficam com o fornecedor</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Vendor lock-in</strong></td>
+              <td>Nenhum — você é dono</td>
+              <td>Alto — exportar é trabalhoso</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Acesso à API</strong></td>
+              <td>Direto, sem intermediário</td>
+              <td>Via API do SaaS (paga extra)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Escala (50+ contas)</strong></td>
+              <td>VPS maior = mesmo preço</td>
+              <td>Cresce linear com contas</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Suporte</strong></td>
+              <td>Discord da comunidade</td>
+              <td>Suporte profissional</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Em <strong class="text-emerald-400">custo total a 12 meses</strong> com 5 contas e 3 usuários: Buffer Team sai a ~$1.080/ano; um Postiz num VPS de $10/mês sai a ~$120 + 6 horas de setup/manutenção. A conta vira quando você passa de 2-3 usuários.
+      </p>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚖️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se você cobra clientes, <strong>self-host vira margem</strong>. Cada cliente que entra adiciona contas sem aumentar seu custo de software — só o do VPS. Em SaaS, cada cliente novo é um seat a mais na sua fatura.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">TCO</div>
+          <p class="text-xs text-neutral-400">Custo total: infra + tempo + suporte.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Vendor lock-in</div>
+          <p class="text-xs text-neutral-400">Dependência que dificulta trocar de fornecedor.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Soberania de dados</div>
+          <p class="text-xs text-neutral-400">Quem é dono e onde os dados moram.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Custo marginal</div>
+          <p class="text-xs text-neutral-400">Quanto sai cada conta/cliente adicional.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🆚 Postiz vs Ayrshare vs Buffer</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Três perfis bem distintos. <strong class="text-emerald-400">Postiz</strong> = open source self-hosted. <strong class="text-emerald-400">Ayrshare</strong> = API-first (você embute em produto). <strong class="text-emerald-400">Buffer</strong> = SaaS clássico de UI bonita.
+      </p>
+
+      <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Critério</th>
+              <th>Postiz</th>
+              <th>Ayrshare</th>
+              <th>Buffer</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-300">
+            <tr>
+              <td><strong class="text-emerald-400">Modelo</strong></td>
+              <td>Open source / Cloud</td>
+              <td>API SaaS</td>
+              <td>SaaS UI-first</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Preço (entrada)</strong></td>
+              <td>Grátis (self) / $29 cloud</td>
+              <td>$149/mês (Premium)</td>
+              <td>$15/mês (Essentials)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Plataformas suportadas</strong></td>
+              <td>17+ (X, IG, FB, LI, TT, BS, YT...)</td>
+              <td>14+</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">API pública</strong></td>
+              <td>Sim, REST nativa</td>
+              <td>Sim — é o produto</td>
+              <td>Sim, restrita</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Dificuldade</strong></td>
+              <td>Média (Docker + .env)</td>
+              <td>Fácil (HTTP call)</td>
+              <td>Trivial (UI)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Ideal para</strong></td>
+              <td>Devs / agências / quem quer controle</td>
+              <td>SaaS que precisa embutir agendamento</td>
+              <td>Criadores e times pequenos</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">Customização</strong></td>
+              <td>Total (fork)</td>
+              <td>Via parâmetros</td>
+              <td>Mínima</td>
+            </tr>
+            <tr>
+              <td><strong class="text-emerald-400">AI / geração de texto</strong></td>
+              <td>Plugin (OpenAI key)</td>
+              <td>Built-in</td>
+              <td>Sim, em planos pagos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-5">
+          <h4 class="font-bold text-emerald-400 mb-2">🔧 Postiz</h4>
+          <p class="text-sm text-neutral-300">Vai bem quando: você quer dono dos dados, vai escalar contas sem escalar custo, ou pretende customizar.</p>
+        </div>
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-5">
+          <h4 class="font-bold text-emerald-400 mb-2">⚙️ Ayrshare</h4>
+          <p class="text-sm text-neutral-300">Vai bem quando: você constrói um produto e quer "postar em redes" como feature, sem aprender 8 APIs diferentes.</p>
+        </div>
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-5">
+          <h4 class="font-bold text-emerald-400 mb-2">📅 Buffer</h4>
+          <p class="text-sm text-neutral-300">Vai bem quando: a UI é o produto. Time não-técnico, calendário visual, aprovações simples, sem necessidade de API.</p>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">API-first</div>
+          <p class="text-xs text-neutral-400">Produto cuja interface principal é a API.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">UI-first</div>
+          <p class="text-xs text-neutral-400">Foco em experiência visual e cliques.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">White-label</div>
+          <p class="text-xs text-neutral-400">Você revende com sua marca por cima.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Plugin model</div>
+          <p class="text-xs text-neutral-400">Funcionalidades acopladas por integração.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛠️ Quando vale construir do zero</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Construir um sistema próprio é caro em tempo. Faz sentido apenas quando o produto pronto te limita em uma das dimensões abaixo. Se nenhum dos sinais bate, <strong class="text-emerald-400">use Postiz ou um SaaS</strong>.
+      </p>
+
+      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Sinais de que vale construir do zero
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-emerald-400">Volume alto e estável:</strong> milhares de posts/dia, dezenas de contas — qualquer SaaS fica proibitivo.</li>
+          <li><strong class="text-emerald-400">Lógica de negócio única:</strong> regras de agendamento que dependem de eventos do seu sistema (preços, estoque, releases).</li>
+          <li><strong class="text-emerald-400">Compliance ou dados regulados:</strong> setor financeiro, saúde, jurídico — não pode mandar conteúdo pra terceiros.</li>
+          <li><strong class="text-emerald-400">Integração profunda com seu produto:</strong> agendamento é feature do core, não acessório.</li>
+          <li><strong class="text-emerald-400">Você revende como SaaS:</strong> margem só fecha com infra própria.</li>
+          <li><strong class="text-emerald-400">Customização que nenhum produto entrega:</strong> ex.: aprovação multi-nível com regras de auditoria.</li>
+        </ul>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Sinais de que NÃO vale construir</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Eu só queria personalizar uma telinha" — fork do Postiz resolve.</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Time de 1-2 pessoas com 3 contas — Buffer é mais barato que seu tempo.</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Pra aprender" sem prazo — ótimo, mas não como projeto comercial.</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Volume baixo (&lt;100 posts/mês) — overhead de manter é maior que o valor.</span></li>
+        </ul>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Uma <strong class="text-emerald-400">terceira via</strong> resolve quase todos os casos intermediários: <strong>fork do Postiz</strong>. Você herda 95% do trabalho feito e customiza apenas o que falta. Esse é o caminho coberto pelas trilhas seguintes.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Build vs buy</div>
+          <p class="text-xs text-neutral-400">Construir, comprar pronto ou forkar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Time to market</div>
+          <p class="text-xs text-neutral-400">Quanto leva pra ir do zero ao primeiro post real.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Margem operacional</div>
+          <p class="text-xs text-neutral-400">Sobra após pagar infra e licenças.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Fork</div>
+          <p class="text-xs text-neutral-400">Cópia de projeto aberto que você evolui à parte.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🗺️ Roadmap recomendado</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Sequência para começar sem tomar prejuízo, sem ficar 3 meses esperando app review, e sem se perder em complexidade desnecessária. Cada etapa só começa quando a anterior está rodando.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 1 — Bluesky + WordPress</h4>
+            <p class="text-sm text-neutral-400">Comece pelas duas APIs <strong>sem app review</strong>. Bluesky AT Protocol pede só login. WordPress REST aceita Application Password em 30 segundos. Você publica de verdade no primeiro dia.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Semana 2 — Subir o Postiz</h4>
+            <p class="text-sm text-neutral-400">Stack pronto via Docker Compose (Trilha 2). Conecta Bluesky e WordPress, valida agendamento, backup. Aqui você ganha UI e fila profissional sem escrever quase nada.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Mês 2 — Submeter X e LinkedIn</h4>
+            <p class="text-sm text-neutral-400">Crie os apps, defina escopos, abra app review do LinkedIn. Se Twitter for canal essencial, assine o X Basic ($200/mês). Enquanto espera aprovação, continua publicando nos canais já ativos.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Mês 3 — Instagram, Facebook, Threads</h4>
+            <p class="text-sm text-neutral-400">Meta exige conta Business + página + IG conectado. Mais burocrático, então deixa por último. Threads herda OAuth do IG. Aqui você fecha o "Big 4" de redes.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Mês 4+ — TikTok, YouTube, customização</h4>
+            <p class="text-sm text-neutral-400">Vídeo é o último estágio: app review longo, restrições de conteúdo, upload pesado. Junto, comece a customizar o Postiz (templates, integração com seu CMS, analytics).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Plataformas</th>
+              <th>Custo acumulado</th>
+              <th>Risco</th>
+              <th>Entregável</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-300">
+            <tr>
+              <td>Semana 1</td>
+              <td>Bluesky + WordPress</td>
+              <td>$0</td>
+              <td>Mínimo</td>
+              <td>Primeiro post automatizado</td>
+            </tr>
+            <tr>
+              <td>Semana 2</td>
+              <td>+ Postiz (Docker)</td>
+              <td>$5-10/mês (VPS)</td>
+              <td>Baixo</td>
+              <td>Agendamento com UI</td>
+            </tr>
+            <tr>
+              <td>Mês 2</td>
+              <td>+ X (Basic) + LinkedIn</td>
+              <td>$205/mês</td>
+              <td>Médio (app review)</td>
+              <td>Big 2 de texto cobertos</td>
+            </tr>
+            <tr>
+              <td>Mês 3</td>
+              <td>+ FB / IG / Threads</td>
+              <td>$205/mês</td>
+              <td>Médio (Meta burocrático)</td>
+              <td>Ecossistema Meta integrado</td>
+            </tr>
+            <tr>
+              <td>Mês 4+</td>
+              <td>+ TikTok / YouTube</td>
+              <td>$205/mês</td>
+              <td>Alto (app review longo)</td>
+              <td>Vídeo + customização</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🧭</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Pule X se ele não for canal-chave. Muita gente assina $200/mês "por garantia" e descobre depois que 80% do engajamento estava no LinkedIn. <strong>Mede primeiro, paga depois.</strong></p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Caminho crítico</div>
+          <p class="text-xs text-neutral-400">Sequência mínima para chegar ao valor.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">MVP</div>
+          <p class="text-xs text-neutral-400">Versão mínima que já entrega resultado real.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Risco escalonado</div>
+          <p class="text-xs text-neutral-400">Começa pelo barato e simples, escala depois.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Iteração</div>
+          <p class="text-xs text-neutral-400">Mede, aprende, ajusta antes do próximo passo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL DA TRILHA 1 -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-2 flex items-center">
+          <span class="mr-3">🎓</span> Resumo final — Trilha 1 concluída
+        </h2>
+        <p class="text-neutral-400 mb-6">Você terminou os Fundamentos. Tem o mapa do território e sabe por onde começar.</p>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Custos das plataformas decifrados</strong><span class="text-neutral-400"> — só o X cobra; o resto é grátis dentro dos limites.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Rate limits mapeados</strong><span class="text-neutral-400"> — você sabe onde estão os tetos e como reagir a <code class="font-mono">429</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Self-hosted vs SaaS decidido</strong><span class="text-neutral-400"> — você tem critérios objetivos pra escolher.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Postiz vs Ayrshare vs Buffer comparados</strong><span class="text-neutral-400"> — cada um tem o nicho dele, não dá pra confundir.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Decisão de build vs buy</strong><span class="text-neutral-400"> — você sabe quando vale construir e quando é desperdício.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Roadmap em mãos</strong><span class="text-neutral-400"> — Bluesky+WP → Postiz → X+LinkedIn → Meta → Vídeo.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próxima Trilha:</h3>
+          <p class="text-neutral-300"><strong>T2 — Postiz</strong>: setup com Docker Compose, configuração inicial, conectar primeira conta, agendar primeiro post.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha 1</a>
+          <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próxima Trilha → T2 Postiz</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

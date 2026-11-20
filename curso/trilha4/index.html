@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 4 - Blogs | MkBlogs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acento amber (T4) */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217, 119, 6, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217, 119, 6, 0.18); }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:border-amber-500\/30:hover { border-color: rgba(217, 119, 6, 0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    /* Light mode - cores das outras trilhas (hover do nav) */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📝 Blogs</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Publique posts em WordPress, Ghost, Dev.to, Hashnode e sites estáticos via API. Aprenda os endpoints reais de cada plataforma e como automatizar publicações de qualquer linguagem.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">4</div>
+          <div class="text-xs text-neutral-400">Módulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">24</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">~2h</div>
+          <div class="text-xs text-neutral-400">Duração</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="#modulo-4-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-bold text-sm">4.1</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🐘 WordPress REST API</h3>
+          <p class="text-xs text-neutral-400">O CMS de 43% da web</p>
+        </a>
+        <a href="#modulo-4-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-bold text-sm">4.2</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">👻 Ghost Admin API</h3>
+          <p class="text-xs text-neutral-400">JWT, integração nativa</p>
+        </a>
+        <a href="#modulo-4-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-bold text-sm">4.3</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">✍️ Dev.to & Hashnode</h3>
+          <p class="text-xs text-neutral-400">REST + GraphQL para devs</p>
+        </a>
+        <a href="#modulo-4-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-bold text-sm">4.4</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">📂 Estáticos via GitHub</h3>
+          <p class="text-xs text-neutral-400">Git commit = deploy</p>
+        </a>
+      </div>
+    </section>
+
+    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+
+    <!-- MÓDULO 4.1 -->
+    <div id="modulo-4-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐘 WordPress REST API</h3>
+        <p class="text-neutral-400 text-sm">O WordPress roda em 43% dos sites do mundo e expõe uma REST API completa em <code>/wp-json/wp/v2/</code>. Publique posts, mídia, categorias e agendamentos sem plugin extra.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔌</span>
+            <div><span class="font-medium">Habilitar REST API</span><span class="text-neutral-500 text-sm ml-2">- Já vem ativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Desde a versão 4.7 (2016), a REST API vem habilitada por padrão. Endpoint base: <code>https://seusite.com/wp-json/wp/v2/</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem configuração extra. Basta saber a URL e ter credenciais. Funciona em hospedagens compartilhadas, VPS e WordPress.com Business+.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GET <code>/wp-json</code> retorna discovery, JSON estruturado, mesmo schema de admin, alguns plugins de segurança bloqueiam — verificar antes.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔑</span>
+            <div><span class="font-medium">Application Password</span><span class="text-neutral-500 text-sm ml-2">- Auth segura sem expor senha</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Senha de aplicação gerada em <code>Usuários → Perfil → Application Passwords</code>. Formato: <code>xxxx xxxx xxxx xxxx xxxx xxxx</code> (24 chars, 6 grupos).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Substitui a senha real. Revogável individualmente. Habilitada nativamente desde WordPress 5.6 — não precisa de plugin JWT.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Basic base64(user:app_pass)</code>. Cada app gera uma senha diferente. Logs no Site Health.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📤</span>
+            <div><span class="font-medium">POST /wp-json/wp/v2/posts</span><span class="text-neutral-500 text-sm ml-2">- Criar post</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint que recebe JSON com <code>title</code>, <code>content</code>, <code>status</code>, <code>excerpt</code>, <code>slug</code>, <code>author</code>. Retorna o post criado com ID.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o endpoint nuclear. Domina ele e domina a publicação automatizada inteira: blog post, página, custom post type — todos seguem o mesmo padrão.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Content-Type: application/json, content aceita HTML, retorna 201 Created, ID retornado serve para PUT/DELETE futuros.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🖼️</span>
+            <div><span class="font-medium">Upload em /wp-json/wp/v2/media</span><span class="text-neutral-500 text-sm ml-2">- Imagens e featured image</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint multipart que aceita arquivos. Headers: <code>Content-Disposition: attachment; filename="foto.jpg"</code> e <code>Content-Type: image/jpeg</code>. Body = bytes do arquivo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Post sem imagem destacada parece amador. Faça upload primeiro, pegue o ID retornado, depois passe em <code>featured_media</code> no POST do post.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Aceita JPG, PNG, WebP, MP4, PDF. Retorna ID + URL. Anexa ao post via <code>featured_media: ID</code>. Alt text via PATCH posterior.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏷️</span>
+            <div><span class="font-medium">Categorias e tags</span><span class="text-neutral-500 text-sm ml-2">- Taxonomias</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoints <code>/wp-json/wp/v2/categories</code> e <code>/wp-json/wp/v2/tags</code>. No POST do post, passe arrays de IDs: <code>categories: [3, 5]</code>, <code>tags: [7, 9, 12]</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Organização e SEO. Categoria sem tag = post órfão. Crie taxonomias antes de publicar — ou GET para listar IDs existentes.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">IDs numéricos (não slugs), criar via POST nos endpoints específicos, slug é único, parent permite hierarquia em categorias.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📅</span>
+            <div><span class="font-medium">Status: draft / publish / future</span><span class="text-neutral-500 text-sm ml-2">- Controle de publicação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Campo <code>status</code> aceita: <code>publish</code> (público), <code>draft</code> (rascunho), <code>future</code> (agendado — exige <code>date</code> ISO 8601), <code>private</code>, <code>pending</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Permite agendar dezenas de posts de uma vez. Combine <code>status: future</code> + <code>date: 2026-12-25T10:00:00</code> para publicação automática no Natal.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Date no fuso configurado no WP, future precisa de WP-Cron ativo, draft não vai pro feed RSS, private só autor enxerga.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-1.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.2 -->
+    <div id="modulo-4-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.2</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">👻 Ghost Admin API</h3>
+        <p class="text-neutral-400 text-sm">O Ghost é o CMS minimalista feito para publicação. Sua Admin API usa JWT e tem SDK oficial. Limpa, rápida, sem o legado do WordPress.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Criar Custom Integration</span><span class="text-neutral-500 text-sm ml-2">- Settings → Integrations</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No painel Ghost: <code>Settings → Integrations → Add custom integration</code>. Gera Admin API Key, Content API Key e API URL.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o único caminho oficial para automação. Cada integration tem chaves separadas — revogáveis sem afetar outras.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Admin API = escrita, Content API = leitura pública, webhook opcional, ícone customizável para identificar.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🗝️</span>
+            <div><span class="font-medium">Admin API Key (id:secret)</span><span class="text-neutral-500 text-sm ml-2">- Formato composto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">String no formato <code>{id}:{secret}</code>. Ex: <code>5f9e...3a:abc123def...</code>. O id identifica a integration, o secret assina o JWT.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Diferente de tokens simples: você não envia a key, você usa ela para gerar JWT a cada requisição. Mais seguro.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Split em <code>:</code>, id vira <code>kid</code> no JWT, secret é hex → Buffer para assinar HS256, nunca commitar.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Lib @tryghost/admin-api</span><span class="text-neutral-500 text-sm ml-2">- SDK oficial Node.js</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">SDK oficial: <code>npm i @tryghost/admin-api</code>. Métodos prontos: <code>api.posts.add()</code>, <code>.edit()</code>, <code>.browse()</code>, <code>.delete()</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cuida do JWT automaticamente. Você só passa URL, key e versão. Reduz 50 linhas de auth para 3.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Versão da API obrigatória (ex: <code>v5.0</code>), suporta source HTML/Markdown/Lexical, retorna Promise.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🪪</span>
+            <div><span class="font-medium">JWT auth</span><span class="text-neutral-500 text-sm ml-2">- Token efêmero de 5 min</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada request gera um JWT HS256 com payload <code>{iat, exp: iat+5min, aud: "/admin/"}</code>, header com <code>kid</code>, assinado com o secret hex.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mesmo se interceptado, o token expira em 5 min. Em outras linguagens (Python, Go), você implementa essa lógica manualmente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Ghost &lt;jwt&gt;</code> (não "Bearer"!), HS256, kid no header, hex → Buffer no Node.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">Publicar post em Markdown/HTML</span><span class="text-neutral-500 text-sm ml-2">- source: 'html'</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No <code>posts.add({...}, {source: 'html'})</code>, o campo <code>html</code> é convertido para o formato Lexical interno. Sem o source, Ghost espera Lexical JSON.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">HTML é universal — qualquer Markdown renderiza pra HTML. Você escreve no formato que quiser, Ghost armazena no formato dele.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Status: published/draft/scheduled, title obrigatório, slug auto-gerado, tags como array de objetos <code>[{name: "tag"}]</code>.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎨</span>
+            <div><span class="font-medium">Feature image e SEO meta</span><span class="text-neutral-500 text-sm ml-2">- Open Graph nativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Campos: <code>feature_image</code> (URL), <code>meta_title</code>, <code>meta_description</code>, <code>og_title</code>, <code>og_description</code>, <code>twitter_image</code>, <code>canonical_url</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ghost já gera Open Graph e Twitter Card automaticamente — mas dá pra customizar por post. Diferença entre 100 cliques e 1000.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Upload da imagem em <code>POST /images/upload</code> primeiro, URL retornada vai em feature_image, canonical evita penalização SEO.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-2.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.3 -->
+    <div id="modulo-4-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.3</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">✍️ Dev.to & Hashnode</h3>
+        <p class="text-neutral-400 text-sm">Plataformas focadas em devs. Dev.to (Forem) usa REST simples; Hashnode usa GraphQL. Ambas têm comunidade ativa e SEO forte para conteúdo técnico.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Dev.to API key</span><span class="text-neutral-500 text-sm ml-2">- Settings → Extensions</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Token gerado em <code>dev.to/settings/extensions → DEV Community API Keys</code>. Use header <code>api-key: SEU_TOKEN</code> (não Bearer).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem chave, sem publicação. É um único token por conta — perdeu, regenera (invalida o anterior).</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Base URL: <code>https://dev.to/api</code>, header customizado <code>api-key</code>, rate limit ~10 req/30s, formato JSON.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📮</span>
+            <div><span class="font-medium">POST /api/articles</span><span class="text-neutral-500 text-sm ml-2">- Forem API</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint <code>POST https://dev.to/api/articles</code>. Body: <code>{article: {title, body_markdown, published, tags, ...}}</code>. Dev.to roda em cima do Forem open-source.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mesmo endpoint funciona em qualquer Forem (Dev.to, CodeNewbie, etc). Aprende uma vez, usa em várias plataformas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tudo dentro de <code>article: {}</code>, published bool, tags array de strings (máx 4), markdown nativo, retorna URL do post.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📰</span>
+            <div><span class="font-medium">Frontmatter + cover_image</span><span class="text-neutral-500 text-sm ml-2">- Markdown enriquecido</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Dev.to aceita YAML frontmatter dentro do <code>body_markdown</code>: <code>---\ntitle: ...\ncover_image: https://...\nseries: ...\n---</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Permite criar séries (capítulos linkados), definir cover image, canonical URL, tudo no próprio markdown. Útil pra cross-posting de Hugo/Jekyll.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">cover_image deve ter 1000x420px, series string agrupa posts, canonical_url evita duplicate content, published: false = draft.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔮</span>
+            <div><span class="font-medium">Hashnode GraphQL</span><span class="text-neutral-500 text-sm ml-2">- gql.hashnode.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint único: <code>POST https://gql.hashnode.com</code>. Body: <code>{query, variables}</code>. Auth: header <code>Authorization: PAT_TOKEN</code> (gerado em settings/developer).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">GraphQL retorna exatamente os campos pedidos — sem over-fetching. Schema tipado, autocomplete em ferramentas tipo Apollo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Query vs Mutation, publicationId obrigatório (id do blog), Personal Access Token (PAT), errors no response não sobem como HTTP error.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Mutation publishPost</span><span class="text-neutral-500 text-sm ml-2">- Schema GraphQL</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mutation: <code>mutation PublishPost($input: PublishPostInput!) { publishPost(input: $input) { post { id slug url } } }</code>. Input com publicationId, title, contentMarkdown, tags.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a forma oficial de publicar. <code>updatePost</code> e <code>removePost</code> seguem padrão idêntico — aprende uma mutation, conhece todas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tags array de <code>{slug, name}</code>, coverImageOptions opcional, originalArticleURL pra cross-post, retorna post completo.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔁</span>
+            <div><span class="font-medium">Cross-posting com canonical_url</span><span class="text-neutral-500 text-sm ml-2">- Sem penalização SEO</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Tag HTML <code>&lt;link rel="canonical"&gt;</code> aponta pro post "original". Quando você publica o mesmo conteúdo em vários sites, só o canonical recebe crédito SEO.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem canonical, Google considera duplicate content e pode rebaixar todos. Com canonical, você ganha alcance sem perder ranking.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dev.to: <code>canonical_url</code>, Hashnode: <code>originalArticleURL</code>, WordPress: plugin Yoast, sempre apontar pro seu domínio próprio.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-3.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MÓDULO 4.4 -->
+    <div id="modulo-4-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📂 Sites estáticos via GitHub API</h3>
+        <p class="text-neutral-400 text-sm">Hugo, Jekyll, Astro, Next.js — todos viram blog estático. Commit no GitHub via API = deploy automático pelo GitHub Actions. Velocidade absurda e custo zero.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Hugo / Jekyll / Astro / Next</span><span class="text-neutral-500 text-sm ml-2">- O ecossistema SSG</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Static Site Generators: lê arquivos Markdown + templates → HTML estático. Hugo (Go, mais rápido), Jekyll (Ruby, GitHub Pages nativo), Astro (JS, modern), Next.js (React, híbrido).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">HTML estático = CDN-friendly, escala infinita, custo zero, sem banco de dados, sem PHP, imune a 99% das vulnerabilidades web.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Posts vivem em <code>content/posts/</code> ou <code>_posts/</code>, build local com CLI, deploy automatizado, themes customizáveis.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎫</span>
+            <div><span class="font-medium">PAT do GitHub</span><span class="text-neutral-500 text-sm ml-2">- Personal Access Token</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Token gerado em <code>github.com/settings/tokens</code>. Prefira "Fine-grained tokens": permite escolher repos específicos e escopo <code>Contents: read+write</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem PAT você não escreve via API. Fine-grained limita o estrago se vazar — só funciona no repo escolhido.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Bearer ghp_xxx</code>, expiração configurável (90 dias recomendado), nunca commitar, usar GitHub Secrets em Actions.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">PUT /repos/.../contents</span><span class="text-neutral-500 text-sm ml-2">- Criar arquivo via API</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint: <code>PUT https://api.github.com/repos/{owner}/{repo}/contents/{path}</code>. Body: <code>{message, content: base64(markdown), branch}</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É como fazer <code>git commit</code> sem ter git instalado. Funciona de qualquer lambda, Edge Function ou n8n.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Content em base64 obrigatório, message vira mensagem do commit, sha necessário pra editar arquivo existente (não criar), retorna SHA do novo commit.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Markdown com frontmatter</span><span class="text-neutral-500 text-sm ml-2">- YAML no topo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Bloco YAML entre <code>---</code> no início do <code>.md</code>: <code>title</code>, <code>date</code>, <code>draft</code>, <code>tags</code>, <code>image</code>. Hugo/Jekyll/Astro leem isso pra montar metadata.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Formato universal entre todos os SSGs — migrar de Hugo pra Astro = só trocar build, conteúdo continua igual.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">date em ISO 8601, draft: true esconde do build, slug opcional (usa filename), TOML também aceito (<code>+++</code>).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🤖</span>
+            <div><span class="font-medium">GitHub Actions = deploy automático</span><span class="text-neutral-500 text-sm ml-2">- CI/CD nativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Workflow em <code>.github/workflows/deploy.yml</code> roda em <code>push</code>: build do SSG → upload pro GitHub Pages, Netlify, Vercel ou Cloudflare Pages.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Commit via API → push trigger → build → deploy. Em 60 segundos seu post está no ar globalmente. Zero intervenção manual.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">on: push, jobs com runs-on, actions oficiais (<code>actions/checkout</code>, <code>actions/deploy-pages</code>), secrets pra tokens.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚖️</span>
+            <div><span class="font-medium">Vantagens vs CMS tradicional</span><span class="text-neutral-500 text-sm ml-2">- Quando escolher estático</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sem banco, sem PHP, sem painel admin. Conteúdo versionado em Git. Hospedagem grátis (Pages/Netlify/Vercel) ou ~$1/mês em CDN.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Performance 10x melhor que WordPress. Segurança nativa (sem superfície de ataque). Custo ~zero. Versionamento incluído.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trade-off: sem dinâmico (comments via Disqus), sem painel não-técnico, build pode demorar em sites grandes, ótimo para blog/docs/portfolio.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-4-4.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGAÇÃO ENTRE TRILHAS -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 3: Redes</a>
+      <a href="../trilha5/index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Trilha 5: Do Zero →</a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-4-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold">🐘 WordPress REST API</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold">👻 Ghost Admin API</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold">✍️ Dev.to & Hashnode</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold">📂 Sites estáticos via GitHub API</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs 🚀 - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

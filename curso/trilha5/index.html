@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 5: Construindo do Zero | MkBlogs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode - Parte 1 (base) */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Parte 2 (cores teal - T5) */
+    html:not(.dark) .text-teal-400 { color: #0d9488; }
+    html:not(.dark) .bg-teal-500\/20 { background-color: rgba(13, 148, 136, 0.12); }
+    html:not(.dark) .bg-teal-500\/10 { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .border-teal-500\/30 { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .hover\:bg-teal-500\/30:hover { background-color: rgba(13, 148, 136, 0.18); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-teal-400 { color: #0d9488; }
+    html:not(.dark) .hover\:border-teal-500\/30:hover { border-color: rgba(13, 148, 136, 0.25); }
+    html:not(.dark) .bg-teal-600 { background-color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500:hover { background-color: #14b8a6; }
+
+    /* Light mode - Parte 3 (gradientes e cores especiais) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Parte 4 (nav) */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">TRILHA 5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ Construindo do Zero</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda a arquitetar e construir um agendador multi-rede do zero. Stack NestJS + Prisma + PostgreSQL + BullMQ + Redis, padrão Provider para abstrair redes sociais e fila com retry inteligente.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">5</div><div class="text-xs text-neutral-400">Módulos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">30</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">~4h</div><div class="text-xs text-neutral-400">Duração</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="#modulo-5-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-bold text-sm">5.1</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-teal-400 transition-colors">⚙️ Stack e setup</h3>
+          <p class="text-xs text-neutral-400">A fundação certa</p>
+        </a>
+        <a href="#modulo-5-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-bold text-sm">5.2</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-teal-400 transition-colors">🗄️ Schema do banco</h3>
+          <p class="text-xs text-neutral-400">1 post → N redes</p>
+        </a>
+        <a href="#modulo-5-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-bold text-sm">5.3</span>
+            <span class="text-xs text-neutral-500">~50 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-teal-400 transition-colors">🔌 Padrão Provider</h3>
+          <p class="text-xs text-neutral-400">Plug-and-play de redes</p>
+        </a>
+        <a href="#modulo-5-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-bold text-sm">5.4</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-teal-400 transition-colors">⏰ Fila e agendamento</h3>
+          <p class="text-xs text-neutral-400">Publicar no minuto certo</p>
+        </a>
+        <a href="#modulo-5-5" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-bold text-sm">5.5</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-teal-400 transition-colors">🖼️ Upload de mídia</h3>
+          <p class="text-xs text-neutral-400">S3, sharp e órfãos</p>
+        </a>
+      </div>
+    </section>
+
+    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+
+    <!-- MODULO 5.1 -->
+    <div id="modulo-5-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.1</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">⚙️ Stack e setup</h3>
+        <p class="text-neutral-400 text-sm">As escolhas de stack que vão te perseguir por anos. NestJS, Prisma, BullMQ e monorepo com pnpm.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏛️</span>
+            <div><span class="font-medium">NestJS vs Express</span><span class="text-neutral-500 text-sm ml-2">- Por que NestJS</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">NestJS é um framework Node.js opinativo, com arquitetura modular (controllers, services, modules), DI nativa e suporte first-class a TypeScript. Express é minimalista — você monta tudo.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Para um agendador multi-rede com workers, providers e jobs, NestJS impõe estrutura que evita virar espaguete em 3 meses. Decorators (@Cron, @Process), guards e interceptors já vêm prontos.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">DI container, módulos, providers (injectables), pipes/guards, integração nativa com BullMQ via @nestjs/bullmq.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐘</span>
+            <div><span class="font-medium">Prisma + PostgreSQL</span><span class="text-neutral-500 text-sm ml-2">- ORM type-safe</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Prisma é um ORM/query builder que gera client TypeScript a partir do schema.prisma. Sintaxe declarativa, autocomplete real, migrations versionadas. Postgres é o banco relacional padrão para SaaS.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Postar em N redes envolve relações (User → Post → PostTarget → SocialAccount). Prisma resolve isso com includes tipados — você não escreve JOIN à mão e o TS pega erro antes de runtime.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">schema.prisma, prisma generate, prisma migrate dev/deploy, client.$transaction, includes vs select.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📬</span>
+            <div><span class="font-medium">BullMQ + Redis</span><span class="text-neutral-500 text-sm ml-2">- Fila de jobs</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">BullMQ é uma fila de jobs em Redis: você enfileira um job com payload + delay, e um worker em outro processo consome quando chega a hora. Suporta retry, backoff, prioridade.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem fila, você teria que rodar cron checando "tem post para agora?" a cada minuto. BullMQ resolve com delay nativo: enfileirou com delay=2h, o job só dispara em 2h. E sobrevive a restart.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Queue, Worker, Job, delay, attempts, backoff exponencial, removeOnComplete, QueueEvents.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📁</span>
+            <div><span class="font-medium">Estrutura de pastas monorepo</span><span class="text-neutral-500 text-sm ml-2">- apps/ + packages/</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Monorepo: um repo com múltiplos pacotes/apps. Layout clássico: apps/api (NestJS), apps/worker (BullMQ), apps/web (Next.js), packages/db (Prisma client), packages/types (tipos compartilhados).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você precisa compartilhar tipos entre API e front, e o Prisma client entre API e worker. Sem monorepo, vira duplicação e drift de tipos. Com monorepo, refatora num lugar só.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">workspace, internal packages, hoisting de deps, turborepo (opcional), import "@mkblogs/db".</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">pnpm workspaces</span><span class="text-neutral-500 text-sm ml-2">- Gerenciador rápido</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">pnpm é alternativa ao npm/yarn com content-addressable store: deps ficam num único local, hard-linked no node_modules. workspaces define pacotes locais via pnpm-workspace.yaml.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em monorepo node_modules cresce rápido. pnpm economiza GBs, instala mais rápido e bloqueia phantom dependencies (deps que você usa mas não declarou).</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">pnpm-workspace.yaml, pnpm --filter api dev, deps internas com workspace:*, store global em ~/.local/share/pnpm.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Variáveis de ambiente</span><span class="text-neutral-500 text-sm ml-2">- .env e validação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">DATABASE_URL, REDIS_URL, JWT_SECRET, S3_BUCKET, ENCRYPTION_KEY... Variáveis de ambiente carregadas via dotenv ou @nestjs/config, validadas com Zod ou class-validator.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Subir produção e descobrir que esqueceu de setar ENCRYPTION_KEY é o pesadelo clássico. Validação no boot do app evita: se variável obrigatória faltou, app não sobe.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">.env.example commitado, .env no .gitignore, ConfigModule.forRoot({ validationSchema }), separar segredos do app config.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-1.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.2 -->
+    <div id="modulo-5-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.2</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🗄️ Schema do banco</h3>
+        <p class="text-neutral-400 text-sm">O modelo de dados que aguenta 1 post → N redes sem virar caos. Tokens, mídia e migrations.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">👤</span>
+            <div><span class="font-medium">Modelo User</span><span class="text-neutral-500 text-sm ml-2">- Quem usa a plataforma</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Entidade central: id (cuid), email único, passwordHash (bcrypt), createdAt, plan (free/pro). Relação 1:N com SocialAccount e Post.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Toda autorização gira em torno de User. Antes de buscar um post, você confirma user.id == post.userId. Sem isso, qualquer um vê posts de qualquer um.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">cuid vs uuid vs autoincrement, índice em email, never expose passwordHash em DTO, soft delete vs hard delete.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔑</span>
+            <div><span class="font-medium">Modelo SocialAccount</span><span class="text-neutral-500 text-sm ml-2">- Tokens encrypted</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Conta conectada de uma rede: userId, provider (bluesky, x, mastodon), handle, accessToken, refreshToken, expiresAt. Tokens armazenados criptografados (AES-256-GCM).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Token vazado é acesso à conta do usuário. Banco vazado sem encryption = LGPD/multa + reputação destruída. Encryption-at-rest é não-negociável.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ENCRYPTION_KEY em env, encrypt/decrypt helpers, unique (userId, provider, handle), refresh antes de expirar.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">Modelo Post</span><span class="text-neutral-500 text-sm ml-2">- Texto + media</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O conteúdo "canônico": id, userId, text, scheduledAt, status (draft/scheduled/publishing/published/failed). Relação N:N com Media via tabela pivot. 1:N com PostTarget.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Separar o "conteúdo desejado" (Post) do "execução por rede" (PostTarget) permite postar mesma coisa em 5 redes e ter status independente de cada uma. Bluesky publicou, X falhou — sem perder o histórico.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">enum PostStatus, índice em scheduledAt, índice composto (userId, status), text como TEXT (não VARCHAR).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Modelo PostTarget</span><span class="text-neutral-500 text-sm ml-2">- 1 post → N redes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada "destino" de um post: postId, socialAccountId, status, providerPostId (URI do post na rede), publishedAt, errorMessage, attemptCount.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É aqui que mora a verdade do que rolou em cada rede. Sem PostTarget, você não sabe se o post chegou no X — só se "tentou postar". Com PostTarget, dá pra mostrar links clicáveis pro usuário.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">providerPostId guardado após sucesso, status independente por target, retry só do target que falhou, índice (postId, socialAccountId) único.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🖼️</span>
+            <div><span class="font-medium">Modelo Media</span><span class="text-neutral-500 text-sm ml-2">- S3 URL</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Arquivo de mídia anexado: id, userId, key (path no S3), url (CDN), mimeType, sizeBytes, width, height. Banco guarda metadados; arquivo bruto vive no S3/R2.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Guardar imagens no Postgres como bytea é receita de banco lento. S3 é projetado pra isso: URLs públicas/assinadas, CDN na frente, custo baixo.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">key (não URL completa) no banco, presigned URL pra upload direto, mime sniffing no backend, cleanup de órfãs.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Migrations com Prisma</span><span class="text-neutral-500 text-sm ml-2">- Versionar o schema</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">prisma migrate dev cria um SQL versionado em prisma/migrations/ a partir das mudanças no schema.prisma. prisma migrate deploy aplica em produção.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem migrations, mudar uma coluna em prod é manual e propenso a erro. Com migrations versionadas, o histórico fica no Git e o deploy aplica na ordem certa.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">migrate dev vs deploy, never edit applied migration, prisma db push para protótipo, backup antes de prod.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-2.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.3 -->
+    <div id="modulo-5-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.3</span>
+          <span class="text-xs text-neutral-500">~50 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔌 Padrão Provider</h3>
+        <p class="text-neutral-400 text-sm">A abstração que faz seu código não saber a diferença entre Bluesky, X, Mastodon ou Threads.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧩</span>
+            <div><span class="font-medium">Interface SocialProvider</span><span class="text-neutral-500 text-sm ml-2">- authenticate, refreshToken, post</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Contrato TS que toda rede social implementa: authenticate(credentials), refreshToken(token), post(text, media), deletePost(id). Tipos de entrada/saída fixos, implementação varia.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o coração da extensibilidade. Adicionar Mastodon vira criar um arquivo novo que implementa a interface — zero mudança no resto do app.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">interface vs abstract class, Result type pra erros, normalização de respostas (sempre retorna { uri, publishedAt }).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🏭</span>
+            <div><span class="font-medium">Factory de providers</span><span class="text-neutral-500 text-sm ml-2">- Dispatcher por provider</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">ProviderFactory.get(provider: 'bluesky' | 'x') retorna a instância certa. Pode ser um Map registrado no boot ou um decorator @Injectable do Nest.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem factory, você cai num switch gigante toda vez que precisa postar. Com factory, só pega o provider pelo nome e chama .post(). Limpo e testável.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">DI no NestJS, Map&lt;string, SocialProvider&gt;, erro claro quando provider não existe.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🦋</span>
+            <div><span class="font-medium">Implementar BlueskyProvider</span><span class="text-neutral-500 text-sm ml-2">- @atproto/api</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">SDK oficial @atproto/api. Login com identifier + app password, agent.post({ text, embed }) para publicar, agent.uploadBlob para mídia.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Bluesky é a rede mais aberta hoje, sem rate limits agressivos pra apps pequenos e tem app password (não precisa OAuth completo). Bom primeiro provider para implementar.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">AtpAgent, app passwords, BskyAgent.post(), embed images via uploadBlob, parsing de URI at://...</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✖️</span>
+            <div><span class="font-medium">Implementar XProvider</span><span class="text-neutral-500 text-sm ml-2">- OAuth 2.0 e API v2</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">X (Twitter) API v2 com OAuth 2.0 PKCE. POST /2/tweets com bearer token. Upload de mídia ainda via v1.1 (/media/upload). Plano básico custa USD 100/mês.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a maior dor de cabeça (OAuth, refresh com rotação, custo, rate limits). Implementar bem aqui prova que sua arquitetura aguenta provider chato. Os outros são moleza depois.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">OAuth 2.0 PKCE, refresh token rotation, media_id em upload v1.1, rate limit 429 + Retry-After.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚠️</span>
+            <div><span class="font-medium">Tratamento de erro</span><span class="text-neutral-500 text-sm ml-2">- RefreshTokenError e domínio</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Classes de erro de domínio: RefreshTokenError (token expirou e refresh falhou), RateLimitError (com retryAfter), ProviderTransientError (rede), ProviderPermanentError (conteúdo inválido).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem classes de erro, o worker não sabe se deve retry ou abandonar. Retry de erro permanente = job preso. Não-retry de erro transiente = falha boba.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">extends Error, instanceof no worker pra decidir, mensagem amigável pro usuário ("reconecte sua conta"), notificar via email se reconnect necessário.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧪</span>
+            <div><span class="font-medium">Testes unitários por provider</span><span class="text-neutral-500 text-sm ml-2">- Mock de SDK e fetch</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Para cada provider, teste cobre: post() de sucesso retorna URI, post() com 429 lança RateLimitError, refresh() que falha lança RefreshTokenError. Mockar @atproto/api e fetch.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Provider quebrar em produção é constrangedor. Teste unitário pega regressão antes do deploy. Vitest + msw (mock service worker) é o combo padrão.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">vi.mock(), MSW para HTTP, golden file de payload, cobertura mínima 80% nos providers críticos.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-3.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.4 -->
+    <div id="modulo-5-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.4</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">⏰ Fila e agendamento</h3>
+        <p class="text-neutral-400 text-sm">BullMQ com delay nativo, retry exponencial, DLQ e quando migrar para Temporal.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">BullMQ basics</span><span class="text-neutral-500 text-sm ml-2">- Queue, Worker, Job</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">3 primitivas: Queue (produtor enfileira), Worker (consumidor processa), Job (a unidade com payload + opções). Toda comunicação roda no Redis via lua scripts atômicos.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o estado-da-arte de filas em Node hoje. Sucessor maduro do Bull, com tipagem boa e API limpa. Pronto pra produção em milhares de empresas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">queue.add(name, data, opts), new Worker(queueName, fn), concurrency, prefix de keys por env.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⌛</span>
+            <div><span class="font-medium">Job com delay</span><span class="text-neutral-500 text-sm ml-2">- Agendado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">queue.add('publish-post', { postTargetId }, { delay: scheduledAt - now }). BullMQ guarda no Redis e só move o job pra "active" quando o delay vence.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Resolve agendamento sem cron. "Postar dia 25 às 14h" vira um delay de N ms — preciso, escalável e sobrevive a restart porque está no Redis.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">delay em ms, jobId determinístico para idempotência, queue.getDelayed(), removeOnComplete: { age: 7d }.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Worker que publica</span><span class="text-neutral-500 text-sm ml-2">- Processa o PostTarget</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Função async (job) =&gt; { busca PostTarget no banco → ProviderFactory.get(provider).post(...) → grava providerPostId no PostTarget → marca status = published }.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o ponto onde fila + banco + provider se encontram. Erro aqui = post não chega ou chega duplicado. Idempotência é vital: checar status antes de postar de novo.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">@Processor do @nestjs/bullmq, transaction pra atualizar status, idempotência via providerPostId, log com correlationId.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔁</span>
+            <div><span class="font-medium">Retry com backoff</span><span class="text-neutral-500 text-sm ml-2">- Exponencial</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">attempts: 5, backoff: { type: 'exponential', delay: 5000 }. Falhas transientes (rede, 5xx) reentram a fila com delay crescente (5s, 10s, 20s, 40s, 80s).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem retry, qualquer hiccup do X deixa post como failed. Com backoff exponencial, a API tem espaço pra se recuperar e não você não bombardeia ela durante outage.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">só fazer retry de erro transiente, throw vs Unrecoverable error, attempts.attemptsMade, log de cada tentativa.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">💀</span>
+            <div><span class="font-medium">Dead letter queue</span><span class="text-neutral-500 text-sm ml-2">- Onde falhas vão morrer</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Após todos os attempts esgotados, mover o job para uma "failed queue" separada. Alertar dev, marcar PostTarget como failed, enviar email ao usuário.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem DLQ, falhas terminais somem no console. Com DLQ, você tem dashboard de "o que deu ruim e precisa investigar" e pode reprocessar manualmente quando consertar bug.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">QueueEvents 'failed', failedQueue.add(jobData), Bull Board ou Arena UI, alerta no Slack via webhook.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Migrar para Temporal</span><span class="text-neutral-500 text-sm ml-2">- Quando crescer</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Temporal.io: orquestrador de workflows com estado durável, replay automático, sagas multi-step. Substitui BullMQ quando você precisa de coreografia complexa entre passos.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">BullMQ é ótimo para jobs isolados. Quando seu fluxo vira "se A falhar depois de B sucesso, desfazer B" — você precisa de workflows com compensação. Temporal nasceu pra isso.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">workflow vs activity, replay determinístico, sinais, Temporal Cloud vs self-hosted, custo: BullMQ &lt; Temporal.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-4.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.5 -->
+    <div id="modulo-5-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.5</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🖼️ Upload de mídia</h3>
+        <p class="text-neutral-400 text-sm">Multer, S3/R2, sharp para resize e limpeza de órfãs. Mídia certa, sem inflar storage.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📤</span>
+            <div><span class="font-medium">Multer + multipart/form-data</span><span class="text-neutral-500 text-sm ml-2">- Parsing de upload</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Multer parseia multipart/form-data de uploads HTTP. NestJS tem integração via @nestjs/platform-express com @UseInterceptors(FileInterceptor('file')).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">JSON não carrega binário sem base64 (33% overhead). multipart é o padrão da web para upload. Sem entender, você acaba enviando arquivo como base64 e estourando body limit.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">memory storage vs disk storage, fileSize limit, dest temp folder, file.buffer no controller.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">☁️</span>
+            <div><span class="font-medium">Salvar no S3 (ou R2)</span><span class="text-neutral-500 text-sm ml-2">- Storage barato</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">@aws-sdk/client-s3 com PutObjectCommand. Cloudflare R2 é compatível com a mesma API e tem egress grátis — ideal para servir mídia pública.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">No S3, USD ~0.023/GB/mês + custo de egress. No R2, mesma coisa de storage mas zero de egress. Para um app que serve imagens pra usuários, R2 sai 5-10x mais barato.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">endpoint customizado (R2), key com prefixo userId/, ACL public-read vs presigned, region.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔗</span>
+            <div><span class="font-medium">Gerar URL pública assinada</span><span class="text-neutral-500 text-sm ml-2">- Presigned URL</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">getSignedUrl(client, GetObjectCommand, { expiresIn: 3600 }) gera URL temporária assinada. Cliente baixa direto do S3, sem passar pelo seu servidor.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem presigned, ou você deixa bucket público (vazamento) ou faz proxy no servidor (banda cara). Presigned: temporário + seguro + servido direto pela infra do S3/R2.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">expiresIn em segundos, presigned PUT pra upload direto do browser, cache de URL no Redis.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✂️</span>
+            <div><span class="font-medium">Resize/optimize</span><span class="text-neutral-500 text-sm ml-2">- sharp</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">sharp é lib Node baseada em libvips: resize, format webp, strip metadata, gerar thumbnails. Roda direto em buffer ou stream, sem subprocess.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Usuário envia foto de 12MB do celular. Bluesky aceita 1MB. Sem resize, post falha. Com sharp, redimensiona, comprime para webp e envia 200KB de qualidade visual idêntica.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">sharp(buffer).resize(2048).webp({ quality: 80 }).toBuffer(), strip exif, generate thumbnail 300x300.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Validação de mime/size</span><span class="text-neutral-500 text-sm ml-2">- Antes do S3</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Não confiar no Content-Type do header. Usar file-type para detectar pelos magic bytes do buffer. Limit fileSize no Multer + double-check no serviço.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Aceitar "image/jpeg" pelo header é receita de RCE: usuário envia .exe renomeado. Magic bytes não mentem. Sem validação real, vira vetor de upload malicioso.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">file-type lib, allowlist de mimes (image/jpeg, image/png, image/webp), maxSize 10MB, 413 Payload Too Large.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧹</span>
+            <div><span class="font-medium">Cleanup de mídia órfã</span><span class="text-neutral-500 text-sm ml-2">- Cron de limpeza</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Job diário (BullMQ repeat) que busca Media sem postId associado e mais antigas que 24h, deleta do S3 e do banco. Mídia órfã = upload iniciado, post nunca finalizado.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem cleanup, storage cresce indefinidamente. Em 6 meses você paga storage de coisa que ninguém vê. Cron simples resolve, mas precisa cuidar de race com upload em andamento.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">queue.add com repeat: { cron: '0 3 * * *' }, soft delete antes de hard delete, S3 lifecycle policy como fallback.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-5.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO TRILHA -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 4: Blogs</a>
+      <a href="../trilha6/index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Trilha 6: Deploy →</a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-5-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.1</span><span class="font-semibold">Stack e setup</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.2</span><span class="font-semibold">Schema do banco</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.3</span><span class="font-semibold">Padrão Provider</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.4</span><span class="font-semibold">Fila e agendamento</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.5</span><span class="font-semibold">Upload de mídia</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs 🚀 - 2026 · <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const htmlEl = document.documentElement;
+    if (localStorage.getItem('theme') === 'light') {
+      htmlEl.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      htmlEl.classList.toggle('dark');
+      localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

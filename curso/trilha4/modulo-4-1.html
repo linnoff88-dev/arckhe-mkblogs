@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 4.1 - WordPress REST API | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Amber (T4) */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/30 { background-color: rgba(146, 64, 14, 0.10); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .bg-amber-600 { background-color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500:hover { background-color: #b45309; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Módulo 4.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🐘 WordPress REST API</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Publicar posts no WordPress por HTTP: endpoints, autenticação, upload de mídia, taxonomias e agendamento — tudo via <code class="font-mono">/wp-json</code> sem plugin.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">✅ Habilitar a REST API</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Desde o <strong class="text-amber-400">WordPress 4.7</strong> (dez/2016) a REST API vem ativa <em>por padrão</em>. Não precisa plugin, não precisa flag, não precisa mexer em <code class="text-amber-400 font-mono text-sm">functions.php</code>. O endpoint raiz é <code class="text-amber-400 font-mono text-sm">/wp-json/</code> e ele já descreve toda a API por hipermídia.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de qualquer coisa, confirme que sua instalação responde. Um simples <code class="text-amber-400 font-mono text-sm">GET</code> público lista a estrutura — se vier 404 ou HTML, alguém desabilitou via plugin de segurança ou <code class="text-amber-400 font-mono text-sm">.htaccess</code> agressivo.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Descobrir o índice da API (público)
+curl -s https://seublog.com/wp-json/ | head -40
+
+# Resposta JSON esperada (trecho)
+{
+  "name": "Seu Blog",
+  "description": "Just another WordPress site",
+  "url": "https://seublog.com",
+  "namespaces": ["oembed/1.0", "wp/v2", "wp-site-health/v1"],
+  "authentication": {
+    "application-passwords": {
+      "endpoints": {
+        "authorization": "https://seublog.com/wp-admin/authorize-application.php"
+      }
+    }
+  },
+  "routes": {
+    "/wp/v2/posts": { "namespace": "wp/v2", "methods": ["GET","POST"] },
+    "/wp/v2/media": { "namespace": "wp/v2", "methods": ["GET","POST"] }
+  }
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Listar posts publicados é igualmente público — útil pra confirmar que o roteamento de <code class="text-amber-400 font-mono text-sm">/wp-json</code> está saudável antes de mexer em autenticação.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Listar os 5 últimos posts publicados
+curl -s "https://seublog.com/wp-json/wp/v2/posts?per_page=5&_fields=id,title,date"
+
+# [
+#   {"id":142,"title":{"rendered":"Post mais novo"},"date":"2026-05-20T10:00:00"},
+#   {"id":141,"title":{"rendered":"Outro post"},"date":"2026-05-19T08:30:00"}
+# ]</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Plugins como <strong>Wordfence</strong> e <strong>iThemes Security</strong> bloqueiam a REST API "anônima" por padrão. Se <code class="text-primary font-mono text-sm">GET /wp-json/wp/v2/users</code> retornar <code class="text-primary font-mono text-sm">401</code> mesmo autenticado, vá na configuração do plugin e libere o namespace <code class="text-primary font-mono text-sm">wp/v2</code> pra usuários logados.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">/wp-json</div>
+          <p class="text-xs text-neutral-400">Raiz da REST API — descreve namespaces e rotas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">wp/v2</div>
+          <p class="text-xs text-neutral-400">Namespace principal (posts, pages, media, users).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Permalinks</div>
+          <p class="text-xs text-neutral-400">REST exige permalinks ≠ "plain". Confirme em Settings.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">_fields</div>
+          <p class="text-xs text-neutral-400">Filtra campos do payload — reduz tráfego em listas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔑 Application Password</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Senha de aplicativo é o método <strong class="text-amber-400">oficial</strong> do WordPress core (5.6+) para autenticar via API. Diferente da senha de login, ela é gerada por contexto (um app, um script), pode ser revogada individualmente e funciona com <strong class="text-amber-400">HTTP Basic Auth</strong> sobre HTTPS.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para gerar: <strong class="text-amber-400">Users → Profile</strong> (no admin) → role até <strong class="text-amber-400">Application Passwords</strong> → dê um nome (ex: <code class="text-amber-400 font-mono text-sm">postiz-bot</code>) → clique em <strong>Add New</strong>. Aparece uma senha de 24 caracteres com espaços — copie agora, ela não reaparece.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo do que o WP gera (NÃO use essa, gere a sua)
+xxxx yyyy zzzz aaaa bbbb cccc
+
+# Como usar em Basic Auth (curl)
+USER="seu_login"
+APP_PASS="xxxx yyyy zzzz aaaa bbbb cccc"
+
+# Teste autenticado: ver seu próprio usuário
+curl -s -u "$USER:$APP_PASS" \
+  https://seublog.com/wp-json/wp/v2/users/me
+
+# {
+#   "id": 1,
+#   "name": "Nei",
+#   "roles": ["administrator"],
+#   "capabilities": { "edit_posts": true, "publish_posts": true }
+# }</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Em ambientes onde o cliente HTTP não suporta <code class="text-amber-400 font-mono text-sm">-u user:pass</code> direto, monte o header manualmente — o WordPress aceita as duas formas.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Montar header Authorization na mão
+TOKEN=$(printf "%s" "$USER:$APP_PASS" | base64)
+
+curl -s -H "Authorization: Basic $TOKEN" \
+     https://seublog.com/wp-json/wp/v2/users/me</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma senha por integração — facilita revogar sem quebrar as outras.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar em variável de ambiente ou secret manager, nunca no código.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar sempre <code class="font-mono">https://</code> — Basic Auth em HTTP vaza a senha.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar um <strong>usuário dedicado</strong> com role <code class="font-mono">editor</code> só pra automação.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar a senha do login do admin via Basic Auth.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar uma única App Password entre vários bots.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Remover os espaços da senha — eles fazem parte.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar <code class="font-mono">.env</code> com a App Password no git.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Basic Auth</div>
+          <p class="text-xs text-neutral-400">Header <code class="font-mono">Authorization: Basic base64(user:pass)</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">App Password</div>
+          <p class="text-xs text-neutral-400">Credencial por contexto, revogável, separada do login.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Capabilities</div>
+          <p class="text-xs text-neutral-400">Permissões do usuário — limitam o que o token pode fazer.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">HTTPS</div>
+          <p class="text-xs text-neutral-400">Obrigatório — Basic Auth sem TLS é texto puro.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📝 POST /wp-json/wp/v2/posts</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Criar um post é um único <code class="text-amber-400 font-mono text-sm">POST</code> com body JSON. Os campos mínimos são <code class="text-amber-400 font-mono text-sm">title</code>, <code class="text-amber-400 font-mono text-sm">content</code> e <code class="text-amber-400 font-mono text-sm">status</code>. O resto (slug, excerpt, autor, categorias) é opcional — o WordPress preenche defaults sensatos.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Criar um post como rascunho (mais seguro pra testar)
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "title": "Meu primeiro post via REST",
+        "content": "&lt;p&gt;Olá mundo do &lt;strong&gt;WordPress API&lt;/strong&gt;.&lt;/p&gt;",
+        "status": "draft",
+        "excerpt": "Resumo curto que vai pro feed",
+        "slug": "primeiro-post-via-rest"
+      }' \
+  https://seublog.com/wp-json/wp/v2/posts</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A resposta traz o objeto completo do post recém-criado. Guarde o <code class="text-amber-400 font-mono text-sm">id</code> — você vai usar pra anexar mídia destacada, atualizar status e fazer PATCH depois.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Resposta esperada (201 Created)
+{
+  "id": 234,
+  "date": "2026-05-24T14:32:10",
+  "date_gmt": "2026-05-24T17:32:10",
+  "guid": { "rendered": "https://seublog.com/?p=234" },
+  "modified": "2026-05-24T14:32:10",
+  "slug": "primeiro-post-via-rest",
+  "status": "draft",
+  "type": "post",
+  "link": "https://seublog.com/?p=234",
+  "title": { "rendered": "Meu primeiro post via REST" },
+  "content": {
+    "rendered": "&lt;p&gt;Olá mundo do &lt;strong&gt;WordPress API&lt;/strong&gt;.&lt;/p&gt;",
+    "protected": false
+  },
+  "author": 1,
+  "featured_media": 0,
+  "categories": [1],
+  "tags": []
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Pra atualizar, use <code class="text-amber-400 font-mono text-sm">POST</code> ou <code class="text-amber-400 font-mono text-sm">PUT</code> no mesmo endpoint com o <code class="text-amber-400 font-mono text-sm">id</code> na URL. Só envie os campos que mudaram — o WP faz merge.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Atualizar só o status do post 234 pra publicado
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{"status":"publish"}' \
+  https://seublog.com/wp-json/wp/v2/posts/234</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Sempre crie como <code class="text-primary font-mono text-sm">draft</code> primeiro e publique num segundo request. Se algo no payload estiver errado (HTML quebrado, categoria inexistente), você corrige antes de virar conteúdo público. Erro com post já publicado vira <em>UX problem</em> pros leitores.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Content-Type</div>
+          <p class="text-xs text-neutral-400"><code class="font-mono">application/json</code> obrigatório no POST.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">rendered vs raw</div>
+          <p class="text-xs text-neutral-400">Resposta separa HTML final do conteúdo bruto.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">slug</div>
+          <p class="text-xs text-neutral-400">URL amigável — se omitido, WP gera do título.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Idempotência</div>
+          <p class="text-xs text-neutral-400">Update reenviado com mesmo body produz mesmo estado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🖼️ Upload em /wp-json/wp/v2/media</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Mídia (imagem destacada, imagens inline) sobe pelo endpoint <code class="text-amber-400 font-mono text-sm">/wp-json/wp/v2/media</code>. Não é JSON — é <strong class="text-amber-400">multipart/form-data</strong> ou raw binary com header <code class="text-amber-400 font-mono text-sm">Content-Disposition</code>. A resposta traz o <code class="text-amber-400 font-mono text-sm">id</code> da mídia, que você usa em <code class="text-amber-400 font-mono text-sm">featured_media</code> no post.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A forma mais simples no <code class="text-amber-400 font-mono text-sm">curl</code> é raw binary com <code class="text-amber-400 font-mono text-sm">--data-binary</code> — funciona pra qualquer imagem PNG/JPG/WebP.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Upload de uma imagem como raw binary
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: image/jpeg" \
+  -H "Content-Disposition: attachment; filename=\"capa.jpg\"" \
+  --data-binary "@./capa.jpg" \
+  https://seublog.com/wp-json/wp/v2/media</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A resposta é o objeto da mídia. Anote o <code class="text-amber-400 font-mono text-sm">id</code> (aqui <code class="text-amber-400 font-mono text-sm">567</code>) — esse vira o <code class="text-amber-400 font-mono text-sm">featured_media</code> do post.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Resposta 201 Created
+{
+  "id": 567,
+  "date": "2026-05-24T14:35:00",
+  "slug": "capa",
+  "type": "attachment",
+  "link": "https://seublog.com/capa/",
+  "title": { "rendered": "capa" },
+  "author": 1,
+  "media_type": "image",
+  "mime_type": "image/jpeg",
+  "source_url": "https://seublog.com/wp-content/uploads/2026/05/capa.jpg",
+  "media_details": {
+    "width": 1920,
+    "height": 1080,
+    "file": "2026/05/capa.jpg",
+    "sizes": {
+      "thumbnail": { "width": 150, "height": 150, "source_url": "..." },
+      "medium":    { "width": 300, "height": 169, "source_url": "..." },
+      "large":     { "width": 1024, "height": 576, "source_url": "..." }
+    }
+  }
+}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Agora associe a mídia ao post — patch no post 234 com <code class="text-amber-400 font-mono text-sm">featured_media: 567</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Definir capa do post
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{"featured_media": 567}' \
+  https://seublog.com/wp-json/wp/v2/posts/234
+
+# Atualizar alt text e legenda da mídia
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "alt_text": "Pessoa digitando em laptop com café ao lado",
+        "caption": "Foto: Unsplash / @creator"
+      }' \
+  https://seublog.com/wp-json/wp/v2/media/567</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">📐</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O WordPress regenera <strong>todos</strong> os tamanhos no upload (thumbnail, medium, large + os do tema). Mande imagens já otimizadas em <strong>1920x1080</strong> ou menor — subir arquivos de 6MB triplica o uso de disco e atrasa o request. Use <code class="text-primary font-mono text-sm">cwebp</code> ou <code class="text-primary font-mono text-sm">mozjpeg</code> antes do upload.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">multipart</div>
+          <p class="text-xs text-neutral-400">Formato HTTP para enviar binário + metadados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Content-Disposition</div>
+          <p class="text-xs text-neutral-400">Header que carrega o filename original.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">featured_media</div>
+          <p class="text-xs text-neutral-400">ID da imagem destacada do post.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">alt_text</div>
+          <p class="text-xs text-neutral-400">Acessibilidade e SEO — sempre preencher.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🏷️ Categorias e tags</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        WordPress trabalha com <strong class="text-amber-400">IDs numéricos</strong>, não strings. Pra atribuir "Tecnologia" a um post, você precisa primeiro descobrir o ID dessa categoria. Os endpoints são <code class="text-amber-400 font-mono text-sm">/wp/v2/categories</code> e <code class="text-amber-400 font-mono text-sm">/wp/v2/tags</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Buscar categoria por slug
+curl -s "https://seublog.com/wp-json/wp/v2/categories?slug=tecnologia&_fields=id,name,slug"
+
+# [{"id": 7, "name": "Tecnologia", "slug": "tecnologia"}]
+
+# Listar todas as categorias (até 100)
+curl -s "https://seublog.com/wp-json/wp/v2/categories?per_page=100&_fields=id,name,slug"</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Se a categoria não existe, crie sob demanda. O endpoint exige autenticação (capability <code class="text-amber-400 font-mono text-sm">manage_categories</code>).
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Criar categoria
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Inteligência Artificial","slug":"ia"}' \
+  https://seublog.com/wp-json/wp/v2/categories
+
+# {"id": 12, "name": "Inteligência Artificial", "slug": "ia", "count": 0}
+
+# Criar tag
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"WordPress"}' \
+  https://seublog.com/wp-json/wp/v2/tags
+
+# {"id": 34, "name": "WordPress", "slug": "wordpress", "count": 0}</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Com os IDs em mãos, mande no payload do post como <strong>arrays</strong> — mesmo que seja uma única categoria/tag.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Atribuir categorias 7 + 12 e tags 34 + 88 ao post 234
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "categories": [7, 12],
+        "tags": [34, 88]
+      }' \
+  https://seublog.com/wp-json/wp/v2/posts/234</code></pre>
+
+      <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Padrão pra automação
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-amber-400">1. Cache local de IDs:</strong> seu script mantém um mapa <code class="font-mono">{slug → id}</code> em memória/Redis e só consulta a API quando o slug é novo.</li>
+          <li><strong class="text-amber-400">2. Get-or-create:</strong> primeiro <code class="font-mono">GET ?slug=x</code>; se array vazio, <code class="font-mono">POST</code> pra criar.</li>
+          <li><strong class="text-amber-400">3. Slugs estáveis:</strong> normalize antes (lowercase, sem acento) — evita criar "IA" e "ia" como categorias distintas.</li>
+          <li><strong class="text-amber-400">4. Tags primeiro, categorias depois:</strong> categorias podem ter parent/hierarquia, então resolva pai antes do filho.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Taxonomy</div>
+          <p class="text-xs text-neutral-400">Sistema de classificação (category, tag, custom).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Slug</div>
+          <p class="text-xs text-neutral-400">Identificador URL-safe, único por taxonomia.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Get-or-create</div>
+          <p class="text-xs text-neutral-400">Padrão idempotente: busca, e cria se não existe.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Hierarquia</div>
+          <p class="text-xs text-neutral-400">Categorias podem ter <code class="font-mono">parent</code>; tags não.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📅 Status: draft / publish / future</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O campo <code class="text-amber-400 font-mono text-sm">status</code> controla o ciclo de vida do post. Os três que importam pra automação são <code class="text-amber-400 font-mono text-sm">draft</code> (rascunho), <code class="text-amber-400 font-mono text-sm">publish</code> (no ar) e <code class="text-amber-400 font-mono text-sm">future</code> (agendado). Agendamento é <strong class="text-amber-400">nativo</strong> — não precisa cronjob nem plugin.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">draft — rascunho</h4>
+            <p class="text-sm text-neutral-400 mb-3">Visível só no admin pra autores e editores. Use pra criar e revisar antes de publicar.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">{"status": "draft"}</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">publish — no ar agora</h4>
+            <p class="text-sm text-neutral-400 mb-3">Vai pra home, feed RSS e indexação imediatamente. Sem volta sem dor.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">{"status": "publish"}</code></pre>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">future — agendado</h4>
+            <p class="text-sm text-neutral-400 mb-3">Combine <code class="font-mono">status: future</code> + <code class="font-mono">date</code> no futuro. O WP-Cron publica sozinho na hora marcada.</p>
+            <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">{
+  "status": "future",
+  "date": "2026-06-01T09:00:00"
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Exemplo completo: criar um post já agendado pra próxima segunda às 9h, com capa, categorias e tags — tudo num único request.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Post agendado completo
+curl -s -X POST \
+  -u "$USER:$APP_PASS" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "title": "5 hábitos que mudaram meu workflow",
+        "slug": "5-habitos-workflow",
+        "content": "&lt;p&gt;Conteúdo completo aqui...&lt;/p&gt;",
+        "excerpt": "Os pequenos rituais que ganharam horas da minha semana.",
+        "status": "future",
+        "date": "2026-06-01T09:00:00",
+        "categories": [7, 12],
+        "tags": [34, 88],
+        "featured_media": 567
+      }' \
+  https://seublog.com/wp-json/wp/v2/posts</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Listar o que está na fila de agendamento é igualmente simples — filtre por <code class="text-amber-400 font-mono text-sm">status=future</code>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Ver agenda futura
+curl -s -u "$USER:$APP_PASS" \
+  "https://seublog.com/wp-json/wp/v2/posts?status=future&_fields=id,date,title,slug"
+
+# [
+#   {"id": 234, "date": "2026-06-01T09:00:00", "title": {...}, "slug": "5-habitos-workflow"},
+#   {"id": 235, "date": "2026-06-03T08:00:00", "title": {...}, "slug": "outro-post"}
+# ]</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏰</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O WP-Cron <strong>não é um cron real</strong> — ele dispara quando alguém visita o site. Se seu blog tem tráfego baixo, agendamentos atrasam. Em produção séria, desabilite o WP-Cron interno (<code class="text-primary font-mono text-sm">DISABLE_WP_CRON=true</code> no <code class="text-primary font-mono text-sm">wp-config.php</code>) e configure um <code class="text-primary font-mono text-sm">cron</code> de sistema que chama <code class="text-primary font-mono text-sm">wp-cron.php</code> a cada 5 min.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">status</div>
+          <p class="text-xs text-neutral-400">draft, publish, future, pending, private, trash.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">date</div>
+          <p class="text-xs text-neutral-400">ISO 8601 no fuso do site; <code class="font-mono">date_gmt</code> em UTC.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">WP-Cron</div>
+          <p class="text-xs text-neutral-400">Scheduler interno baseado em hits HTTP.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-amber-400 mb-1">Timezone</div>
+          <p class="text-xs text-neutral-400">Settings → General define o fuso do <code class="font-mono">date</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">REST API confirmada</strong><span class="text-neutral-400"> — <code class="font-mono">/wp-json</code> responde, namespaces <code class="font-mono">wp/v2</code> ativos, permalinks OK.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Application Password gerada</strong><span class="text-neutral-400"> — credencial dedicada, Basic Auth sobre HTTPS, guardada fora do código.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">POST /posts dominado</strong><span class="text-neutral-400"> — criar como draft, atualizar com PATCH, status final num segundo request.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Upload de mídia</strong><span class="text-neutral-400"> — raw binary em <code class="font-mono">/media</code>, <code class="font-mono">featured_media</code> anexado ao post, alt text preenchido.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Taxonomias resolvidas</strong><span class="text-neutral-400"> — get-or-create de categorias/tags por slug, IDs em cache pra evitar chamadas redundantes.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Agendamento nativo</strong><span class="text-neutral-400"> — <code class="font-mono">status=future</code> + <code class="font-mono">date</code> futura, com cron de sistema apoiando o WP-Cron.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">4.2 — Ghost API: publicação programática num CMS moderno e headless-friendly</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

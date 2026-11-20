@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 6.3 - Monitoramento e logs | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Rose (T6) */
+    html:not(.dark) .text-rose-400 { color: #9f1239; }
+    html:not(.dark) .bg-rose-500\/20 { background-color: rgba(225, 29, 72, 0.12); }
+    html:not(.dark) .bg-rose-500\/10 { background-color: rgba(225, 29, 72, 0.08); }
+    html:not(.dark) .bg-rose-900\/20 { background-color: rgba(225, 29, 72, 0.08); }
+    html:not(.dark) .bg-rose-900\/30 { background-color: rgba(225, 29, 72, 0.10); }
+    html:not(.dark) .border-rose-500\/30 { border-color: rgba(225, 29, 72, 0.25); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+    html:not(.dark) .hover\:bg-rose-500\/30:hover { background-color: rgba(225, 29, 72, 0.18); }
+    html:not(.dark) .bg-rose-600 { background-color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500:hover { background-color: #be123c; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - blue para boxes informativas */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Módulo 6.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📊 Monitoramento e logs</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Sair do escuro: logs centralizados, uptime monitor, métricas com Prometheus/Grafana, alertas no Telegram, Sentry para erros de app e status page pública.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avançado</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📋 Centralizar logs (Loki / Better Stack)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Logs dispersos em containers individuais são <strong class="text-rose-400">inúteis em pânico</strong>. Quando o site cai às 2h da manhã, você quer abrir UMA tela e buscar por <code class="text-rose-400 font-mono text-sm">"error"</code> nos últimos 15 minutos — não rodar <code class="text-rose-400 font-mono text-sm">docker logs</code> em 6 containers diferentes.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Duas opções pragmáticas: <strong class="text-rose-400">Loki + Grafana</strong> (self-hosted, dá mais trabalho mas tudo seu) ou <strong class="text-rose-400">Better Stack / Logtail</strong> (SaaS, 1GB/mês grátis, configura em 5 min). Para um VPS pequeno, comece pelo SaaS.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Loki via Docker (stack mínimo)
+# docker-compose.loki.yml
+services:
+  loki:
+    image: grafana/loki:2.9.0
+    ports: ["3100:3100"]
+    volumes:
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    volumes:
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
+volumes:
+  loki-data:</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Defina <strong>retenção</strong> desde o dia 1. Logs crescem rápido: 100MB/dia x 90 dias = 9GB. Para Loki, configure <code class="text-primary font-mono text-sm">retention_period: 720h</code> (30 dias). Para Better Stack, ajuste no painel — o plano grátis retém só 3 dias.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Agregação</div>
+          <p class="text-xs text-neutral-400">Todos os logs em UM lugar, com busca unificada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Retenção</div>
+          <p class="text-xs text-neutral-400">Quantos dias guardar antes de descartar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Labels</div>
+          <p class="text-xs text-neutral-400">Tags (service, env, level) que tornam busca rápida.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">LogQL / Search</div>
+          <p class="text-xs text-neutral-400">Query language para filtrar e agregar logs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⏱️ Uptime monitor (UptimeRobot grátis)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Se o seu site cai e <strong class="text-rose-400">você descobre pelo cliente</strong>, falhou. Um uptime monitor externo bate em endpoints HTTP a cada N minutos e te avisa no segundo em que parar de responder. O <strong class="text-rose-400">UptimeRobot</strong> oferece 50 monitores grátis com check de 5 em 5 minutos.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Criar conta e adicionar monitor</h4>
+            <p class="text-sm text-neutral-300">Tipo <code class="font-mono">HTTP(s)</code>, URL do site, intervalo 5 min. Configure também <code class="font-mono">/api/health</code> para validar dependências, não só o HTML.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Configurar canais de alerta</h4>
+            <p class="text-sm text-neutral-300">E-mail (sempre), SMS (pago) ou webhook para Telegram/Slack. Defina <strong>quem</strong> recebe e em <strong>qual horário</strong> — alerta de 3h só faz sentido se alguém vai agir.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Publicar status page</h4>
+            <p class="text-sm text-neutral-300">Aba "Public Status Pages" gera URL tipo <code class="font-mono">stats.uptimerobot.com/abc123</code>. Sem código, mostra histórico de 90 dias e uptime %.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Monitor sintético externo (UptimeRobot) <strong>e</strong> healthcheck interno (Docker) não se substituem. O externo detecta DNS quebrado, certificado expirado, firewall bloqueando — coisas que o container interno acha "ok". Use os dois.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">HTTP check</div>
+          <p class="text-xs text-neutral-400">Bate na URL, espera status 2xx em tempo X.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Intervalo</div>
+          <p class="text-xs text-neutral-400">5 min (grátis) ou 1 min (pago) — trade-off custo/latência.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Multi-region</div>
+          <p class="text-xs text-neutral-400">Checks de várias geografias evitam falso-positivo de ISP.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Status page</div>
+          <p class="text-xs text-neutral-400">Página pública mostrando histórico de uptime.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📈 Métricas (Prometheus + Grafana)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Logs respondem "o que aconteceu". Métricas respondem <strong class="text-rose-400">"qual a tendência"</strong>. CPU subiu 30% na última hora? Memória crescendo lentamente desde ontem? Sem métricas você só percebe quando trava. O combo <strong class="text-rose-400">Prometheus</strong> (coleta + storage) + <strong class="text-rose-400">Grafana</strong> (dashboard) é padrão de mercado.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># docker-compose.monitoring.yml
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports: ["9090:9090"]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prom-data:/prometheus
+    command:
+      - '--storage.tsdb.retention.time=30d'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports: ["9100:9100"]
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    ports: ["3001:3000"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  prom-data:
+  grafana-data:</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># prometheus.yml — scrape config mínimo
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Dashboards prontos no Grafana
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">ID 1860</strong> — Node Exporter Full: CPU, RAM, disco, rede, load average. Importar e plugar — funciona out-of-the-box.</li>
+          <li><strong class="text-blue-400">ID 893</strong> — Docker containers: por container, uso de recursos e status.</li>
+          <li><strong class="text-blue-400">ID 9628</strong> — PostgreSQL: conexões, locks, queries lentas, cache hit ratio.</li>
+          <li><strong class="text-blue-400">Retenção:</strong> 30 dias bastam para a maioria. Mais que isso? VictoriaMetrics em vez de Prometheus puro.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Exporters</div>
+          <p class="text-xs text-neutral-400">Agentes que expõem métricas em <code class="font-mono">/metrics</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Pull model</div>
+          <p class="text-xs text-neutral-400">Prometheus puxa, não recebe push — mais resiliente.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">PromQL</div>
+          <p class="text-xs text-neutral-400">Linguagem para somar, agregar e calcular métricas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">TSDB</div>
+          <p class="text-xs text-neutral-400">Time-series DB — guarda séries temporais densas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔔 Alertas (e-mail / Telegram)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Métricas que ninguém olha não previnem incidente. Configure <strong class="text-rose-400">Alertmanager</strong> (companheiro do Prometheus) para disparar quando CPU passa de 90% por 5 min, disco passa de 85% ou um serviço some. <strong class="text-rose-400">Telegram</strong> é o canal mais rápido para alertas pessoais — webhook em 30s.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># alertmanager.yml
+route:
+  receiver: 'telegram'
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+receivers:
+  - name: 'telegram'
+    telegram_configs:
+      - bot_token: ${TG_BOT_TOKEN}
+        chat_id: ${TG_CHAT_ID}
+        parse_mode: 'HTML'
+
+# rules.yml — regras de alerta
+groups:
+  - name: host
+    rules:
+      - alert: HighCPU
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU acima de 90% por 5min"
+
+      - alert: DiskFull
+        expr: node_filesystem_avail_bytes / node_filesystem_size_bytes &lt; 0.15
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disco com menos de 15% livre"</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Definir <code class="font-mono">severity</code> (warning / critical) e rotear por canal.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">for: 5m</code> para evitar disparos por spike momentâneo.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agrupar alertas (<code class="font-mono">group_by</code>) para não receber 50 mensagens iguais.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Testar o alerta <strong>antes</strong> do incidente real — disparo manual.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Alertar para tudo — fadiga de alerta mata atenção.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Disparar critical para CPU em pico de 10s.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mandar alerta sem <code class="font-mono">summary</code> claro do que está errado.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Configurar bot do Telegram com token público no repo.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Severity</div>
+          <p class="text-xs text-neutral-400">warning (olhar amanhã) vs critical (acordar agora).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Webhook</div>
+          <p class="text-xs text-neutral-400">HTTP POST que entrega alerta a Telegram/Slack/Discord.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Silencing</div>
+          <p class="text-xs text-neutral-400">Silenciar alertas durante manutenção planejada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Runbook</div>
+          <p class="text-xs text-neutral-400">Doc curto: "se este alerta dispara, faça isto".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🐛 Sentry para erros de app</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Logs e métricas mostram <strong class="text-rose-400">sintomas de infra</strong>. Sentry mostra <strong class="text-rose-400">exceções da aplicação</strong> com stack trace completo, contexto do request, breadcrumbs e quantos usuários foram afetados. Plano grátis: 5k erros/mês — sobra para projeto pequeno.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Setup em app Node/Next (3 linhas no entry point)
+import * as Sentry from "@sentry/node";
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  release: process.env.GIT_SHA,
+  tracesSampleRate: 0.1,  // 10% das requests viram traces
+});
+
+# .env
+SENTRY_DSN=https://abc123@o12345.ingest.sentry.io/678
+GIT_SHA=$(git rev-parse --short HEAD)</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Recursos críticos do Sentry
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">DSN:</strong> URL única do projeto. Sensível mas não secreta — pode aparecer em frontend (com domain whitelist).</li>
+          <li><strong class="text-blue-400">Source maps:</strong> upload no deploy para Sentry traduzir <code class="font-mono">main.abc123.js:1:8842</code> em arquivo + linha original.</li>
+          <li><strong class="text-blue-400">Release tracking:</strong> tag <code class="font-mono">release</code> mostra qual deploy quebrou — comparar erro antes/depois fica trivial.</li>
+          <li><strong class="text-blue-400">Issue grouping:</strong> erros similares colapsam em UMA issue com contagem — não 500 e-mails do mesmo bug.</li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Configure <code class="text-primary font-mono text-sm">beforeSend</code> para <strong>scrubbar dados sensíveis</strong> (senha, token, cartão) antes do erro sair. Sentry tem PII scrubbing default, mas confiar é arriscado — filtre você mesmo o que sai pela rede.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">DSN</div>
+          <p class="text-xs text-neutral-400">Endpoint que recebe os erros do seu app.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Source maps</div>
+          <p class="text-xs text-neutral-400">Mapeiam JS minificado de volta ao código-fonte.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Breadcrumbs</div>
+          <p class="text-xs text-neutral-400">Trilha de ações que precederam o erro.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Release</div>
+          <p class="text-xs text-neutral-400">Tag de versão para isolar regressões.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🌐 Status page pública</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando algo cai, clientes ligando perguntando "tá fora?" custa mais tempo que o próprio incidente. Uma <strong class="text-rose-400">status page pública</strong> resolve: a pessoa abre, vê "Incidente em andamento desde 14:32", e te deixa trabalhar. <strong class="text-rose-400">Uptime Kuma</strong> é self-hosted, grátis e bonito.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Uptime Kuma em 1 comando
+docker run -d \
+  --name uptime-kuma \
+  --restart unless-stopped \
+  -p 3002:3001 \
+  -v uptime-kuma:/app/data \
+  louislam/uptime-kuma:1
+
+# Acessar em http://servidor:3002
+# 1. Criar conta admin
+# 2. Adicionar monitores (HTTP, ping, port, DNS, Docker, push)
+# 3. Settings > Status Pages > criar pública
+# 4. Apontar status.seu-dominio.com via Nginx ou Caddy</code></pre>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📢</span> Boas práticas de comunicação
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">Transparência ganha confiança:</strong> esconder incidente é pior que admitir — clientes percebem do mesmo jeito.</li>
+          <li><strong class="text-blue-400">Update a cada 30 min:</strong> mesmo sem novidade. "Ainda investigando" é melhor que silêncio.</li>
+          <li><strong class="text-blue-400">Post-mortem público:</strong> após resolver, descreva causa raiz e medidas. Cresce credibilidade.</li>
+          <li><strong class="text-blue-400">Subdomínio dedicado:</strong> <code class="font-mono">status.seu-site.com</code> hospedado SEPARADO do app principal — se a infra cai, a status page sobrevive.</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Hospedar status page em infra <strong>diferente</strong> do app.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mostrar uptime de 90 dias — histórico vira confiança.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Permitir inscrição por e-mail/RSS para clientes sérios.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Divulgar a URL no rodapé do site e na docs.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hospedar a status page no mesmo VPS do app.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esconder incidentes para "não assustar" — só piora.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Marcar "all systems operational" sem checar de verdade.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de atualizar quando o incidente termina.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Transparência</div>
+          <p class="text-xs text-neutral-400">Comunicar incidente cedo, mesmo sem causa-raiz.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Incident</div>
+          <p class="text-xs text-neutral-400">Evento com início, updates e resolução documentados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">SLA / SLO</div>
+          <p class="text-xs text-neutral-400">Metas de disponibilidade (99,9% = 43min/mês fora).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-rose-400 mb-1">Post-mortem</div>
+          <p class="text-xs text-neutral-400">Análise pública do que falhou e como prevenir.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Logs centralizados</strong><span class="text-neutral-400"> — Loki self-hosted ou Better Stack SaaS, com retenção definida desde o dia 1.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Uptime monitor externo</strong><span class="text-neutral-400"> — UptimeRobot batendo em <code class="font-mono">/api/health</code> a cada 5 min com alerta multi-canal.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Métricas em produção</strong><span class="text-neutral-400"> — Prometheus + node_exporter + Grafana com dashboards prontos (1860, 893, 9628).</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Alertas que importam</strong><span class="text-neutral-400"> — Alertmanager + Telegram, severity, <code class="font-mono">for:</code> para evitar fadiga.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Sentry conectado</strong><span class="text-neutral-400"> — exceções com stack trace, source maps, release tracking e PII scrubbing.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div><strong class="text-white">Status page pública</strong><span class="text-neutral-400"> — Uptime Kuma em subdomínio separado, com post-mortems e histórico de 90 dias.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">6.4 — Backup, restore e plano de disaster recovery</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-6-4.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

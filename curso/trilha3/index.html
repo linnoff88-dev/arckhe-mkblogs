@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 3: Conectar Redes Sociais | MkBlogs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(124, 58, 237, 0.25); }
+
+    /* Light mode - remove gradientes (fundo uniforme) */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas e linhas divisorias mais suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER DA TRILHA -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 3
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔑 Conectar Redes Sociais</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Obtenha credenciais, tokens e permissões para publicar via API nas 6 principais redes: Bluesky, Mastodon, X (Twitter), LinkedIn, Instagram/Threads e TikTok. Da rede mais fácil à mais burocrática.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Módulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">36</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">~4h</div>
+          <div class="text-xs text-neutral-400">Duração</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="#modulo-3-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.1</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🦋 Bluesky</h3>
+          <p class="text-xs text-neutral-400">Sem aprovação, login em 5 min</p>
+        </a>
+        <a href="#modulo-3-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.2</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🐘 Mastodon</h3>
+          <p class="text-xs text-neutral-400">Token direto, sem OAuth</p>
+        </a>
+        <a href="#modulo-3-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.3</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🐦 X (Twitter)</h3>
+          <p class="text-xs text-neutral-400">Pay-per-use, $0,01 por post</p>
+        </a>
+        <a href="#modulo-3-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.4</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">💼 LinkedIn</h3>
+          <p class="text-xs text-neutral-400">OAuth 2.0 + token de 60 dias</p>
+        </a>
+        <a href="#modulo-3-5" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.5</span>
+            <span class="text-xs text-neutral-500">~45 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">📷 Instagram & Threads</h3>
+          <p class="text-xs text-neutral-400">App Review obrigatório</p>
+        </a>
+        <a href="#modulo-3-6" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.6</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🎵 TikTok</h3>
+          <p class="text-xs text-neutral-400">Content Posting API rigorosa</p>
+        </a>
+      </div>
+    </section>
+
+    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+
+    <!-- MODULO 3.1 - BLUESKY -->
+    <div id="modulo-3-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🦋 Bluesky (fácil, sem aprovação)</h3>
+        <p class="text-neutral-400 text-sm">A rede mais permissiva: protocolo aberto AT Protocol, sem App Review, sem custo. Comece por aqui.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Criar conta + App Password</span><span class="text-neutral-500 text-sm ml-2">- Segurança em 2 cliques</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">App Password é uma senha secundária gerada em <code>bsky.app/settings/app-passwords</code>. Permite que seu script faça login sem expor sua senha principal e pode ser revogada a qualquer momento.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a única forma segura de automatizar publicações. Se a chave vazar, você revoga só ela. Sua senha principal continua intacta e o 2FA permanece ativo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Handle (ex: <code>nome.bsky.social</code>), App Password (formato xxxx-xxxx-xxxx-xxxx), escopo limitado a publicar/ler.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Instalar @atproto/api</span><span class="text-neutral-500 text-sm ml-2">- SDK oficial em Node</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">A lib oficial <code>@atproto/api</code> abstrai chamadas HTTP do AT Protocol. Instalar com <code>npm install @atproto/api</code>. Documentação em <code>docs.bsky.app</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Você ganha tipos TypeScript, retry automático, helpers de RichText e validação de schemas Lexicon. Evita reinventar parser de respostas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">BskyAgent é a classe principal, service URL padrão <code>https://bsky.social</code>, suporta também outros PDS (Personal Data Servers).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔑</span>
+            <div><span class="font-medium">Login programático</span><span class="text-neutral-500 text-sm ml-2">- agent.login()</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Método <code>agent.login({ identifier, password })</code> retorna sessão com accessJwt e refreshJwt. A sessão é guardada na instância do agent para chamadas subsequentes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Persistir <code>agent.session</code> evita login a cada publicação. Em jobs longos, use <code>resumeSession</code> em vez de <code>login</code> repetidamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">JWT expira em ~2h, refreshJwt em ~60 dias, DID (identificador único e imutável do usuário).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✏️</span>
+            <div><span class="font-medium">Publicar texto</span><span class="text-neutral-500 text-sm ml-2">- agent.post()</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm"><code>await agent.post({ text: 'Hello mundo' })</code> cria um registro do tipo <code>app.bsky.feed.post</code> no repositório do usuário. Limite de 300 grafemas (não bytes).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a operação base. Retorna <code>uri</code> e <code>cid</code> que servem para responder, curtir, deletar e linkar o post.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">300 grafemas máx, createdAt em ISO 8601, langs para indicar idioma, reply para threads.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🖼️</span>
+            <div><span class="font-medium">Upload de blob (imagem)</span><span class="text-neutral-500 text-sm ml-2">- uploadBlob + embed</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Fluxo de 2 passos: <code>agent.uploadBlob(buffer, { encoding: 'image/jpeg' })</code> retorna referência do blob, depois você passa em <code>embed: { $type: 'app.bsky.embed.images', images: [{ alt, image: blobRef }] }</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Imagens drivam 3-5x mais engajamento. Sem blob, seus posts ficam só texto e perdem alcance no feed algorítmico.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Máx 1MB por imagem, até 4 imagens por post, alt text obrigatório por acessibilidade.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔗</span>
+            <div><span class="font-medium">RichText e detecção de links</span><span class="text-neutral-500 text-sm ml-2">- Facets automáticos</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Classe <code>RichText</code> detecta menções (@user), hashtags e URLs e gera <code>facets</code> com índices byte-precisos. Use <code>rt.detectFacets(agent)</code> antes de postar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem facets, o texto sai como string inerte: links não clicáveis, hashtags não buscáveis, menções não notificam. Mata o alcance.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Facets indexados em bytes UTF-8, tipos: link/mention/tag, RichText também faz truncate respeitando grafemas.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-1.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.2 - MASTODON -->
+    <div id="modulo-3-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.2</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐘 Mastodon</h3>
+        <p class="text-neutral-400 text-sm">Federado, instalável em qualquer servidor. Token em 2 minutos, REST API padrão, sem App Review.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏛️</span>
+            <div><span class="font-medium">Escolher instância</span><span class="text-neutral-500 text-sm ml-2">- mastodon.social, ou própria</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Mastodon é federado: cada instância (servidor) é independente. Mais populares: <code>mastodon.social</code>, <code>mas.to</code>, <code>fosstodon.org</code>. Sua URL base muda conforme a instância.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">O endpoint da API é <code>https://SUA-INSTANCIA/api/v1/...</code>. Errar a instância = 404 em tudo. Posts ficam visíveis em outras instâncias pela federação ActivityPub.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Fediverso, ActivityPub, instância vs conta, regras de moderação variam.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Criar app no /settings/applications</span><span class="text-neutral-500 text-sm ml-2">- UI nativa</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Acesse <code>SUA-INSTANCIA/settings/applications</code> logado. Clique em "New application", escolha nome, scopes (<code>read write</code>), e a instância gera client_id, client_secret e <strong>access token</strong>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Diferente de Twitter/LinkedIn, não precisa de OAuth dance: a UI já te entrega o access token pronto. Setup em 2 minutos.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Scopes: read, write, follow, push, admin. Acesse "Your access token" no final do formulário.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎫</span>
+            <div><span class="font-medium">Token de app</span><span class="text-neutral-500 text-sm ml-2">- Bearer simples, sem expiração</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">O access token criado nas applications NÃO expira até você revogar. Use no header <code>Authorization: Bearer SEU_TOKEN</code> em todas as chamadas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Token longo-prazo = automação simples. Sem refresh, sem renovação, sem OAuth callback. Diferencial enorme vs LinkedIn (60 dias) ou Twitter (2h).</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Bearer auth, escopo herdado da app, revogável só pelo dono via UI.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📤</span>
+            <div><span class="font-medium">POST /api/v1/statuses</span><span class="text-neutral-500 text-sm ml-2">- Endpoint de publicação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Endpoint <code>POST https://INSTANCIA/api/v1/statuses</code> com body <code>{ status: "texto", visibility: "public" }</code>. Retorna o objeto Status com id, url e timestamps.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a operação principal. Suporta 500 caracteres (vs 300 do Bluesky), Markdown limitado, hashtags, menções remotas e idempotency key.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">500 chars, Idempotency-Key header evita posts duplicados em retry, scheduled_at para agendar.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📎</span>
+            <div><span class="font-medium">Upload de mídia em /api/v1/media</span><span class="text-neutral-500 text-sm ml-2">- multipart/form-data</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Use <code>POST /api/v2/media</code> (preferido, assíncrono) ou <code>/api/v1/media</code> com multipart contendo arquivo + description (alt text). Retorna media id que você passa em <code>media_ids[]</code> no statuses.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Mastodon aceita imagens, vídeo, áudio e GIF. O v2 processa em background — você recebe 202 e faz poll até processing terminar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Até 4 anexos por status, alt text obrigatório por boas práticas, focus point para crop inteligente.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚠️</span>
+            <div><span class="font-medium">Visibility e content warnings</span><span class="text-neutral-500 text-sm ml-2">- public / unlisted / private / direct</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Campo <code>visibility</code> aceita: <code>public</code> (timeline pública), <code>unlisted</code> (não aparece em discovery), <code>private</code> (só seguidores) e <code>direct</code> (mensagem). Campo <code>spoiler_text</code> cria content warning.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">A cultura Mastodon exige CW em política, NSFW e spoilers. Posts sem CW apropriado são silenciados/reportados. Use unlisted para reposts automatizados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">CW = spoiler_text, sensitive=true marca mídia, visibility define federação.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-2.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.3 - X (Twitter) -->
+    <div id="modulo-3-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.3</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐦 X (Twitter API v2)</h3>
+        <p class="text-neutral-400 text-sm">Pay-per-use a partir de $0,01 por post. OAuth 2.0 + lib twitter-api-v2. Upload de mídia ainda usa v1.1.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Developer Portal X.com</span><span class="text-neutral-500 text-sm ml-2">- developer.x.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Portal oficial em <code>developer.x.com/portal/dashboard</code>. Crie Project + App. Project agrupa apps por caso de uso; App contém as credenciais.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem Project, não há acesso à API v2. Use case description é avaliado: descreva claramente publicação automatizada de conteúdo próprio.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Project > App, Bearer Token (app-only), API Key/Secret (consumer), Access Token (user context).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">💰</span>
+            <div><span class="font-medium">Custo: pay-per-use $0,01/post</span><span class="text-neutral-500 text-sm ml-2">- Free 500 posts/mês</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Free tier: 500 posts/mês via API. Basic: $200/mês, 3.000 posts. Pro: $5.000/mês, 1M posts. Acima disso entra pay-per-use a partir de $0,01/post conforme volume.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a rede mais cara do estudo. Calcule volume antes: 100 posts/dia = 3.000/mês = plano Basic obrigatório. Para teste pessoal o Free basta.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Rate limits separados por tier, leitura também consome quota, free tier permite só write/read básico.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Criar app + OAuth 2.0</span><span class="text-neutral-500 text-sm ml-2">- PKCE flow</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Configure app com User authentication settings: tipo "Web App", scopes <code>tweet.read tweet.write users.read offline.access</code>, callback URL. Use OAuth 2.0 + PKCE para obter user access token.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Para postar em nome do usuário, OAuth 2.0 com PKCE é o caminho moderno. O scope <code>offline.access</code> dá refresh token (essencial pra automação).</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">PKCE = code_verifier + code_challenge, refresh token rotativo, access token expira em 2h.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">Lib twitter-api-v2</span><span class="text-neutral-500 text-sm ml-2">- npm install twitter-api-v2</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Lib <code>twitter-api-v2</code> (npm) é a referência da comunidade: cobre v2 e v1.1, OAuth 1.0a/2.0, streams, retry, tipagem TypeScript. Use <code>new TwitterApi(token).v2.tweet({ text })</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Implementar OAuth 2.0 PKCE + media upload chunked do zero é trabalhoso. A lib resolve refresh automático, paginação e tipos.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Cliente .v2 e .v1, readWrite vs readOnly, helpers de paginação, plugin de cache opcional.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🖼️</span>
+            <div><span class="font-medium">Upload de media (ainda v1.1)</span><span class="text-neutral-500 text-sm ml-2">- media/upload chunked</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Upload de mídia em X ainda vive em <code>upload.twitter.com/1.1/media/upload.json</code> (v1.1). Fluxo INIT > APPEND (chunks) > FINALIZE > STATUS. Pegue o <code>media_id_string</code> e passe em <code>media.media_ids</code> ao criar o tweet v2.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a única pegadinha grande: a API "v2" não faz upload. A lib twitter-api-v2 abstrai com <code>v1.uploadMedia(buffer)</code>, mas saber do dual-API evita confusão.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Chunks de até 5MB, vídeo: media_category=tweet_video, alt text via <code>metadata/create</code>.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧵</span>
+            <div><span class="font-medium">Threads programáticos</span><span class="text-neutral-500 text-sm ml-2">- reply.in_reply_to_tweet_id</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Para criar thread, publique o primeiro tweet, pegue o <code>id</code> retornado, e crie o próximo passando <code>reply: { in_reply_to_tweet_id }</code>. A lib oferece <code>v2.tweetThread([...])</code> que automatiza isso.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Threads driblam o limite de 280 caracteres e funcionam como blog post curto. Conteúdo educativo viraliza muito mais em thread do que tweet único com link.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">280 caracteres (4.000 no Premium), use conversation_id para buscar a thread inteira, retry com idempotency.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-3.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.4 - LinkedIn -->
+    <div id="modulo-3-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.4</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">💼 LinkedIn</h3>
+        <p class="text-neutral-400 text-sm">Developer App + produto "Share on LinkedIn" + OAuth 2.0. Token de 60 dias com refresh. Tom corporativo, alcance B2B alto.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏢</span>
+            <div><span class="font-medium">LinkedIn Developer App</span><span class="text-neutral-500 text-sm ml-2">- developer.linkedin.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Crie app em <code>linkedin.com/developers/apps</code>. Exige Company Page como "verified company": associe a app a uma página de empresa (pode ser pessoal/teste). Sem isso, alguns produtos ficam bloqueados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">A vinculação a Company Page é o ponto de fricção. Crie uma página minimal de "estudos" se não tiver empresa real. Sem página verified = sem produtos avançados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Client ID, Client Secret, Authorized redirect URLs, Company Page admin role.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Produto "Share on LinkedIn"</span><span class="text-neutral-500 text-sm ml-2">- Self-serve, sem review</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Na aba "Products" da sua app, solicite <code>Share on LinkedIn</code> e <code>Sign In with LinkedIn using OpenID Connect</code>. Ambos são self-serve — aprovados instantaneamente. Posts em página de empresa exigem <code>Marketing Developer Platform</code> (esse precisa review).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Share on LinkedIn = postar no perfil pessoal sem review. Cobre 90% dos casos de uso de creator. Marketing Developer Platform é só se você precisa postar em company pages de terceiros.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Self-serve products vs reviewed products, OIDC para login, escopo herdado dos products habilitados.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Scopes w_member_social</span><span class="text-neutral-500 text-sm ml-2">- Permissão de publicação</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Scope <code>w_member_social</code> autoriza publicar posts em nome do usuário. <code>r_liteprofile</code> e <code>r_emailaddress</code> (ou <code>openid profile email</code> via OIDC) dão dados do perfil para identificar o autor.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Sem <code>w_member_social</code>, qualquer POST em <code>/ugcPosts</code> ou <code>/rest/posts</code> retorna 403. Outros scopes (w_organization_social) exigem Marketing Developer Platform.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Escopos separados por espaço na URL de autorização, w_member_social = write como membro.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">OAuth 2.0 flow</span><span class="text-neutral-500 text-sm ml-2">- Authorization Code</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Authorization Code flow: redireciona o usuário para <code>linkedin.com/oauth/v2/authorization</code> com client_id, redirect_uri, scope e state. Após consentimento, troca o code em <code>linkedin.com/oauth/v2/accessToken</code> por access_token.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Não suporta PKCE (ao contrário de X). Use state para evitar CSRF. Não há grant client_credentials para postar em nome de usuário — sempre user context.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">state param (CSRF), redirect_uri precisa estar exatamente igual ao cadastrado, code expira em 30s.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📤</span>
+            <div><span class="font-medium">Upload de imagem (/rest/images)</span><span class="text-neutral-500 text-sm ml-2">- 3 passos: init/upload/post</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Fluxo: <code>POST /rest/images?action=initializeUpload</code> retorna uploadUrl + image URN, depois <code>PUT</code> binário direto no uploadUrl. Use o URN em <code>content.media.id</code> ao criar post em <code>/rest/posts</code>. Header obrigatório: <code>LinkedIn-Version: 202401</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Endpoint antigo <code>/v2/assets</code> está deprecado. A API "Versioned" (/rest) é o presente. Imagens dobram engajamento no feed.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">URN no formato <code>urn:li:image:XXX</code>, header <code>LinkedIn-Version</code>, owner URN do autor.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⏰</span>
+            <div><span class="font-medium">Refresh token (60 dias)</span><span class="text-neutral-500 text-sm ml-2">- Renovação obrigatória</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Access token dura 60 dias, refresh token 365 dias (somente para apps com produto "Sign In with LinkedIn using OpenID Connect" + Marketing Developer Platform). Para Share on LinkedIn padrão, NÃO há refresh — usuário reautoriza a cada 60 dias.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Surpresa frequente: você assume que refresh sempre existe e descobre depois que precisa pedir Marketing Developer Platform. Planeje notificação antes do 55º dia.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">grant_type=refresh_token, fallback: re-OAuth via email automático ao usuário.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-4.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.5 - Instagram & Threads -->
+    <div id="modulo-3-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.5</span>
+          <span class="text-xs text-neutral-500">~45 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📷 Instagram & Threads (Meta)</h3>
+        <p class="text-neutral-400 text-sm">A mais burocrática: conta Business obrigatória, App Review da Meta, fluxo de 2 passos (container + publish). Threads usa mesmo ecossistema.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏪</span>
+            <div><span class="font-medium">Conta Business obrigatória</span><span class="text-neutral-500 text-sm ml-2">- Sem Personal, sem API</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Instagram Graph API só funciona com contas Business ou Creator vinculadas a uma Facebook Page. Converta a conta em <code>Configurações > Conta > Mudar para conta profissional</code> e vincule à página do Facebook.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É o primeiro bloqueio. Conta pessoal = 0% de acesso à API. Vinculação à Facebook Page também é obrigatória — não basta ser Business.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Instagram Business Account (IGBA), Facebook Page ID, vinculação via Meta Business Suite.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Meta App + App Review</span><span class="text-neutral-500 text-sm ml-2">- developers.facebook.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Crie app no <code>developers.facebook.com/apps</code>, tipo "Business". Em Development Mode, só usuários de teste (admin/dev da app) podem usar. Para liberar ao público, submeta App Review com vídeo demonstrando uso de cada permissão.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Para uso pessoal (sua própria conta), Development Mode basta — não precisa review. Review só é necessária se outros usuários vão autorizar o app.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">App Mode: Development vs Live, Roles: Admin/Developer/Tester, App Review com vídeo de até 90s.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔓</span>
+            <div><span class="font-medium">Permissões pages_manage_posts / instagram_content_publish</span><span class="text-neutral-500 text-sm ml-2">- Os 2 escopos críticos</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Para Instagram: <code>instagram_content_publish</code> + <code>instagram_basic</code> + <code>pages_show_list</code> + <code>pages_read_engagement</code>. Para Facebook Pages: <code>pages_manage_posts</code>. Threads tem escopos próprios: <code>threads_basic</code> + <code>threads_content_publish</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Esquecer um único escopo = endpoint retorna 200 mas sem dados. Cada permissão sensível precisa justificativa específica no App Review.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Advanced Access vs Standard Access, Business Verification obrigatória para algumas permissões.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🪜</span>
+            <div><span class="font-medium">Fluxo 2-step: container + publish</span><span class="text-neutral-500 text-sm ml-2">- Diferente de todas as outras</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Passo 1: <code>POST /{ig-user-id}/media</code> com image_url + caption — retorna container_id. Passo 2: <code>POST /{ig-user-id}/media_publish</code> com creation_id=container_id. Imagem precisa estar publicamente acessível via HTTPS (não aceita upload direto).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É o fluxo mais incomum entre todas as APIs. A exigência de URL pública força você a ter storage (S3/Cloudinary). Tente publicar imediatamente: containers expiram em 24h.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Status do container: IN_PROGRESS/FINISHED/ERROR, poll antes do publish para vídeos/Reels.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🧵</span>
+            <div><span class="font-medium">Threads API (mesmo ecossistema)</span><span class="text-neutral-500 text-sm ml-2">- developers.facebook.com/docs/threads</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Threads usa o mesmo Meta Developer Portal. Endpoints em <code>graph.threads.net/v1.0/{threads-user-id}/threads</code>. Mesmo fluxo container + publish do Instagram. Auth próprio em <code>threads.net/oauth/authorize</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Bônus enorme: se você já passou pelo App Review do Instagram, adicionar Threads é incremental. 500 caracteres por thread, suporta media e replies.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">media_type: TEXT/IMAGE/VIDEO/CAROUSEL, reply_to_id para threads, link_attachment para preview de URLs.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Dicas para acelerar App Review</span><span class="text-neutral-500 text-sm ml-2">- Vídeo bom = aprovação em dias</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">O vídeo de App Review (60-90s) deve mostrar: login do usuário, tela de consentimento mostrando cada permissão sendo pedida, ação real usando cada permissão, resultado visível. Sem cortes editoriais. Plataforma de teste idêntica à produção.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Review típico leva 5-15 dias. Vídeo ruim = rejeitado e fila reinicia. Justifique cada permissão em 1 frase técnica (não marketing) descrevendo o use case exato.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Business Verification antes de submeter, política de Data Use, screencast com narração simples.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-5.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.6 - TikTok -->
+    <div id="modulo-3-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.6</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎵 TikTok Content Posting API</h3>
+        <p class="text-neutral-400 text-sm">App Review rigorosíssimo, upload em chunks, restrições de dimensão e duração. Quando vale o esforço.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🌐</span>
+            <div><span class="font-medium">TikTok Developer Portal</span><span class="text-neutral-500 text-sm ml-2">- developers.tiktok.com</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Acesse <code>developers.tiktok.com</code>, crie organização e app. Habilite o produto <code>Content Posting API</code> e configure OAuth 2.0 com scopes <code>video.upload</code> e/ou <code>video.publish</code>.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Diferente da Meta, TikTok exige Organization (pessoa jurídica). Para teste, usuários de Sandbox são limitados a usuários de teste registrados na app.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Sandbox vs Production, scopes separados para upload (rascunho) e publish (publicado).</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">App Review rigoroso</span><span class="text-neutral-500 text-sm ml-2">- Mais rígido que Meta</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">TikTok exige privacy policy hospedada, termos de uso, URL de produção funcionando, demo vídeo, e justificativa detalhada de cada scope. Review pode levar semanas e rejeições por detalhes mínimos são comuns.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">É a API mais difícil de habilitar do estudo. Mesmo apps pequenas são escrutinadas. Tenha tudo polido antes de submeter.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Domain verification, Privacy Policy URL obrigatório, Demo video usando produção real.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📮</span>
+            <div><span class="font-medium">Direct Post vs Photo Post</span><span class="text-neutral-500 text-sm ml-2">- Dois endpoints diferentes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Vídeo: <code>POST /v2/post/publish/video/init/</code> seguido de upload chunked. Foto/carrossel: <code>POST /v2/post/publish/content/init/</code> com <code>post_mode: DIRECT_POST</code> ou <code>MEDIA_UPLOAD</code> (rascunho aberto no app).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">DIRECT_POST publica imediatamente (exige <code>video.publish</code>); MEDIA_UPLOAD só cria rascunho que o usuário finaliza no app (mais fácil de aprovar no review).</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">publish_id, status polling em <code>/v2/post/publish/status/fetch/</code>, post_info: title, privacy_level, disable_comment.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Upload de vídeo em chunks</span><span class="text-neutral-500 text-sm ml-2">- Range bytes obrigatório</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Após init, recebe upload_url. Faça PUTs em chunks (mínimo 5MB, máximo 64MB cada exceto o último) com header <code>Content-Range: bytes start-end/total</code>. Última PUT marca o upload como completo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Vídeos grandes (>500MB) exigem chunking. Falhar em um chunk não invalida os anteriores — reenvie só o que falhou. URL de upload expira em ~1h.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">chunk_size, total_chunk_count, Content-Type: video/mp4, resumable upload.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📐</span>
+            <div><span class="font-medium">Limites e dimensões</span><span class="text-neutral-500 text-sm ml-2">- 9:16, MP4, até 4GB</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">Vídeo: MP4/MOV/WEBM, até 4GB, duração de 3s a 10 min (varia por conta). Aspecto recomendado 9:16 (1080x1920). Resoluções suportadas: 360p a 1080p. Foto: JPG/WEBP, máx 20MB, máx 35 fotos no carrossel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Subir vídeo 16:9 = letterbox feio = poucas views. Pre-processar com FFmpeg para 1080x1920 é praticamente obrigatório. Conta nova tem limite menor de duração.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">9:16 ratio, H.264 + AAC, frame rate 23-60fps, bitrate recomendado 8-10Mbps.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚖️</span>
+            <div><span class="font-medium">Quando vale a pena</span><span class="text-neutral-500 text-sm ml-2">- Custo-benefício real</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que é:</span> <p class="text-neutral-300 text-sm">TikTok recompensa quem usa o app nativo (edição, sons, efeitos). Postar via API geralmente performa pior algoritmicamente. A integração faz sentido para: cross-posting de vídeos pré-editados, agendamento e empresas com volume.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span> <p class="text-neutral-300 text-sm">Saber QUANDO não automatizar é tão importante quanto saber automatizar. Para creators solo, usar o app + agendamento nativo do TikTok pode ser mais eficiente que a API.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span> <p class="text-neutral-300 text-sm">Algoritmo prioriza posts nativos, MEDIA_UPLOAD (draft) como meio-termo, ROI vs esforço de App Review.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-3-6.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 2: Postiz</a>
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Trilha 4: Blogs →</a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs 🚀 - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      if (localStorage.getItem('theme') === 'light') html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

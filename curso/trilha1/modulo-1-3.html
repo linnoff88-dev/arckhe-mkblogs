@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 1.3 - OAuth e tokens | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Emerald (T1) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(5, 150, 105, 0.10); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .bg-emerald-600 { background-color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500:hover { background-color: #10b981; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - blue para boxes de dados */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+
+    /* Light mode - red para grids Evitar e alertas */
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a>
+      <span>/</span>
+      <span class="text-emerald-400">Módulo 1.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔐 OAuth e tokens</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como redes sociais autenticam apps sem trocar senha: do consent screen ao refresh automático, com tokens criptografados em repouso.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Teoria</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔑 OAuth 2.0 em 1 minuto</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-emerald-400">OAuth 2.0</strong> é o protocolo que permite ao Postiz postar no seu LinkedIn sem nunca ver sua senha. Em vez disso, o usuário aprova um <strong class="text-emerald-400">consent screen</strong>, e o provedor devolve um <strong class="text-emerald-400">access token</strong> com escopo limitado (ex.: "publicar posts", mas não "ler mensagens privadas").
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O fluxo mais usado para apps com backend é o <strong class="text-emerald-400">Authorization Code Flow</strong>: o usuário é redirecionado para o provedor, autoriza, volta para uma <code class="text-emerald-400 font-mono text-sm">redirect URI</code> registrada com um <code class="text-emerald-400 font-mono text-sm">code</code> de uso único, e o backend troca esse code por um token.
+      </p>
+
+      <h3 class="text-lg font-semibold mb-4">Fluxo Authorization Code passo a passo</h3>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">App redireciona usuário</h4>
+            <p class="text-sm text-neutral-300">Postiz monta uma URL para o provedor com <code class="font-mono">client_id</code>, <code class="font-mono">redirect_uri</code>, <code class="font-mono">scope</code> e <code class="font-mono">state</code>.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Provedor exibe consent screen</h4>
+            <p class="text-sm text-neutral-300">"O app X quer publicar no seu LinkedIn. Permitir?" Usuário aprova ou nega.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Redirect com <code class="font-mono">code</code></h4>
+            <p class="text-sm text-neutral-300">Provedor redireciona para <code class="font-mono">redirect_uri?code=ABC&state=XYZ</code>. O <code class="font-mono">state</code> precisa bater para evitar CSRF.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Backend troca code por token</h4>
+            <p class="text-sm text-neutral-300">POST server-to-server com <code class="font-mono">client_secret</code>. Provedor devolve <code class="font-mono">access_token</code> + <code class="font-mono">refresh_token</code> + <code class="font-mono">expires_in</code>.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">App usa o access token</h4>
+            <p class="text-sm text-neutral-300">Cada request à API do provedor inclui <code class="font-mono">Authorization: Bearer &lt;token&gt;</code>. Sem senha, sem cookie.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Client ID</div>
+          <p class="text-xs text-neutral-400">Identificador público do app no provedor.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Redirect URI</div>
+          <p class="text-xs text-neutral-400">URL fixa registrada — qualquer outra é rejeitada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Scope</div>
+          <p class="text-xs text-neutral-400">Permissões específicas pedidas no consent.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">State</div>
+          <p class="text-xs text-neutral-400">Token anti-CSRF que volta no redirect.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🎫 Access token vs refresh token</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O provedor devolve <strong class="text-emerald-400">dois tokens</strong> com propósitos opostos. Confundir os dois é o erro nº1 de quem começa: vazar um access token é incômodo (expira em horas), vazar um refresh token é incidente de segurança grave (vale meses).
+      </p>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Comparação por provedor
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">Meta (Facebook/Instagram):</strong> access token de curta duração (~1h) + long-lived token (~60 dias). Não há refresh token clássico — você "troca" o short-lived pelo long-lived.</li>
+          <li><strong class="text-blue-400">LinkedIn:</strong> access token 60 dias, refresh token 365 dias. Renovação obrigatória para apps que querem postar continuamente.</li>
+          <li><strong class="text-blue-400">X (Twitter):</strong> access token 2h, refresh token rotativo (cada uso emite um novo refresh).</li>
+          <li><strong class="text-blue-400">Google/YouTube:</strong> access token 1h, refresh token sem expiração (até o usuário revogar).</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">🎫 Access token</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Usado em <strong>cada chamada</strong> à API.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Curta duração (1h a 60 dias).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Pode ser JWT (legível) ou opaco.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Vai no header <code class="font-mono">Authorization: Bearer</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Quando expira → status 401.</span></li>
+          </ul>
+        </div>
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">♻️ Refresh token</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Usado <strong>só para obter novo access token</strong>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Longa duração (meses ou indefinido).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Sempre opaco — nunca decifre.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Trocado no endpoint <code class="font-mono">/token</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">•</span><span>Se vazar → revogar TUDO imediatamente.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⏱️</span> Quando renovar?
+        </h3>
+        <p class="text-neutral-300">Não espere o 401. Renove proativamente <strong>5 minutos antes</strong> do <code class="text-primary font-mono text-sm">expires_at</code>. Isso evita falhas em meio a posts agendados e burst de retries que disparam rate limit do provedor.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">expires_in</div>
+          <p class="text-xs text-neutral-400">Segundos até o access token virar pó.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Bearer</div>
+          <p class="text-xs text-neutral-400">Quem segura o token, tem o acesso — nada mais.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Rotativo</div>
+          <p class="text-xs text-neutral-400">Cada refresh emite um novo refresh token.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Revogação</div>
+          <p class="text-xs text-neutral-400">Endpoint para invalidar tokens vazados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔒 Como guardar tokens (AES-256-GCM)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Tokens em texto puro no banco é o mesmo que guardar senhas em texto puro: catastrófico se houver leak. O padrão da indústria é <strong class="text-emerald-400">encrypt at rest</strong> com <strong class="text-emerald-400">AES-256-GCM</strong>, usando uma chave mestra que vive em variável de ambiente — nunca no código.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        AES-256-GCM dá dois benefícios: criptografia simétrica forte (256 bits) <strong>e</strong> autenticação (GCM detecta se o ciphertext foi adulterado). Sempre use IV aleatório por registro — reusar IV em GCM quebra o esquema inteiro.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// crypto.service.ts — encrypt/decrypt de tokens
+import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+
+const KEY = Buffer.from(process.env.TOKEN_ENCRYPTION_KEY!, 'hex'); // 32 bytes
+
+export function encryptToken(plaintext: string): string {
+  const iv = randomBytes(12);                              // 96 bits, único por registro
+  const cipher = createCipheriv('aes-256-gcm', KEY, iv);
+  const enc = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  // formato: iv.tag.ciphertext (todos em base64)
+  return [iv, tag, enc].map(b =&gt; b.toString('base64')).join('.');
+}
+
+export function decryptToken(blob: string): string {
+  const [iv, tag, enc] = blob.split('.').map(s =&gt; Buffer.from(s, 'base64'));
+  const decipher = createDecipheriv('aes-256-gcm', KEY, iv);
+  decipher.setAuthTag(tag);
+  return Buffer.concat([decipher.update(enc), decipher.final()]).toString('utf8');
+}</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Gerar chave com <code class="font-mono">openssl rand -hex 32</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar a chave em variável de ambiente, KMS ou Vault.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>IV aleatório novo a cada criptografia.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Marcar coluna <code class="font-mono">encrypted_token</code> como <code class="font-mono">TEXT</code> (não <code class="font-mono">VARCHAR(255)</code>).</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar a chave (mesmo em <code class="font-mono">.env.example</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logar tokens em arquivo, Sentry ou stdout.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar a mesma chave em dev e prod.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Salvar o IV fora do registro do token.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">AES-256-GCM</div>
+          <p class="text-xs text-neutral-400">Cifra simétrica + autenticação integrada.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">IV</div>
+          <p class="text-xs text-neutral-400">Initialization vector — único por registro.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Auth Tag</div>
+          <p class="text-xs text-neutral-400">Assinatura que detecta adulteração.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Key rotation</div>
+          <p class="text-xs text-neutral-400">Trocar a chave-mestra periodicamente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">♻️ Rotina de refresh automático</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Postar a 1h da manhã com token expirado é o pesadelo clássico. A solução é um <strong class="text-emerald-400">interceptor</strong> que checa <code class="text-emerald-400 font-mono text-sm">expires_at</code> antes de cada chamada e renova proativamente, mais um <strong class="text-emerald-400">retry com novo token</strong> caso a API retorne 401 mesmo assim.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O exemplo abaixo é o coração de qualquer integração OAuth séria: três blocos em ordem — <strong>preflight check</strong>, <strong>chamada</strong>, <strong>retry on 401</strong>.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// social-api.client.ts — request com refresh automático
+async function apiCall(account: SocialAccount, url: string, body: any) {
+  // 1) Preflight: renova se faltam menos de 5 min
+  if (account.expiresAt.getTime() - Date.now() &lt; 5 * 60_000) {
+    await refreshAccessToken(account);
+  }
+
+  let token = decryptToken(account.accessToken);
+
+  // 2) Chamada
+  let res = await fetch(url, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  // 3) Retry com novo token se o provedor expirou antes do esperado
+  if (res.status === 401) {
+    await refreshAccessToken(account);
+    token = decryptToken(account.accessToken);
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  }
+
+  if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+async function refreshAccessToken(account: SocialAccount) {
+  const refresh = decryptToken(account.refreshToken);
+  const r = await fetch(account.provider.tokenUrl, {
+    method: 'POST',
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refresh,
+      client_id: process.env[`${account.provider.name}_CLIENT_ID`]!,
+      client_secret: process.env[`${account.provider.name}_CLIENT_SECRET`]!,
+    }),
+  });
+  const data = await r.json();
+  account.accessToken = encryptToken(data.access_token);
+  if (data.refresh_token) account.refreshToken = encryptToken(data.refresh_token); // rotativo
+  account.expiresAt = new Date(Date.now() + data.expires_in * 1000);
+  await account.save();
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Use um <strong>lock distribuído</strong> (Redis SETNX por <code class="text-primary font-mono text-sm">account.id</code>) durante o refresh. Sem isso, dois workers que disparam o mesmo job ao mesmo tempo fazem dois refreshes em paralelo — e provedores com refresh rotativo invalidam o token do segundo worker.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Preflight check</div>
+          <p class="text-xs text-neutral-400">Renovar antes da chamada, não depois do erro.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Interceptor</div>
+          <p class="text-xs text-neutral-400">Camada que injeta o token sem cada handler lembrar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Retry on 401</div>
+          <p class="text-xs text-neutral-400">Tentativa única após refresh — não loop infinito.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Lock</div>
+          <p class="text-xs text-neutral-400">Serializa refreshes concorrentes da mesma conta.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📋 App Review (Meta/LinkedIn/TikTok)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Provedores grandes não liberam scopes sensíveis (como "publicar posts") sem que seu app passe por <strong class="text-emerald-400">App Review</strong>. Em modo dev o app só funciona com contas dos próprios desenvolvedores; para qualquer usuário externo postar, a review é obrigatória.
+      </p>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Prazos típicos (2025-2026)
+        </h3>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li><strong class="text-blue-400">Meta (Facebook/Instagram):</strong> 3-15 dias úteis. Pode rejeitar várias vezes pedindo screencast detalhado do uso de cada permissão.</li>
+          <li><strong class="text-blue-400">LinkedIn:</strong> 2-6 semanas. O <em>Marketing Developer Platform</em> tem fila longa e exige caso de uso B2B claro.</li>
+          <li><strong class="text-blue-400">TikTok:</strong> 5-20 dias. Exige domínio verificado, política de privacidade e teste em sandbox.</li>
+          <li><strong class="text-blue-400">X (Twitter):</strong> Acesso "Free" instantâneo (limitado); "Basic" $200/mês; "Pro" $5k/mês.</li>
+          <li><strong class="text-blue-400">YouTube:</strong> Quota inicial baixa, expansão exige formulário detalhado a cada salto.</li>
+        </ul>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">O que acelera a aprovação</h3>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Screencast em alta qualidade</h4>
+            <p class="text-sm text-neutral-300">Mostre cada permissão sendo usada no produto, sem cortes — fala em inglês claro e legenda quando possível.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Domínio próprio com HTTPS</h4>
+            <p class="text-sm text-neutral-300">Ngrok ou domínio gratuito é rejeição quase certa. Tenha <code class="font-mono">app.seu-dominio.com</code> com cert válido.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Política de privacidade real</h4>
+            <p class="text-sm text-neutral-300">Página pública listando dados coletados, finalidade e retenção. Genéricas copiadas são detectadas.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold mb-2">Conta de teste pronta</h4>
+            <p class="text-sm text-neutral-300">Forneça login + senha de uma conta de teste no app pronta para o revisor entrar e validar.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Dev Mode</div>
+          <p class="text-xs text-neutral-400">App só funciona para desenvolvedores listados.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Live Mode</div>
+          <p class="text-xs text-neutral-400">Aberto a qualquer usuário — exige review.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Advanced Access</div>
+          <p class="text-xs text-neutral-400">Permissões sensíveis que pedem revisão extra.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Use Case</div>
+          <p class="text-xs text-neutral-400">Justificativa de negócio escrita por permissão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🦋 Bluesky/Mastodon: exceção sem aprovação</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Enquanto Meta e LinkedIn te fazem esperar semanas, o <strong class="text-emerald-400">fediverso</strong> resolve o mesmo problema em minutos. Bluesky (AT Protocol) e Mastodon (ActivityPub) seguem outra filosofia: instâncias abertas, autenticação por <strong class="text-emerald-400">App Password</strong> ou OAuth dinâmico, sem comitê de revisão.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para um MVP que precisa rodar essa semana, ou para qualquer self-hosted que não quer depender da boa vontade de empresas privadas, esses dois são o caminho rápido.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Bluesky — autenticação direta via App Password
+# Settings &gt; App Passwords &gt; gera uma string tipo abcd-efgh-ijkl-mnop
+
+curl -X POST https://bsky.social/xrpc/com.atproto.server.createSession \
+  -H "Content-Type: application/json" \
+  -d '{
+    "identifier": "seu-handle.bsky.social",
+    "password": "abcd-efgh-ijkl-mnop"
+  }'
+# Devolve { accessJwt, refreshJwt, did, handle } — pronto para postar.
+
+# Mastodon — registra app via API e autoriza usuário
+curl -X POST https://mastodon.social/api/v1/apps \
+  -d 'client_name=MeuApp' \
+  -d 'redirect_uris=urn:ietf:wg:oauth:2.0:oob' \
+  -d 'scopes=write:statuses'</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Vantagens</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sem App Review, sem fila, sem rejeição arbitrária.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sem custo de tier (X cobra $200+/mês).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>APIs documentadas e estáveis.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Audiência cresce rápido entre devs e early adopters.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">⚠️ Limitações</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">•</span><span>Alcance menor que Instagram/LinkedIn.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">•</span><span>Mastodon exige descobrir a instância do usuário primeiro.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">•</span><span>App Password do Bluesky dá acesso total — trate como senha.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">•</span><span>Métricas/analytics ainda limitados versus redes centralizadas.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🚀</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Comece o desenvolvimento pelo Bluesky. Você valida toda a arquitetura de tokens, criptografia e refresh em <strong>uma tarde</strong>, e quando a aprovação do Meta sair semanas depois, é só plugar o adapter — o resto do código já está testado.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">App Password</div>
+          <p class="text-xs text-neutral-400">Senha alternativa por app, revogável a qualquer momento.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">AT Protocol</div>
+          <p class="text-xs text-neutral-400">Stack aberta sobre a qual o Bluesky roda.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">Instância</div>
+          <p class="text-xs text-neutral-400">Servidor Mastodon — usuário escolhe qual usar.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-emerald-400 mb-1">DID</div>
+          <p class="text-xs text-neutral-400">Identificador descentralizado do Bluesky.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">OAuth 2.0 entendido</strong><span class="text-neutral-400"> — authorization code flow, redirect URI fixa, consent screen e state anti-CSRF.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Access vs refresh token</strong><span class="text-neutral-400"> — duração, propósito, retomada proativa antes do expires_at.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Criptografia em repouso</strong><span class="text-neutral-400"> — AES-256-GCM com IV único, chave em env var, nunca em código.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Refresh automático</strong><span class="text-neutral-400"> — interceptor com preflight check, retry on 401 e lock por conta.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">App Review na prática</strong><span class="text-neutral-400"> — prazos por provedor, screencast, domínio HTTPS, política de privacidade.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div><strong class="text-white">Atalho do fediverso</strong><span class="text-neutral-400"> — Bluesky/Mastodon liberam dev sem comitê e aceleram o MVP.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">1.4 — Filas, jobs e agendamento de posts</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-1-4.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

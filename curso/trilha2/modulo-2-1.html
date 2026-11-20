@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.1 - Pré-requisitos | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Blue (T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .bg-blue-600 { background-color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500:hover { background-color: #3b82f6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Módulo 2.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📋 Pré-requisitos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Tudo que você precisa ter pronto antes de subir o Postiz: VPS, Docker, domínio, e-mail transacional, storage e o terminal na ponta dos dedos.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Intermediário</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🖥️ VPS recomendada</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz roda confortavelmente em uma VPS pequena, mas <strong class="text-blue-400">não em um shared hosting</strong>. O processo Node + Postgres + Redis consomem RAM e exigem controle root para Docker. O mínimo viável é <strong class="text-blue-400">2 GB de RAM, 2 vCPUs e 20 GB de disco</strong> — abaixo disso, OOM kill é questão de tempo.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Duas escolhas óbvias e baratas: <strong class="text-blue-400">Hetzner CX22</strong> (€4/mês, datacenter na Alemanha/Finlândia) ou <strong class="text-blue-400">DigitalOcean Basic Droplet</strong> ($6/mês, várias regiões). Ambas dão Ubuntu 24.04 LTS em poucos cliques.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Após criar a VPS, conectar via SSH (substitua o IP)
+ssh root@198.51.100.42
+
+# Atualizar o sistema antes de qualquer instalação
+apt update && apt upgrade -y
+
+# Criar usuário não-root (boa prática mínima)
+adduser deploy
+usermod -aG sudo deploy
+
+# Verificar recursos disponíveis
+free -h          # RAM
+df -h            # disco
+nproc            # vCPUs</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escolher provedor com <strong>snapshot/backup</strong> nativo (Hetzner, DO, Vultr).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Começar com Ubuntu LTS — 24.04 tem suporte até 2029.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Dimensionar com folga: <strong>4 GB de RAM</strong> evita surpresas no primeiro mês.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Habilitar firewall do provedor (libere só 22, 80, 443).</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar shared hosting / cPanel — Docker não roda.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Escolher 1 GB de RAM "pra economizar" — Postgres + Node estouram.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar tudo como <code class="font-mono">root</code> sem criar usuário deploy.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de fechar a porta 5432 (Postgres) no firewall público.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">VPS</div>
+          <p class="text-xs text-neutral-400">Servidor virtual privado com root e IP dedicado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">vCPU</div>
+          <p class="text-xs text-neutral-400">Núcleo virtual mapeado a uma thread física.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Snapshot</div>
+          <p class="text-xs text-neutral-400">Imagem do disco para restaurar em segundos.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">LTS</div>
+          <p class="text-xs text-neutral-400">Long Term Support — releases com 5+ anos de patches.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🐳 Docker e Docker Compose v2</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz é distribuído como <strong class="text-blue-400">imagem Docker oficial</strong>. Você precisa do <strong class="text-blue-400">Docker Engine 24+</strong> e do plugin <strong class="text-blue-400">Compose v2</strong> (<code class="text-blue-400 font-mono text-sm">docker compose</code>, sem hífen). Compose v1 está deprecado e falha em features novas como <code class="text-blue-400 font-mono text-sm">condition: service_healthy</code>.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-blue-400">Não use</strong> o <code class="text-blue-400 font-mono text-sm">apt install docker.io</code> dos repositórios padrão do Ubuntu — vem desatualizado e sem o plugin Compose. Instale pelo repositório oficial da Docker.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalação oficial no Ubuntu 24.04
+curl -fsSL https://get.docker.com | sh
+
+# Adicionar usuário ao grupo docker (evita sudo)
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Verificar versão do engine
+docker --version
+# Docker version 27.3.1, build ce12230
+
+# Verificar plugin Compose v2
+docker compose version
+# Docker Compose version v2.29.7
+
+# Teste rápido (puxa imagem hello-world)
+docker run --rm hello-world</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se você vê <code class="text-primary font-mono text-sm">docker-compose</code> com hífen funcionando, é o legacy v1. <strong>Desinstale</strong> e use o plugin v2 — todo o Postiz e seus exemplos assumem <code class="text-primary font-mono text-sm">docker compose</code> (espaço).</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Docker Engine</div>
+          <p class="text-xs text-neutral-400">Daemon que executa containers no host.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Compose v2</div>
+          <p class="text-xs text-neutral-400">Plugin nativo escrito em Go, integrado ao CLI.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Imagem</div>
+          <p class="text-xs text-neutral-400">Snapshot read-only com app + dependências.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Grupo docker</div>
+          <p class="text-xs text-neutral-400">Permite rodar containers sem <code class="font-mono">sudo</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🌐 Domínio próprio e DNS</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Você <strong class="text-blue-400">precisa</strong> de um domínio para: (1) gerar certificado HTTPS, (2) registrar callback OAuth nas redes sociais (Twitter/X, LinkedIn etc. não aceitam IP cru) e (3) ter URL estável que não muda quando você recriar a VPS.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Compre em qualquer registrar barato — <strong class="text-blue-400">Cloudflare Registrar</strong> (preço de custo, sem markup), <strong class="text-blue-400">Namecheap</strong> ou <strong class="text-blue-400">Registro.br</strong> (.com.br). Use um <strong class="text-blue-400">subdomínio dedicado</strong> tipo <code class="text-blue-400 font-mono text-sm">postiz.seudominio.com</code> em vez do apex.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># No painel de DNS, criar registro A:
+#   Tipo: A
+#   Nome: postiz
+#   Valor: 198.51.100.42   (IP da sua VPS)
+#   TTL:  300              (5 min, facilita ajustes)
+
+# Confirmar propagação (pode levar até 30 min)
+dig +short postiz.seudominio.com
+# 198.51.100.42
+
+# Alternativa rápida
+nslookup postiz.seudominio.com
+
+# Testar conectividade reversa
+curl -I http://postiz.seudominio.com</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Se usa Cloudflare, comece com <strong>proxy desligado</strong> (nuvem cinza) até o Postiz estar respondendo no domínio. Proxy ativo (nuvem laranja) pode mascarar erros de configuração e atrapalha o desafio HTTP-01 do Let's Encrypt no Traefik.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Registro A</div>
+          <p class="text-xs text-neutral-400">Mapeia nome → IPv4. Base de todo apontamento.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">TTL</div>
+          <p class="text-xs text-neutral-400">Tempo de cache no resolver — menor = mudanças rápidas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Subdomínio</div>
+          <p class="text-xs text-neutral-400">Prefixo (<code class="font-mono">postiz.</code>) que isola por serviço.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Propagação</div>
+          <p class="text-xs text-neutral-400">Tempo até resolvers globais aprenderem o registro.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📧 E-mail transacional (Resend)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz envia e-mails de <strong class="text-blue-400">signup, reset de senha e notificações de falha de post</strong>. Sem provedor configurado, esses fluxos quebram silenciosamente. <strong class="text-blue-400">Resend</strong> é a escolha mais simples: 3 000 e-mails/mês grátis, API moderna, sem o pesadelo de configurar SMTP na mão.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Alternativas válidas: <strong class="text-blue-400">Postmark</strong> (excelente entregabilidade), <strong class="text-blue-400">Amazon SES</strong> (barato em volume) ou <strong class="text-blue-400">SMTP genérico</strong>. Em qualquer caso, você precisa <strong class="text-blue-400">verificar o domínio</strong> com SPF e DKIM, senão cai no spam.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Passos no resend.com:
+# 1. Criar conta (free tier, 3000 emails/mês)
+# 2. Domains → Add Domain → seudominio.com
+# 3. Copiar os 3 registros DNS que aparecem (SPF, DKIM, Return-Path)
+# 4. Colar no seu provedor de DNS
+# 5. Aguardar verificação automática (5-15 min)
+# 6. API Keys → Create API Key → guardar como RESEND_API_KEY
+
+# Testar a chave via curl
+curl -X POST https://api.resend.com/emails \
+  -H "Authorization: Bearer re_seu_token_aqui" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "postiz@seudominio.com",
+    "to": "voce@gmail.com",
+    "subject": "Teste Resend",
+    "text": "Funcionou!"
+  }'</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">📨</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Antes de migrar para produção, mande 2-3 e-mails de teste e cheque os cabeçalhos do destinatário: <code class="text-primary font-mono text-sm">spf=pass</code>, <code class="text-primary font-mono text-sm">dkim=pass</code>, <code class="text-primary font-mono text-sm">dmarc=pass</code>. Qualquer <code class="text-primary font-mono text-sm">fail</code> = e-mails indo para spam.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Transacional</div>
+          <p class="text-xs text-neutral-400">E-mail acionado por evento (não marketing).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">SPF</div>
+          <p class="text-xs text-neutral-400">Autoriza IPs que podem enviar pelo seu domínio.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">DKIM</div>
+          <p class="text-xs text-neutral-400">Assinatura criptográfica que prova autenticidade.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">API key</div>
+          <p class="text-xs text-neutral-400">Token secreto para autenticar chamadas HTTP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📦 Storage S3-compatible (R2 / MinIO)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Postiz precisa guardar <strong class="text-blue-400">imagens e vídeos</strong> que você anexa aos posts. Salvar no disco da VPS funciona em dev, mas em produção você quer <strong class="text-blue-400">storage S3-compatible</strong>: sobrevive a reboots, cresce sem refazer partição e serve direto via CDN.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Duas opções pragmáticas: <strong class="text-blue-400">Cloudflare R2</strong> (10 GB grátis, <em>zero egress fee</em> — o killer feature) ou <strong class="text-blue-400">MinIO self-hosted</strong> (roda no mesmo Docker Compose, dado fica em casa). AWS S3 funciona mas cobra egress, evita.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Opção A: Cloudflare R2
+# 1. dash.cloudflare.com → R2 → Create bucket → "postiz-uploads"
+# 2. Manage R2 API Tokens → Create token → permission "Object Read & Write"
+# 3. Anotar:
+#    - Account ID
+#    - Access Key ID
+#    - Secret Access Key
+#    - Endpoint: https://<account-id>.r2.cloudflarestorage.com
+
+# Opção B: MinIO self-hosted (adiciona ao docker-compose.yml depois)
+docker run -d --name minio \
+  -p 9000:9000 -p 9001:9001 \
+  -e MINIO_ROOT_USER=admin \
+  -e MINIO_ROOT_PASSWORD=senha_forte_aqui \
+  -v minio-data:/data \
+  quay.io/minio/minio server /data --console-address ":9001"
+
+# Testar credenciais com mc (MinIO Client)
+mc alias set r2 https://acc.r2.cloudflarestorage.com ACCESS_KEY SECRET_KEY
+mc ls r2/postiz-uploads</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Quando usar R2</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Você quer simplicidade e free tier generoso.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mídia é servida ao público (zero egress).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Não quer pensar em backup do storage.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Já usa Cloudflare para DNS/CDN.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✓ Quando usar MinIO</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Política interna exige dado on-premise.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Volume alto (TB) onde free tier não cobre.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Quer evitar dependência de cloud externa.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Você está disposto a cuidar de backup do volume.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">S3-compatible</div>
+          <p class="text-xs text-neutral-400">API igual à AWS S3 — drivers reaproveitáveis.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Bucket</div>
+          <p class="text-xs text-neutral-400">Container lógico que agrupa objetos (arquivos).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Egress</div>
+          <p class="text-xs text-neutral-400">Tráfego de saída — onde S3 cobra caro, R2 não.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Endpoint</div>
+          <p class="text-xs text-neutral-400">URL base para chamadas API do storage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">💻 Conhecimento mínimo de terminal</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Você não precisa ser sysadmin sênior, mas <strong class="text-blue-400">tem que sobreviver no SSH sem GUI</strong>. Editar arquivo de config, ler log, mover arquivo, reiniciar serviço — tudo via teclado. Se cada um desses comandos exige Google, o módulo 2.2 vai ser doloroso.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <strong class="text-blue-400">tmux</strong> (ou <strong class="text-blue-400">screen</strong>) para que sessões SSH sobrevivam a desconexão — fundamental quando o boot do Postiz leva 1-2 min e você fecha o laptop sem querer.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Conexão SSH com chave (gere uma se não tiver: ssh-keygen -t ed25519)
+ssh -i ~/.ssh/id_ed25519 deploy@postiz.seudominio.com
+
+# Comandos de sobrevivência
+ls -la                    # listar com permissões
+cd ~/postiz               # navegar
+nano docker-compose.yml   # editar (ou vim, se conhecer)
+cat .env                  # ver conteúdo
+grep -r "DATABASE" .      # buscar
+tail -f /var/log/syslog   # log ao vivo
+ps aux | grep postiz      # processos
+
+# tmux: sessão que sobrevive ao SSH cair
+tmux new -s postiz        # criar sessão chamada "postiz"
+# Ctrl+B depois D          → detach (sai sem fechar)
+tmux attach -t postiz     # reconectar
+tmux ls                   # listar sessões
+
+# Transferir arquivo do seu laptop para a VPS
+scp ./backup.sql deploy@postiz.seudominio.com:~/postiz/</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔑</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Configure <strong>SSH por chave pública</strong> e <strong>desabilite login por senha</strong> em <code class="text-primary font-mono text-sm">/etc/ssh/sshd_config</code> (<code class="text-primary font-mono text-sm">PasswordAuthentication no</code>). Bots escaneiam a porta 22 24/7 — sem senha como vetor, eles vão embora.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">SSH</div>
+          <p class="text-xs text-neutral-400">Shell remoto criptografado — porta 22 padrão.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">Chave pública</div>
+          <p class="text-xs text-neutral-400">Par cripto — login sem senha, muito mais seguro.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">tmux</div>
+          <p class="text-xs text-neutral-400">Multiplexador de terminal — sessões persistentes.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-blue-400 mb-1">scp / rsync</div>
+          <p class="text-xs text-neutral-400">Cópia de arquivos sobre SSH, com ou sem delta.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">VPS provisionada</strong><span class="text-neutral-400"> — mínimo 2 GB RAM, Ubuntu 24.04 LTS, usuário deploy criado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Docker pronto</strong><span class="text-neutral-400"> — Engine 24+ e Compose v2 instalados via script oficial.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Domínio apontado</strong><span class="text-neutral-400"> — registro A do subdomínio resolvendo para o IP da VPS.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">E-mail transacional</strong><span class="text-neutral-400"> — conta Resend criada, domínio verificado, API key na mão.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Storage decidido</strong><span class="text-neutral-400"> — R2 ou MinIO com bucket criado e credenciais salvas.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Terminal afiado</strong><span class="text-neutral-400"> — SSH por chave, tmux configurado, comandos básicos memorizados.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">2.2 — Setup com Docker Compose: subir o Postiz do zero</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-2-2.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

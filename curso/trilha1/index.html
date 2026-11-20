@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 1 - Fundamentos | MkBlogs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acento Emerald (T1) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-600 { background-color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500:hover { background-color: #10b981; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">🧭 Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">🔌 APIs</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">⚙️ Backend</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">🎨 Conteúdo</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">🚢 Deploy</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">📈 Escala</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 1
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Fundamentos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        O ponto de partida do MkBlogs: por que automatizar publicação em redes sociais e blogs, como o ecossistema (Postiz, Blotato, Buffer, Ayrshare) se encaixa, e qual a arquitetura técnica e financeira de um sistema multi-plataforma de texto + imagem.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">4</div>
+          <div class="text-xs text-neutral-400">Módulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">24</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">~3h</div>
+          <div class="text-xs text-neutral-400">Duração</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="#modulo-1-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-emerald-400 font-bold text-sm">1.1</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🎯 Visão geral do sistema</h3>
+          <p class="text-xs text-neutral-400">Por que automatizar tudo</p>
+        </a>
+        <a href="#modulo-1-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-emerald-400 font-bold text-sm">1.2</span>
+            <span class="text-xs text-neutral-500">~45 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🏗️ Arquitetura multi-plataforma</h3>
+          <p class="text-xs text-neutral-400">Adapters, filas, storage</p>
+        </a>
+        <a href="#modulo-1-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-emerald-400 font-bold text-sm">1.3</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🔐 OAuth e tokens</H3>
+          <p class="text-xs text-neutral-400">Login sem dor de cabeça</p>
+        </a>
+        <a href="#modulo-1-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-emerald-400 font-bold text-sm">1.4</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">💰 Custo, limites e estratégia</h3>
+          <p class="text-xs text-neutral-400">Quando vale construir</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTEUDO DETALHADO -->
+    <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+
+    <!-- MODULO 1.1 -->
+    <div id="modulo-1-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.1</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎯 Visão geral do sistema</h3>
+        <p class="text-neutral-400 text-sm">Entenda o problema que o MkBlogs resolve, o cenário de ferramentas em 2026 e o desenho do que vamos construir nas próximas trilhas.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <!-- T1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Por que automatizar publicação</span>
+              <span class="text-neutral-500 text-sm ml-2">- ROI de tempo e consistência</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Substituir o copia-e-cola manual por um único ponto de entrada que dispara texto e imagem para N redes ao mesmo tempo, com agendamento e retry.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Publicar em 7 redes manualmente consome ~30 min por post; um sistema bem feito derruba para segundos e elimina o erro de "esqueci do LinkedIn".</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Cross-posting, idempotência, fila de jobs, agendamento UTC e auditoria do que saiu onde.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">O que são redes sociais via API</span>
+              <span class="text-neutral-500 text-sm ml-2">- Endpoints, scopes, payloads</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Cada rede (X, LinkedIn, Meta, TikTok, Bluesky) expõe uma REST/GraphQL API onde você envia JSON com texto, mídia e metadados e recebe um ID de post.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem entender o shape de cada API, você não consegue normalizar payloads no seu adapter nem prever quais campos vão dar erro.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">OAuth scopes, multipart upload de mídia, rate limit headers, status codes (4xx vs 5xx) e webhooks de confirmação.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚖️</span>
+            <div>
+              <span class="font-medium">API oficial vs scraping</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estabilidade vs liberdade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">API oficial = contrato estável com SLA e ToS; scraping = automatizar a UI (Puppeteer/Playwright), sem contrato e sujeito a ban.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Algumas redes (Instagram pessoal, Threads, TikTok) historicamente só liberam features completas via UI — saber onde cada caminho dói é estratégia.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Risco de bloqueio, custo de manutenção (DOM muda), proxy residencial, headless browser e o trade-off legal de cada abordagem.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🧩</span>
+            <div>
+              <span class="font-medium">O ecossistema: Postiz, Blotato, Buffer, Ayrshare</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quem faz o quê</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Postiz é open-source self-hosted; Blotato foca em vídeos curtos com AI; Buffer é SaaS clássico de agendamento; Ayrshare é API-first para devs.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Você não precisa reinventar a roda — entender qual ferramenta cobre 80% do seu caso evita meses de engenharia desnecessária.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Self-hosted vs SaaS, lock-in, API white-label, número de redes suportadas e modelo de cobrança (por post, por conta, por seat).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">💵</span>
+            <div>
+              <span class="font-medium">Custos esperados (2026)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quanto sangra por mês</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Soma de: API paga da rede (X cobra ~$0,01/post no tier Basic), infra (VPS ~$20/mês), storage de mídia (~$5) e SaaS opcional (Ayrshare ~$149/mês).</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Subestimar custo é a forma mais comum de o projeto morrer no segundo mês — precisa estimar antes de codar.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Custo por post, custo fixo vs variável, tier gratuito de cada API e o "custo escondido" de manter integrações vivas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🗺️</span>
+            <div>
+              <span class="font-medium">Mapa do que vamos construir</span>
+              <span class="text-neutral-500 text-sm ml-2">- Roadmap do curso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Um app Next.js + worker Node que recebe um post (texto + imagem), enfileira jobs por rede, executa adapters e devolve status num dashboard.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter o destino claro desde o início faz cada trilha encaixar — você sabe exatamente onde cada peça vai morar.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Frontend de composição, fila BullMQ, adapters por rede, banco Postgres + Prisma e dashboard de status com webhooks.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-1.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 1.2 -->
+    <div id="modulo-1-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.2</span>
+          <span class="text-xs text-neutral-500">~45 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Arquitetura multi-plataforma</h3>
+        <p class="text-neutral-400 text-sm">As 6 peças que toda ferramenta de publicação tem por baixo: adapters, fila, storage, banco, frontend e webhooks. Quem entende isso, debuga qualquer tool.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <!-- T1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">Padrão de adapters</span>
+              <span class="text-neutral-500 text-sm ml-2">- Uma interface, N redes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Uma interface comum `publish(post): Result` implementada por classes específicas (XAdapter, LinkedInAdapter, MetaAdapter) que encapsulam quirks de cada API.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">É o que permite adicionar uma rede nova em horas em vez de dias — todo o orquestrador trata adapters como caixa-preta.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Strategy pattern, normalização de payload, mapeamento de erros para enum único e composição via Provider Registry.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔁</span>
+            <div>
+              <span class="font-medium">Fila com retry</span>
+              <span class="text-neutral-500 text-sm ml-2">- BullMQ ou Temporal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Cada publicação vira um job (`publishToX`, `publishToLinkedIn`) com backoff exponencial em caso de 5xx ou rate limit.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">APIs caem, retornam 429 e o worker reinicia — sem fila persistente você perde posts e dá explicação para cliente.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">BullMQ (Redis) para simples, Temporal para workflows longos, dead-letter queue e idempotency key por post+rede.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🖼️</span>
+            <div>
+              <span class="font-medium">Storage de imagem</span>
+              <span class="text-neutral-500 text-sm ml-2">- S3 ou Cloudinary</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Bucket público (ou CDN) onde você sobe a imagem uma vez e referencia por URL — algumas redes exigem upload binário, outras URL.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem URL pública, X e Bluesky aceitam upload direto, mas LinkedIn pré-assina e Meta exige container ID — fluxos diferentes precisam da mesma fonte.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Presigned URLs, transformações on-the-fly (Cloudinary), variantes por rede (1:1, 16:9, 9:16) e expiração de CDN.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🗄️</span>
+            <div>
+              <span class="font-medium">Banco de dados</span>
+              <span class="text-neutral-500 text-sm ml-2">- Prisma + Postgres</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Tabelas centrais: `User`, `SocialAccount` (tokens criptografados), `Post` (canonical), `PostTarget` (1 por rede), `Job` (estado da fila).</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O modelo de dados define o que você consegue agendar, reagendar e relatar — modelar mal é refatorar em 3 meses.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Relação 1:N (Post → PostTarget), JSON columns para payload original, índices em `scheduledAt` e migrations versionadas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">Frontend de agendamento</span>
+              <span class="text-neutral-500 text-sm ml-2">- Composer + calendário</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">UI Next.js com composer multi-rede (preview por plataforma), seletor de data/hora UTC-aware e calendário tipo Buffer com drag-to-reschedule.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Backend perfeito sem UI usável vira tool interna que ninguém adota — preview por rede é o diferencial.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Timezone do usuário, contadores de caracteres por rede (X=280, LinkedIn=3000), preview WYSIWYG e upload com progresso.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📡</span>
+            <div>
+              <span class="font-medium">Webhooks de callback</span>
+              <span class="text-neutral-500 text-sm ml-2">- Confirmação assíncrona</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Endpoint HTTPS público que recebe POST da rede social quando o post é publicado, falha ou recebe engajamento.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem webhook você fica fazendo polling — caro, lento e quebra rate limit. Webhook é a única forma escalável de saber métricas em tempo real.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Assinatura HMAC, replay protection, túneis em dev (ngrok/cloudflared) e retry do lado de quem envia.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-2.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 1.3 -->
+    <div id="modulo-1-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.3</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔐 OAuth e tokens</h3>
+        <p class="text-neutral-400 text-sm">Como o usuário autoriza sua app, como guardar tokens em segurança, como sobreviver à App Review da Meta e por que Bluesky muda tudo.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <!-- T1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📜</span>
+            <div>
+              <span class="font-medium">OAuth 2.0 em 1 minuto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Fluxo authorization code</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Protocolo onde o usuário é redirecionado para a rede, autoriza scopes, volta com um `code` que sua app troca por `access_token` no backend.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">É o único caminho legal de publicar em nome de outro usuário — sem dominar OAuth, você nunca passa de uma conta única.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">`response_type=code`, `state` anti-CSRF, PKCE, redirect URI exato e troca server-side com client_secret.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎟️</span>
+            <div>
+              <span class="font-medium">Access token vs refresh token</span>
+              <span class="text-neutral-500 text-sm ml-2">- Curta vs longa duração</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">`access_token` autentica requests (vida curta, 1h-2h); `refresh_token` é trocado pelo próximo access_token sem reautorização do usuário.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Confundir os dois é a causa #1 de "minha app desconecta sozinha" — você está usando refresh como access ou vice-versa.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">TTL, rotação de refresh_token (LinkedIn rotaciona, X não), token revogado e diferença entre offline_access scope e padrão.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔒</span>
+            <div>
+              <span class="font-medium">Como guardar tokens</span>
+              <span class="text-neutral-500 text-sm ml-2">- AES-256 at rest</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Tokens são guardados criptografados no banco com AES-256-GCM, usando uma master key separada (KMS, env var, Vault).</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Token em plain-text no banco = leak de credencial = invasor publica em nome dos seus clientes. Não negociável.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Envelope encryption, rotação de chave mestra, IV único por registro e nunca logar token nem em console.error.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Rotina de refresh automático</span>
+              <span class="text-neutral-500 text-sm ml-2">- Cron + lock</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Um job recorrente que percorre tokens que vão expirar nas próximas X horas e faz refresh, com lock pessimista para evitar race com requests vivos.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Refresh sob demanda (lazy) causa bugs de concorrência quando 2 jobs publicam ao mesmo tempo — proativo é mais seguro.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Janela de antecedência (ex: 24h antes), backoff em falha, marcar conta como "needs_reauth" e notificar o user.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏛️</span>
+            <div>
+              <span class="font-medium">App Review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Meta, LinkedIn, TikTok</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Processo onde a plataforma valida sua app (vídeo de uso, política de privacidade, business verification) antes de liberar scopes de publicação para terceiros.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem app review aprovada, só você (dev) consegue publicar; nenhum cliente externo é autorizado. Pode levar 2-6 semanas.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">`pages_manage_posts`, `w_member_social`, business verification, screencast obrigatório e razões mais comuns de rejeição.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🦋</span>
+            <div>
+              <span class="font-medium">Bluesky / Mastodon</span>
+              <span class="text-neutral-500 text-sm ml-2">- A exceção sem aprovação</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Redes baseadas em protocolos abertos (AT Protocol, ActivityPub) onde qualquer dev autentica com app password (Bluesky) ou OAuth do servidor (Mastodon) sem review.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">São o "modo fácil" para validar seu MVP enquanto a app review da Meta está rolando — em 1h você publica em produção.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">App password, PDS (personal data server), federação, instâncias múltiplas no Mastodon e ausência total de gate-keeping.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-3.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 1.4 -->
+    <div id="modulo-1-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.4</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">💰 Custo, limites e estratégia</h3>
+        <p class="text-neutral-400 text-sm">Tabela real de custos em 2026, rate limits por API, comparação self-hosted vs SaaS e o roadmap recomendado para sair do zero ao primeiro post automatizado.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <!-- T1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">💸</span>
+            <div>
+              <span class="font-medium">Tabela de custo por plataforma</span>
+              <span class="text-neutral-500 text-sm ml-2">- X, Meta, LinkedIn, TikTok</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">X Basic ~$200/mês com ~10k posts; Meta Graph API gratuita mas requer review; LinkedIn API gratuita pós-aprovação; TikTok gratuita com cotas.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O custo da API é o piso do seu pricing — se você cobra menos do que paga ao X, perde dinheiro a cada post.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tiers (Basic/Pro/Enterprise), custo marginal, billing por requests, hidden cost de App Review e seat-based pricing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🚦</span>
+            <div>
+              <span class="font-medium">Rate limits típicos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Janelas e estratégia</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Limites por janela: X = 500 posts/24h no Basic, LinkedIn = 100/dia por user, Meta = 200 chamadas/hora por user, TikTok = 6 posts/min.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Bater rate limit em produção = todos os posts ficam pendurados na fila — precisa modelar throttling no worker antes de escalar.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Token bucket, headers `X-RateLimit-Remaining`, sliding window, throttling por conta e priorização de jobs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚔️</span>
+            <div>
+              <span class="font-medium">Self-hosted vs SaaS</span>
+              <span class="text-neutral-500 text-sm ml-2">- Controle vs velocidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Self-hosted (Postiz) = você roda VPS, faz App Review, controla dados; SaaS (Buffer, Ayrshare) = paga mensalidade e a empresa cuida do resto.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Cada lado tem dor diferente — SaaS tem teto de customização, self-hosted tem custo de manutenção em horas/mês.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">TCO (total cost of ownership), lock-in, dados proprietários do cliente, SLA e capacidade de auditoria.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🥊</span>
+            <div>
+              <span class="font-medium">Postiz vs Ayrshare vs Buffer</span>
+              <span class="text-neutral-500 text-sm ml-2">- Comparativo prático</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Postiz = OSS, AGPL, self-host; Ayrshare = API-first, ~$149/mês, ideal para devs; Buffer = UI-first para marketing, ~$15/seat.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Escolher errado custa migração depois — Buffer não tem API decente, Ayrshare não tem UI, Postiz exige sysadmin.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Cobertura de redes, webhooks suportados, suporte a vídeo, agendamento recorrente e qualidade da documentação.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛠️</span>
+            <div>
+              <span class="font-medium">Quando vale construir do zero</span>
+              <span class="text-neutral-500 text-sm ml-2">- Build vs buy</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Construir vale quando: produto core depende da integração, volume torna SaaS proibitivo, ou cliente exige controle total de dados (compliance).</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Construir uma engine de publicação leva 3-6 meses de dev sênior — só faz sentido se a economia justifica.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Break-even mensal, custo de oportunidade, NIH (not invented here) e o caminho híbrido: usar SaaS como adapter no início.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- T6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧭</span>
+            <div>
+              <span class="font-medium">Roadmap recomendado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Do MVP ao multi-tenant</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que é:</span>
+                <p class="text-neutral-300 text-sm">Etapa 1: Bluesky + Mastodon (sem review); Etapa 2: LinkedIn + X; Etapa 3: Meta + TikTok (após review); Etapa 4: blogs (WordPress, Ghost, Hashnode).</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ordem errada trava o projeto por semanas esperando aprovação — começar pelas redes abertas valida o resto da arquitetura sem bloqueio.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">MVP iterativo, dependências bloqueantes (App Review), validação técnica vs validação de mercado e crescimento incremental por adapter.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-4.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO ENTRE TRILHAS -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Voltar ao Início
+      </a>
+      <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">
+        Próxima Trilha: 🔌 APIs →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- MODAIS -->
+  <div id="modal-1-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.1</span>
+          <span class="font-semibold">🎯 Visão geral do sistema</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.2</span>
+          <span class="font-semibold">🏗️ Arquitetura multi-plataforma</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.3</span>
+          <span class="font-semibold">🔐 OAuth e tokens</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.4</span>
+          <span class="font-semibold">💰 Custo, limites e estratégia</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) exp.classList.remove('active');
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

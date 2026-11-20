@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.1 - Bluesky | MkBlogs 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento Purple (T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .bg-purple-600 { background-color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500:hover { background-color: #8b5cf6; }
+
+    /* Light mode - hovers de outras trilhas no nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217, 119, 6, 0.08); }
+    html:not(.dark) .hover\:text-teal-400:hover { color: #0d9488; }
+    html:not(.dark) .hover\:bg-teal-500\/10:hover { background-color: rgba(13, 148, 136, 0.08); }
+    html:not(.dark) .hover\:text-rose-400:hover { color: #9f1239; }
+    html:not(.dark) .hover\:bg-rose-500\/10:hover { background-color: rgba(225, 29, 72, 0.08); }
+
+    /* Light mode - emerald e red para grids Fazer/Evitar */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(220, 38, 38, 0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220, 38, 38, 0.25); }
+
+    /* Light mode - remove gradientes e cores especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Code blocks no light mode */
+    html:not(.dark) pre.bg-dark-900 { background-color: #0f172a; }
+    html:not(.dark) pre.bg-dark-900 code { color: #e2e8f0; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🚀</span>
+            <span class="font-bold text-lg hidden sm:inline">MkBlogs</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Postiz</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Redes</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Blogs</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Do Zero</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Deploy</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Módulo 3.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER DO MÓDULO -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🦋 Bluesky — postando no AT Protocol</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">A rede social mais fácil de automatizar: sem aprovação de app, sem OAuth labiríntico. Em 30 minutos você cria conta, instala o SDK, faz login programático e publica texto, imagens e links com facets.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Tópicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Básico</div>
+          <div class="text-xs text-neutral-400">Nível</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Prático</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">👤 Criar conta + App Password</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Bluesky é a rede mais amigável a desenvolvedores: <strong class="text-purple-400">não precisa aprovação</strong>, não tem fila de espera para API, e a autenticação é por <strong class="text-purple-400">App Password</strong> — uma senha derivada que você revoga sem afetar o login principal. Diferente do X/Twitter, ninguém precisa "aceitar" seu projeto.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Crie a conta em <a href="https://bsky.app" target="_blank" class="text-purple-400 hover:underline">bsky.app</a> com e-mail e senha. Seu identificador (<code class="text-purple-400 font-mono text-sm">handle</code>) vai ser algo como <code class="text-purple-400 font-mono text-sm">seu-nome.bsky.social</code> — esse é o "usuário" que o SDK pede no login.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Depois vá em <strong class="text-purple-400">Settings → Privacy and security → App Passwords → Add App Password</strong>. Dê um nome descritivo (ex.: <code class="text-purple-400 font-mono text-sm">mkblogs-bot</code>) e copie a string gerada. Ela aparece <strong class="text-purple-400">uma única vez</strong> — guarde no <code class="text-purple-400 font-mono text-sm">.env</code> imediatamente.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># .env — formato da App Password é xxxx-xxxx-xxxx-xxxx
+BSKY_HANDLE=seu-nome.bsky.social
+BSKY_APP_PASSWORD=abcd-efgh-ijkl-mnop
+
+# Endpoint do PDS (Personal Data Server) — padrão Bluesky
+BSKY_SERVICE=https://bsky.social</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🔐</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">App Passwords <strong>não</strong> dão acesso a trocar a senha principal nem deletar a conta — só ao protocolo de publicação. Crie uma por integração: assim revogar o token do bot não desloga você do app oficial.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Handle</div>
+          <p class="text-xs text-neutral-400">Identificador público no formato <code class="font-mono">user.bsky.social</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">App Password</div>
+          <p class="text-xs text-neutral-400">Credencial derivada, escopo limitado, revogável.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">PDS</div>
+          <p class="text-xs text-neutral-400">Personal Data Server que hospeda seus posts.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">DID</div>
+          <p class="text-xs text-neutral-400">Decentralized Identifier único da conta.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📦 Instalar @atproto/api</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O SDK oficial do AT Protocol é o <strong class="text-purple-400">@atproto/api</strong>, mantido pela Bluesky Social. Tem types TypeScript completos, suporta browser e Node, e abstrai os endpoints XRPC numa classe <code class="text-purple-400 font-mono text-sm">BskyAgent</code> com métodos de alto nível.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Iniciar projeto Node + TypeScript
+mkdir bsky-bot && cd bsky-bot
+npm init -y
+npm install @atproto/api
+npm install -D typescript @types/node tsx dotenv
+npx tsc --init</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Configure o <code class="text-purple-400 font-mono text-sm">tsconfig.json</code> com <code class="text-purple-400 font-mono text-sm">"target": "ES2022"</code> e <code class="text-purple-400 font-mono text-sm">"module": "NodeNext"</code> para suportar <code class="text-purple-400 font-mono text-sm">top-level await</code> e ESM nativo. O import básico do SDK fica assim:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/client.ts
+import { BskyAgent, RichText } from "@atproto/api";
+import "dotenv/config";
+
+// Cliente apontando para o PDS padrão
+export const agent = new BskyAgent({
+  service: process.env.BSKY_SERVICE ?? "https://bsky.social",
+});
+
+// Helpers de tipagem
+export type PostRecord = {
+  text: string;
+  createdAt: string;
+  facets?: unknown[];
+  embed?: unknown;
+};</code></pre>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// package.json — scripts úteis
+{
+  "scripts": {
+    "post": "tsx src/post.ts",
+    "image": "tsx src/post-image.ts",
+    "rich": "tsx src/post-rich.ts"
+  }
+}</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">tsx</code> em vez de <code class="text-primary font-mono text-sm">ts-node</code> — é mais rápido, suporta ESM out-of-the-box e não exige configuração extra. Para produção, transpile com <code class="text-primary font-mono text-sm">tsc</code> e rode o <code class="text-primary font-mono text-sm">.js</code> com Node puro.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">@atproto/api</div>
+          <p class="text-xs text-neutral-400">SDK oficial, isomórfico (Node + browser).</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">BskyAgent</div>
+          <p class="text-xs text-neutral-400">Classe principal com sessão e métodos de alto nível.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">XRPC</div>
+          <p class="text-xs text-neutral-400">Protocolo RPC sobre HTTP usado pelo AT Protocol.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">tsx</div>
+          <p class="text-xs text-neutral-400">Runner TypeScript leve, ideal para scripts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔑 Login programático</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O método <code class="text-purple-400 font-mono text-sm">agent.login()</code> troca handle + App Password por um par de tokens (<code class="text-purple-400 font-mono text-sm">accessJwt</code> e <code class="text-purple-400 font-mono text-sm">refreshJwt</code>). O SDK mantém esses tokens em memória e os renova automaticamente nas chamadas seguintes — você só precisa logar uma vez por execução.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/login.ts
+import { agent } from "./client.js";
+
+async function authenticate(): Promise&lt;void&gt; {
+  const handle = process.env.BSKY_HANDLE;
+  const password = process.env.BSKY_APP_PASSWORD;
+
+  if (!handle || !password) {
+    throw new Error("BSKY_HANDLE e BSKY_APP_PASSWORD são obrigatórios");
+  }
+
+  const result = await agent.login({
+    identifier: handle,
+    password,
+  });
+
+  console.log("✅ Logado como:", result.data.handle);
+  console.log("   DID:", result.data.did);
+  console.log("   Email:", result.data.email);
+}
+
+authenticate().catch((err) =&gt; {
+  console.error("❌ Falha no login:", err);
+  process.exit(1);
+});</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para reutilizar a sessão entre execuções (evitando login repetido em filas), persista o objeto <code class="text-purple-400 font-mono text-sm">agent.session</code> e restaure com <code class="text-purple-400 font-mono text-sm">resumeSession()</code>:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/session-cache.ts
+import fs from "node:fs/promises";
+import { agent } from "./client.js";
+import type { AtpSessionData } from "@atproto/api";
+
+const SESSION_FILE = ".bsky-session.json";
+
+export async function ensureSession(): Promise&lt;void&gt; {
+  try {
+    const raw = await fs.readFile(SESSION_FILE, "utf8");
+    const session = JSON.parse(raw) as AtpSessionData;
+    await agent.resumeSession(session);
+    console.log("♻️  Sessão restaurada");
+  } catch {
+    await agent.login({
+      identifier: process.env.BSKY_HANDLE!,
+      password: process.env.BSKY_APP_PASSWORD!,
+    });
+    await fs.writeFile(SESSION_FILE, JSON.stringify(agent.session));
+    console.log("🆕 Nova sessão criada");
+  }
+}</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar variáveis de ambiente antes do <code class="font-mono">login()</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir <code class="font-mono">agent.session</code> em jobs longos.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Capturar erro 401 e refazer o login automaticamente.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logar o <code class="font-mono">did</code> nos logs (handle pode mudar).</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logar de novo a cada post — desperdiça tokens.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar a senha principal no lugar da App Password.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar <code class="font-mono">.bsky-session.json</code> no git.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar a App Password entre integrações.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">accessJwt</div>
+          <p class="text-xs text-neutral-400">Token curto, autoriza chamadas autenticadas.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">refreshJwt</div>
+          <p class="text-xs text-neutral-400">Token longo, renova o access expirado.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">resumeSession</div>
+          <p class="text-xs text-neutral-400">Restaura sessão sem novo handshake.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">identifier</div>
+          <p class="text-xs text-neutral-400">Handle <em>ou</em> e-mail — o SDK aceita ambos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📝 Publicar texto</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O método <code class="text-purple-400 font-mono text-sm">agent.post()</code> recebe um record que segue o schema <strong class="text-purple-400">app.bsky.feed.post</strong>. Os dois campos obrigatórios são <code class="text-purple-400 font-mono text-sm">text</code> (até 300 caracteres) e <code class="text-purple-400 font-mono text-sm">createdAt</code> em ISO 8601.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post.ts
+import { agent } from "./client.js";
+import { ensureSession } from "./session-cache.js";
+
+async function publish(): Promise&lt;void&gt; {
+  await ensureSession();
+
+  const result = await agent.post({
+    text: "Primeiro post via @atproto/api 🦋",
+    createdAt: new Date().toISOString(),
+  });
+
+  console.log("📤 Post publicado");
+  console.log("   URI:", result.uri);
+  console.log("   CID:", result.cid);
+}
+
+publish().catch(console.error);</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O retorno traz <code class="text-purple-400 font-mono text-sm">uri</code> (formato <code class="text-purple-400 font-mono text-sm">at://did:plc:.../app.bsky.feed.post/&lt;rkey&gt;</code>) e <code class="text-purple-400 font-mono text-sm">cid</code> (hash do conteúdo). Guarde os dois se quiser deletar ou referenciar o post depois.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Validação de tamanho antes de publicar
+const MAX_GRAPHEMES = 300;
+
+function assertPostable(text: string): void {
+  const length = [...new Intl.Segmenter().segment(text)].length;
+  if (length &gt; MAX_GRAPHEMES) {
+    throw new Error(`Post tem ${length} grafemas (máx ${MAX_GRAPHEMES})`);
+  }
+}
+
+assertPostable("Texto que cabe no limite ✨");
+await agent.post({
+  text: "Texto que cabe no limite ✨",
+  createdAt: new Date().toISOString(),
+  langs: ["pt-BR"],
+});</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O limite do Bluesky é em <strong>grafemas</strong>, não bytes nem code units. Um emoji composto (<code class="text-primary font-mono text-sm">👨‍👩‍👧</code>) conta como 1, mas <code class="text-primary font-mono text-sm">"".length</code> retorna 8. Use <code class="text-primary font-mono text-sm">Intl.Segmenter</code> para contar certo.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Record</div>
+          <p class="text-xs text-neutral-400">Objeto tipado seguindo um Lexicon do AT Protocol.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">AT-URI</div>
+          <p class="text-xs text-neutral-400">Identificador único do post no formato <code class="font-mono">at://</code>.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">CID</div>
+          <p class="text-xs text-neutral-400">Content ID — hash IPFS do conteúdo imutável.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Grafema</div>
+          <p class="text-xs text-neutral-400">Unidade visual percebida (uma "letra" para o usuário).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🖼️ Upload de imagem</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Imagens no Bluesky são <strong class="text-purple-400">blobs</strong> separados do post. O fluxo é em duas etapas: primeiro <code class="text-purple-400 font-mono text-sm">uploadBlob()</code> envia os bytes e devolve uma referência; depois você inclui essa referência no campo <code class="text-purple-400 font-mono text-sm">embed</code> do post.
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Limites: até <strong class="text-purple-400">4 imagens</strong> por post, <strong class="text-purple-400">1 MB</strong> por blob (após otimização), formatos <code class="text-purple-400 font-mono text-sm">image/jpeg</code>, <code class="text-purple-400 font-mono text-sm">image/png</code> e <code class="text-purple-400 font-mono text-sm">image/webp</code>. Alt text é obrigatório para acessibilidade.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post-image.ts
+import fs from "node:fs/promises";
+import { agent } from "./client.js";
+import { ensureSession } from "./session-cache.js";
+
+type UploadedImage = {
+  alt: string;
+  image: {
+    $type: "blob";
+    ref: { $link: string };
+    mimeType: string;
+    size: number;
+  };
+};
+
+async function uploadImage(
+  path: string,
+  mimeType: string,
+  alt: string,
+): Promise&lt;UploadedImage&gt; {
+  const bytes = await fs.readFile(path);
+
+  if (bytes.byteLength &gt; 1_000_000) {
+    throw new Error(`Imagem ${path} excede 1 MB (${bytes.byteLength} bytes)`);
+  }
+
+  const { data } = await agent.uploadBlob(bytes, { encoding: mimeType });
+
+  return {
+    alt,
+    image: data.blob as UploadedImage["image"],
+  };
+}
+
+async function publish(): Promise&lt;void&gt; {
+  await ensureSession();
+
+  const hero = await uploadImage(
+    "./assets/capa.jpg",
+    "image/jpeg",
+    "Logo do projeto MkBlogs sobre fundo escuro",
+  );
+
+  const result = await agent.post({
+    text: "Lançamento oficial 🚀",
+    createdAt: new Date().toISOString(),
+    embed: {
+      $type: "app.bsky.embed.images",
+      images: [hero],
+    },
+  });
+
+  console.log("📤 Post com imagem:", result.uri);
+}
+
+publish().catch(console.error);</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para múltiplas imagens, faça <code class="text-purple-400 font-mono text-sm">Promise.all()</code> dos uploads e passe o array no <code class="text-purple-400 font-mono text-sm">images</code>:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">const uploads = await Promise.all([
+  uploadImage("./a.jpg", "image/jpeg", "Captura da dashboard"),
+  uploadImage("./b.png", "image/png",  "Gráfico de engajamento"),
+  uploadImage("./c.webp","image/webp", "Print da configuração"),
+]);
+
+await agent.post({
+  text: "Três capturas do release de hoje",
+  createdAt: new Date().toISOString(),
+  embed: {
+    $type: "app.bsky.embed.images",
+    images: uploads,
+  },
+});</code></pre>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">♿</span> Dica prática
+        </h3>
+        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">alt</code> não é decorativo — leitores de tela dependem dele e o algoritmo do Bluesky usa o texto para ranqueamento. Descreva o que aparece, não "imagem" ou "foto". Imagem sem alt útil é tratada como spam por moderadores.</p>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Blob</div>
+          <p class="text-xs text-neutral-400">Binário (imagem/vídeo) referenciado por CID.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Embed</div>
+          <p class="text-xs text-neutral-400">Conteúdo anexo: imagens, link, quote ou record.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">MIME type</div>
+          <p class="text-xs text-neutral-400">Necessário no <code class="font-mono">encoding</code> do uploadBlob.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Alt text</div>
+          <p class="text-xs text-neutral-400">Descrição textual para acessibilidade e indexação.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔗 RichText e detecção de links</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Diferente do Twitter, o Bluesky <strong class="text-purple-400">não detecta links automaticamente</strong>. URLs e menções viram texto puro a menos que você anexe <strong class="text-purple-400">facets</strong> — marcações posicionais que dizem ao cliente "esses bytes são um link, esses são uma menção".
+      </p>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A classe <code class="text-purple-400 font-mono text-sm">RichText</code> do SDK faz o trabalho pesado: detecta padrões, calcula os offsets em UTF-8 (não UTF-16!) e gera o array de facets pronto para anexar ao post.
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post-rich.ts
+import { RichText } from "@atproto/api";
+import { agent } from "./client.js";
+import { ensureSession } from "./session-cache.js";
+
+async function publish(): Promise&lt;void&gt; {
+  await ensureSession();
+
+  const rt = new RichText({
+    text: "Lançamos a v1! Conheça em https://mkblogs.dev " +
+          "e siga @inema.club.bsky.social para novidades. #devtools",
+  });
+
+  // Detecta URLs, menções e hashtags + valida tamanho em grafemas
+  await rt.detectFacets(agent);
+
+  if (rt.graphemeLength &gt; 300) {
+    throw new Error(`Texto tem ${rt.graphemeLength} grafemas`);
+  }
+
+  const result = await agent.post({
+    text: rt.text,
+    facets: rt.facets,
+    createdAt: new Date().toISOString(),
+    langs: ["pt-BR"],
+  });
+
+  console.log("📤 Post rico publicado:", result.uri);
+  console.log("   Facets detectadas:", rt.facets?.length ?? 0);
+}
+
+publish().catch(console.error);</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Internamente, cada facet tem um <code class="text-purple-400 font-mono text-sm">index</code> com <code class="text-purple-400 font-mono text-sm">byteStart</code>/<code class="text-purple-400 font-mono text-sm">byteEnd</code> e uma lista de <code class="text-purple-400 font-mono text-sm">features</code> (link, mention, tag). Se quiser construir manualmente:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Facet manual — útil quando o texto é gerado dinamicamente
+const text = "Leia mais em mkblogs.dev";
+const url = "https://mkblogs.dev";
+const target = "mkblogs.dev";
+
+const byteStart = new TextEncoder().encode(
+  text.slice(0, text.indexOf(target)),
+).byteLength;
+const byteEnd = byteStart + new TextEncoder().encode(target).byteLength;
+
+await agent.post({
+  text,
+  createdAt: new Date().toISOString(),
+  facets: [
+    {
+      index: { byteStart, byteEnd },
+      features: [
+        { $type: "app.bsky.richtext.facet#link", uri: url },
+      ],
+    },
+  ],
+});</code></pre>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para link preview (card com título, descrição e thumbnail), use <code class="text-purple-400 font-mono text-sm">embed.external</code> com um blob de imagem opcional:
+      </p>
+
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">await agent.post({
+  text: "Novo guia publicado 🦋",
+  createdAt: new Date().toISOString(),
+  embed: {
+    $type: "app.bsky.embed.external",
+    external: {
+      uri: "https://mkblogs.dev/bluesky-guide",
+      title: "Guia completo do Bluesky API",
+      description: "Do zero ao primeiro bot em 30 minutos.",
+      // thumb opcional: blob retornado por uploadBlob()
+    },
+  },
+});</code></pre>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">RichText.detectFacets()</code> para link/menção/hashtag automáticos.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Calcular offsets em <strong>bytes UTF-8</strong>, nunca em chars JS.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar <code class="font-mono">graphemeLength &lt;= 300</code> antes do post.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Anexar card de preview com <code class="font-mono">embed.external</code>.</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar autodetecção sem chamar <code class="font-mono">detectFacets()</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar <code class="font-mono">str.indexOf()</code> direto como byteStart.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Colocar tanto <code class="font-mono">images</code> quanto <code class="font-mono">external</code> num único embed.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar text com markdown — Bluesky renderiza puro.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">Facet</div>
+          <p class="text-xs text-neutral-400">Marcação posicional sobre um trecho do texto.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">RichText</div>
+          <p class="text-xs text-neutral-400">Helper que detecta links, menções e hashtags.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">UTF-8 offsets</div>
+          <p class="text-xs text-neutral-400">Posição em bytes, não em chars JavaScript.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
+          <div class="font-semibold text-purple-400 mb-1">embed.external</div>
+          <p class="text-xs text-neutral-400">Card de preview com título, descrição e thumb.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">🎯</span> Resumo do Módulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Conta + App Password criada</strong><span class="text-neutral-400"> — handle <code class="font-mono">user.bsky.social</code> e credencial revogável guardada no <code class="font-mono">.env</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">SDK @atproto/api instalado</strong><span class="text-neutral-400"> — projeto Node + TypeScript com <code class="font-mono">tsx</code> e <code class="font-mono">BskyAgent</code> configurado.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Login programático funcionando</strong><span class="text-neutral-400"> — <code class="font-mono">agent.login()</code> com persistência de sessão via <code class="font-mono">resumeSession()</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Texto publicado</strong><span class="text-neutral-400"> — <code class="font-mono">agent.post()</code> com validação de 300 grafemas via <code class="font-mono">Intl.Segmenter</code>.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Upload de imagem dominado</strong><span class="text-neutral-400"> — fluxo blob + embed, até 4 imagens, alt text obrigatório.</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">RichText e facets</strong><span class="text-neutral-400"> — links, menções e hashtags via <code class="font-mono">detectFacets()</code>, card de preview com <code class="font-mono">embed.external</code>.</span></div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Próximo Módulo:</h3>
+          <p class="text-neutral-300">3.2 — Mastodon: instâncias, tokens e a Fediverse API</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Próximo Módulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>MkBlogs - 2026 • <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    } else {
+      html.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>
