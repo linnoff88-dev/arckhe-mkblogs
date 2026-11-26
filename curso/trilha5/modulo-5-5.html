@@ -132,7 +132,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.5</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🖼️ Upload de mídia</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Receber arquivos no NestJS, persistir no S3/R2, servir via URL assinada, otimizar com sharp e manter o bucket limpo de mídia órfã.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">Receber arquivos no NestJS, persistir no S3/R2, servir via URL assinada, otimizar com sharp e manter o bucket limpo de mídia órfê.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -212,7 +212,7 @@ export class MediaController {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Nunca use <code class="text-primary font-mono text-sm">diskStorage</code> em produção. Arquivo em disco precisa de cleanup manual em caso de falha — e em ambientes com múltiplas réplicas, o arquivo "some" se o load balancer mandar a próxima request para outro pod.</p>
+        <p class="text-neutral-300">Nunca use <code class="text-primary font-mono text-sm">diskStorage</code> em produçêo. Arquivo em disco precisa de cleanup manual em caso de falha — e em ambientes com múltiplas réplicas, o arquivo "some" se o load balancer mandar a próxima request para outro pod.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -244,11 +244,11 @@ export class MediaController {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use o <strong class="text-teal-400">AWS SDK v3</strong> com <code class="text-teal-400 font-mono text-sm">PutObjectCommand</code>. Funciona igual no S3 da AWS e no <strong class="text-teal-400">Cloudflare R2</strong> — basta trocar o <code class="text-teal-400 font-mono text-sm">endpoint</code> e a região para <code class="text-teal-400 font-mono text-sm">auto</code>. R2 é zero egress, ideal para servir mídia.
+        Use o <strong class="text-teal-400">AWS SDK v3</strong> com <code class="text-teal-400 font-mono text-sm">PutObjectCommand</code>. Funciona igual no S3 da AWS e no <strong class="text-teal-400">Cloudflare R2</strong> — basta trocar o <code class="text-teal-400 font-mono text-sm">endpoint</code> e a regiêo para <code class="text-teal-400 font-mono text-sm">auto</code>. R2 é zero egress, ideal para servir mídia.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A geração da <strong class="text-teal-400">key</strong> precisa ser previsível e única. Combine prefixo lógico + UUID + extensão: <code class="text-teal-400 font-mono text-sm">posts/2026/05/&lt;uuid&gt;.webp</code>. Evita colisão e facilita auditoria.
+        A geraçêo da <strong class="text-teal-400">key</strong> precisa ser previsível e única. Combine prefixo lógico + UUID + extensêo: <code class="text-teal-400 font-mono text-sm">posts/2026/05/&lt;uuid&gt;.webp</code>. Evita colisêo e facilita auditoria.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/s3.client.ts
@@ -302,7 +302,7 @@ export async function putObject(
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">PutObjectCommand</div>
-          <p class="text-xs text-neutral-400">Operação atômica de escrita no bucket.</p>
+          <p class="text-xs text-neutral-400">Operaçêo atômica de escrita no bucket.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">R2 vs S3</div>
@@ -323,11 +323,11 @@ export async function putObject(
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Buckets privados são o default — você não quer expor todos os objetos. Para servir mídia ao frontend, gere <strong class="text-teal-400">URLs assinadas</strong> com <code class="text-teal-400 font-mono text-sm">getSignedUrl</code>. A URL carrega credenciais temporárias no query string e expira automaticamente.
+        Buckets privados sêo o default — você nêo quer expor todos os objetos. Para servir mídia ao frontend, gere <strong class="text-teal-400">URLs assinadas</strong> com <code class="text-teal-400 font-mono text-sm">getSignedUrl</code>. A URL carrega credenciais temporárias no query string e expira automaticamente.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use <strong class="text-teal-400">expirations curtas</strong> (15min - 1h) para mídia em painel admin e <strong class="text-teal-400">cache CDN público</strong> para imagens de posts já publicados. Cada propósito tem seu padrão.
+        Use <strong class="text-teal-400">expirations curtas</strong> (15min - 1h) para mídia em painel admin e <strong class="text-teal-400">cache CDN público</strong> para imagens de posts já publicados. Cada propósito tem seu padrêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/signed-url.ts
@@ -401,7 +401,7 @@ async getUrl(@Param('id') id: string): Promise&lt;{ url: string }&gt; {
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Pipeline padrão: limite à largura máxima (ex.: 1600px), preserve aspect ratio, força WebP com qualidade 82. Para thumbnails, gere uma segunda variante 400px e suba ambas.
+        Pipeline padrêo: limite à largura máxima (ex.: 1600px), preserve aspect ratio, força WebP com qualidade 82. Para thumbnails, gere uma segunda variante 400px e suba ambas.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/image.optimizer.ts
@@ -444,7 +444,7 @@ export async function thumbnail(input: Buffer): Promise&lt;OptimizedImage&gt; {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">📐</span> Dica prática
         </h3>
-        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">.rotate()</code> sem argumento aplica a rotação EXIF e depois remove o metadado. Sem isso, fotos do celular aparecem deitadas no navegador em alguns browsers.</p>
+        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">.rotate()</code> sem argumento aplica a rotaçêo EXIF e depois remove o metadado. Sem isso, fotos do celular aparecem deitadas no navegador em alguns browsers.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -463,7 +463,7 @@ export async function thumbnail(input: Buffer): Promise&lt;OptimizedImage&gt; {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">EXIF rotate</div>
-          <p class="text-xs text-neutral-400">Corrige orientação de fotos de celular automaticamente.</p>
+          <p class="text-xs text-neutral-400">Corrige orientaçêo de fotos de celular automaticamente.</p>
         </div>
       </div>
     </section>
@@ -472,7 +472,7 @@ export async function thumbnail(input: Buffer): Promise&lt;OptimizedImage&gt; {
     <section id="topico-5" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold">✅ Validação de mime/size</h2>
+        <h2 class="text-2xl font-bold">✅ Validaçêo de mime/size</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -480,7 +480,7 @@ export async function thumbnail(input: Buffer): Promise&lt;OptimizedImage&gt; {
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Combine três camadas: <strong class="text-teal-400">whitelist de extensão</strong> (rápido), <strong class="text-teal-400">size limit</strong> (10MB cobre 99% dos casos legítimos) e <strong class="text-teal-400">magic byte sniff</strong> (verdade absoluta).
+        Combine três camadas: <strong class="text-teal-400">whitelist de extensêo</strong> (rápido), <strong class="text-teal-400">size limit</strong> (10MB cobre 99% dos casos legítimos) e <strong class="text-teal-400">magic byte sniff</strong> (verdade absoluta).
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/media/validator.ts
@@ -503,14 +503,14 @@ export async function validateImage(file: Express.Multer.File): Promise&lt;void&
 
   // 2. Mime declarado (sanity check)
   if (!ALLOWED_MIMES.has(file.mimetype)) {
-    throw new BadRequestException(`Mime ${file.mimetype} não permitido`);
+    throw new BadRequestException(`Mime ${file.mimetype} nêo permitido`);
   }
 
   // 3. Magic bytes (verdade)
   const detected = await fileTypeFromBuffer(file.buffer);
   if (!detected || !ALLOWED_MIMES.has(detected.mime)) {
     throw new BadRequestException(
-      `Conteúdo real (${detected?.mime ?? 'desconhecido'}) não confere com tipo declarado`,
+      `Conteúdo real (${detected?.mime ?? 'desconhecido'}) nêo confere com tipo declarado`,
     );
   }
 }</code></pre>
@@ -519,17 +519,17 @@ export async function validateImage(file: Express.Multer.File): Promise&lt;void&
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar <strong>magic bytes</strong> com <code class="font-mono">file-type</code>, não confiar no header.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar <strong>magic bytes</strong> com <code class="font-mono">file-type</code>, nêo confiar no header.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Whitelist de extensões — nunca blacklist.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Limite global de 10MB no Multer + checagem manual.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Reprocessar com sharp — destrói qualquer payload escondido.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar só no <code class="font-mono">Content-Type</code> do request.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aceitar SVG sem sanitização (pode ter <code class="font-mono">&lt;script&gt;</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aceitar SVG sem sanitizaçêo (pode ter <code class="font-mono">&lt;script&gt;</code>).</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Servir o arquivo do mesmo domínio do app (XSS).</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logar o buffer inteiro em erro — vai estourar APM.</span></li>
           </ul>
@@ -561,11 +561,11 @@ export async function validateImage(file: Express.Multer.File): Promise&lt;void&
     <section id="topico-6" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">🧹 Cleanup de mídia órfã</h2>
+        <h2 class="text-2xl font-bold">🧹 Cleanup de mídia órfê</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Toda mídia uploadeada começa como <strong class="text-teal-400">órfã</strong>: existe no bucket mas não está vinculada a nenhum post ainda. Se o usuário abandona o rascunho, o arquivo vira lixo pago. Marque com <code class="text-teal-400 font-mono text-sm">postId: null</code> e rode um <strong class="text-teal-400">cron job</strong> que limpa os órfãos com mais de N dias.
+        Toda mídia uploadeada começa como <strong class="text-teal-400">órfê</strong>: existe no bucket mas nêo está vinculada a nenhum post ainda. Se o usuário abandona o rascunho, o arquivo vira lixo pago. Marque com <code class="text-teal-400 font-mono text-sm">postId: null</code> e rode um <strong class="text-teal-400">cron job</strong> que limpa os órfêos com mais de N dias.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -624,13 +624,13 @@ export class MediaCleanupCron {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💸</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Monitore o tamanho total do bucket por prefixo. Se <code class="text-primary font-mono text-sm">posts/</code> cresce 10MB/dia mas você só publica 2MB/dia, o cron não está pegando algum caminho de órfão — investigue antes da conta do mês doer.</p>
+        <p class="text-neutral-300">Monitore o tamanho total do bucket por prefixo. Se <code class="text-primary font-mono text-sm">posts/</code> cresce 10MB/dia mas você só publica 2MB/dia, o cron nêo está pegando algum caminho de órfêo — investigue antes da conta do mês doer.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-teal-400 mb-1">Mídia órfã</div>
+          <div class="font-semibold text-teal-400 mb-1">Mídia órfê</div>
           <p class="text-xs text-neutral-400">Upload sem vínculo a post — vira lixo se ignorado.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -670,21 +670,21 @@ export class MediaCleanupCron {
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
-            <div><strong class="text-white">Otimização com sharp</strong><span class="text-neutral-400"> — resize 1600px, WebP qualidade 82, rotate EXIF, thumbnail 400px.</span></div>
+            <div><strong class="text-white">Otimizaçêo com sharp</strong><span class="text-neutral-400"> — resize 1600px, WebP qualidade 82, rotate EXIF, thumbnail 400px.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
-            <div><strong class="text-white">Validação em camadas</strong><span class="text-neutral-400"> — size + mime declarado + magic bytes via <code class="font-mono">file-type</code>.</span></div>
+            <div><strong class="text-white">Validaçêo em camadas</strong><span class="text-neutral-400"> — size + mime declarado + magic bytes via <code class="font-mono">file-type</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
-            <div><strong class="text-white">Cleanup automatizado</strong><span class="text-neutral-400"> — cron diário remove órfãos (&gt;1d) e soft-deletes (&gt;7d).</span></div>
+            <div><strong class="text-white">Cleanup automatizado</strong><span class="text-neutral-400"> — cron diário remove órfêos (&gt;1d) e soft-deletes (&gt;7d).</span></div>
           </div>
         </div>
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-teal-400 mb-2">🏁 Fim da Trilha 5 — Do Zero</h3>
-          <p class="text-neutral-300">Você construiu o MVP: schema, auth, posts, agendamento e mídia. Hora de colocar no ar de verdade — Trilha 6 cobre containerização, CI/CD, observabilidade e deploy em VPS / Railway / Fly.io.</p>
+          <p class="text-neutral-300">Você construiu o MVP: schema, auth, posts, agendamento e mídia. Hora de colocar no ar de verdade — Trilha 6 cobre containerizaçêo, CI/CD, observabilidade e deploy em VPS / Railway / Fly.io.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

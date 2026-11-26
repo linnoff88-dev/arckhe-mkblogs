@@ -131,7 +131,7 @@
         </div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
           <div class="text-xl font-bold text-amber-400">~2h</div>
-          <div class="text-xs text-neutral-400">Duração</div>
+          <div class="text-xs text-neutral-400">Duraçêo</div>
         </div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
           <div class="text-xl font-bold text-amber-400">Básico</div>
@@ -161,7 +161,7 @@
             <span class="text-xs text-neutral-500">~35 min</span>
           </div>
           <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">👻 Ghost Admin API</h3>
-          <p class="text-xs text-neutral-400">JWT, integração nativa</p>
+          <p class="text-xs text-neutral-400">JWT, integraçêo nativa</p>
         </a>
         <a href="#modulo-4-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
           <div class="flex items-center justify-between mb-2">
@@ -204,8 +204,8 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Desde a versão 4.7 (2016), a REST API vem habilitada por padrão. Endpoint base: <code>https://seusite.com/wp-json/wp/v2/</code>.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem configuração extra. Basta saber a URL e ter credenciais. Funciona em hospedagens compartilhadas, VPS e WordPress.com Business+.</p></div>
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Desde a versêo 4.7 (2016), a REST API vem habilitada por padrêo. Endpoint base: <code>https://seusite.com/wp-json/wp/v2/</code>.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem configuraçêo extra. Basta saber a URL e ter credenciais. Funciona em hospedagens compartilhadas, VPS e WordPress.com Business+.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GET <code>/wp-json</code> retorna discovery, JSON estruturado, mesmo schema de admin, alguns plugins de segurança bloqueiam — verificar antes.</p></div>
             </div>
           </div>
@@ -219,8 +219,8 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Senha de aplicação gerada em <code>Usuários → Perfil → Application Passwords</code>. Formato: <code>xxxx xxxx xxxx xxxx xxxx xxxx</code> (24 chars, 6 grupos).</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Substitui a senha real. Revogável individualmente. Habilitada nativamente desde WordPress 5.6 — não precisa de plugin JWT.</p></div>
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Senha de aplicaçêo gerada em <code>Usuários → Perfil → Application Passwords</code>. Formato: <code>xxxx xxxx xxxx xxxx xxxx xxxx</code> (24 chars, 6 grupos).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Substitui a senha real. Revogável individualmente. Habilitada nativamente desde WordPress 5.6 — nêo precisa de plugin JWT.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Basic base64(user:app_pass)</code>. Cada app gera uma senha diferente. Logs no Site Health.</p></div>
             </div>
           </div>
@@ -235,7 +235,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint que recebe JSON com <code>title</code>, <code>content</code>, <code>status</code>, <code>excerpt</code>, <code>slug</code>, <code>author</code>. Retorna o post criado com ID.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o endpoint nuclear. Domina ele e domina a publicação automatizada inteira: blog post, página, custom post type — todos seguem o mesmo padrão.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o endpoint nuclear. Domina ele e domina a publicaçêo automatizada inteira: blog post, página, custom post type — todos seguem o mesmo padrêo.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Content-Type: application/json, content aceita HTML, retorna 201 Created, ID retornado serve para PUT/DELETE futuros.</p></div>
             </div>
           </div>
@@ -265,8 +265,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoints <code>/wp-json/wp/v2/categories</code> e <code>/wp-json/wp/v2/tags</code>. No POST do post, passe arrays de IDs: <code>categories: [3, 5]</code>, <code>tags: [7, 9, 12]</code>.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Organização e SEO. Categoria sem tag = post órfão. Crie taxonomias antes de publicar — ou GET para listar IDs existentes.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">IDs numéricos (não slugs), criar via POST nos endpoints específicos, slug é único, parent permite hierarquia em categorias.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Organizaçêo e SEO. Categoria sem tag = post órfêo. Crie taxonomias antes de publicar — ou GET para listar IDs existentes.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">IDs numéricos (nêo slugs), criar via POST nos endpoints específicos, slug é único, parent permite hierarquia em categorias.</p></div>
             </div>
           </div>
         </div>
@@ -275,13 +275,13 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
             <span class="text-lg">📅</span>
-            <div><span class="font-medium">Status: draft / publish / future</span><span class="text-neutral-500 text-sm ml-2">- Controle de publicação</span></div>
+            <div><span class="font-medium">Status: draft / publish / future</span><span class="text-neutral-500 text-sm ml-2">- Controle de publicaçêo</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Campo <code>status</code> aceita: <code>publish</code> (público), <code>draft</code> (rascunho), <code>future</code> (agendado — exige <code>date</code> ISO 8601), <code>private</code>, <code>pending</code>.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Permite agendar dezenas de posts de uma vez. Combine <code>status: future</code> + <code>date: 2026-12-25T10:00:00</code> para publicação automática no Natal.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Date no fuso configurado no WP, future precisa de WP-Cron ativo, draft não vai pro feed RSS, private só autor enxerga.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Permite agendar dezenas de posts de uma vez. Combine <code>status: future</code> + <code>date: 2026-12-25T10:00:00</code> para publicaçêo automática no Natal.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Date no fuso configurado no WP, future precisa de WP-Cron ativo, draft nêo vai pro feed RSS, private só autor enxerga.</p></div>
             </div>
           </div>
         </div>
@@ -301,7 +301,7 @@
           <span class="text-xs text-neutral-500">~35 min</span>
         </div>
         <h3 class="text-2xl font-bold mb-2">👻 Ghost Admin API</h3>
-        <p class="text-neutral-400 text-sm">O Ghost é o CMS minimalista feito para publicação. Sua Admin API usa JWT e tem SDK oficial. Limpa, rápida, sem o legado do WordPress.</p>
+        <p class="text-neutral-400 text-sm">O Ghost é o CMS minimalista feito para publicaçêo. Sua Admin API usa JWT e tem SDK oficial. Limpa, rápida, sem o legado do WordPress.</p>
       </div>
 
       <div class="divide-y divide-dark-600">
@@ -314,7 +314,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">No painel Ghost: <code>Settings → Integrations → Add custom integration</code>. Gera Admin API Key, Content API Key e API URL.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o único caminho oficial para automação. Cada integration tem chaves separadas — revogáveis sem afetar outras.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o único caminho oficial para automaçêo. Cada integration tem chaves separadas — revogáveis sem afetar outras.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Admin API = escrita, Content API = leitura pública, webhook opcional, ícone customizável para identificar.</p></div>
             </div>
           </div>
@@ -329,7 +329,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">String no formato <code>{id}:{secret}</code>. Ex: <code>5f9e...3a:abc123def...</code>. O id identifica a integration, o secret assina o JWT.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Diferente de tokens simples: você não envia a key, você usa ela para gerar JWT a cada requisição. Mais seguro.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Diferente de tokens simples: você nêo envia a key, você usa ela para gerar JWT a cada requisiçêo. Mais seguro.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Split em <code>:</code>, id vira <code>kid</code> no JWT, secret é hex → Buffer para assinar HS256, nunca commitar.</p></div>
             </div>
           </div>
@@ -344,8 +344,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">SDK oficial: <code>npm i @tryghost/admin-api</code>. Métodos prontos: <code>api.posts.add()</code>, <code>.edit()</code>, <code>.browse()</code>, <code>.delete()</code>.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cuida do JWT automaticamente. Você só passa URL, key e versão. Reduz 50 linhas de auth para 3.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Versão da API obrigatória (ex: <code>v5.0</code>), suporta source HTML/Markdown/Lexical, retorna Promise.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cuida do JWT automaticamente. Você só passa URL, key e versêo. Reduz 50 linhas de auth para 3.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Versêo da API obrigatória (ex: <code>v5.0</code>), suporta source HTML/Markdown/Lexical, retorna Promise.</p></div>
             </div>
           </div>
         </div>
@@ -360,7 +360,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada request gera um JWT HS256 com payload <code>{iat, exp: iat+5min, aud: "/admin/"}</code>, header com <code>kid</code>, assinado com o secret hex.</p></div>
               <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mesmo se interceptado, o token expira em 5 min. Em outras linguagens (Python, Go), você implementa essa lógica manualmente.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Ghost &lt;jwt&gt;</code> (não "Bearer"!), HS256, kid no header, hex → Buffer no Node.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Ghost &lt;jwt&gt;</code> (nêo "Bearer"!), HS256, kid no header, hex → Buffer no Node.</p></div>
             </div>
           </div>
         </div>
@@ -390,7 +390,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Campos: <code>feature_image</code> (URL), <code>meta_title</code>, <code>meta_description</code>, <code>og_title</code>, <code>og_description</code>, <code>twitter_image</code>, <code>canonical_url</code>.</p></div>
               <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ghost já gera Open Graph e Twitter Card automaticamente — mas dá pra customizar por post. Diferença entre 100 cliques e 1000.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Upload da imagem em <code>POST /images/upload</code> primeiro, URL retornada vai em feature_image, canonical evita penalização SEO.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Upload da imagem em <code>POST /images/upload</code> primeiro, URL retornada vai em feature_image, canonical evita penalizaçêo SEO.</p></div>
             </div>
           </div>
         </div>
@@ -422,8 +422,8 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Token gerado em <code>dev.to/settings/extensions → DEV Community API Keys</code>. Use header <code>api-key: SEU_TOKEN</code> (não Bearer).</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem chave, sem publicação. É um único token por conta — perdeu, regenera (invalida o anterior).</p></div>
+              <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Token gerado em <code>dev.to/settings/extensions → DEV Community API Keys</code>. Use header <code>api-key: SEU_TOKEN</code> (nêo Bearer).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem chave, sem publicaçêo. É um único token por conta — perdeu, regenera (invalida o anterior).</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Base URL: <code>https://dev.to/api</code>, header customizado <code>api-key</code>, rate limit ~10 req/30s, formato JSON.</p></div>
             </div>
           </div>
@@ -469,7 +469,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint único: <code>POST https://gql.hashnode.com</code>. Body: <code>{query, variables}</code>. Auth: header <code>Authorization: PAT_TOKEN</code> (gerado em settings/developer).</p></div>
               <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">GraphQL retorna exatamente os campos pedidos — sem over-fetching. Schema tipado, autocomplete em ferramentas tipo Apollo.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Query vs Mutation, publicationId obrigatório (id do blog), Personal Access Token (PAT), errors no response não sobem como HTTP error.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Query vs Mutation, publicationId obrigatório (id do blog), Personal Access Token (PAT), errors no response nêo sobem como HTTP error.</p></div>
             </div>
           </div>
         </div>
@@ -483,7 +483,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mutation: <code>mutation PublishPost($input: PublishPostInput!) { publishPost(input: $input) { post { id slug url } } }</code>. Input com publicationId, title, contentMarkdown, tags.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a forma oficial de publicar. <code>updatePost</code> e <code>removePost</code> seguem padrão idêntico — aprende uma mutation, conhece todas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a forma oficial de publicar. <code>updatePost</code> e <code>removePost</code> seguem padrêo idêntico — aprende uma mutation, conhece todas.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tags array de <code>{slug, name}</code>, coverImageOptions opcional, originalArticleURL pra cross-post, retorna post completo.</p></div>
             </div>
           </div>
@@ -493,7 +493,7 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
             <span class="text-lg">🔁</span>
-            <div><span class="font-medium">Cross-posting com canonical_url</span><span class="text-neutral-500 text-sm ml-2">- Sem penalização SEO</span></div>
+            <div><span class="font-medium">Cross-posting com canonical_url</span><span class="text-neutral-500 text-sm ml-2">- Sem penalizaçêo SEO</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
@@ -547,8 +547,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Token gerado em <code>github.com/settings/tokens</code>. Prefira "Fine-grained tokens": permite escolher repos específicos e escopo <code>Contents: read+write</code>.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem PAT você não escreve via API. Fine-grained limita o estrago se vazar — só funciona no repo escolhido.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Bearer ghp_xxx</code>, expiração configurável (90 dias recomendado), nunca commitar, usar GitHub Secrets em Actions.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem PAT você nêo escreve via API. Fine-grained limita o estrago se vazar — só funciona no repo escolhido.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Header: <code>Authorization: Bearer ghp_xxx</code>, expiraçêo configurável (90 dias recomendado), nunca commitar, usar GitHub Secrets em Actions.</p></div>
             </div>
           </div>
         </div>
@@ -563,7 +563,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Endpoint: <code>PUT https://api.github.com/repos/{owner}/{repo}/contents/{path}</code>. Body: <code>{message, content: base64(markdown), branch}</code>.</p></div>
               <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É como fazer <code>git commit</code> sem ter git instalado. Funciona de qualquer lambda, Edge Function ou n8n.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Content em base64 obrigatório, message vira mensagem do commit, sha necessário pra editar arquivo existente (não criar), retorna SHA do novo commit.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Content em base64 obrigatório, message vira mensagem do commit, sha necessário pra editar arquivo existente (nêo criar), retorna SHA do novo commit.</p></div>
             </div>
           </div>
         </div>
@@ -592,7 +592,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Workflow em <code>.github/workflows/deploy.yml</code> roda em <code>push</code>: build do SSG → upload pro GitHub Pages, Netlify, Vercel ou Cloudflare Pages.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Commit via API → push trigger → build → deploy. Em 60 segundos seu post está no ar globalmente. Zero intervenção manual.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Commit via API → push trigger → build → deploy. Em 60 segundos seu post está no ar globalmente. Zero intervençêo manual.</p></div>
               <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">on: push, jobs com runs-on, actions oficiais (<code>actions/checkout</code>, <code>actions/deploy-pages</code>), secrets pra tokens.</p></div>
             </div>
           </div>
@@ -608,7 +608,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-amber-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Sem banco, sem PHP, sem painel admin. Conteúdo versionado em Git. Hospedagem grátis (Pages/Netlify/Vercel) ou ~$1/mês em CDN.</p></div>
               <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Performance 10x melhor que WordPress. Segurança nativa (sem superfície de ataque). Custo ~zero. Versionamento incluído.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trade-off: sem dinâmico (comments via Disqus), sem painel não-técnico, build pode demorar em sites grandes, ótimo para blog/docs/portfolio.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trade-off: sem dinâmico (comments via Disqus), sem painel nêo-técnico, build pode demorar em sites grandes, ótimo para blog/docs/portfolio.</p></div>
             </div>
           </div>
         </div>
@@ -620,7 +620,7 @@
       </div>
     </div>
 
-    <!-- NAVEGAÇÃO ENTRE TRILHAS -->
+    <!-- NAVEGAÇêO ENTRE TRILHAS -->
     <div class="flex flex-col sm:flex-row gap-4 mt-12">
       <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha 3: Redes</a>
       <a href="../trilha5/index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Trilha 5: Do Zero →</a>

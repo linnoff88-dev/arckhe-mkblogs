@@ -131,7 +131,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.5</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 API e webhooks</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Transformar o Postiz em um motor de publicação programável: REST API, API keys, POST de posts via <code class="font-mono">curl</code>, webhooks de status e integração com n8n/Make.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">Transformar o Postiz em um motor de publicaçêo programável: REST API, API keys, POST de posts via <code class="font-mono">curl</code>, webhooks de status e integraçêo com n8n/Make.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -165,11 +165,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Por padrão, a <strong class="text-blue-400">API pública</strong> do Postiz vem <strong class="text-blue-400">desligada</strong>. Para evitar que alguém abuse do seu endpoint, é preciso ativar via flag no <code class="text-blue-400 font-mono text-sm">.env</code> e reiniciar o stack. Depois disso, todos os endpoints ficam disponíveis em <code class="text-blue-400 font-mono text-sm">/api</code> na mesma porta do app.
+        Por padrêo, a <strong class="text-blue-400">API pública</strong> do Postiz vem <strong class="text-blue-400">desligada</strong>. Para evitar que alguém abuse do seu endpoint, é preciso ativar via flag no <code class="text-blue-400 font-mono text-sm">.env</code> e reiniciar o stack. Depois disso, todos os endpoints ficam disponíveis em <code class="text-blue-400 font-mono text-sm">/api</code> na mesma porta do app.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O endpoint base segue o padrão <strong class="text-blue-400">{MAIN_URL}/api</strong>. Em dev local, vira <code class="text-blue-400 font-mono text-sm">http://localhost:5000/api</code>. Em produção atrás de domínio, <code class="text-blue-400 font-mono text-sm">https://postiz.seudominio.com/api</code>.
+        O endpoint base segue o padrêo <strong class="text-blue-400">{MAIN_URL}/api</strong>. Em dev local, vira <code class="text-blue-400 font-mono text-sm">http://localhost:5000/api</code>. Em produçêo atrás de domínio, <code class="text-blue-400 font-mono text-sm">https://postiz.seudominio.com/api</code>.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env — adicione (ou descomente)
@@ -202,7 +202,7 @@ curl -i http://localhost:5000/api/health
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">REST</div>
-          <p class="text-xs text-neutral-400">Recursos expostos via HTTP, verbos padrão (GET/POST/PUT/DELETE).</p>
+          <p class="text-xs text-neutral-400">Recursos expostos via HTTP, verbos padrêo (GET/POST/PUT/DELETE).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Feature flag</div>
@@ -250,14 +250,14 @@ curl -s -H "Authorization: Bearer $POSTIZ_API_KEY" \
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar uma chave <strong>por integração</strong> (n8n, app próprio, script de bot).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar uma chave <strong>por integraçêo</strong> (n8n, app próprio, script de bot).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Nomear cada chave com contexto: <code class="font-mono">n8n-prod</code>, <code class="font-mono">app-mobile</code>.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar em <strong>secret manager</strong> (1Password, Vault, env do orquestrador).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Regenerar imediatamente se houver suspeita de vazamento.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar uma chave única entre múltiplos sistemas.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar a chave no git — mesmo em repo privado.</span></li>
@@ -279,10 +279,10 @@ curl -s -H "Authorization: Bearer $POSTIZ_API_KEY" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Hash one-way</div>
-          <p class="text-xs text-neutral-400">O banco guarda só o hash; o segredo não pode ser recuperado.</p>
+          <p class="text-xs text-neutral-400">O banco guarda só o hash; o segredo nêo pode ser recuperado.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-blue-400 mb-1">Rotação</div>
+          <div class="font-semibold text-blue-400 mb-1">Rotaçêo</div>
           <p class="text-xs text-neutral-400">Trocar a chave periodicamente reduz impacto de vazamento.</p>
         </div>
       </div>
@@ -296,11 +296,11 @@ curl -s -H "Authorization: Bearer $POSTIZ_API_KEY" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O endpoint <code class="text-blue-400 font-mono text-sm">POST /api/posts</code> é o coração da API. Você manda um JSON descrevendo <strong class="text-blue-400">o conteúdo</strong>, em <strong class="text-blue-400">quais integrações</strong> publicar e <strong class="text-blue-400">quando</strong>. O Postiz responde com o <code class="text-blue-400 font-mono text-sm">postId</code> e enfileira o trabalho no BullMQ.
+        O endpoint <code class="text-blue-400 font-mono text-sm">POST /api/posts</code> é o coraçêo da API. Você manda um JSON descrevendo <strong class="text-blue-400">o conteúdo</strong>, em <strong class="text-blue-400">quais integrações</strong> publicar e <strong class="text-blue-400">quando</strong>. O Postiz responde com o <code class="text-blue-400 font-mono text-sm">postId</code> e enfileira o trabalho no BullMQ.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Os três campos obrigatórios são <code class="text-blue-400 font-mono text-sm">type</code> (<code class="text-blue-400 font-mono text-sm">draft</code>, <code class="text-blue-400 font-mono text-sm">schedule</code> ou <code class="text-blue-400 font-mono text-sm">now</code>), <code class="text-blue-400 font-mono text-sm">date</code> (ISO 8601 em UTC) e <code class="text-blue-400 font-mono text-sm">posts</code> — array com um item por integração.
+        Os três campos obrigatórios sêo <code class="text-blue-400 font-mono text-sm">type</code> (<code class="text-blue-400 font-mono text-sm">draft</code>, <code class="text-blue-400 font-mono text-sm">schedule</code> ou <code class="text-blue-400 font-mono text-sm">now</code>), <code class="text-blue-400 font-mono text-sm">date</code> (ISO 8601 em UTC) e <code class="text-blue-400 font-mono text-sm">posts</code> — array com um item por integraçêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Body JSON: agendar um post no LinkedIn e no X
@@ -353,22 +353,22 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Para descobrir os <code class="text-primary font-mono text-sm">integration.id</code> certos, chame <code class="text-primary font-mono text-sm">GET /api/integrations</code> uma vez e cache os IDs no seu lado. Não dá pra usar o nome da rede — o Postiz precisa do ID da conta específica conectada.</p>
+        <p class="text-neutral-300">Para descobrir os <code class="text-primary font-mono text-sm">integration.id</code> certos, chame <code class="text-primary font-mono text-sm">GET /api/integrations</code> uma vez e cache os IDs no seu lado. Nêo dá pra usar o nome da rede — o Postiz precisa do ID da conta específica conectada.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Idempotency</div>
-          <p class="text-xs text-neutral-400">Re-enviar o mesmo POST não deve duplicar — use <code class="font-mono">tags</code> únicas.</p>
+          <p class="text-xs text-neutral-400">Re-enviar o mesmo POST nêo deve duplicar — use <code class="font-mono">tags</code> únicas.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">ISO 8601</div>
-          <p class="text-xs text-neutral-400">Formato padrão de data em UTC: <code class="font-mono">YYYY-MM-DDTHH:mm:ssZ</code>.</p>
+          <p class="text-xs text-neutral-400">Formato padrêo de data em UTC: <code class="font-mono">YYYY-MM-DDTHH:mm:ssZ</code>.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Job queue</div>
-          <p class="text-xs text-neutral-400">O 201 só significa "enfileirado", não "publicado".</p>
+          <p class="text-xs text-neutral-400">O 201 só significa "enfileirado", nêo "publicado".</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Multi-rede</div>
@@ -389,7 +389,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Cadastre o callback em <code class="text-blue-400 font-mono text-sm">Settings → Webhooks → Add URL</code>. Cada webhook tem um <strong class="text-blue-400">secret</strong> usado para assinar o payload no header <code class="text-blue-400 font-mono text-sm">X-Postiz-Signature</code> — valide isso no seu lado pra confirmar que a requisição veio mesmo do Postiz.
+        Cadastre o callback em <code class="text-blue-400 font-mono text-sm">Settings → Webhooks → Add URL</code>. Cada webhook tem um <strong class="text-blue-400">secret</strong> usado para assinar o payload no header <code class="text-blue-400 font-mono text-sm">X-Postiz-Signature</code> — valide isso no seu lado pra confirmar que a requisiçêo veio mesmo do Postiz.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Payload que o Postiz envia para sua URL
@@ -434,7 +434,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-blue-400">post.queued:</strong> trabalho aceito e na fila — útil para auditoria.</li>
-          <li><strong class="text-blue-400">post.published:</strong> publicação concluída — guarde o <code class="font-mono">remoteUrl</code> para deep-link.</li>
+          <li><strong class="text-blue-400">post.published:</strong> publicaçêo concluída — guarde o <code class="font-mono">remoteUrl</code> para deep-link.</li>
           <li><strong class="text-blue-400">post.failed:</strong> erro na API da rede; inspecione <code class="font-mono">error.code</code> para alertar.</li>
           <li><strong class="text-blue-400">post.deleted:</strong> alguém removeu via UI ou API — sincronize seu lado.</li>
         </ul>
@@ -444,7 +444,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🛡️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Responda <code class="text-primary font-mono text-sm">200 OK</code> rápido (&lt;2s) e processe o evento em fila do seu lado. Se demorar, o Postiz reenvia — e você processa o mesmo evento duas vezes. Use o <code class="text-primary font-mono text-sm">postId</code> + <code class="text-primary font-mono text-sm">event</code> como chave de deduplicação.</p>
+        <p class="text-neutral-300">Responda <code class="text-primary font-mono text-sm">200 OK</code> rápido (&lt;2s) e processe o evento em fila do seu lado. Se demorar, o Postiz reenvia — e você processa o mesmo evento duas vezes. Use o <code class="text-primary font-mono text-sm">postId</code> + <code class="text-primary font-mono text-sm">event</code> como chave de deduplicaçêo.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -463,7 +463,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Retry</div>
-          <p class="text-xs text-neutral-400">Postiz reenvia em backoff se você não responder 2xx.</p>
+          <p class="text-xs text-neutral-400">Postiz reenvia em backoff se você nêo responder 2xx.</p>
         </div>
       </div>
     </section>
@@ -472,11 +472,11 @@ curl -X POST "$POSTIZ_API_URL/posts" \
     <section id="topico-5" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold">🔗 Integração com n8n e Make</h2>
+        <h2 class="text-2xl font-bold">🔗 Integraçêo com n8n e Make</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Tanto n8n quanto Make.com têm <strong class="text-blue-400">nodes nativos do Postiz</strong> (community node no n8n; módulo oficial no Make). Eles encapsulam a autenticação Bearer e expõem ações como <em>Create Post</em>, <em>List Integrations</em>, <em>Delete Post</em>. Se preferir, use o <strong class="text-blue-400">HTTP Request node</strong> genérico — funciona igual.
+        Tanto n8n quanto Make.com têm <strong class="text-blue-400">nodes nativos do Postiz</strong> (community node no n8n; módulo oficial no Make). Eles encapsulam a autenticaçêo Bearer e expõem ações como <em>Create Post</em>, <em>List Integrations</em>, <em>Delete Post</em>. Se preferir, use o <strong class="text-blue-400">HTTP Request node</strong> genérico — funciona igual.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -533,7 +533,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Trigger</div>
-          <p class="text-xs text-neutral-400">Primeiro node de um workflow; inicia a execução.</p>
+          <p class="text-xs text-neutral-400">Primeiro node de um workflow; inicia a execuçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Function node</div>
@@ -550,7 +550,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O grande motivo de usar a API do Postiz em vez de integrar direto com cada rede é <strong class="text-blue-400">não reinventar OAuth, renovação de tokens, rate limit e idempotência</strong> N vezes. Seu app fala com <em>uma</em> API consistente; o Postiz cuida do resto.
+        O grande motivo de usar a API do Postiz em vez de integrar direto com cada rede é <strong class="text-blue-400">nêo reinventar OAuth, renovaçêo de tokens, rate limit e idempotência</strong> N vezes. Seu app fala com <em>uma</em> API consistente; o Postiz cuida do resto.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Arquitetura recomendada
@@ -574,25 +574,25 @@ curl -X POST "$POSTIZ_API_URL/posts" \
      |
      | (5) POST webhook  → https://seuapp.com/webhooks/postiz
      v
-[ Seu App ]  (atualiza DB, dispara notificação ao usuário)</code></pre>
+[ Seu App ]  (atualiza DB, dispara notificaçêo ao usuário)</code></pre>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ Vantagens vs integrar direto</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma única autenticação (Bearer) em vez de OAuth por rede.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma única autenticaçêo (Bearer) em vez de OAuth por rede.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Refresh de tokens, retry e rate limit já implementados.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agendamento e fila prontos — não precisa de cron/BullMQ próprio.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agendamento e fila prontos — nêo precisa de cron/BullMQ próprio.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Quando o Postiz adiciona uma rede nova, você ganha de graça.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ Quando NÃO usar a API</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ Quando NêO usar a API</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você precisa de uma feature exótica que a rede X tem mas Postiz não expõe.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você precisa de uma feature exótica que a rede X tem mas Postiz nêo expõe.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Volume gigantesco (milhões/dia) — pode bater no rate limit interno.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Latência crítica em tempo real — passa por fila, não é instantâneo.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você já tem integração direta madura e estável.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Latência crítica em tempo real — passa por fila, nêo é instantâneo.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você já tem integraçêo direta madura e estável.</span></li>
           </ul>
         </div>
       </div>
@@ -601,7 +601,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🚀</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Pense no Postiz como um <strong>broker de publicação</strong>: seu app trata regra de negócio (quem pode postar o quê, quando, com qual aprovação) e o Postiz trata o <em>last mile</em> técnico de chegar nas redes. Essa separação é o que torna a arquitetura escalável.</p>
+        <p class="text-neutral-300">Pense no Postiz como um <strong>broker de publicaçêo</strong>: seu app trata regra de negócio (quem pode postar o quê, quando, com qual aprovaçêo) e o Postiz trata o <em>last mile</em> técnico de chegar nas redes. Essa separaçêo é o que torna a arquitetura escalável.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -616,11 +616,11 @@ curl -X POST "$POSTIZ_API_URL/posts" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Decoupling</div>
-          <p class="text-xs text-neutral-400">Seu app não conhece detalhes de cada API de rede.</p>
+          <p class="text-xs text-neutral-400">Seu app nêo conhece detalhes de cada API de rede.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Eventual consistency</div>
-          <p class="text-xs text-neutral-400">Publicação é assíncrona; estado final chega via webhook.</p>
+          <p class="text-xs text-neutral-400">Publicaçêo é assíncrona; estado final chega via webhook.</p>
         </div>
       </div>
     </section>
@@ -639,7 +639,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">API key gerada</strong><span class="text-neutral-400"> — uma chave por integração, guardada em secret manager, autenticando via Bearer token.</span></div>
+            <div><strong class="text-white">API key gerada</strong><span class="text-neutral-400"> — uma chave por integraçêo, guardada em secret manager, autenticando via Bearer token.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
@@ -647,7 +647,7 @@ curl -X POST "$POSTIZ_API_URL/posts" \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">Webhooks configurados</strong><span class="text-neutral-400"> — eventos <code class="font-mono">published</code>/<code class="font-mono">failed</code> com assinatura HMAC e deduplicação.</span></div>
+            <div><strong class="text-white">Webhooks configurados</strong><span class="text-neutral-400"> — eventos <code class="font-mono">published</code>/<code class="font-mono">failed</code> com assinatura HMAC e deduplicaçêo.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>

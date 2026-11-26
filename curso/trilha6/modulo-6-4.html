@@ -132,7 +132,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.4</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">💾 Backup e segurança</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Backup não é o que você faz — é o que você prova que consegue restaurar. Tokens, dumps, encriptação, rotação e plano de DR para dormir tranquilo.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">Backup nêo é o que você faz — é o que você prova que consegue restaurar. Tokens, dumps, encriptaçêo, rotaçêo e plano de DR para dormir tranquilo.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -166,11 +166,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O coração do Postiz é o Postgres: posts agendados, contas conectadas, tokens OAuth, métricas. Perder o volume é perder semanas de trabalho. A primeira camada de defesa é um <strong class="text-rose-400">pg_dump diário</strong> em formato <code class="text-rose-400 font-mono text-sm">-Fc</code> (custom) — comprimido, mais rápido pra restaurar e permite restore seletivo de tabelas.
+        O coraçêo do Postiz é o Postgres: posts agendados, contas conectadas, tokens OAuth, métricas. Perder o volume é perder semanas de trabalho. A primeira camada de defesa é um <strong class="text-rose-400">pg_dump diário</strong> em formato <code class="text-rose-400 font-mono text-sm">-Fc</code> (custom) — comprimido, mais rápido pra restaurar e permite restore seletivo de tabelas.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use <strong class="text-rose-400">cron do host</strong>, não cron dentro do container. Container morre, cron morre junto. O dump roda via <code class="text-rose-400 font-mono text-sm">docker exec</code> no Postgres já em execução.
+        Use <strong class="text-rose-400">cron do host</strong>, nêo cron dentro do container. Container morre, cron morre junto. O dump roda via <code class="text-rose-400 font-mono text-sm">docker exec</code> no Postgres já em execuçêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># /usr/local/bin/postiz-backup.sh
@@ -186,7 +186,7 @@ docker exec postiz-postgres \
   pg_dump -U postiz -d postiz -Fc \
   > "$BACKUP_DIR/postiz_${STAMP}.dump"
 
-# Retenção local: 7 dias
+# Retençêo local: 7 dias
 find "$BACKUP_DIR" -name "postiz_*.dump" -mtime +7 -delete
 
 echo "[$(date -Iseconds)] backup ok: postiz_${STAMP}.dump"</code></pre>
@@ -216,7 +216,7 @@ crontab -e
           <p class="text-xs text-neutral-400">Agendador do host — sobrevive a restart de container.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Retenção</div>
+          <div class="font-semibold text-rose-400 mb-1">Retençêo</div>
           <p class="text-xs text-neutral-400">Janela de versões mantidas antes de purgar.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -234,11 +234,11 @@ crontab -e
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Dump no mesmo host onde o Postiz roda <strong>não é backup</strong> — é uma cópia. Se o disco morrer, morre junto. A camada off-site usa <strong class="text-rose-400">restic</strong>: encripta com AES-256 antes de subir, faz <strong class="text-rose-400">dedup</strong> em blocos (vários dumps quase iguais ocupam quase nada) e tem retenção declarativa.
+        Dump no mesmo host onde o Postiz roda <strong>nêo é backup</strong> — é uma cópia. Se o disco morrer, morre junto. A camada off-site usa <strong class="text-rose-400">restic</strong>: encripta com AES-256 antes de subir, faz <strong class="text-rose-400">dedup</strong> em blocos (vários dumps quase iguais ocupam quase nada) e tem retençêo declarativa.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Cloudflare R2 é a opção barata: zero egress fee, API S3-compatível, ~$0.015/GB-mês. AWS S3 funciona igual com endpoint default. O segredo de encriptação fica <strong class="text-rose-400">só no servidor</strong> — sem ele, o backup é lixo aleatório no bucket.
+        Cloudflare R2 é a opçêo barata: zero egress fee, API S3-compatível, ~$0.015/GB-mês. AWS S3 funciona igual com endpoint default. O segredo de encriptaçêo fica <strong class="text-rose-400">só no servidor</strong> — sem ele, o backup é lixo aleatório no bucket.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalar restic
@@ -256,7 +256,7 @@ restic init
 # Backup do diretório de dumps
 restic backup /var/backups/postiz --tag daily
 
-# Política de retenção: 7 diários, 4 semanais, 6 mensais
+# Política de retençêo: 7 diários, 4 semanais, 6 mensais
 restic forget \
   --keep-daily 7 --keep-weekly 4 --keep-monthly 6 \
   --prune</code></pre>
@@ -278,19 +278,19 @@ restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune --quiet</c
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">restic</div>
-          <p class="text-xs text-neutral-400">Backup com dedup, encriptação e snapshots.</p>
+          <p class="text-xs text-neutral-400">Backup com dedup, encriptaçêo e snapshots.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Dedup</div>
-          <p class="text-xs text-neutral-400">Blocos repetidos são armazenados uma só vez.</p>
+          <p class="text-xs text-neutral-400">Blocos repetidos sêo armazenados uma só vez.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">forget --prune</div>
-          <p class="text-xs text-neutral-400">Aplica retenção e libera espaço do repositório.</p>
+          <p class="text-xs text-neutral-400">Aplica retençêo e libera espaço do repositório.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Off-site</div>
-          <p class="text-xs text-neutral-400">Cópia em rede / região / provedor diferente.</p>
+          <p class="text-xs text-neutral-400">Cópia em rede / regiêo / provedor diferente.</p>
         </div>
       </div>
     </section>
@@ -303,11 +303,11 @@ restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune --quiet</c
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        <strong class="text-rose-400">Backup não testado é boato.</strong> Você só descobre que o dump está corrompido, que faltou uma tabela, que o segredo está errado ou que ninguém anotou o procedimento — no dia em que precisa. Marque no calendário: <strong>primeiro domingo de cada mês</strong>, restore de teste num ambiente isolado.
+        <strong class="text-rose-400">Backup nêo testado é boato.</strong> Você só descobre que o dump está corrompido, que faltou uma tabela, que o segredo está errado ou que ninguém anotou o procedimento — no dia em que precisa. Marque no calendário: <strong>primeiro domingo de cada mês</strong>, restore de teste num ambiente isolado.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O teste roda em uma VM ou container <strong class="text-rose-400">separado da produção</strong>. Restore o dump mais recente, suba um Postiz apontando para esse Postgres, faça login e verifique se posts agendados, contas conectadas e métricas voltaram.
+        O teste roda em uma VM ou container <strong class="text-rose-400">separado da produçêo</strong>. Restore o dump mais recente, suba um Postiz apontando para esse Postgres, faça login e verifique se posts agendados, contas conectadas e métricas voltaram.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Em ambiente isolado (host de teste)
@@ -346,9 +346,9 @@ docker rm -f pg-restore</code></pre>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Restaurar em cima da produção — <strong>nunca</strong>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Restaurar em cima da produçêo — <strong>nunca</strong>.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Confiar no log do cron" sem abrir o dump.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pular o teste porque "está tudo funcionando".</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de remover o container de teste depois.</span></li>
@@ -360,7 +360,7 @@ docker rm -f pg-restore</code></pre>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Restore drill</div>
-          <p class="text-xs text-neutral-400">Ensaio periódico do procedimento de recuperação.</p>
+          <p class="text-xs text-neutral-400">Ensaio periódico do procedimento de recuperaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Ambiente isolado</div>
@@ -381,11 +381,11 @@ docker rm -f pg-restore</code></pre>
     <section id="topico-4" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold">🔄 Rotação de tokens</h2>
+        <h2 class="text-2xl font-bold">🔄 Rotaçêo de tokens</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Tokens de longa duração são <strong class="text-rose-400">superfícies de ataque permanentes</strong>. Um vazamento de log, um backup que escapou, um dev que saiu da empresa — todos viram acesso eterno enquanto o token estiver válido. A política mínima é rotacionar tudo em ciclos previsíveis.
+        Tokens de longa duraçêo sêo <strong class="text-rose-400">superfícies de ataque permanentes</strong>. Um vazamento de log, um backup que escapou, um dev que saiu da empresa — todos viram acesso eterno enquanto o token estiver válido. A política mínima é rotacionar tudo em ciclos previsíveis.
       </p>
 
       <div class="bg-rose-900/20 rounded-xl border border-rose-500/30 p-6 mb-6">
@@ -418,17 +418,17 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">📅</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Crie eventos recorrentes no calendário com o checklist da rotação. "Rotação de tokens — Q1/2026" no primeiro dia do trimestre. Sem rito agendado, ninguém rotaciona — e descobrir uma chave de 3 anos atrás num backup vazado é experiência humilhante.</p>
+        <p class="text-neutral-300">Crie eventos recorrentes no calendário com o checklist da rotaçêo. "Rotaçêo de tokens — Q1/2026" no primeiro dia do trimestre. Sem rito agendado, ninguém rotaciona — e descobrir uma chave de 3 anos atrás num backup vazado é experiência humilhante.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Rotação</div>
+          <div class="font-semibold text-rose-400 mb-1">Rotaçêo</div>
           <p class="text-xs text-neutral-400">Substituir credencial ativa por uma nova.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Revogação</div>
+          <div class="font-semibold text-rose-400 mb-1">Revogaçêo</div>
           <p class="text-xs text-neutral-400">Invalidar a credencial antiga no provedor.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -454,7 +454,7 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Se um atacante conseguir uma credencial, o estrago é limitado pelo que ela pode fazer. Uma chave R2 com permissão de <code class="text-rose-400 font-mono text-sm">Object Read &amp; Write</code> em <strong>um único bucket</strong> é infinitamente melhor que uma chave master da conta.
+        Se um atacante conseguir uma credencial, o estrago é limitado pelo que ela pode fazer. Uma chave R2 com permissêo de <code class="text-rose-400 font-mono text-sm">Object Read &amp; Write</code> em <strong>um único bucket</strong> é infinitamente melhor que uma chave master da conta.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo: policy AWS S3 mínima para o backup
@@ -474,20 +474,20 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
     ]
   }]
 }
-# SEM s3:* ou Resource: "*" — atacante não enumera outros buckets</code></pre>
+# SEM s3:* ou Resource: "*" — atacante nêo enumera outros buckets</code></pre>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar IAM user dedicado por função (backup, deploy, app).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar IAM user dedicado por funçêo (backup, deploy, app).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escopos OAuth mínimos — só os endpoints usados.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rodar containers como user não-root (<code class="font-mono">user:</code> no compose).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rodar containers como user nêo-root (<code class="font-mono">user:</code> no compose).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Postgres do Postiz com role própria, sem SUPERUSER.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar credencial root/master no servidor.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reusar a mesma API key em deploy e em backup.</span></li>
@@ -512,8 +512,8 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
           <p class="text-xs text-neutral-400">Subconjunto de permissões pedidas ao usuário.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Separação</div>
-          <p class="text-xs text-neutral-400">Uma identidade por função, nunca compartilhada.</p>
+          <div class="font-semibold text-rose-400 mb-1">Separaçêo</div>
+          <p class="text-xs text-neutral-400">Uma identidade por funçêo, nunca compartilhada.</p>
         </div>
       </div>
     </section>
@@ -526,7 +526,7 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Um DR plan responde duas perguntas <strong>antes</strong> do desastre: <strong class="text-rose-400">RTO</strong> (Recovery Time Objective — quanto tempo até voltar) e <strong class="text-rose-400">RPO</strong> (Recovery Point Objective — quanto de dados pode perder). Para um Postiz pessoal: RTO de 2h e RPO de 24h é razoável. Para SaaS pago: RTO &lt;30min, RPO &lt;1h exige replicação contínua.
+        Um DR plan responde duas perguntas <strong>antes</strong> do desastre: <strong class="text-rose-400">RTO</strong> (Recovery Time Objective — quanto tempo até voltar) e <strong class="text-rose-400">RPO</strong> (Recovery Point Objective — quanto de dados pode perder). Para um Postiz pessoal: RTO de 2h e RPO de 24h é razoável. Para SaaS pago: RTO &lt;30min, RPO &lt;1h exige replicaçêo contínua.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -544,7 +544,7 @@ docker compose logs --tail=20 postiz | grep -i ready</code></pre>
           <li><strong class="text-rose-400">4. Subir Postgres vazio</strong> via <code class="font-mono">docker compose up -d postgres</code>.</li>
           <li><strong class="text-rose-400">5. Restaurar dump:</strong> <code class="font-mono">pg_restore -U postiz -d postiz -c --if-exists &lt; backup.dump</code>.</li>
           <li><strong class="text-rose-400">6. Subir app:</strong> <code class="font-mono">docker compose up -d</code> e validar <code class="font-mono">/api/health</code>.</li>
-          <li><strong class="text-rose-400">7. Reconectar OAuth:</strong> alguns tokens podem precisar renovação manual no painel.</li>
+          <li><strong class="text-rose-400">7. Reconectar OAuth:</strong> alguns tokens podem precisar renovaçêo manual no painel.</li>
         </ul>
       </div>
 
@@ -565,7 +565,7 @@ echo "[3/4] Restaurando dump mais recente..."
 LATEST=$(ls -t /tmp/dr/var/backups/postiz/postiz_*.dump | head -1)
 docker exec -i postiz-postgres pg_restore -U postiz -d postiz -c --if-exists &lt; "$LATEST"
 
-echo "[4/4] Subindo aplicação..."
+echo "[4/4] Subindo aplicaçêo..."
 docker compose up -d
 sleep 10
 curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</code></pre>
@@ -574,14 +574,14 @@ curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🎯</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O runbook precisa estar acessível <strong>quando o servidor está fora do ar</strong>. Não adianta versionar só no repositório que vive no servidor que caiu. Mantenha cópia: GitHub privado + PDF impresso na gaveta + nota no gerenciador de senhas. Pareça paranoico — desastre acontece num domingo às 3h da manhã.</p>
+        <p class="text-neutral-300">O runbook precisa estar acessível <strong>quando o servidor está fora do ar</strong>. Nêo adianta versionar só no repositório que vive no servidor que caiu. Mantenha cópia: GitHub privado + PDF impresso na gaveta + nota no gerenciador de senhas. Pareça paranoico — desastre acontece num domingo às 3h da manhê.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">RTO</div>
-          <p class="text-xs text-neutral-400">Tempo máximo aceitável até a aplicação voltar.</p>
+          <p class="text-xs text-neutral-400">Tempo máximo aceitável até a aplicaçêo voltar.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">RPO</div>
@@ -606,7 +606,7 @@ curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</
         </h2>
 
         <p class="text-neutral-300 mb-8 leading-relaxed">
-          Da primeira ideia de "quero publicar online" até um Postiz em produção com domínio, HTTPS, monitoramento e plano de disaster recovery — você atravessou as seis trilhas. Não é pouca coisa. A maior parte dos blogs que existem hoje na internet foram colocados no ar por pessoas que sabiam menos do que você sabe agora.
+          Da primeira ideia de "quero publicar online" até um Postiz em produçêo com domínio, HTTPS, monitoramento e plano de disaster recovery — você atravessou as seis trilhas. Nêo é pouca coisa. A maior parte dos blogs que existem hoje na internet foram colocados no ar por pessoas que sabiam menos do que você sabe agora.
         </p>
 
         <h3 class="text-lg font-semibold text-rose-400 mb-4">O que você domina agora</h3>
@@ -617,11 +617,11 @@ curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Postiz (T2)</strong><span class="text-neutral-400"> — setup Docker, configuração, IA, agendamento, troubleshooting.</span></div>
+            <div><strong class="text-white">Postiz (T2)</strong><span class="text-neutral-400"> — setup Docker, configuraçêo, IA, agendamento, troubleshooting.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Redes sociais (T3)</strong><span class="text-neutral-400"> — OAuth, integração de Twitter, LinkedIn, Instagram, calendário.</span></div>
+            <div><strong class="text-white">Redes sociais (T3)</strong><span class="text-neutral-400"> — OAuth, integraçêo de Twitter, LinkedIn, Instagram, calendário.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
@@ -629,7 +629,7 @@ curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Do zero (T5)</strong><span class="text-neutral-400"> — VPS, Docker em produção, primeiro deploy real.</span></div>
+            <div><strong class="text-white">Do zero (T5)</strong><span class="text-neutral-400"> — VPS, Docker em produçêo, primeiro deploy real.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
@@ -640,8 +640,8 @@ curl -fsS http://localhost:5000/api/health &amp;&amp; echo "DR concluído ✓"</
         <div class="bg-dark-800/50 rounded-lg p-6 mb-8">
           <h3 class="font-semibold text-rose-400 mb-3">🚀 Próximos passos</h3>
           <ul class="space-y-2 text-neutral-300 text-sm">
-            <li>• <strong>Publique algo público</strong> esta semana. Não precisa ser perfeito — precisa existir.</li>
-            <li>• <strong>Agende a primeira rotação de tokens</strong> daqui a 90 dias no calendário.</li>
+            <li>• <strong>Publique algo público</strong> esta semana. Nêo precisa ser perfeito — precisa existir.</li>
+            <li>• <strong>Agende a primeira rotaçêo de tokens</strong> daqui a 90 dias no calendário.</li>
             <li>• <strong>Faça o primeiro restore drill</strong> ainda este mês, antes que você esqueça como funciona.</li>
             <li>• <strong>Volte aqui</strong> sempre que precisar revisar um conceito — o curso fica.</li>
           </ul>

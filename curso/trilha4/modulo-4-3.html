@@ -165,7 +165,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Dev.to roda sobre o <strong class="text-amber-400">Forem</strong>, plataforma open-source da própria Dev.to. A API é REST, autenticada por uma <strong class="text-amber-400">DEV API Key</strong> pessoal — não OAuth, não scopes, é uma chave única que dá acesso de escrita à sua conta.
+        O Dev.to roda sobre o <strong class="text-amber-400">Forem</strong>, plataforma open-source da própria Dev.to. A API é REST, autenticada por uma <strong class="text-amber-400">DEV API Key</strong> pessoal — nêo OAuth, nêo scopes, é uma chave única que dá acesso de escrita à sua conta.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -188,14 +188,14 @@ curl -H "api-key: SEU_DEV_API_KEY" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Crie uma chave por integração (uma para Postiz, outra para script local, outra para CI). Se uma vazar, você revoga só ela — sem derrubar as outras automações.</p>
+        <p class="text-neutral-300">Crie uma chave por integraçêo (uma para Postiz, outra para script local, outra para CI). Se uma vazar, você revoga só ela — sem derrubar as outras automações.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Forem</div>
-          <p class="text-xs text-neutral-400">Engine open-source que roda o Dev.to e comunidades irmãs.</p>
+          <p class="text-xs text-neutral-400">Engine open-source que roda o Dev.to e comunidades irmês.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">API key</div>
@@ -203,7 +203,7 @@ curl -H "api-key: SEU_DEV_API_KEY" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Header</div>
-          <p class="text-xs text-neutral-400">Nome literal: <code class="font-mono">api-key</code> (não <code class="font-mono">Authorization</code>).</p>
+          <p class="text-xs text-neutral-400">Nome literal: <code class="font-mono">api-key</code> (nêo <code class="font-mono">Authorization</code>).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Rate limit</div>
@@ -220,7 +220,7 @@ curl -H "api-key: SEU_DEV_API_KEY" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para publicar um post, basta um <code class="text-amber-400 font-mono text-sm">POST</code> em <code class="text-amber-400 font-mono text-sm">https://dev.to/api/articles</code> com o header <code class="text-amber-400 font-mono text-sm">api-key</code> e um JSON aninhado em <code class="text-amber-400 font-mono text-sm">{"article": {...}}</code>. Os campos essenciais são <strong class="text-amber-400">title</strong>, <strong class="text-amber-400">body_markdown</strong> e <strong class="text-amber-400">published</strong>.
+        Para publicar um post, basta um <code class="text-amber-400 font-mono text-sm">POST</code> em <code class="text-amber-400 font-mono text-sm">https://dev.to/api/articles</code> com o header <code class="text-amber-400 font-mono text-sm">api-key</code> e um JSON aninhado em <code class="text-amber-400 font-mono text-sm">{"article": {...}}</code>. Os campos essenciais sêo <strong class="text-amber-400">title</strong>, <strong class="text-amber-400">body_markdown</strong> e <strong class="text-amber-400">published</strong>.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -234,7 +234,7 @@ curl -X POST https://dev.to/api/articles \
   -d '{
     "article": {
       "title": "Subindo Postiz com Docker Compose",
-      "body_markdown": "# Introdução\n\nNeste post mostro como...",
+      "body_markdown": "# Introduçêo\n\nNeste post mostro como...",
       "published": true,
       "tags": ["docker", "selfhosted", "devops"],
       "series": "MkBlogs"
@@ -289,7 +289,7 @@ curl -X POST https://dev.to/api/articles \
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <code class="text-amber-400 font-mono text-sm">cover_image</code> precisa ser uma <strong class="text-amber-400">URL pública</strong> (HTTPS) — o Dev.to não aceita upload binário pelo endpoint de articles. Use Cloudinary, R2, ou as próprias imagens hospedadas em outro post.
+        O <code class="text-amber-400 font-mono text-sm">cover_image</code> precisa ser uma <strong class="text-amber-400">URL pública</strong> (HTTPS) — o Dev.to nêo aceita upload binário pelo endpoint de articles. Use Cloudinary, R2, ou as próprias imagens hospedadas em outro post.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># body_markdown com frontmatter
@@ -303,7 +303,7 @@ canonical_url: https://meublog.dev/postiz-docker
 series: MkBlogs
 ---
 
-# Introdução
+# Introduçêo
 
 Neste post mostro como subir o Postiz...
 
@@ -316,7 +316,7 @@ services:
 ```</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Quando há frontmatter, ele <strong class="text-amber-400">sobrescreve</strong> os campos do JSON externo. Padronize: ou tudo no frontmatter, ou tudo nos campos top-level — misturar gera confusão.
+        Quando há frontmatter, ele <strong class="text-amber-400">sobrescreve</strong> os campos do JSON externo. Padronize: ou tudo no frontmatter, ou tudo nos campos top-level — misturar gera confusêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Request com frontmatter (mais limpo)
@@ -364,7 +364,7 @@ JSON</code></pre>
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A autenticação é via <strong class="text-amber-400">Personal Access Token</strong>, gerado em <code class="text-amber-400 font-mono text-sm">Account Settings → Developer → Generate New Token</code>. Vai no header <code class="text-amber-400 font-mono text-sm">Authorization</code> sem prefixo <code class="text-amber-400 font-mono text-sm">Bearer</code> — sutileza fácil de errar.
+        A autenticaçêo é via <strong class="text-amber-400">Personal Access Token</strong>, gerado em <code class="text-amber-400 font-mono text-sm">Account Settings → Developer → Generate New Token</code>. Vai no header <code class="text-amber-400 font-mono text-sm">Authorization</code> sem prefixo <code class="text-amber-400 font-mono text-sm">Bearer</code> — sutileza fácil de errar.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Smoke test — query "me" valida o token
@@ -450,7 +450,7 @@ mutation PublishPost($input: PublishPostInput!) {
 {
   "input": {
     "title": "Subindo Postiz com Docker Compose",
-    "contentMarkdown": "# Introdução\n\nNeste post...",
+    "contentMarkdown": "# Introduçêo\n\nNeste post...",
     "publicationId": "abc123_id_da_sua_publication",
     "tags": [
       { "slug": "docker", "name": "Docker" },
@@ -476,7 +476,7 @@ curl -X POST https://gql.hashnode.com/ \
     "variables": {
       "input": {
         "title": "Subindo Postiz com Docker Compose",
-        "contentMarkdown": "# Introdução\n\nNeste post...",
+        "contentMarkdown": "# Introduçêo\n\nNeste post...",
         "publicationId": "SUA_PUBLICATION_ID",
         "tags": [{ "slug": "docker", "name": "Docker" }],
         "originalArticleURL": "https://meublog.dev/postiz-docker"
@@ -488,14 +488,14 @@ curl -X POST https://gql.hashnode.com/ \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🔧</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Erros do GraphQL voltam com HTTP <strong>200 OK</strong> e um campo <code class="text-primary font-mono text-sm">errors</code> no JSON. Não confie só no status — parseie <code class="text-primary font-mono text-sm">response.errors</code> antes de declarar sucesso.</p>
+        <p class="text-neutral-300">Erros do GraphQL voltam com HTTP <strong>200 OK</strong> e um campo <code class="text-primary font-mono text-sm">errors</code> no JSON. Nêo confie só no status — parseie <code class="text-primary font-mono text-sm">response.errors</code> antes de declarar sucesso.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Mutation</div>
-          <p class="text-xs text-neutral-400">Operação GraphQL que altera estado (create/update/delete).</p>
+          <p class="text-xs text-neutral-400">Operaçêo GraphQL que altera estado (create/update/delete).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Variables</div>
@@ -520,7 +520,7 @@ curl -X POST https://gql.hashnode.com/ \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Republicar o mesmo post em Dev.to + Hashnode + seu blog próprio multiplica audiência — mas <strong class="text-amber-400">sem cuidado</strong> isso vira <strong class="text-amber-400">duplicate content</strong> e o Google penaliza todos os três. A solução é a <code class="text-amber-400 font-mono text-sm">canonical_url</code>: você declara qual versão é a "original" e as cópias dizem ao Google "indexe aquela ali".
+        Republicar o mesmo post em Dev.to + Hashnode + seu blog próprio multiplica audiência — mas <strong class="text-amber-400">sem cuidado</strong> isso vira <strong class="text-amber-400">duplicate content</strong> e o Google penaliza todos os três. A soluçêo é a <code class="text-amber-400 font-mono text-sm">canonical_url</code>: você declara qual versêo é a "original" e as cópias dizem ao Google "indexe aquela ali".
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Dev.to — campo "canonical_url"
@@ -554,7 +554,7 @@ curl -X POST https://gql.hashnode.com/ \
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Publicar em Dev.to e Hashnode sem canonical — Google escolhe um aleatório.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apontar canonical da Dev.to para o Hashnode (ou vice-versa) — confunde rank.</span></li>
@@ -579,7 +579,7 @@ curl -X POST https://gql.hashnode.com/ \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Duplicate content</div>
-          <p class="text-xs text-neutral-400">Mesmo HTML em múltiplas URLs — confunde indexação.</p>
+          <p class="text-xs text-neutral-400">Mesmo HTML em múltiplas URLs — confunde indexaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">SEO juice</div>
@@ -602,7 +602,7 @@ curl -X POST https://gql.hashnode.com/ \
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-amber-400 mt-1">✓</span>
-            <div><strong class="text-white">DEV API Key gerada</strong><span class="text-neutral-400"> — uma chave por integração, copiada no momento da criação.</span></div>
+            <div><strong class="text-white">DEV API Key gerada</strong><span class="text-neutral-400"> — uma chave por integraçêo, copiada no momento da criaçêo.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-amber-400 mt-1">✓</span>
@@ -618,7 +618,7 @@ curl -X POST https://gql.hashnode.com/ \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-amber-400 mt-1">✓</span>
-            <div><strong class="text-white">Mutation publishPost executada</strong><span class="text-neutral-400"> — query fixa, variables tipadas, atenção a <code class="font-mono">errors[]</code> mesmo com 200.</span></div>
+            <div><strong class="text-white">Mutation publishPost executada</strong><span class="text-neutral-400"> — query fixa, variables tipadas, atençêo a <code class="font-mono">errors[]</code> mesmo com 200.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-amber-400 mt-1">✓</span>

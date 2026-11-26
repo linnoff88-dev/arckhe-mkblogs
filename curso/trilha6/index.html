@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trilha 6 — Deploy & Produção | MkBlogs 🚀</title>
+  <title>Trilha 6 — Deploy & Produçêo | MkBlogs 🚀</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -105,9 +105,9 @@
   <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">TRILHA 6</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Deploy & Produção</h1>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Deploy & Produçêo</h1>
       <p class="text-lg text-neutral-400 max-w-3xl">
-        Do código rodando local até um sistema em produção que aguenta porrada: VPS, Docker Compose, HTTPS automático, reverse proxy, monitoramento, backup testado e segurança operacional. O último passo do MkBlogs — onde tudo vira <strong class="text-rose-400">infra real</strong>.
+        Do código rodando local até um sistema em produçêo que aguenta porrada: VPS, Docker Compose, HTTPS automático, reverse proxy, monitoramento, backup testado e segurança operacional. O último passo do MkBlogs — onde tudo vira <strong class="text-rose-400">infra real</strong>.
       </p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
@@ -121,7 +121,7 @@
         </div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
           <div class="text-xl font-bold text-rose-400">~3h</div>
-          <div class="text-xs text-neutral-400">Duração</div>
+          <div class="text-xs text-neutral-400">Duraçêo</div>
         </div>
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
           <div class="text-xl font-bold text-rose-400">Avançado</div>
@@ -182,7 +182,7 @@
           <span class="text-xs text-neutral-500">~40 min</span>
         </div>
         <h3 class="text-2xl font-bold mb-2">🖥️ Servidor e Docker</h3>
-        <p class="text-neutral-400 text-sm">Escolher VPS, hardening básico do Ubuntu, Docker + Compose e o arquivo <code class="text-rose-400">docker-compose.prod.yml</code> que vai pra produção.</p>
+        <p class="text-neutral-400 text-sm">Escolher VPS, hardening básico do Ubuntu, Docker + Compose e o arquivo <code class="text-rose-400">docker-compose.prod.yml</code> que vai pra produçêo.</p>
       </div>
 
       <div class="divide-y divide-dark-600">
@@ -196,8 +196,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Servidor virtual privado (VPS) com IP público fixo, onde a stack inteira do MkBlogs vai rodar 24/7. Hetzner CX22 (2 vCPU, 4GB RAM, 40GB SSD) na Alemanha custa ~€4,51/mês e cobre tranquilamente Postiz + Postgres + Redis + uma app NestJS.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Render, Railway e Fly.io ficam caros rápido quando você precisa de banco persistente, fila e worker. Uma VPS de €4 entrega 5x mais recurso pela mesma faixa de preço — e você aprende infra de verdade. Hetzner, OVH, Contabo e DigitalOcean são opções sérias; AWS Lightsail funciona mas é o mais caro.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">vCPU vs CPU dedicada; RAM mínima 2GB pra Postgres + Redis + Node; localização do data center (latência pra Brasil: Ashburn/EUA ~120ms, Hetzner Falkenstein ~200ms); IPv4 dedicado; snapshot/imagem de backup.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Render, Railway e Fly.io ficam caros rápido quando você precisa de banco persistente, fila e worker. Uma VPS de €4 entrega 5x mais recurso pela mesma faixa de preço — e você aprende infra de verdade. Hetzner, OVH, Contabo e DigitalOcean sêo opções sérias; AWS Lightsail funciona mas é o mais caro.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">vCPU vs CPU dedicada; RAM mínima 2GB pra Postgres + Redis + Node; localizaçêo do data center (latência pra Brasil: Ashburn/EUA ~120ms, Hetzner Falkenstein ~200ms); IPv4 dedicado; snapshot/imagem de backup.</p></div>
             </div>
           </div>
         </div>
@@ -210,9 +210,9 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Hardening básico do Ubuntu 24.04 LTS recém-provisionado: usuário não-root com sudo, login SSH só por chave (PasswordAuthentication no), <code class="text-rose-400">ufw</code> liberando apenas 22/80/443 e <code class="text-rose-400">fail2ban</code> banindo IPs que tentam força bruta no SSH.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma VPS sem hardening recebe milhares de tentativas de login por dia em 1h após subir. Sem fail2ban e firewall, é questão de tempo até alguém entrar. Esses 4 passos básicos eliminam 99% dos ataques automatizados.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Princípio do menor privilégio; chave SSH ed25519 (não RSA); <code class="text-rose-400">ufw default deny incoming</code>; jaula de fail2ban (maxretry, bantime, findtime); unattended-upgrades pra patches de segurança automáticos.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Hardening básico do Ubuntu 24.04 LTS recém-provisionado: usuário nêo-root com sudo, login SSH só por chave (PasswordAuthentication no), <code class="text-rose-400">ufw</code> liberando apenas 22/80/443 e <code class="text-rose-400">fail2ban</code> banindo IPs que tentam força bruta no SSH.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma VPS sem hardening recebe milhares de tentativas de login por dia em 1h após subir. Sem fail2ban e firewall, é questêo de tempo até alguém entrar. Esses 4 passos básicos eliminam 99% dos ataques automatizados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Princípio do menor privilégio; chave SSH ed25519 (nêo RSA); <code class="text-rose-400">ufw default deny incoming</code>; jaula de fail2ban (maxretry, bantime, findtime); unattended-upgrades pra patches de segurança automáticos.</p></div>
             </div>
           </div>
         </div>
@@ -225,8 +225,8 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Instalação do Docker Engine + plugin Compose v2 via repositório oficial do Docker (<code class="text-rose-400">download.docker.com</code>), não pelo apt do Ubuntu que entrega versão velha. Compose v2 vem como subcomando: <code class="text-rose-400">docker compose up</code>, sem hífen.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O <code class="text-rose-400">docker.io</code> do apt pode ter 1-2 anos de atraso e bugs já corrigidos. O repositório oficial garante a versão atual, suporte a buildx, networking moderno e o Compose v2 nativo. Adicionar seu usuário ao grupo <code class="text-rose-400">docker</code> evita ter que usar sudo a cada comando.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Instalaçêo do Docker Engine + plugin Compose v2 via repositório oficial do Docker (<code class="text-rose-400">download.docker.com</code>), nêo pelo apt do Ubuntu que entrega versêo velha. Compose v2 vem como subcomando: <code class="text-rose-400">docker compose up</code>, sem hífen.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O <code class="text-rose-400">docker.io</code> do apt pode ter 1-2 anos de atraso e bugs já corrigidos. O repositório oficial garante a versêo atual, suporte a buildx, networking moderno e o Compose v2 nativo. Adicionar seu usuário ao grupo <code class="text-rose-400">docker</code> evita ter que usar sudo a cada comando.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Docker Engine vs Docker Desktop (desktop é só pra dev); grupo docker = root equivalente (cuidado); <code class="text-rose-400">docker compose</code> vs <code class="text-rose-400">docker-compose</code>; daemon.json pra log driver e storage driver; <code class="text-rose-400">docker system prune</code> pra limpar lixo.</p></div>
             </div>
           </div>
@@ -240,9 +240,9 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Arquivo Compose dedicado à produção: imagens fixadas por tag (não :latest), variáveis vindas de <code class="text-rose-400">.env</code>, sem bind mounts de código, sem portas expostas direto (só via Caddy), <code class="text-rose-400">restart: unless-stopped</code> e limites de recursos (<code class="text-rose-400">mem_limit</code>, <code class="text-rose-400">cpus</code>).</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compose de dev e prod são animais diferentes: dev quer hot reload e ports expostas; prod quer reprodutibilidade, segurança e estabilidade. Misturar os dois leva a "funciona no meu PC" e portas 5432 do Postgres expostas na internet — receita pra invasão.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Override files (<code class="text-rose-400">-f compose.yml -f compose.prod.yml</code>); networks internas vs externas; <code class="text-rose-400">expose</code> vs <code class="text-rose-400">ports</code>; secrets via <code class="text-rose-400">.env</code> com permissão 600; pin de versão de imagem (ghcr.io/postiz/postiz-app:v1.30.0).</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Arquivo Compose dedicado à produçêo: imagens fixadas por tag (nêo :latest), variáveis vindas de <code class="text-rose-400">.env</code>, sem bind mounts de código, sem portas expostas direto (só via Caddy), <code class="text-rose-400">restart: unless-stopped</code> e limites de recursos (<code class="text-rose-400">mem_limit</code>, <code class="text-rose-400">cpus</code>).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Compose de dev e prod sêo animais diferentes: dev quer hot reload e ports expostas; prod quer reprodutibilidade, segurança e estabilidade. Misturar os dois leva a "funciona no meu PC" e portas 5432 do Postgres expostas na internet — receita pra invasêo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Override files (<code class="text-rose-400">-f compose.yml -f compose.prod.yml</code>); networks internas vs externas; <code class="text-rose-400">expose</code> vs <code class="text-rose-400">ports</code>; secrets via <code class="text-rose-400">.env</code> com permissêo 600; pin de versêo de imagem (ghcr.io/postiz/postiz-app:v1.30.0).</p></div>
             </div>
           </div>
         </div>
@@ -266,7 +266,7 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
             <span class="text-lg">❤️</span>
-            <div><span class="font-medium">Restart policy e healthcheck</span><span class="text-neutral-500 text-sm ml-2">- auto-recuperação</span></div>
+            <div><span class="font-medium">Restart policy e healthcheck</span><span class="text-neutral-500 text-sm ml-2">- auto-recuperaçêo</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
@@ -305,8 +305,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Criar registro A em <code class="text-rose-400">mkblogs.com</code> apontando pro IPv4 da VPS, AAAA pro IPv6, e CNAMEs pros subdomínios (<code class="text-rose-400">api.</code>, <code class="text-rose-400">app.</code>) apontando pro domínio raiz. Cloudflare grátis na frente (modo DNS-only, nuvem cinza) facilita gerenciar.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem DNS apontando certo, Caddy não consegue validar Let's Encrypt e fica sem HTTPS. TTL alto (24h) atrapalha quando você precisa mudar IP. Subdomínios facilitam separar API, painel e status sem precisar de novos certificados.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">A vs AAAA vs CNAME; TTL (use 300s durante mudanças, 3600s depois); propagação (<code class="text-rose-400">dig +trace</code>); Cloudflare proxy desligado pra Let's Encrypt HTTP-01 funcionar; wildcard <code class="text-rose-400">*.mkblogs.com</code> exige validação DNS-01.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem DNS apontando certo, Caddy nêo consegue validar Let's Encrypt e fica sem HTTPS. TTL alto (24h) atrapalha quando você precisa mudar IP. Subdomínios facilitam separar API, painel e status sem precisar de novos certificados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">A vs AAAA vs CNAME; TTL (use 300s durante mudanças, 3600s depois); propagaçêo (<code class="text-rose-400">dig +trace</code>); Cloudflare proxy desligado pra Let's Encrypt HTTP-01 funcionar; wildcard <code class="text-rose-400">*.mkblogs.com</code> exige validaçêo DNS-01.</p></div>
             </div>
           </div>
         </div>
@@ -320,8 +320,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Reverse proxy é a porta de entrada HTTPS que termina TLS, roteia por hostname e fala HTTP pros containers internos. Caddy (Go) tem auto-HTTPS no <code class="text-rose-400">Caddyfile</code> com 3 linhas. Traefik é mais flexível mas YAML/labels complexas. <code class="text-rose-400">nginx-proxy + acme-companion</code> é o jeito antigo, ainda funciona.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pra MkBlogs (1-3 serviços HTTP), <strong class="text-rose-400">Caddy é a escolha óbvia</strong>: Caddyfile cabe em 10 linhas, certificado automático, renovação automática, HTTP/3 ligado por padrão. Traefik ganha se você tem 10+ serviços e quer descobrir por labels do Docker.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Termination TLS; SNI; upstream HTTP interno; service discovery (labels Docker, etcd, file); ACME provider; admin API do Caddy na porta 2019 (não expor!); reload sem downtime.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pra MkBlogs (1-3 serviços HTTP), <strong class="text-rose-400">Caddy é a escolha óbvia</strong>: Caddyfile cabe em 10 linhas, certificado automático, renovaçêo automática, HTTP/3 ligado por padrêo. Traefik ganha se você tem 10+ serviços e quer descobrir por labels do Docker.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Termination TLS; SNI; upstream HTTP interno; service discovery (labels Docker, etcd, file); ACME provider; admin API do Caddy na porta 2019 (nêo expor!); reload sem downtime.</p></div>
             </div>
           </div>
         </div>
@@ -335,7 +335,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Arquivo <code class="text-rose-400">Caddyfile</code> no formato: <code class="text-rose-400">app.mkblogs.com { reverse_proxy postiz:3000 }</code>. Caddy sozinho resolve ACME challenge HTTP-01, pega certificado Let's Encrypt, instala, configura HSTS e redireciona 80 → 443.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É literalmente a configuração mais simples de HTTPS em produção que existe hoje. Comparado ao nginx + certbot + cronjob de renovação + reload, são 3 linhas vs 50. Erro humano cai drasticamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É literalmente a configuraçêo mais simples de HTTPS em produçêo que existe hoje. Comparado ao nginx + certbot + cronjob de renovaçêo + reload, sêo 3 linhas vs 50. Erro humano cai drasticamente.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Site block; matcher (<code class="text-rose-400">@api host api.mkblogs.com</code>); <code class="text-rose-400">reverse_proxy</code> com health check; <code class="text-rose-400">encode gzip zstd</code>; volume <code class="text-rose-400">caddy_data</code> persistente (guarda os certificados!); <code class="text-rose-400">tls internal</code> pra dev local.</p></div>
             </div>
           </div>
@@ -350,7 +350,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Separar superfícies por subdomínio: <code class="text-rose-400">app.mkblogs.com</code> (painel Postiz), <code class="text-rose-400">api.mkblogs.com</code> (sua API NestJS), <code class="text-rose-400">status.mkblogs.com</code> (status page), <code class="text-rose-400">grafana.mkblogs.com</code> (métricas). Cada um vira um site block no Caddyfile.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Manter tudo em <code class="text-rose-400">/api</code>, <code class="text-rose-400">/app</code>, <code class="text-rose-400">/status</code> no mesmo domínio gera conflito de cookies, CORS confuso e dificulta limites de rate por surface. Subdomínios isolam cookies de sessão e simplificam regras.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Manter tudo em <code class="text-rose-400">/api</code>, <code class="text-rose-400">/app</code>, <code class="text-rose-400">/status</code> no mesmo domínio gera conflito de cookies, CORS confuso e dificulta limites de rate por surface. Subdomínios isolam cookies de sessêo e simplificam regras.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cookie scope por domínio; CORS cross-subdomain (<code class="text-rose-400">Access-Control-Allow-Origin</code>); rate-limit por host no Caddy; CSP <code class="text-rose-400">connect-src</code>; um certificado por subdomínio (Let's Encrypt grátis até 50/semana por domínio raiz).</p></div>
             </div>
           </div>
@@ -375,13 +375,13 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
             <span class="text-lg">🔄</span>
-            <div><span class="font-medium">Renovação automática Let's Encrypt</span><span class="text-neutral-500 text-sm ml-2">- 90 dias sem dor</span></div>
+            <div><span class="font-medium">Renovaçêo automática Let's Encrypt</span><span class="text-neutral-500 text-sm ml-2">- 90 dias sem dor</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Certificados Let's Encrypt duram 90 dias. Caddy renova automaticamente quando faltam ~30 dias, usando o mesmo desafio HTTP-01 (ou DNS-01 se você configurou). Tudo persiste no volume <code class="text-rose-400">caddy_data</code> em <code class="text-rose-400">/data</code>.</p></div>
               <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A maioria dos "site fora do ar com cadeado vermelho" é certificado expirado. Com Caddy, isso é problema resolvido — desde que (1) o volume persista, (2) o DNS continue apontando certo e (3) a porta 80 continue acessível pra desafio HTTP-01.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ACME v2; rate limit de 5 certificados/semana por domínio (cuidado em testes — usar staging); <code class="text-rose-400">acme_ca https://acme-staging-v02.api.letsencrypt.org/directory</code>; ZeroSSL como fallback; alerta em UptimeRobot pra expiração (cinto e suspensório).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ACME v2; rate limit de 5 certificados/semana por domínio (cuidado em testes — usar staging); <code class="text-rose-400">acme_ca https://acme-staging-v02.api.letsencrypt.org/directory</code>; ZeroSSL como fallback; alerta em UptimeRobot pra expiraçêo (cinto e suspensório).</p></div>
             </div>
           </div>
         </div>
@@ -413,9 +413,9 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Coletar logs de todos os containers num lugar pesquisável. Opção self-hosted: <strong class="text-rose-400">Grafana Loki</strong> + Promtail/Alloy lendo do Docker socket. Opção SaaS: <strong class="text-rose-400">Better Stack</strong> (ex-Logtail) com plano grátis de 1GB/mês.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Coletar logs de todos os containers num lugar pesquisável. Opçêo self-hosted: <strong class="text-rose-400">Grafana Loki</strong> + Promtail/Alloy lendo do Docker socket. Opçêo SaaS: <strong class="text-rose-400">Better Stack</strong> (ex-Logtail) com plano grátis de 1GB/mês.</p></div>
               <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm"><code class="text-rose-400">docker logs -f</code> só funciona quando você sabe qual container investigar. Quando o usuário diz "deu erro às 14h32 ontem", você precisa de busca textual com filtros por serviço, tempo e nível — exatamente o que Loki/Better Stack entregam.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Structured logging (JSON > texto solto); <code class="text-rose-400">log driver</code> do Docker (json-file padrão, com rotação max-size); LogQL do Loki (similar a PromQL); retention vs custo; PII em logs (não logar token/email cru).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Structured logging (JSON > texto solto); <code class="text-rose-400">log driver</code> do Docker (json-file padrêo, com rotaçêo max-size); LogQL do Loki (similar a PromQL); retention vs custo; PII em logs (nêo logar token/email cru).</p></div>
             </div>
           </div>
         </div>
@@ -428,9 +428,9 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Monitor externo (fora da sua VPS!) que faz HTTP GET no <code class="text-rose-400">/health</code> de cada serviço a cada 5 minutos e alerta quando responde !=200 ou demora demais. <strong class="text-rose-400">UptimeRobot</strong> tem 50 monitors grátis; <strong class="text-rose-400">BetterStack Uptime</strong> e <strong class="text-rose-400">Healthchecks.io</strong> são alternativas.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Monitor externo (fora da sua VPS!) que faz HTTP GET no <code class="text-rose-400">/health</code> de cada serviço a cada 5 minutos e alerta quando responde !=200 ou demora demais. <strong class="text-rose-400">UptimeRobot</strong> tem 50 monitors grátis; <strong class="text-rose-400">BetterStack Uptime</strong> e <strong class="text-rose-400">Healthchecks.io</strong> sêo alternativas.</p></div>
               <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Monitor que roda dentro da própria VPS é inútil — se a VPS cai, o monitor cai junto e silencia. Monitor externo é a primeira linha de defesa contra "tô fora do ar e nem sei". Healthchecks.io ainda monitora cron jobs (pings de heartbeat).</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">HTTP check vs ping vs keyword check; intervalo (5min grátis, 1min pago); endpoint <code class="text-rose-400">/health</code> que valida banco + Redis, não só "200 OK"; dead-man's-switch pra cron (Healthchecks.io); SSL expiration check de brinde.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">HTTP check vs ping vs keyword check; intervalo (5min grátis, 1min pago); endpoint <code class="text-rose-400">/health</code> que valida banco + Redis, nêo só "200 OK"; dead-man's-switch pra cron (Healthchecks.io); SSL expiration check de brinde.</p></div>
             </div>
           </div>
         </div>
@@ -444,7 +444,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Stack <strong class="text-rose-400">Prometheus + Grafana</strong> rodando ao lado da app. <code class="text-rose-400">node_exporter</code> coleta CPU/RAM/disco da VPS, <code class="text-rose-400">cadvisor</code> coleta métricas por container, e a app expõe <code class="text-rose-400">/metrics</code> (latência, fila BullMQ, falhas de OAuth). Grafana desenha gráficos.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem métricas, você descobre que o disco encheu quando o Postgres trava. Com gráfico de disco e CPU dos últimos 7 dias, você vê a tendência e age antes. Pra MkBlogs, métricas críticas são: profundidade da fila, latência das APIs (X, LinkedIn), erros 5xx, uso de disco em volumes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem métricas, você descobre que o disco encheu quando o Postgres trava. Com gráfico de disco e CPU dos últimos 7 dias, você vê a tendência e age antes. Pra MkBlogs, métricas críticas sêo: profundidade da fila, latência das APIs (X, LinkedIn), erros 5xx, uso de disco em volumes.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pull-based (Prometheus) vs push-based; counter/gauge/histogram; labels (cuidado com cardinalidade alta); retention de 15 dias é suficiente; dashboards do Grafana com <strong class="text-rose-400">grafana.com/dashboards</strong> (ID 1860 = Node Exporter Full, 893 = cadvisor).</p></div>
             </div>
           </div>
@@ -459,8 +459,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Regras no <code class="text-rose-400">Alertmanager</code> (parte do Prometheus) que disparam quando uma métrica passa do limite (disco &gt; 85%, fila &gt; 1000 jobs, taxa de erro &gt; 5%). Saída pra email SMTP, Telegram (via bot), Discord webhook ou ntfy.sh.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Dashboard que ninguém olha não serve. Alerta no celular acorda você. Telegram via <strong class="text-rose-400">@BotFather</strong> é grátis, instantâneo e chega no celular sem precisar de SMS pago. Cuidado com alert fatigue: poucos alertas e acionáveis.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Severity (warning vs critical); <code class="text-rose-400">for: 5m</code> evita flapping; agrupamento (<code class="text-rose-400">group_by</code>); silenciamento durante manutenção; runbook URL em cada alerta; ntfy.sh self-hosted como alternativa zero-friction.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Dashboard que ninguém olha nêo serve. Alerta no celular acorda você. Telegram via <strong class="text-rose-400">@BotFather</strong> é grátis, instantâneo e chega no celular sem precisar de SMS pago. Cuidado com alert fatigue: poucos alertas e acionáveis.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Severity (warning vs critical); <code class="text-rose-400">for: 5m</code> evita flapping; agrupamento (<code class="text-rose-400">group_by</code>); silenciamento durante manutençêo; runbook URL em cada alerta; ntfy.sh self-hosted como alternativa zero-friction.</p></div>
             </div>
           </div>
         </div>
@@ -473,9 +473,9 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm"><strong class="text-rose-400">Sentry</strong> captura exceptions não tratadas do Node, agrupa por fingerprint, mostra stack trace, breadcrumbs, request body, user ID e dispara alerta. Tem SaaS com free tier de 5k eventos/mês e versão self-hosted (mais pesada).</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Logs mostram <em>que</em> deu erro; Sentry mostra <em>por que</em>. Pra app real do MkBlogs, você quer saber: qual user, qual rede social, qual job da fila, qual versão do código (release tag), e ver a tendência (esse erro está crescendo?).</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">DSN; <code class="text-rose-400">tracesSampleRate</code> (performance) vs <code class="text-rose-400">sampleRate</code> (erros); <code class="text-rose-400">beforeSend</code> pra remover PII; release tracking + sourcemaps; integração com BullMQ (capturar falhas de job); GlitchTip como alternativa open-source.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm"><strong class="text-rose-400">Sentry</strong> captura exceptions nêo tratadas do Node, agrupa por fingerprint, mostra stack trace, breadcrumbs, request body, user ID e dispara alerta. Tem SaaS com free tier de 5k eventos/mês e versêo self-hosted (mais pesada).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Logs mostram <em>que</em> deu erro; Sentry mostra <em>por que</em>. Pra app real do MkBlogs, você quer saber: qual user, qual rede social, qual job da fila, qual versêo do código (release tag), e ver a tendência (esse erro está crescendo?).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">DSN; <code class="text-rose-400">tracesSampleRate</code> (performance) vs <code class="text-rose-400">sampleRate</code> (erros); <code class="text-rose-400">beforeSend</code> pra remover PII; release tracking + sourcemaps; integraçêo com BullMQ (capturar falhas de job); GlitchTip como alternativa open-source.</p></div>
             </div>
           </div>
         </div>
@@ -490,7 +490,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Página em <code class="text-rose-400">status.mkblogs.com</code> mostrando estado de cada componente (API, painel, agendamento, OAuth) e histórico de incidentes. Open-source: <strong class="text-rose-400">Uptime Kuma</strong>, <strong class="text-rose-400">Statping-ng</strong>, <strong class="text-rose-400">Cachet</strong>. SaaS: Better Stack, Instatus.</p></div>
               <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quando algo cai, status page reduz suporte em ~70%: usuário vê "X API está fora" e entende. Também serve de histórico público de SLA — clientes B2B pedem isso. Uptime Kuma sobe em 2 minutos com docker-compose e tem visual decente.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Componente vs incidente; postmortem público; comunicação durante incidente (4 estágios: investigando → identificado → monitorando → resolvido); status page <strong class="text-rose-400">fora</strong> da mesma VPS (senão cai junto); subscribe por email/RSS pra updates.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Componente vs incidente; postmortem público; comunicaçêo durante incidente (4 estágios: investigando → identificado → monitorando → resolvido); status page <strong class="text-rose-400">fora</strong> da mesma VPS (senêo cai junto); subscribe por email/RSS pra updates.</p></div>
             </div>
           </div>
         </div>
@@ -509,7 +509,7 @@
           <span class="text-xs text-neutral-500">~35 min</span>
         </div>
         <h3 class="text-2xl font-bold mb-2">💾 Backup e segurança</h3>
-        <p class="text-neutral-400 text-sm">Dump diário do Postgres, off-site em S3/R2 com restic, teste de restore mensal, rotação de tokens e plano de disaster recovery.</p>
+        <p class="text-neutral-400 text-sm">Dump diário do Postgres, off-site em S3/R2 com restic, teste de restore mensal, rotaçêo de tokens e plano de disaster recovery.</p>
       </div>
 
       <div class="divide-y divide-dark-600">
@@ -523,8 +523,8 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cron job diário (03:00 UTC) que roda <code class="text-rose-400">docker compose exec -T postgres pg_dump -Fc -U mkblogs mkblogs &gt; /srv/backups/mkblogs-$(date +%F).dump</code>. Formato <code class="text-rose-400">-Fc</code> (custom) é binário e comprimido, restaurável com <code class="text-rose-400">pg_restore</code>.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Backup é a única coisa que separa "incidente chato" de "fim do negócio". Snapshot da VPS no provider ajuda, mas dump lógico é o que permite restaurar uma tabela específica, migrar de versão de Postgres ou ir pra outro provedor.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dump lógico (<code class="text-rose-400">pg_dump</code>) vs físico (<code class="text-rose-400">pg_basebackup</code>, snapshot LVM); <code class="text-rose-400">-Fc</code> custom vs <code class="text-rose-400">-Fp</code> plain SQL; rotação local (manter últimos 7 dias); <code class="text-rose-400">flock</code> pra evitar overlap; cron com <code class="text-rose-400">MAILTO</code> ou Healthchecks.io ping.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Backup é a única coisa que separa "incidente chato" de "fim do negócio". Snapshot da VPS no provider ajuda, mas dump lógico é o que permite restaurar uma tabela específica, migrar de versêo de Postgres ou ir pra outro provedor.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dump lógico (<code class="text-rose-400">pg_dump</code>) vs físico (<code class="text-rose-400">pg_basebackup</code>, snapshot LVM); <code class="text-rose-400">-Fc</code> custom vs <code class="text-rose-400">-Fp</code> plain SQL; rotaçêo local (manter últimos 7 dias); <code class="text-rose-400">flock</code> pra evitar overlap; cron com <code class="text-rose-400">MAILTO</code> ou Healthchecks.io ping.</p></div>
             </div>
           </div>
         </div>
@@ -539,7 +539,7 @@
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Mandar o dump pra fora da VPS. <strong class="text-rose-400">restic</strong> faz dedupe + criptografia + snapshots e fala com S3/R2/B2 nativamente. <strong class="text-rose-400">rclone</strong> é mais simples (rsync pra cloud). <strong class="text-rose-400">Cloudflare R2</strong> tem 10GB grátis e zero egress fee — perfeito pra backup pequeno.</p></div>
               <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Backup que mora só na própria VPS é backup que some junto com a VPS (ransomware, datacenter pegando fogo, conta suspensa). Regra <strong class="text-rose-400">3-2-1</strong>: 3 cópias, 2 mídias diferentes, 1 off-site. R2 + restic resolve isso por ~US$0/mês.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">restic snapshots + <code class="text-rose-400">forget --keep-daily 7 --keep-weekly 4 --keep-monthly 12</code>; chave de criptografia (guardada FORA da VPS!); S3-compatible (R2, B2, Wasabi, MinIO); egress fee como armadilha (AWS S3 cobra, R2/B2 não); <code class="text-rose-400">restic check</code> pra validar integridade.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">restic snapshots + <code class="text-rose-400">forget --keep-daily 7 --keep-weekly 4 --keep-monthly 12</code>; chave de criptografia (guardada FORA da VPS!); S3-compatible (R2, B2, Wasabi, MinIO); egress fee como armadilha (AWS S3 cobra, R2/B2 nêo); <code class="text-rose-400">restic check</code> pra validar integridade.</p></div>
             </div>
           </div>
         </div>
@@ -553,7 +553,7 @@
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Script que mensalmente baixa o último snapshot do R2, sobe um Postgres descartável em container, roda <code class="text-rose-400">pg_restore</code>, faz <code class="text-rose-400">SELECT count(*) FROM users</code> e compara com um número esperado. Falhou? Alerta no Telegram.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm"><strong class="text-rose-400">Backup não testado é Schrödinger backup</strong> — você não sabe se funciona até precisar. Histórias de empresas que perderam tudo porque o dump estava corrompido há 6 meses são abundantes. Restore mensal automatizado dá confiança real.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm"><strong class="text-rose-400">Backup nêo testado é Schrödinger backup</strong> — você nêo sabe se funciona até precisar. Histórias de empresas que perderam tudo porque o dump estava corrompido há 6 meses sêo abundantes. Restore mensal automatizado dá confiança real.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">RTO (Recovery Time Objective — quanto tempo até voltar) vs RPO (Recovery Point Objective — quanto dado posso perder); restore em ambiente isolado; smoke test pós-restore (contagens, checksums); <code class="text-rose-400">pg_restore --jobs</code> pra paralelizar; documentar o procedimento (DR runbook).</p></div>
             </div>
           </div>
@@ -563,13 +563,13 @@
           <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
             <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
             <span class="text-lg">🔑</span>
-            <div><span class="font-medium">Rotação de tokens</span><span class="text-neutral-500 text-sm ml-2">- segredos com prazo</span></div>
+            <div><span class="font-medium">Rotaçêo de tokens</span><span class="text-neutral-500 text-sm ml-2">- segredos com prazo</span></div>
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
               <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Trocar regularmente: senha do banco, JWT secret, encryption key dos OAuth tokens, API keys de Sentry/UptimeRobot, chave SSH do deploy, password do admin do Postiz. Calendário trimestral; emergencial se um dev sai do time ou se houver suspeita.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Token vazado em log, em commit antigo do Git ou no laptop roubado de um dev continua válido até alguém revogar. Rotação periódica limita a janela de exposição. <code class="text-rose-400">git history</code> não esquece — tem que usar <code class="text-rose-400">git-secrets</code>, <code class="text-rose-400">trufflehog</code> e revogar.</p></div>
-              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inventário de segredos (lista do que existe); rotação com overlap (chave antiga aceita por 24h); <code class="text-rose-400">.env</code> com permissão 600 e sem comitar; gerenciadores (Doppler, Infisical, 1Password CLI, sops + age); revogar tokens OAuth nas próprias plataformas (X, LinkedIn).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Token vazado em log, em commit antigo do Git ou no laptop roubado de um dev continua válido até alguém revogar. Rotaçêo periódica limita a janela de exposiçêo. <code class="text-rose-400">git history</code> nêo esquece — tem que usar <code class="text-rose-400">git-secrets</code>, <code class="text-rose-400">trufflehog</code> e revogar.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inventário de segredos (lista do que existe); rotaçêo com overlap (chave antiga aceita por 24h); <code class="text-rose-400">.env</code> com permissêo 600 e sem comitar; gerenciadores (Doppler, Infisical, 1Password CLI, sops + age); revogar tokens OAuth nas próprias plataformas (X, LinkedIn).</p></div>
             </div>
           </div>
         </div>
@@ -582,8 +582,8 @@
           </button>
           <div class="topic-explanation px-6 pb-4">
             <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada componente recebe só a permissão mínima necessária: user do Postgres da app não tem <code class="text-rose-400">SUPERUSER</code>; container não roda como root (<code class="text-rose-400">USER node</code> no Dockerfile); chave R2 tem escopo de <em>write-only</em> num bucket específico; deploy SSH usa chave dedicada com <code class="text-rose-400">command=</code> restrito.</p></div>
-              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quando (não <em>se</em>) um componente for comprometido, o estrago fica limitado. Container rodando como root + montando <code class="text-rose-400">/var/run/docker.sock</code> = comprometimento total do host. Chave R2 com <code class="text-rose-400">s3:*</code> = adversário apaga seus backups.</p></div>
+              <div><span class="text-rose-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada componente recebe só a permissêo mínima necessária: user do Postgres da app nêo tem <code class="text-rose-400">SUPERUSER</code>; container nêo roda como root (<code class="text-rose-400">USER node</code> no Dockerfile); chave R2 tem escopo de <em>write-only</em> num bucket específico; deploy SSH usa chave dedicada com <code class="text-rose-400">command=</code> restrito.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quando (nêo <em>se</em>) um componente for comprometido, o estrago fica limitado. Container rodando como root + montando <code class="text-rose-400">/var/run/docker.sock</code> = comprometimento total do host. Chave R2 com <code class="text-rose-400">s3:*</code> = adversário apaga seus backups.</p></div>
               <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Defense in depth; <code class="text-rose-400">CAP_DROP: ALL</code> e <code class="text-rose-400">read_only: true</code> em containers que aguentam; <code class="text-rose-400">network_mode: internal</code> pra Postgres/Redis; IAM policy mínima em R2/S3; SSH <code class="text-rose-400">PermitRootLogin no</code>; sudoers granular.</p></div>
             </div>
           </div>
@@ -624,7 +624,7 @@
     <section class="mt-12">
       <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8 text-center">
         <h2 class="text-2xl font-bold mb-4">🎉 Fim da jornada MkBlogs</h2>
-        <p class="text-neutral-300 max-w-2xl mx-auto mb-6">Você passou por <strong class="text-rose-400">6 trilhas</strong>: fundamentos, Postiz pronto, OAuth de redes, blogs, construção do zero e agora deploy em produção. A próxima publicação já pode ser sua — em escala.</p>
+        <p class="text-neutral-300 max-w-2xl mx-auto mb-6">Você passou por <strong class="text-rose-400">6 trilhas</strong>: fundamentos, Postiz pronto, OAuth de redes, blogs, construçêo do zero e agora deploy em produçêo. A próxima publicaçêo já pode ser sua — em escala.</p>
         <a href="https://inema.club" target="_blank" class="inline-block px-6 py-3 bg-rose-600 text-white font-bold rounded-lg hover:bg-rose-500 transition-colors">Mais cursos em INEMA.CLUB →</a>
       </div>
     </section>

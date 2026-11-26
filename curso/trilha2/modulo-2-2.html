@@ -165,7 +165,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Antes de qualquer <code class="text-blue-400 font-mono text-sm">docker compose up</code>, confirme que o host tem o que precisa: <strong class="text-blue-400">Docker Engine 24+</strong> e <strong class="text-blue-400">Compose v2</strong>. Compose v1 (<code class="text-blue-400 font-mono text-sm">docker-compose</code> com hífen) está deprecado e não suporta features que o Postiz usa.
+        Antes de qualquer <code class="text-blue-400 font-mono text-sm">docker compose up</code>, confirme que o host tem o que precisa: <strong class="text-blue-400">Docker Engine 24+</strong> e <strong class="text-blue-400">Compose v2</strong>. Compose v1 (<code class="text-blue-400 font-mono text-sm">docker-compose</code> com hífen) está deprecado e nêo suporta features que o Postiz usa.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -220,11 +220,11 @@ touch docker-compose.yml .env .env.example</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O stack mínimo do Postiz tem <strong class="text-blue-400">três serviços</strong>: a aplicação Postiz (Node + Next), o <strong class="text-blue-400">Postgres</strong> (persistência de posts/contas) e o <strong class="text-blue-400">Redis</strong> (filas BullMQ que disparam o agendamento). Sem o Redis nada agenda; sem o Postgres nada persiste.
+        O stack mínimo do Postiz tem <strong class="text-blue-400">três serviços</strong>: a aplicaçêo Postiz (Node + Next), o <strong class="text-blue-400">Postgres</strong> (persistência de posts/contas) e o <strong class="text-blue-400">Redis</strong> (filas BullMQ que disparam o agendamento). Sem o Redis nada agenda; sem o Postgres nada persiste.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use <strong class="text-blue-400">volumes nomeados</strong> (não bind mounts para dados de banco) e uma <strong class="text-blue-400">network interna</strong> para que Postgres/Redis nunca fiquem expostos no host.
+        Use <strong class="text-blue-400">volumes nomeados</strong> (nêo bind mounts para dados de banco) e uma <strong class="text-blue-400">network interna</strong> para que Postgres/Redis nunca fiquem expostos no host.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/docker-compose.yml
@@ -284,7 +284,7 @@ networks:
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Note o <code class="text-primary font-mono text-sm">depends_on: condition: service_healthy</code>. Sem isso, o Postiz tenta rodar migrations antes do Postgres aceitar conexão e morre no primeiro boot — o erro mais comum em setup novo.</p>
+        <p class="text-neutral-300">Note o <code class="text-primary font-mono text-sm">depends_on: condition: service_healthy</code>. Sem isso, o Postiz tenta rodar migrations antes do Postgres aceitar conexêo e morre no primeiro boot — o erro mais comum em setup novo.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -316,7 +316,7 @@ networks:
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Postiz lê configuração via <strong class="text-blue-400">variáveis de ambiente</strong> — não tem arquivo de config. As essenciais para subir o stack são URLs (backend/frontend), conexões (Postgres/Redis), o <strong class="text-blue-400">JWT_SECRET</strong> e, opcionalmente, <strong class="text-blue-400">storage</strong> + <strong class="text-blue-400">Resend</strong> para e-mails.
+        O Postiz lê configuraçêo via <strong class="text-blue-400">variáveis de ambiente</strong> — nêo tem arquivo de config. As essenciais para subir o stack sêo URLs (backend/frontend), conexões (Postgres/Redis), o <strong class="text-blue-400">JWT_SECRET</strong> e, opcionalmente, <strong class="text-blue-400">storage</strong> + <strong class="text-blue-400">Resend</strong> para e-mails.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/.env (NUNCA commitar)
@@ -341,7 +341,7 @@ STORAGE_PROVIDER=local
 RESEND_API_KEY=re_xxx_opcional_no_dev</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Gere o <code class="text-blue-400 font-mono text-sm">JWT_SECRET</code> com entropia real. Nunca invente uma string "parece aleatória" — o segredo assina os tokens de sessão de TODAS as contas conectadas.
+        Gere o <code class="text-blue-400 font-mono text-sm">JWT_SECRET</code> com entropia real. Nunca invente uma string "parece aleatória" — o segredo assina os tokens de sessêo de TODAS as contas conectadas.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># 64 bytes hex = 512 bits de entropia
@@ -358,7 +358,7 @@ openssl rand -hex 64</code></pre>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Commitar <code class="font-mono">.env</code> no git — mesmo "só por um minuto".</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reaproveitar <code class="font-mono">JWT_SECRET</code> entre projetos.</span></li>
@@ -397,7 +397,7 @@ openssl rand -hex 64</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Com o <code class="text-blue-400 font-mono text-sm">.env</code> preenchido e o <code class="text-blue-400 font-mono text-sm">docker-compose.yml</code> salvo, o boot inicial é uma sequência de seis passos. Não pule a verificação de logs — é onde aparecem os erros silenciosos de configuração.
+        Com o <code class="text-blue-400 font-mono text-sm">.env</code> preenchido e o <code class="text-blue-400 font-mono text-sm">docker-compose.yml</code> salvo, o boot inicial é uma sequência de seis passos. Nêo pule a verificaçêo de logs — é onde aparecem os erros silenciosos de configuraçêo.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -501,8 +501,8 @@ openssl rand -hex 64</code></pre>
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-blue-400">Porta 5000 ocupada:</strong> outro serviço já segura a porta. Confirme com <code class="font-mono">lsof -i :5000</code> e mude o mapeamento para <code class="font-mono">8080:5000</code>.</li>
-          <li><strong class="text-blue-400">Postgres não sobe:</strong> volume corrompido de boot anterior ou senha trocada. <code class="font-mono">docker compose logs postgres</code> mostra o motivo exato.</li>
-          <li><strong class="text-blue-400">Redis connection refused:</strong> a aplicação está num network diferente ou <code class="font-mono">REDIS_URL</code> aponta para <code class="font-mono">localhost</code> em vez de <code class="font-mono">redis</code>.</li>
+          <li><strong class="text-blue-400">Postgres nêo sobe:</strong> volume corrompido de boot anterior ou senha trocada. <code class="font-mono">docker compose logs postgres</code> mostra o motivo exato.</li>
+          <li><strong class="text-blue-400">Redis connection refused:</strong> a aplicaçêo está num network diferente ou <code class="font-mono">REDIS_URL</code> aponta para <code class="font-mono">localhost</code> em vez de <code class="font-mono">redis</code>.</li>
           <li><strong class="text-blue-400">Permission denied em volume:</strong> bind mount com dono errado. Use volume nomeado ou faça <code class="font-mono">chown</code> com o UID do container.</li>
         </ul>
       </div>
@@ -516,7 +516,7 @@ docker compose ps -a
 # Entrar no Postgres para inspecionar
 docker exec -it postiz-postgres psql -U postiz -d postiz -c "\dt"
 
-# Testar conexão Redis de dentro do container Postiz
+# Testar conexêo Redis de dentro do container Postiz
 docker exec -it postiz sh -c "nc -zv redis 6379"
 
 # Reset completo (APAGA volumes — só em dev!)
@@ -533,9 +533,9 @@ docker compose down -v</code></pre>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apagar volumes em produção sem backup recente.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apagar volumes em produçêo sem backup recente.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar containers como root (<code class="font-mono">user: root</code>).</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Restart até funcionar" sem ler nenhuma linha de log.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Editar <code class="font-mono">.env</code> e esquecer de <code class="font-mono">up -d</code> de novo.</span></li>
@@ -572,7 +572,7 @@ docker compose down -v</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        "Container <code class="text-blue-400 font-mono text-sm">Up</code>" não é o mesmo que "aplicação funciona". Faça um <strong class="text-blue-400">smoke test</strong> de seis pontos antes de declarar vitória.
+        "Container <code class="text-blue-400 font-mono text-sm">Up</code>" nêo é o mesmo que "aplicaçêo funciona". Faça um <strong class="text-blue-400">smoke test</strong> de seis pontos antes de declarar vitória.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -580,14 +580,14 @@ docker compose down -v</code></pre>
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Browser em <code class="font-mono">http://localhost:5000</code></h4>
-            <p class="text-sm text-neutral-300">A página deve carregar — não um erro de conexão recusada, não um 502, não branco.</p>
+            <p class="text-sm text-neutral-300">A página deve carregar — nêo um erro de conexêo recusada, nêo um 502, nêo branco.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Tela de signup aparece</h4>
-            <p class="text-sm text-neutral-300">Sem ela, o frontend não conseguiu falar com o backend — confirme <code class="font-mono">NEXT_PUBLIC_BACKEND_URL</code>.</p>
+            <p class="text-sm text-neutral-300">Sem ela, o frontend nêo conseguiu falar com o backend — confirme <code class="font-mono">NEXT_PUBLIC_BACKEND_URL</code>.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -601,7 +601,7 @@ docker compose down -v</code></pre>
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Login funciona</h4>
-            <p class="text-sm text-neutral-300">Token JWT é gerado e persistido em cookie. Sessão deve sobreviver a F5.</p>
+            <p class="text-sm text-neutral-300">Token JWT é gerado e persistido em cookie. Sessêo deve sobreviver a F5.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -615,7 +615,7 @@ docker compose down -v</code></pre>
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Endpoint de health</h4>
-            <p class="text-sm text-neutral-300">Resposta <code class="font-mono">200 OK</code> indica que app + DB + Redis estão saudáveis.</p>
+            <p class="text-sm text-neutral-300">Resposta <code class="font-mono">200 OK</code> indica que app + DB + Redis estêo saudáveis.</p>
           </div>
         </div>
       </div>
@@ -636,7 +636,7 @@ curl -i http://localhost:5000/api/health
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Smoke test</div>
-          <p class="text-xs text-neutral-400">Verificação rápida de que o sistema sobe e responde.</p>
+          <p class="text-xs text-neutral-400">Verificaçêo rápida de que o sistema sobe e responde.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Health check</div>
@@ -648,7 +648,7 @@ curl -i http://localhost:5000/api/health
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Próximos passos</div>
-          <p class="text-xs text-neutral-400">Domínio, HTTPS, backup, primeira integração.</p>
+          <p class="text-xs text-neutral-400">Domínio, HTTPS, backup, primeira integraçêo.</p>
         </div>
       </div>
     </section>
@@ -689,7 +689,7 @@ curl -i http://localhost:5000/api/health
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">2.3 — Configuração inicial e primeira conta conectada</p>
+          <p class="text-neutral-300">2.3 — Configuraçêo inicial e primeira conta conectada</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

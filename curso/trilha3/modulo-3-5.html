@@ -132,7 +132,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.5</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">📷 Instagram & Threads (Meta)</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">O ecossistema mais burocrático do mercado: Business obrigatório, App Review obrigatório e fluxo 2-step de publicação. Vale a pena pelo alcance — mas você precisa sobreviver às 4-6 semanas de review.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">O ecossistema mais burocrático do mercado: Business obrigatório, App Review obrigatório e fluxo 2-step de publicaçêo. Vale a pena pelo alcance — mas você precisa sobreviver às 4-6 semanas de review.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -166,17 +166,17 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A Graph API do Instagram <strong class="text-purple-400">não publica em conta pessoal</strong>. Para postar via API você precisa de uma conta <strong class="text-purple-400">Business</strong> (ou <em>Creator</em> em casos pontuais, mas o caminho seguro é Business) <strong class="text-purple-400">vinculada a uma Facebook Page</strong>. Sem esses dois requisitos, nenhum endpoint de publicação responde — sempre <code class="text-purple-400 font-mono text-sm">400 Bad Request</code>.
+        A Graph API do Instagram <strong class="text-purple-400">nêo publica em conta pessoal</strong>. Para postar via API você precisa de uma conta <strong class="text-purple-400">Business</strong> (ou <em>Creator</em> em casos pontuais, mas o caminho seguro é Business) <strong class="text-purple-400">vinculada a uma Facebook Page</strong>. Sem esses dois requisitos, nenhum endpoint de publicaçêo responde — sempre <code class="text-purple-400 font-mono text-sm">400 Bad Request</code>.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Conversão é gratuita e leva minutos no app do Instagram. O ponto crítico é o <strong class="text-purple-400">vínculo com a Page</strong>: a permissão de publicação flui da Page → Instagram, não direto na conta IG.
+        Conversêo é gratuita e leva minutos no app do Instagram. O ponto crítico é o <strong class="text-purple-400">vínculo com a Page</strong>: a permissêo de publicaçêo flui da Page → Instagram, nêo direto na conta IG.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Passo a passo no app do Instagram
 # 1. Configurações → Conta → Mudar para conta profissional
 # 2. Escolher categoria (ex: "Software", "Mídia")
-# 3. Selecionar "Empresa" (NÃO "Criador de conteúdo")
+# 3. Selecionar "Empresa" (NêO "Criador de conteúdo")
 # 4. Vincular Facebook Page existente OU criar uma nova
 
 # Verificar via Graph API que o vínculo existe
@@ -195,7 +195,7 @@ curl -G "https://graph.facebook.com/v21.0/me/accounts" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚠️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Se o campo <code class="text-primary font-mono text-sm">instagram_business_account</code> vier vazio, o vínculo Page↔IG <strong>não foi feito corretamente</strong>. Volte no <strong>Meta Business Suite</strong> (business.facebook.com) e refaça o link em <em>Configurações → Contas → Contas do Instagram</em>. Esse é o erro #1 de quem tenta postar pela primeira vez.</p>
+        <p class="text-neutral-300">Se o campo <code class="text-primary font-mono text-sm">instagram_business_account</code> vier vazio, o vínculo Page↔IG <strong>nêo foi feito corretamente</strong>. Volte no <strong>Meta Business Suite</strong> (business.facebook.com) e refaça o link em <em>Configurações → Contas → Contas do Instagram</em>. Esse é o erro #1 de quem tenta postar pela primeira vez.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -206,7 +206,7 @@ curl -G "https://graph.facebook.com/v21.0/me/accounts" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Facebook Page</div>
-          <p class="text-xs text-neutral-400">Ponte de permissão entre IG e a API.</p>
+          <p class="text-xs text-neutral-400">Ponte de permissêo entre IG e a API.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">IG Business ID</div>
@@ -227,16 +227,16 @@ curl -G "https://graph.facebook.com/v21.0/me/accounts" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Toda chamada à Graph API exige um <strong class="text-purple-400">Meta App</strong> registrado em <a href="https://developers.facebook.com" target="_blank" class="text-purple-400 hover:underline">developers.facebook.com</a>. Para Instagram + Threads, o tipo correto é <strong class="text-purple-400">Business</strong> — não escolha "Consumer", as permissões necessárias nem aparecem lá.
+        Toda chamada à Graph API exige um <strong class="text-purple-400">Meta App</strong> registrado em <a href="https://developers.facebook.com" target="_blank" class="text-purple-400 hover:underline">developers.facebook.com</a>. Para Instagram + Threads, o tipo correto é <strong class="text-purple-400">Business</strong> — nêo escolha "Consumer", as permissões necessárias nem aparecem lá.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Após criar o app, adicione os <strong class="text-purple-400">produtos</strong>: <em>Instagram Graph API</em>, <em>Facebook Login for Business</em> e, se for usar Threads, <em>Threads API</em>. Cada um tem suas próprias permissões e cada permissão sensível passa por <strong class="text-purple-400">App Review</strong> antes de funcionar para usuários que não sejam Admin/Dev/Tester do app.
+        Após criar o app, adicione os <strong class="text-purple-400">produtos</strong>: <em>Instagram Graph API</em>, <em>Facebook Login for Business</em> e, se for usar Threads, <em>Threads API</em>. Cada um tem suas próprias permissões e cada permissêo sensível passa por <strong class="text-purple-400">App Review</strong> antes de funcionar para usuários que nêo sejam Admin/Dev/Tester do app.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Roteiro de criação do app
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Roteiro de criaçêo do app
 # 1. developers.facebook.com → Meus Apps → Criar App
-# 2. Tipo: "Business" (NÃO Consumer, NÃO Gaming)
+# 2. Tipo: "Business" (NêO Consumer, NêO Gaming)
 # 3. Nome do app: ex. "Postiz Self-Hosted"
 # 4. E-mail de contato + Business Account
 # 5. Adicionar produtos:
@@ -258,7 +258,7 @@ curl -G "https://graph.facebook.com/v21.0/me/accounts" \
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-purple-400">Development:</strong> só funciona para contas adicionadas como Admin, Developer ou Tester no app. Útil para desenvolver e testar sem App Review.</li>
           <li><strong class="text-purple-400">Live:</strong> qualquer usuário pode conectar, mas <strong>todas as permissões avançadas precisam estar aprovadas no App Review</strong>.</li>
-          <li><strong class="text-purple-400">Transição:</strong> só é possível mudar para Live após <em>Business Verification</em> completa.</li>
+          <li><strong class="text-purple-400">Transiçêo:</strong> só é possível mudar para Live após <em>Business Verification</em> completa.</li>
         </ul>
       </div>
 
@@ -278,7 +278,7 @@ curl -G "https://graph.facebook.com/v21.0/me/accounts" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Business Verification</div>
-          <p class="text-xs text-neutral-400">Validação da empresa (CNPJ, documentos).</p>
+          <p class="text-xs text-neutral-400">Validaçêo da empresa (CNPJ, documentos).</p>
         </div>
       </div>
     </section>
@@ -305,7 +305,7 @@ instagram_content_publish          # PUBLICAR no IG via API
 # Insights / métricas (opcional mas comum):
 instagram_manage_insights
 
-# URL de autorização (Facebook Login for Business)
+# URL de autorizaçêo (Facebook Login for Business)
 https://www.facebook.com/v21.0/dialog/oauth
   ?client_id=APP_ID
   &redirect_uri=https://seu-host/oauth/callback
@@ -331,11 +331,11 @@ curl -G "https://graph.facebook.com/v21.0/oauth/access_token" \
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">ads_management</code> "só por garantia" — review nega.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expor o <code class="font-mono">App Secret</code> em código que vai pro browser.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em short-lived token (1h) em produção.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em short-lived token (1h) em produçêo.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar OAuth tradicional — Meta migrou para <em>Login for Business</em>.</span></li>
           </ul>
         </div>
@@ -345,7 +345,7 @@ curl -G "https://graph.facebook.com/v21.0/oauth/access_token" \
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Scope</div>
-          <p class="text-xs text-neutral-400">Permissão granular pedida no OAuth.</p>
+          <p class="text-xs text-neutral-400">Permissêo granular pedida no OAuth.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Long-lived token</div>
@@ -370,7 +370,7 @@ curl -G "https://graph.facebook.com/v21.0/oauth/access_token" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Diferente de quase todas as outras APIs, o Instagram <strong class="text-purple-400">não publica em uma chamada só</strong>. O fluxo é: <strong class="text-purple-400">(1)</strong> criar um <em>media container</em> com a mídia + caption → <strong class="text-purple-400">(2)</strong> aguardar processamento → <strong class="text-purple-400">(3)</strong> chamar <code class="text-purple-400 font-mono text-sm">media_publish</code> com o ID do container. Pular o passo 2 em vídeos é o erro mais comum.
+        Diferente de quase todas as outras APIs, o Instagram <strong class="text-purple-400">nêo publica em uma chamada só</strong>. O fluxo é: <strong class="text-purple-400">(1)</strong> criar um <em>media container</em> com a mídia + caption → <strong class="text-purple-400">(2)</strong> aguardar processamento → <strong class="text-purple-400">(3)</strong> chamar <code class="text-purple-400 font-mono text-sm">media_publish</code> com o ID do container. Pular o passo 2 em vídeos é o erro mais comum.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># STEP 1 — Criar container (imagem)
@@ -398,18 +398,18 @@ curl -X POST "https://graph.facebook.com/v21.0/{IG_BUSINESS_ID}/media_publish" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⏳</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Para vídeo/Reel, faça <strong>polling com backoff</strong>: cheque <code class="text-primary font-mono text-sm">status_code</code> a cada 3-5s, até <strong>60 segundos</strong> de espera máxima. Se publicar antes de <code class="text-primary font-mono text-sm">FINISHED</code>, a API retorna <code class="text-primary font-mono text-sm">9007</code> ("Media not ready") e o post entra em estado fantasma — não aparece no feed mas ocupa cota.</p>
+        <p class="text-neutral-300">Para vídeo/Reel, faça <strong>polling com backoff</strong>: cheque <code class="text-primary font-mono text-sm">status_code</code> a cada 3-5s, até <strong>60 segundos</strong> de espera máxima. Se publicar antes de <code class="text-primary font-mono text-sm">FINISHED</code>, a API retorna <code class="text-primary font-mono text-sm">9007</code> ("Media not ready") e o post entra em estado fantasma — nêo aparece no feed mas ocupa cota.</p>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para <strong class="text-purple-400">carrossel</strong>, repita o STEP 1 para cada slide (com <code class="text-purple-400 font-mono text-sm">is_carousel_item=true</code>), depois crie um container-pai do tipo <code class="text-purple-400 font-mono text-sm">CAROUSEL</code> referenciando os filhos e só então faça o <code class="text-purple-400 font-mono text-sm">media_publish</code>.
+        Para <strong class="text-purple-400">carrossel</strong>, repita o STEP 1 para cada slide (com <code class="text-purple-400 font-mono text-sm">is_carousel_item=true</code>), depois crie um container-pai do tipo <code class="text-purple-400 font-mono text-sm">CAROUSEL</code> referenciando os filhos e só entêo faça o <code class="text-purple-400 font-mono text-sm">media_publish</code>.
       </p>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Media container</div>
-          <p class="text-xs text-neutral-400">Rascunho temporário antes da publicação.</p>
+          <p class="text-xs text-neutral-400">Rascunho temporário antes da publicaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">creation_id</div>
@@ -469,8 +469,8 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
           <span class="mr-2">📊</span> Particularidades do Threads
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
-          <li><strong class="text-purple-400">Conta Threads:</strong> não exige Business — basta uma conta Threads ativa (vinculada ao Instagram).</li>
-          <li><strong class="text-purple-400">Host diferente:</strong> <code class="font-mono">graph.threads.net</code> (não <code class="font-mono">graph.facebook.com</code>).</li>
+          <li><strong class="text-purple-400">Conta Threads:</strong> nêo exige Business — basta uma conta Threads ativa (vinculada ao Instagram).</li>
+          <li><strong class="text-purple-400">Host diferente:</strong> <code class="font-mono">graph.threads.net</code> (nêo <code class="font-mono">graph.facebook.com</code>).</li>
           <li><strong class="text-purple-400">Rate limit:</strong> 250 publicações/24h por usuário — mais generoso que IG.</li>
           <li><strong class="text-purple-400">Tipos de mídia:</strong> <code class="font-mono">TEXT</code>, <code class="font-mono">IMAGE</code>, <code class="font-mono">VIDEO</code> e <code class="font-mono">CAROUSEL</code>.</li>
         </ul>
@@ -505,7 +505,7 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O App Review da Meta é <strong class="text-purple-400">o gargalo</strong>. Em média leva <strong class="text-purple-400">4 a 6 semanas</strong> entre submissão e Advanced Access. Boa parte das rejeições é por <em>screencast ruim</em> ou justificativa genérica — e cada rejeição reseta o relógio.
+        O App Review da Meta é <strong class="text-purple-400">o gargalo</strong>. Em média leva <strong class="text-purple-400">4 a 6 semanas</strong> entre submissêo e Advanced Access. Boa parte das rejeições é por <em>screencast ruim</em> ou justificativa genérica — e cada rejeiçêo reseta o relógio.
       </p>
 
       <h3 class="text-lg font-semibold mb-4">⏱️ Timeline realista do App Review</h3>
@@ -513,7 +513,7 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold mb-2">Semana 0 — Preparação <span class="text-xs text-neutral-400">(2-5 dias)</span></h4>
+            <h4 class="font-semibold mb-2">Semana 0 — Preparaçêo <span class="text-xs text-neutral-400">(2-5 dias)</span></h4>
             <p class="text-sm text-neutral-400">Criar app, configurar produtos, escrever Privacy Policy e Terms, hospedar em URL pública estável.</p>
           </div>
         </div>
@@ -527,15 +527,15 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold mb-2">Semana 2 — Submissão do Review <span class="text-xs text-neutral-400">(1-2 dias preparando)</span></h4>
-            <p class="text-sm text-neutral-400">Gravar screencast por permissão, escrever descrição detalhada, submeter no painel.</p>
+            <h4 class="font-semibold mb-2">Semana 2 — Submissêo do Review <span class="text-xs text-neutral-400">(1-2 dias preparando)</span></h4>
+            <p class="text-sm text-neutral-400">Gravar screencast por permissêo, escrever descriçêo detalhada, submeter no painel.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Semanas 3-4 — Análise da Meta <span class="text-xs text-neutral-400">(10-20 dias)</span></h4>
-            <p class="text-sm text-neutral-400">Revisor humano avalia o fluxo. Tempo varia muito com fila e qualidade da submissão.</p>
+            <p class="text-sm text-neutral-400">Revisor humano avalia o fluxo. Tempo varia muito com fila e qualidade da submissêo.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -548,48 +548,48 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">6</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold mb-2">Semana 6 — App em Live <span class="text-xs text-neutral-400">(imediato após aprovação)</span></h4>
+            <h4 class="font-semibold mb-2">Semana 6 — App em Live <span class="text-xs text-neutral-400">(imediato após aprovaçêo)</span></h4>
             <p class="text-sm text-neutral-400">Mudar app de Development para Live no painel — qualquer usuário externo pode conectar.</p>
           </div>
         </div>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">🎥 Anatomia de um screencast aprovado</h3>
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Checklist do screencast (1 vídeo por permissão)
-# Duração: 1-3 minutos por permissão
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Checklist do screencast (1 vídeo por permissêo)
+# Duraçêo: 1-3 minutos por permissêo
 
 [00:00-00:10]  Tela inicial do produto + login do usuário
 [00:10-00:30]  Clique em "Conectar Instagram" → tela OAuth da Meta
-[00:30-00:50]  Mostrar EXATAMENTE quais permissões são pedidas
-[00:50-01:30]  Demonstrar o USO REAL da permissão
+[00:30-00:50]  Mostrar EXATAMENTE quais permissões sêo pedidas
+[00:50-01:30]  Demonstrar o USO REAL da permissêo
                 (ex: publicar um post de teste se for content_publish)
 [01:30-02:00]  Mostrar o resultado (post no feed do IG)
-[02:00-02:30]  Narração explicando POR QUE o usuário se beneficia
+[02:00-02:30]  Narraçêo explicando POR QUE o usuário se beneficia
 
 # Pontos críticos
-- Áudio com narração em INGLÊS (review é global)
-- Resolução mínima 720p
-- Mostrar a UI do SEU app, não terminal/Postman
-- Cada permissão = vídeo separado</code></pre>
+- Áudio com narraçêo em INGLÊS (review é global)
+- Resoluçêo mínima 720p
+- Mostrar a UI do SEU app, nêo terminal/Postman
+- Cada permissêo = vídeo separado</code></pre>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que ACELERA o review</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Screencast em <strong>inglês</strong>, com narração clara.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Screencast em <strong>inglês</strong>, com narraçêo clara.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Justificativa específica: "publica posts agendados em nome do usuário, autenticado via OAuth".</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Privacy Policy + Terms em URL pública e estável.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Business Verification <strong>antes</strong> da submissão.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Business Verification <strong>antes</strong> da submissêo.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Conta de teste com dados reais já populados.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que GARANTE rejeição</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que GARANTE rejeiçêo</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Screencast em terminal/Postman sem mostrar UI.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Quero a permissão X para futuras features" — sem caso de uso atual.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Quero a permissêo X para futuras features" — sem caso de uso atual.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>App ainda em <code class="font-mono">localhost</code> ou domínio temporário.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">ads_*</code> ou escopos que você não precisa.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">ads_*</code> ou escopos que você nêo precisa.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Privacy Policy genérica copiada de template.</span></li>
           </ul>
         </div>
@@ -626,7 +626,7 @@ curl -X POST "https://graph.threads.net/v1.0/{THREADS_USER_ID}/threads" \
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Conta Business + Page</strong><span class="text-neutral-400"> — pré-requisito não-negociável; vínculo verificável via <code class="font-mono">/me/accounts</code>.</span></div>
+            <div><strong class="text-white">Conta Business + Page</strong><span class="text-neutral-400"> — pré-requisito nêo-negociável; vínculo verificável via <code class="font-mono">/me/accounts</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>

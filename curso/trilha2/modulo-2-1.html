@@ -165,20 +165,20 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Postiz roda confortavelmente em uma VPS pequena, mas <strong class="text-blue-400">não em um shared hosting</strong>. O processo Node + Postgres + Redis consomem RAM e exigem controle root para Docker. O mínimo viável é <strong class="text-blue-400">2 GB de RAM, 2 vCPUs e 20 GB de disco</strong> — abaixo disso, OOM kill é questão de tempo.
+        O Postiz roda confortavelmente em uma VPS pequena, mas <strong class="text-blue-400">nêo em um shared hosting</strong>. O processo Node + Postgres + Redis consomem RAM e exigem controle root para Docker. O mínimo viável é <strong class="text-blue-400">2 GB de RAM, 2 vCPUs e 20 GB de disco</strong> — abaixo disso, OOM kill é questêo de tempo.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Duas escolhas óbvias e baratas: <strong class="text-blue-400">Hetzner CX22</strong> (€4/mês, datacenter na Alemanha/Finlândia) ou <strong class="text-blue-400">DigitalOcean Basic Droplet</strong> ($6/mês, várias regiões). Ambas dão Ubuntu 24.04 LTS em poucos cliques.
+        Duas escolhas óbvias e baratas: <strong class="text-blue-400">Hetzner CX22</strong> (€4/mês, datacenter na Alemanha/Finlândia) ou <strong class="text-blue-400">DigitalOcean Basic Droplet</strong> ($6/mês, várias regiões). Ambas dêo Ubuntu 24.04 LTS em poucos cliques.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Após criar a VPS, conectar via SSH (substitua o IP)
 ssh root@198.51.100.42
 
-# Atualizar o sistema antes de qualquer instalação
+# Atualizar o sistema antes de qualquer instalaçêo
 apt update && apt upgrade -y
 
-# Criar usuário não-root (boa prática mínima)
+# Criar usuário nêo-root (boa prática mínima)
 adduser deploy
 usermod -aG sudo deploy
 
@@ -198,9 +198,9 @@ nproc            # vCPUs</code></pre>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar shared hosting / cPanel — Docker não roda.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar shared hosting / cPanel — Docker nêo roda.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Escolher 1 GB de RAM "pra economizar" — Postgres + Node estouram.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar tudo como <code class="font-mono">root</code> sem criar usuário deploy.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de fechar a porta 5432 (Postgres) no firewall público.</span></li>
@@ -241,17 +241,17 @@ nproc            # vCPUs</code></pre>
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        <strong class="text-blue-400">Não use</strong> o <code class="text-blue-400 font-mono text-sm">apt install docker.io</code> dos repositórios padrão do Ubuntu — vem desatualizado e sem o plugin Compose. Instale pelo repositório oficial da Docker.
+        <strong class="text-blue-400">Nêo use</strong> o <code class="text-blue-400 font-mono text-sm">apt install docker.io</code> dos repositórios padrêo do Ubuntu — vem desatualizado e sem o plugin Compose. Instale pelo repositório oficial da Docker.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalação oficial no Ubuntu 24.04
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalaçêo oficial no Ubuntu 24.04
 curl -fsSL https://get.docker.com | sh
 
 # Adicionar usuário ao grupo docker (evita sudo)
 sudo usermod -aG docker $USER
 newgrp docker
 
-# Verificar versão do engine
+# Verificar versêo do engine
 docker --version
 # Docker version 27.3.1, build ce12230
 
@@ -298,7 +298,7 @@ docker run --rm hello-world</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Você <strong class="text-blue-400">precisa</strong> de um domínio para: (1) gerar certificado HTTPS, (2) registrar callback OAuth nas redes sociais (Twitter/X, LinkedIn etc. não aceitam IP cru) e (3) ter URL estável que não muda quando você recriar a VPS.
+        Você <strong class="text-blue-400">precisa</strong> de um domínio para: (1) gerar certificado HTTPS, (2) registrar callback OAuth nas redes sociais (Twitter/X, LinkedIn etc. nêo aceitam IP cru) e (3) ter URL estável que nêo muda quando você recriar a VPS.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -311,7 +311,7 @@ docker run --rm hello-world</code></pre>
 #   Valor: 198.51.100.42   (IP da sua VPS)
 #   TTL:  300              (5 min, facilita ajustes)
 
-# Confirmar propagação (pode levar até 30 min)
+# Confirmar propagaçêo (pode levar até 30 min)
 dig +short postiz.seudominio.com
 # 198.51.100.42
 
@@ -325,7 +325,7 @@ curl -I http://postiz.seudominio.com</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Se usa Cloudflare, comece com <strong>proxy desligado</strong> (nuvem cinza) até o Postiz estar respondendo no domínio. Proxy ativo (nuvem laranja) pode mascarar erros de configuração e atrapalha o desafio HTTP-01 do Let's Encrypt no Traefik.</p>
+        <p class="text-neutral-300">Se usa Cloudflare, comece com <strong>proxy desligado</strong> (nuvem cinza) até o Postiz estar respondendo no domínio. Proxy ativo (nuvem laranja) pode mascarar erros de configuraçêo e atrapalha o desafio HTTP-01 do Let's Encrypt no Traefik.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -343,7 +343,7 @@ curl -I http://postiz.seudominio.com</code></pre>
           <p class="text-xs text-neutral-400">Prefixo (<code class="font-mono">postiz.</code>) que isola por serviço.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-blue-400 mb-1">Propagação</div>
+          <div class="font-semibold text-blue-400 mb-1">Propagaçêo</div>
           <p class="text-xs text-neutral-400">Tempo até resolvers globais aprenderem o registro.</p>
         </div>
       </div>
@@ -357,11 +357,11 @@ curl -I http://postiz.seudominio.com</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Postiz envia e-mails de <strong class="text-blue-400">signup, reset de senha e notificações de falha de post</strong>. Sem provedor configurado, esses fluxos quebram silenciosamente. <strong class="text-blue-400">Resend</strong> é a escolha mais simples: 3 000 e-mails/mês grátis, API moderna, sem o pesadelo de configurar SMTP na mão.
+        O Postiz envia e-mails de <strong class="text-blue-400">signup, reset de senha e notificações de falha de post</strong>. Sem provedor configurado, esses fluxos quebram silenciosamente. <strong class="text-blue-400">Resend</strong> é a escolha mais simples: 3 000 e-mails/mês grátis, API moderna, sem o pesadelo de configurar SMTP na mêo.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Alternativas válidas: <strong class="text-blue-400">Postmark</strong> (excelente entregabilidade), <strong class="text-blue-400">Amazon SES</strong> (barato em volume) ou <strong class="text-blue-400">SMTP genérico</strong>. Em qualquer caso, você precisa <strong class="text-blue-400">verificar o domínio</strong> com SPF e DKIM, senão cai no spam.
+        Alternativas válidas: <strong class="text-blue-400">Postmark</strong> (excelente entregabilidade), <strong class="text-blue-400">Amazon SES</strong> (barato em volume) ou <strong class="text-blue-400">SMTP genérico</strong>. Em qualquer caso, você precisa <strong class="text-blue-400">verificar o domínio</strong> com SPF e DKIM, senêo cai no spam.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Passos no resend.com:
@@ -369,7 +369,7 @@ curl -I http://postiz.seudominio.com</code></pre>
 # 2. Domains → Add Domain → seudominio.com
 # 3. Copiar os 3 registros DNS que aparecem (SPF, DKIM, Return-Path)
 # 4. Colar no seu provedor de DNS
-# 5. Aguardar verificação automática (5-15 min)
+# 5. Aguardar verificaçêo automática (5-15 min)
 # 6. API Keys → Create API Key → guardar como RESEND_API_KEY
 
 # Testar a chave via curl
@@ -387,14 +387,14 @@ curl -X POST https://api.resend.com/emails \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">📨</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Antes de migrar para produção, mande 2-3 e-mails de teste e cheque os cabeçalhos do destinatário: <code class="text-primary font-mono text-sm">spf=pass</code>, <code class="text-primary font-mono text-sm">dkim=pass</code>, <code class="text-primary font-mono text-sm">dmarc=pass</code>. Qualquer <code class="text-primary font-mono text-sm">fail</code> = e-mails indo para spam.</p>
+        <p class="text-neutral-300">Antes de migrar para produçêo, mande 2-3 e-mails de teste e cheque os cabeçalhos do destinatário: <code class="text-primary font-mono text-sm">spf=pass</code>, <code class="text-primary font-mono text-sm">dkim=pass</code>, <code class="text-primary font-mono text-sm">dmarc=pass</code>. Qualquer <code class="text-primary font-mono text-sm">fail</code> = e-mails indo para spam.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Transacional</div>
-          <p class="text-xs text-neutral-400">E-mail acionado por evento (não marketing).</p>
+          <p class="text-xs text-neutral-400">E-mail acionado por evento (nêo marketing).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">SPF</div>
@@ -419,14 +419,14 @@ curl -X POST https://api.resend.com/emails \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Postiz precisa guardar <strong class="text-blue-400">imagens e vídeos</strong> que você anexa aos posts. Salvar no disco da VPS funciona em dev, mas em produção você quer <strong class="text-blue-400">storage S3-compatible</strong>: sobrevive a reboots, cresce sem refazer partição e serve direto via CDN.
+        O Postiz precisa guardar <strong class="text-blue-400">imagens e vídeos</strong> que você anexa aos posts. Salvar no disco da VPS funciona em dev, mas em produçêo você quer <strong class="text-blue-400">storage S3-compatible</strong>: sobrevive a reboots, cresce sem refazer partiçêo e serve direto via CDN.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
         Duas opções pragmáticas: <strong class="text-blue-400">Cloudflare R2</strong> (10 GB grátis, <em>zero egress fee</em> — o killer feature) ou <strong class="text-blue-400">MinIO self-hosted</strong> (roda no mesmo Docker Compose, dado fica em casa). AWS S3 funciona mas cobra egress, evita.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Opção A: Cloudflare R2
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Opçêo A: Cloudflare R2
 # 1. dash.cloudflare.com → R2 → Create bucket → "postiz-uploads"
 # 2. Manage R2 API Tokens → Create token → permission "Object Read & Write"
 # 3. Anotar:
@@ -435,7 +435,7 @@ curl -X POST https://api.resend.com/emails \
 #    - Secret Access Key
 #    - Endpoint: https://<account-id>.r2.cloudflarestorage.com
 
-# Opção B: MinIO self-hosted (adiciona ao docker-compose.yml depois)
+# Opçêo B: MinIO self-hosted (adiciona ao docker-compose.yml depois)
 docker run -d --name minio \
   -p 9000:9000 -p 9001:9001 \
   -e MINIO_ROOT_USER=admin \
@@ -453,7 +453,7 @@ mc ls r2/postiz-uploads</code></pre>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Você quer simplicidade e free tier generoso.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mídia é servida ao público (zero egress).</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Não quer pensar em backup do storage.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Nêo quer pensar em backup do storage.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Já usa Cloudflare para DNS/CDN.</span></li>
           </ul>
         </div>
@@ -461,7 +461,7 @@ mc ls r2/postiz-uploads</code></pre>
           <h4 class="font-bold text-red-400 mb-4">✓ Quando usar MinIO</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Política interna exige dado on-premise.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Volume alto (TB) onde free tier não cobre.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Volume alto (TB) onde free tier nêo cobre.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Quer evitar dependência de cloud externa.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">●</span><span>Você está disposto a cuidar de backup do volume.</span></li>
           </ul>
@@ -480,7 +480,7 @@ mc ls r2/postiz-uploads</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Egress</div>
-          <p class="text-xs text-neutral-400">Tráfego de saída — onde S3 cobra caro, R2 não.</p>
+          <p class="text-xs text-neutral-400">Tráfego de saída — onde S3 cobra caro, R2 nêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Endpoint</div>
@@ -497,14 +497,14 @@ mc ls r2/postiz-uploads</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Você não precisa ser sysadmin sênior, mas <strong class="text-blue-400">tem que sobreviver no SSH sem GUI</strong>. Editar arquivo de config, ler log, mover arquivo, reiniciar serviço — tudo via teclado. Se cada um desses comandos exige Google, o módulo 2.2 vai ser doloroso.
+        Você nêo precisa ser sysadmin sênior, mas <strong class="text-blue-400">tem que sobreviver no SSH sem GUI</strong>. Editar arquivo de config, ler log, mover arquivo, reiniciar serviço — tudo via teclado. Se cada um desses comandos exige Google, o módulo 2.2 vai ser doloroso.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use <strong class="text-blue-400">tmux</strong> (ou <strong class="text-blue-400">screen</strong>) para que sessões SSH sobrevivam a desconexão — fundamental quando o boot do Postiz leva 1-2 min e você fecha o laptop sem querer.
+        Use <strong class="text-blue-400">tmux</strong> (ou <strong class="text-blue-400">screen</strong>) para que sessões SSH sobrevivam a desconexêo — fundamental quando o boot do Postiz leva 1-2 min e você fecha o laptop sem querer.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Conexão SSH com chave (gere uma se não tiver: ssh-keygen -t ed25519)
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Conexêo SSH com chave (gere uma se nêo tiver: ssh-keygen -t ed25519)
 ssh -i ~/.ssh/id_ed25519 deploy@postiz.seudominio.com
 
 # Comandos de sobrevivência
@@ -516,8 +516,8 @@ grep -r "DATABASE" .      # buscar
 tail -f /var/log/syslog   # log ao vivo
 ps aux | grep postiz      # processos
 
-# tmux: sessão que sobrevive ao SSH cair
-tmux new -s postiz        # criar sessão chamada "postiz"
+# tmux: sessêo que sobrevive ao SSH cair
+tmux new -s postiz        # criar sessêo chamada "postiz"
 # Ctrl+B depois D          → detach (sai sem fechar)
 tmux attach -t postiz     # reconectar
 tmux ls                   # listar sessões
@@ -529,14 +529,14 @@ scp ./backup.sql deploy@postiz.seudominio.com:~/postiz/</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🔑</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Configure <strong>SSH por chave pública</strong> e <strong>desabilite login por senha</strong> em <code class="text-primary font-mono text-sm">/etc/ssh/sshd_config</code> (<code class="text-primary font-mono text-sm">PasswordAuthentication no</code>). Bots escaneiam a porta 22 24/7 — sem senha como vetor, eles vão embora.</p>
+        <p class="text-neutral-300">Configure <strong>SSH por chave pública</strong> e <strong>desabilite login por senha</strong> em <code class="text-primary font-mono text-sm">/etc/ssh/sshd_config</code> (<code class="text-primary font-mono text-sm">PasswordAuthentication no</code>). Bots escaneiam a porta 22 24/7 — sem senha como vetor, eles vêo embora.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">SSH</div>
-          <p class="text-xs text-neutral-400">Shell remoto criptografado — porta 22 padrão.</p>
+          <p class="text-xs text-neutral-400">Shell remoto criptografado — porta 22 padrêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Chave pública</div>
@@ -575,7 +575,7 @@ scp ./backup.sql deploy@postiz.seudominio.com:~/postiz/</code></pre>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">E-mail transacional</strong><span class="text-neutral-400"> — conta Resend criada, domínio verificado, API key na mão.</span></div>
+            <div><strong class="text-white">E-mail transacional</strong><span class="text-neutral-400"> — conta Resend criada, domínio verificado, API key na mêo.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>

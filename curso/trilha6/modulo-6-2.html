@@ -131,7 +131,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">MÓDULO 6.2</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔒 Domínio, HTTPS, reverse proxy</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Do A record ao cadeado verde: DNS para a VPS, comparativo de reverse proxies, Caddyfile com auto-HTTPS, subdomínios, headers de segurança e renovação automática do Let's Encrypt.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">Do A record ao cadeado verde: DNS para a VPS, comparativo de reverse proxies, Caddyfile com auto-HTTPS, subdomínios, headers de segurança e renovaçêo automática do Let's Encrypt.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -165,11 +165,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        HTTPS começa no DNS. Sem o domínio resolvendo para o IP da VPS, o Caddy não consegue completar o desafio <strong class="text-rose-400">ACME HTTP-01</strong> do Let's Encrypt e o cadeado nunca aparece. O registro essencial é o <strong class="text-rose-400">A record</strong> (IPv4); se a VPS tem IPv6, adicione também um <strong class="text-rose-400">AAAA</strong>.
+        HTTPS começa no DNS. Sem o domínio resolvendo para o IP da VPS, o Caddy nêo consegue completar o desafio <strong class="text-rose-400">ACME HTTP-01</strong> do Let's Encrypt e o cadeado nunca aparece. O registro essencial é o <strong class="text-rose-400">A record</strong> (IPv4); se a VPS tem IPv6, adicione também um <strong class="text-rose-400">AAAA</strong>.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <strong class="text-rose-400">TTL</strong> (time-to-live) controla quanto tempo resolvers fazem cache da resposta. Em mudança de IP, baixe para <code class="text-rose-400 font-mono text-sm">300</code> antes; em produção estável, <code class="text-rose-400 font-mono text-sm">3600</code> ou mais. A <strong class="text-rose-400">propagação</strong> global leva de minutos a algumas horas — depende do provider e do TTL anterior.
+        O <strong class="text-rose-400">TTL</strong> (time-to-live) controla quanto tempo resolvers fazem cache da resposta. Em mudança de IP, baixe para <code class="text-rose-400 font-mono text-sm">300</code> antes; em produçêo estável, <code class="text-rose-400 font-mono text-sm">3600</code> ou mais. A <strong class="text-rose-400">propagaçêo</strong> global leva de minutos a algumas horas — depende do provider e do TTL anterior.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Registros no painel do provider (Cloudflare, Registro.br, etc.)
@@ -179,7 +179,7 @@
 # A     api.postiz.exemplo 203.0.113.42       300
 # A     app.postiz.exemplo 203.0.113.42       300
 
-# Confirmar resolução (IPv4)
+# Confirmar resoluçêo (IPv4)
 dig +short postiz.exemplo.com A
 # 203.0.113.42
 
@@ -187,7 +187,7 @@ dig +short postiz.exemplo.com A
 dig +short postiz.exemplo.com AAAA
 # 2001:db8::1
 
-# Resolver específico para ver propagação em outro DNS
+# Resolver específico para ver propagaçêo em outro DNS
 dig @1.1.1.1 postiz.exemplo.com +short
 dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
 
@@ -195,7 +195,7 @@ dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Antes de tentar emitir certificado, confirme que o domínio resolve para o IP <strong>certo</strong> a partir de fora — use <a href="https://dnschecker.org" target="_blank" class="text-primary hover:underline">dnschecker.org</a> ou rode <code class="text-primary font-mono text-sm">dig</code> contra múltiplos resolvers. Let's Encrypt valida do datacenter deles, não do seu laptop.</p>
+        <p class="text-neutral-300">Antes de tentar emitir certificado, confirme que o domínio resolve para o IP <strong>certo</strong> a partir de fora — use <a href="https://dnschecker.org" target="_blank" class="text-primary hover:underline">dnschecker.org</a> ou rode <code class="text-primary font-mono text-sm">dig</code> contra múltiplos resolvers. Let's Encrypt valida do datacenter deles, nêo do seu laptop.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -206,14 +206,14 @@ dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">AAAA</div>
-          <p class="text-xs text-neutral-400">Versão IPv6 do A record.</p>
+          <p class="text-xs text-neutral-400">Versêo IPv6 do A record.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">TTL</div>
           <p class="text-xs text-neutral-400">Segundos que resolvers guardam o resultado em cache.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Propagação</div>
+          <div class="font-semibold text-rose-400 mb-1">Propagaçêo</div>
           <p class="text-xs text-neutral-400">Tempo até a mudança aparecer em todos os resolvers.</p>
         </div>
       </div>
@@ -227,18 +227,18 @@ dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Três caminhos para o mesmo objetivo: terminar TLS na borda e fazer reverse proxy para os containers. A escolha depende de quanto <strong class="text-rose-400">automatismo</strong> você quer e quão familiar é com cada ecossistema.
+        Três caminhos para o mesmo objetivo: terminar TLS na borda e fazer reverse proxy para os containers. A escolha depende de quanto <strong class="text-rose-400">automatismo</strong> você quer e quêo familiar é com cada ecossistema.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-dark-800 border border-rose-500/30 rounded-xl p-6">
           <h4 class="font-bold text-rose-400 mb-3">Caddy</h4>
-          <p class="text-sm text-neutral-300 mb-3">Auto-HTTPS por padrão. Caddyfile lê como receita. Zero configuração para o caso comum.</p>
+          <p class="text-sm text-neutral-300 mb-3">Auto-HTTPS por padrêo. Caddyfile lê como receita. Zero configuraçêo para o caso comum.</p>
           <p class="text-xs text-neutral-400"><strong class="text-rose-400">Use quando:</strong> quer o menor caminho até o cadeado, stack pequeno ou médio.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
           <h4 class="font-bold text-rose-400 mb-3">Traefik</h4>
-          <p class="text-sm text-neutral-300 mb-3">Configuração por labels do Docker — containers se anunciam sozinhos. Dashboard nativo.</p>
+          <p class="text-sm text-neutral-300 mb-3">Configuraçêo por labels do Docker — containers se anunciam sozinhos. Dashboard nativo.</p>
           <p class="text-xs text-neutral-400"><strong class="text-rose-400">Use quando:</strong> muitos serviços dinâmicos, Swarm ou Kubernetes na frente.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-xl p-6">
@@ -270,7 +270,7 @@ dig @8.8.8.8 postiz.exemplo.com +short</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Auto-HTTPS</div>
-          <p class="text-xs text-neutral-400">Emite, instala e renova certificado sem intervenção.</p>
+          <p class="text-xs text-neutral-400">Emite, instala e renova certificado sem intervençêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Service discovery</div>
@@ -301,7 +301,7 @@ postiz.exemplo.com {
 }</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Três linhas. O Caddy faz o resto: ACME challenge, certificado, redirect 80→443, HTTP/2, HTTP/3. Adicione o serviço ao compose e remova o <code class="text-rose-400 font-mono text-sm">ports: ["5000:5000"]</code> do Postiz — ele não precisa mais ser acessível direto.
+        Três linhas. O Caddy faz o resto: ACME challenge, certificado, redirect 80→443, HTTP/2, HTTP/3. Adicione o serviço ao compose e remova o <code class="text-rose-400 font-mono text-sm">ports: ["5000:5000"]</code> do Postiz — ele nêo precisa mais ser acessível direto.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># ~/postiz/docker-compose.yml (recorte do serviço caddy)
@@ -315,7 +315,7 @@ postiz.exemplo.com {
       - "443:443/udp"   # HTTP/3 (QUIC)
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data         # certificados (NÃO PERDER!)
+      - caddy-data:/data         # certificados (NêO PERDER!)
       - caddy-config:/config
     networks: [postiz-net]
     depends_on:
@@ -344,7 +344,7 @@ volumes:
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">ACME</div>
-          <p class="text-xs text-neutral-400">Protocolo do Let's Encrypt para emissão automática.</p>
+          <p class="text-xs text-neutral-400">Protocolo do Let's Encrypt para emissêo automática.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">HTTP/3</div>
@@ -401,7 +401,7 @@ exemplo.com {
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Liberar <code class="font-mono">Access-Control-Allow-Origin: *</code> com credenciais.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar HTTP e HTTPS — sempre force HTTPS no canônico.</span></li>
@@ -440,7 +440,7 @@ exemplo.com {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Certificado é só metade do trabalho. Sem headers de segurança, o browser ainda permite ataques que TLS sozinho não cobre: downgrade para HTTP, clickjacking, sniffing de MIME, XSS via scripts injetados.
+        Certificado é só metade do trabalho. Sem headers de segurança, o browser ainda permite ataques que TLS sozinho nêo cobre: downgrade para HTTP, clickjacking, sniffing de MIME, XSS via scripts injetados.
       </p>
 
       <div class="bg-rose-900/20 rounded-xl border border-rose-500/30 p-6 mb-6">
@@ -476,7 +476,7 @@ app.exemplo.com {
         # CSP básico — ajuste conforme assets externos do app
         Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'"
 
-        # Remove header que vaza versão do servidor
+        # Remove header que vaza versêo do servidor
         -Server
     }
 }</code></pre>
@@ -513,11 +513,11 @@ app.exemplo.com {
     <section id="topico-6" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">🔁 Renovação automática Let's Encrypt</h2>
+        <h2 class="text-2xl font-bold">🔁 Renovaçêo automática Let's Encrypt</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Certificado do Let's Encrypt dura <strong class="text-rose-400">90 dias</strong>. O Caddy renova automaticamente quando faltam ~30 dias — sem cron, sem script, sem intervenção. O que pode dar errado é o desafio ACME falhar em silêncio; o jeito de saber é olhar os logs.
+        Certificado do Let's Encrypt dura <strong class="text-rose-400">90 dias</strong>. O Caddy renova automaticamente quando faltam ~30 dias — sem cron, sem script, sem intervençêo. O que pode dar errado é o desafio ACME falhar em silêncio; o jeito de saber é olhar os logs.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Acompanhar logs do Caddy (boot + renovações)
@@ -526,14 +526,14 @@ docker compose logs -f caddy
 # Procurar especificamente eventos de certificado
 docker compose logs caddy | grep -iE "certificate|acme|renew"
 
-# Inspecionar certificado emitido (data de expiração)
+# Inspecionar certificado emitido (data de expiraçêo)
 echo | openssl s_client -servername app.exemplo.com -connect app.exemplo.com:443 2>/dev/null \
   | openssl x509 -noout -dates -issuer
 
 # Forçar reload do Caddyfile sem reiniciar (zero downtime)
 docker exec caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Caso renovação falhe: limpar e tentar de novo (cuidado com rate limit!)
+# Caso renovaçêo falhe: limpar e tentar de novo (cuidado com rate limit!)
 docker compose restart caddy</code></pre>
 
       <div class="space-y-4 mb-6">
@@ -548,7 +548,7 @@ docker compose restart caddy</code></pre>
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">2</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Portas 80 e 443 abertas no firewall</h4>
-            <p class="text-sm text-neutral-400">ACME HTTP-01 precisa de <code class="font-mono">80</code>; TLS precisa de <code class="font-mono">443</code>. Bloquear qualquer uma quebra renovação.</p>
+            <p class="text-sm text-neutral-400">ACME HTTP-01 precisa de <code class="font-mono">80</code>; TLS precisa de <code class="font-mono">443</code>. Bloquear qualquer uma quebra renovaçêo.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -571,7 +571,7 @@ docker compose restart caddy</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🚨</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Configure um alerta externo (UptimeRobot, healthchecks.io) que bate em <code class="text-primary font-mono text-sm">https://app.exemplo.com</code> a cada 5 min. Se o cert vencer ou a config quebrar, você descobre <strong>antes</strong> dos usuários — não pelo print no WhatsApp dizendo "site fora do ar".</p>
+        <p class="text-neutral-300">Configure um alerta externo (UptimeRobot, healthchecks.io) que bate em <code class="text-primary font-mono text-sm">https://app.exemplo.com</code> a cada 5 min. Se o cert vencer ou a config quebrar, você descobre <strong>antes</strong> dos usuários — nêo pelo print no WhatsApp dizendo "site fora do ar".</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -605,7 +605,7 @@ docker compose restart caddy</code></pre>
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">DNS apontando para a VPS</strong><span class="text-neutral-400"> — A record (e AAAA, se IPv6), TTL baixo durante mudança, propagação confirmada via <code class="font-mono">dig</code>.</span></div>
+            <div><strong class="text-white">DNS apontando para a VPS</strong><span class="text-neutral-400"> — A record (e AAAA, se IPv6), TTL baixo durante mudança, propagaçêo confirmada via <code class="font-mono">dig</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
@@ -625,7 +625,7 @@ docker compose restart caddy</code></pre>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Renovação automática</strong><span class="text-neutral-400"> — Caddy renova a cada ~60 dias, logs monitorados e alerta externo configurado.</span></div>
+            <div><strong class="text-white">Renovaçêo automática</strong><span class="text-neutral-400"> — Caddy renova a cada ~60 dias, logs monitorados e alerta externo configurado.</span></div>
           </div>
         </div>
 

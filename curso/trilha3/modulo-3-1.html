@@ -131,7 +131,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🦋 Bluesky — postando no AT Protocol</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">A rede social mais fácil de automatizar: sem aprovação de app, sem OAuth labiríntico. Em 30 minutos você cria conta, instala o SDK, faz login programático e publica texto, imagens e links com facets.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">A rede social mais fácil de automatizar: sem aprovaçêo de app, sem OAuth labiríntico. Em 30 minutos você cria conta, instala o SDK, faz login programático e publica texto, imagens e links com facets.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -165,7 +165,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Bluesky é a rede mais amigável a desenvolvedores: <strong class="text-purple-400">não precisa aprovação</strong>, não tem fila de espera para API, e a autenticação é por <strong class="text-purple-400">App Password</strong> — uma senha derivada que você revoga sem afetar o login principal. Diferente do X/Twitter, ninguém precisa "aceitar" seu projeto.
+        O Bluesky é a rede mais amigável a desenvolvedores: <strong class="text-purple-400">nêo precisa aprovaçêo</strong>, nêo tem fila de espera para API, e a autenticaçêo é por <strong class="text-purple-400">App Password</strong> — uma senha derivada que você revoga sem afetar o login principal. Diferente do X/Twitter, ninguém precisa "aceitar" seu projeto.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -180,14 +180,14 @@
 BSKY_HANDLE=seu-nome.bsky.social
 BSKY_APP_PASSWORD=abcd-efgh-ijkl-mnop
 
-# Endpoint do PDS (Personal Data Server) — padrão Bluesky
+# Endpoint do PDS (Personal Data Server) — padrêo Bluesky
 BSKY_SERVICE=https://bsky.social</code></pre>
 
       <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🔐</span> Dica prática
         </h3>
-        <p class="text-neutral-300">App Passwords <strong>não</strong> dão acesso a trocar a senha principal nem deletar a conta — só ao protocolo de publicação. Crie uma por integração: assim revogar o token do bot não desloga você do app oficial.</p>
+        <p class="text-neutral-300">App Passwords <strong>nêo</strong> dêo acesso a trocar a senha principal nem deletar a conta — só ao protocolo de publicaçêo. Crie uma por integraçêo: assim revogar o token do bot nêo desloga você do app oficial.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -237,7 +237,7 @@ npx tsc --init</code></pre>
 import { BskyAgent, RichText } from "@atproto/api";
 import "dotenv/config";
 
-// Cliente apontando para o PDS padrão
+// Cliente apontando para o PDS padrêo
 export const agent = new BskyAgent({
   service: process.env.BSKY_SERVICE ?? "https://bsky.social",
 });
@@ -263,7 +263,7 @@ export type PostRecord = {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">tsx</code> em vez de <code class="text-primary font-mono text-sm">ts-node</code> — é mais rápido, suporta ESM out-of-the-box e não exige configuração extra. Para produção, transpile com <code class="text-primary font-mono text-sm">tsc</code> e rode o <code class="text-primary font-mono text-sm">.js</code> com Node puro.</p>
+        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">tsx</code> em vez de <code class="text-primary font-mono text-sm">ts-node</code> — é mais rápido, suporta ESM out-of-the-box e nêo exige configuraçêo extra. Para produçêo, transpile com <code class="text-primary font-mono text-sm">tsc</code> e rode o <code class="text-primary font-mono text-sm">.js</code> com Node puro.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -274,7 +274,7 @@ export type PostRecord = {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">BskyAgent</div>
-          <p class="text-xs text-neutral-400">Classe principal com sessão e métodos de alto nível.</p>
+          <p class="text-xs text-neutral-400">Classe principal com sessêo e métodos de alto nível.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">XRPC</div>
@@ -295,7 +295,7 @@ export type PostRecord = {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O método <code class="text-purple-400 font-mono text-sm">agent.login()</code> troca handle + App Password por um par de tokens (<code class="text-purple-400 font-mono text-sm">accessJwt</code> e <code class="text-purple-400 font-mono text-sm">refreshJwt</code>). O SDK mantém esses tokens em memória e os renova automaticamente nas chamadas seguintes — você só precisa logar uma vez por execução.
+        O método <code class="text-purple-400 font-mono text-sm">agent.login()</code> troca handle + App Password por um par de tokens (<code class="text-purple-400 font-mono text-sm">accessJwt</code> e <code class="text-purple-400 font-mono text-sm">refreshJwt</code>). O SDK mantém esses tokens em memória e os renova automaticamente nas chamadas seguintes — você só precisa logar uma vez por execuçêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/login.ts
@@ -306,7 +306,7 @@ async function authenticate(): Promise&lt;void&gt; {
   const password = process.env.BSKY_APP_PASSWORD;
 
   if (!handle || !password) {
-    throw new Error("BSKY_HANDLE e BSKY_APP_PASSWORD são obrigatórios");
+    throw new Error("BSKY_HANDLE e BSKY_APP_PASSWORD sêo obrigatórios");
   }
 
   const result = await agent.login({
@@ -325,7 +325,7 @@ authenticate().catch((err) =&gt; {
 });</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para reutilizar a sessão entre execuções (evitando login repetido em filas), persista o objeto <code class="text-purple-400 font-mono text-sm">agent.session</code> e restaure com <code class="text-purple-400 font-mono text-sm">resumeSession()</code>:
+        Para reutilizar a sessêo entre execuções (evitando login repetido em filas), persista o objeto <code class="text-purple-400 font-mono text-sm">agent.session</code> e restaure com <code class="text-purple-400 font-mono text-sm">resumeSession()</code>:
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/session-cache.ts
@@ -340,14 +340,14 @@ export async function ensureSession(): Promise&lt;void&gt; {
     const raw = await fs.readFile(SESSION_FILE, "utf8");
     const session = JSON.parse(raw) as AtpSessionData;
     await agent.resumeSession(session);
-    console.log("♻️  Sessão restaurada");
+    console.log("♻️  Sessêo restaurada");
   } catch {
     await agent.login({
       identifier: process.env.BSKY_HANDLE!,
       password: process.env.BSKY_APP_PASSWORD!,
     });
     await fs.writeFile(SESSION_FILE, JSON.stringify(agent.session));
-    console.log("🆕 Nova sessão criada");
+    console.log("🆕 Nova sessêo criada");
   }
 }</code></pre>
 
@@ -362,7 +362,7 @@ export async function ensureSession(): Promise&lt;void&gt; {
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Logar de novo a cada post — desperdiça tokens.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar a senha principal no lugar da App Password.</span></li>
@@ -384,7 +384,7 @@ export async function ensureSession(): Promise&lt;void&gt; {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">resumeSession</div>
-          <p class="text-xs text-neutral-400">Restaura sessão sem novo handshake.</p>
+          <p class="text-xs text-neutral-400">Restaura sessêo sem novo handshake.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">identifier</div>
@@ -401,7 +401,7 @@ export async function ensureSession(): Promise&lt;void&gt; {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O método <code class="text-purple-400 font-mono text-sm">agent.post()</code> recebe um record que segue o schema <strong class="text-purple-400">app.bsky.feed.post</strong>. Os dois campos obrigatórios são <code class="text-purple-400 font-mono text-sm">text</code> (até 300 caracteres) e <code class="text-purple-400 font-mono text-sm">createdAt</code> em ISO 8601.
+        O método <code class="text-purple-400 font-mono text-sm">agent.post()</code> recebe um record que segue o schema <strong class="text-purple-400">app.bsky.feed.post</strong>. Os dois campos obrigatórios sêo <code class="text-purple-400 font-mono text-sm">text</code> (até 300 caracteres) e <code class="text-purple-400 font-mono text-sm">createdAt</code> em ISO 8601.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post.ts
@@ -427,7 +427,7 @@ publish().catch(console.error);</code></pre>
         O retorno traz <code class="text-purple-400 font-mono text-sm">uri</code> (formato <code class="text-purple-400 font-mono text-sm">at://did:plc:.../app.bsky.feed.post/&lt;rkey&gt;</code>) e <code class="text-purple-400 font-mono text-sm">cid</code> (hash do conteúdo). Guarde os dois se quiser deletar ou referenciar o post depois.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Validação de tamanho antes de publicar
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Validaçêo de tamanho antes de publicar
 const MAX_GRAPHEMES = 300;
 
 function assertPostable(text: string): void {
@@ -448,7 +448,7 @@ await agent.post({
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚠️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O limite do Bluesky é em <strong>grafemas</strong>, não bytes nem code units. Um emoji composto (<code class="text-primary font-mono text-sm">👨‍👩‍👧</code>) conta como 1, mas <code class="text-primary font-mono text-sm">"".length</code> retorna 8. Use <code class="text-primary font-mono text-sm">Intl.Segmenter</code> para contar certo.</p>
+        <p class="text-neutral-300">O limite do Bluesky é em <strong>grafemas</strong>, nêo bytes nem code units. Um emoji composto (<code class="text-primary font-mono text-sm">👨‍👩‍👧</code>) conta como 1, mas <code class="text-primary font-mono text-sm">"".length</code> retorna 8. Use <code class="text-primary font-mono text-sm">Intl.Segmenter</code> para contar certo.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -480,11 +480,11 @@ await agent.post({
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Imagens no Bluesky são <strong class="text-purple-400">blobs</strong> separados do post. O fluxo é em duas etapas: primeiro <code class="text-purple-400 font-mono text-sm">uploadBlob()</code> envia os bytes e devolve uma referência; depois você inclui essa referência no campo <code class="text-purple-400 font-mono text-sm">embed</code> do post.
+        Imagens no Bluesky sêo <strong class="text-purple-400">blobs</strong> separados do post. O fluxo é em duas etapas: primeiro <code class="text-purple-400 font-mono text-sm">uploadBlob()</code> envia os bytes e devolve uma referência; depois você inclui essa referência no campo <code class="text-purple-400 font-mono text-sm">embed</code> do post.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Limites: até <strong class="text-purple-400">4 imagens</strong> por post, <strong class="text-purple-400">1 MB</strong> por blob (após otimização), formatos <code class="text-purple-400 font-mono text-sm">image/jpeg</code>, <code class="text-purple-400 font-mono text-sm">image/png</code> e <code class="text-purple-400 font-mono text-sm">image/webp</code>. Alt text é obrigatório para acessibilidade.
+        Limites: até <strong class="text-purple-400">4 imagens</strong> por post, <strong class="text-purple-400">1 MB</strong> por blob (após otimizaçêo), formatos <code class="text-purple-400 font-mono text-sm">image/jpeg</code>, <code class="text-purple-400 font-mono text-sm">image/png</code> e <code class="text-purple-400 font-mono text-sm">image/webp</code>. Alt text é obrigatório para acessibilidade.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post-image.ts
@@ -551,7 +551,7 @@ publish().catch(console.error);</code></pre>
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">const uploads = await Promise.all([
   uploadImage("./a.jpg", "image/jpeg", "Captura da dashboard"),
   uploadImage("./b.png", "image/png",  "Gráfico de engajamento"),
-  uploadImage("./c.webp","image/webp", "Print da configuração"),
+  uploadImage("./c.webp","image/webp", "Print da configuraçêo"),
 ]);
 
 await agent.post({
@@ -567,7 +567,7 @@ await agent.post({
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">♿</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">alt</code> não é decorativo — leitores de tela dependem dele e o algoritmo do Bluesky usa o texto para ranqueamento. Descreva o que aparece, não "imagem" ou "foto". Imagem sem alt útil é tratada como spam por moderadores.</p>
+        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">alt</code> nêo é decorativo — leitores de tela dependem dele e o algoritmo do Bluesky usa o texto para ranqueamento. Descreva o que aparece, nêo "imagem" ou "foto". Imagem sem alt útil é tratada como spam por moderadores.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -586,7 +586,7 @@ await agent.post({
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Alt text</div>
-          <p class="text-xs text-neutral-400">Descrição textual para acessibilidade e indexação.</p>
+          <p class="text-xs text-neutral-400">Descriçêo textual para acessibilidade e indexaçêo.</p>
         </div>
       </div>
     </section>
@@ -595,15 +595,15 @@ await agent.post({
     <section id="topico-6" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">🔗 RichText e detecção de links</h2>
+        <h2 class="text-2xl font-bold">🔗 RichText e detecçêo de links</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Diferente do Twitter, o Bluesky <strong class="text-purple-400">não detecta links automaticamente</strong>. URLs e menções viram texto puro a menos que você anexe <strong class="text-purple-400">facets</strong> — marcações posicionais que dizem ao cliente "esses bytes são um link, esses são uma menção".
+        Diferente do Twitter, o Bluesky <strong class="text-purple-400">nêo detecta links automaticamente</strong>. URLs e menções viram texto puro a menos que você anexe <strong class="text-purple-400">facets</strong> — marcações posicionais que dizem ao cliente "esses bytes sêo um link, esses sêo uma mençêo".
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A classe <code class="text-purple-400 font-mono text-sm">RichText</code> do SDK faz o trabalho pesado: detecta padrões, calcula os offsets em UTF-8 (não UTF-16!) e gera o array de facets pronto para anexar ao post.
+        A classe <code class="text-purple-400 font-mono text-sm">RichText</code> do SDK faz o trabalho pesado: detecta padrões, calcula os offsets em UTF-8 (nêo UTF-16!) e gera o array de facets pronto para anexar ao post.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/post-rich.ts
@@ -667,7 +667,7 @@ await agent.post({
 });</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para link preview (card com título, descrição e thumbnail), use <code class="text-purple-400 font-mono text-sm">embed.external</code> com um blob de imagem opcional:
+        Para link preview (card com título, descriçêo e thumbnail), use <code class="text-purple-400 font-mono text-sm">embed.external</code> com um blob de imagem opcional:
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">await agent.post({
@@ -688,16 +688,16 @@ await agent.post({
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">RichText.detectFacets()</code> para link/menção/hashtag automáticos.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">RichText.detectFacets()</code> para link/mençêo/hashtag automáticos.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Calcular offsets em <strong>bytes UTF-8</strong>, nunca em chars JS.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Validar <code class="font-mono">graphemeLength &lt;= 300</code> antes do post.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Anexar card de preview com <code class="font-mono">embed.external</code>.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar autodetecção sem chamar <code class="font-mono">detectFacets()</code>.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar autodetecçêo sem chamar <code class="font-mono">detectFacets()</code>.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar <code class="font-mono">str.indexOf()</code> direto como byteStart.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Colocar tanto <code class="font-mono">images</code> quanto <code class="font-mono">external</code> num único embed.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar text com markdown — Bluesky renderiza puro.</span></li>
@@ -709,7 +709,7 @@ await agent.post({
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Facet</div>
-          <p class="text-xs text-neutral-400">Marcação posicional sobre um trecho do texto.</p>
+          <p class="text-xs text-neutral-400">Marcaçêo posicional sobre um trecho do texto.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">RichText</div>
@@ -717,11 +717,11 @@ await agent.post({
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">UTF-8 offsets</div>
-          <p class="text-xs text-neutral-400">Posição em bytes, não em chars JavaScript.</p>
+          <p class="text-xs text-neutral-400">Posiçêo em bytes, nêo em chars JavaScript.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">embed.external</div>
-          <p class="text-xs text-neutral-400">Card de preview com título, descrição e thumb.</p>
+          <p class="text-xs text-neutral-400">Card de preview com título, descriçêo e thumb.</p>
         </div>
       </div>
     </section>
@@ -744,11 +744,11 @@ await agent.post({
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Login programático funcionando</strong><span class="text-neutral-400"> — <code class="font-mono">agent.login()</code> com persistência de sessão via <code class="font-mono">resumeSession()</code>.</span></div>
+            <div><strong class="text-white">Login programático funcionando</strong><span class="text-neutral-400"> — <code class="font-mono">agent.login()</code> com persistência de sessêo via <code class="font-mono">resumeSession()</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Texto publicado</strong><span class="text-neutral-400"> — <code class="font-mono">agent.post()</code> com validação de 300 grafemas via <code class="font-mono">Intl.Segmenter</code>.</span></div>
+            <div><strong class="text-white">Texto publicado</strong><span class="text-neutral-400"> — <code class="font-mono">agent.post()</code> com validaçêo de 300 grafemas via <code class="font-mono">Intl.Segmenter</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>

@@ -131,7 +131,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🐘 WordPress REST API</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Publicar posts no WordPress por HTTP: endpoints, autenticação, upload de mídia, taxonomias e agendamento — tudo via <code class="font-mono">/wp-json</code> sem plugin.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">Publicar posts no WordPress por HTTP: endpoints, autenticaçêo, upload de mídia, taxonomias e agendamento — tudo via <code class="font-mono">/wp-json</code> sem plugin.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -165,11 +165,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Desde o <strong class="text-amber-400">WordPress 4.7</strong> (dez/2016) a REST API vem ativa <em>por padrão</em>. Não precisa plugin, não precisa flag, não precisa mexer em <code class="text-amber-400 font-mono text-sm">functions.php</code>. O endpoint raiz é <code class="text-amber-400 font-mono text-sm">/wp-json/</code> e ele já descreve toda a API por hipermídia.
+        Desde o <strong class="text-amber-400">WordPress 4.7</strong> (dez/2016) a REST API vem ativa <em>por padrêo</em>. Nêo precisa plugin, nêo precisa flag, nêo precisa mexer em <code class="text-amber-400 font-mono text-sm">functions.php</code>. O endpoint raiz é <code class="text-amber-400 font-mono text-sm">/wp-json/</code> e ele já descreve toda a API por hipermídia.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Antes de qualquer coisa, confirme que sua instalação responde. Um simples <code class="text-amber-400 font-mono text-sm">GET</code> público lista a estrutura — se vier 404 ou HTML, alguém desabilitou via plugin de segurança ou <code class="text-amber-400 font-mono text-sm">.htaccess</code> agressivo.
+        Antes de qualquer coisa, confirme que sua instalaçêo responde. Um simples <code class="text-amber-400 font-mono text-sm">GET</code> público lista a estrutura — se vier 404 ou HTML, alguém desabilitou via plugin de segurança ou <code class="text-amber-400 font-mono text-sm">.htaccess</code> agressivo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Descobrir o índice da API (público)
@@ -195,7 +195,7 @@ curl -s https://seublog.com/wp-json/ | head -40
 }</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Listar posts publicados é igualmente público — útil pra confirmar que o roteamento de <code class="text-amber-400 font-mono text-sm">/wp-json</code> está saudável antes de mexer em autenticação.
+        Listar posts publicados é igualmente público — útil pra confirmar que o roteamento de <code class="text-amber-400 font-mono text-sm">/wp-json</code> está saudável antes de mexer em autenticaçêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Listar os 5 últimos posts publicados
@@ -210,7 +210,7 @@ curl -s "https://seublog.com/wp-json/wp/v2/posts?per_page=5&_fields=id,title,dat
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Plugins como <strong>Wordfence</strong> e <strong>iThemes Security</strong> bloqueiam a REST API "anônima" por padrão. Se <code class="text-primary font-mono text-sm">GET /wp-json/wp/v2/users</code> retornar <code class="text-primary font-mono text-sm">401</code> mesmo autenticado, vá na configuração do plugin e libere o namespace <code class="text-primary font-mono text-sm">wp/v2</code> pra usuários logados.</p>
+        <p class="text-neutral-300">Plugins como <strong>Wordfence</strong> e <strong>iThemes Security</strong> bloqueiam a REST API "anônima" por padrêo. Se <code class="text-primary font-mono text-sm">GET /wp-json/wp/v2/users</code> retornar <code class="text-primary font-mono text-sm">401</code> mesmo autenticado, vá na configuraçêo do plugin e libere o namespace <code class="text-primary font-mono text-sm">wp/v2</code> pra usuários logados.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -246,10 +246,10 @@ curl -s "https://seublog.com/wp-json/wp/v2/posts?per_page=5&_fields=id,title,dat
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para gerar: <strong class="text-amber-400">Users → Profile</strong> (no admin) → role até <strong class="text-amber-400">Application Passwords</strong> → dê um nome (ex: <code class="text-amber-400 font-mono text-sm">postiz-bot</code>) → clique em <strong>Add New</strong>. Aparece uma senha de 24 caracteres com espaços — copie agora, ela não reaparece.
+        Para gerar: <strong class="text-amber-400">Users → Profile</strong> (no admin) → role até <strong class="text-amber-400">Application Passwords</strong> → dê um nome (ex: <code class="text-amber-400 font-mono text-sm">postiz-bot</code>) → clique em <strong>Add New</strong>. Aparece uma senha de 24 caracteres com espaços — copie agora, ela nêo reaparece.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo do que o WP gera (NÃO use essa, gere a sua)
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Exemplo do que o WP gera (NêO use essa, gere a sua)
 xxxx yyyy zzzz aaaa bbbb cccc
 
 # Como usar em Basic Auth (curl)
@@ -268,10 +268,10 @@ curl -s -u "$USER:$APP_PASS" \
 # }</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Em ambientes onde o cliente HTTP não suporta <code class="text-amber-400 font-mono text-sm">-u user:pass</code> direto, monte o header manualmente — o WordPress aceita as duas formas.
+        Em ambientes onde o cliente HTTP nêo suporta <code class="text-amber-400 font-mono text-sm">-u user:pass</code> direto, monte o header manualmente — o WordPress aceita as duas formas.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Montar header Authorization na mão
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Montar header Authorization na mêo
 TOKEN=$(printf "%s" "$USER:$APP_PASS" | base64)
 
 curl -s -H "Authorization: Basic $TOKEN" \
@@ -281,14 +281,14 @@ curl -s -H "Authorization: Basic $TOKEN" \
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma senha por integração — facilita revogar sem quebrar as outras.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Uma senha por integraçêo — facilita revogar sem quebrar as outras.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar em variável de ambiente ou secret manager, nunca no código.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar sempre <code class="font-mono">https://</code> — Basic Auth em HTTP vaza a senha.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar um <strong>usuário dedicado</strong> com role <code class="font-mono">editor</code> só pra automação.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar um <strong>usuário dedicado</strong> com role <code class="font-mono">editor</code> só pra automaçêo.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar a senha do login do admin via Basic Auth.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compartilhar uma única App Password entre vários bots.</span></li>
@@ -327,7 +327,7 @@ curl -s -H "Authorization: Basic $TOKEN" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Criar um post é um único <code class="text-amber-400 font-mono text-sm">POST</code> com body JSON. Os campos mínimos são <code class="text-amber-400 font-mono text-sm">title</code>, <code class="text-amber-400 font-mono text-sm">content</code> e <code class="text-amber-400 font-mono text-sm">status</code>. O resto (slug, excerpt, autor, categorias) é opcional — o WordPress preenche defaults sensatos.
+        Criar um post é um único <code class="text-amber-400 font-mono text-sm">POST</code> com body JSON. Os campos mínimos sêo <code class="text-amber-400 font-mono text-sm">title</code>, <code class="text-amber-400 font-mono text-sm">content</code> e <code class="text-amber-400 font-mono text-sm">status</code>. O resto (slug, excerpt, autor, categorias) é opcional — o WordPress preenche defaults sensatos.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Criar um post como rascunho (mais seguro pra testar)
@@ -416,7 +416,7 @@ curl -s -X POST \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Mídia (imagem destacada, imagens inline) sobe pelo endpoint <code class="text-amber-400 font-mono text-sm">/wp-json/wp/v2/media</code>. Não é JSON — é <strong class="text-amber-400">multipart/form-data</strong> ou raw binary com header <code class="text-amber-400 font-mono text-sm">Content-Disposition</code>. A resposta traz o <code class="text-amber-400 font-mono text-sm">id</code> da mídia, que você usa em <code class="text-amber-400 font-mono text-sm">featured_media</code> no post.
+        Mídia (imagem destacada, imagens inline) sobe pelo endpoint <code class="text-amber-400 font-mono text-sm">/wp-json/wp/v2/media</code>. Nêo é JSON — é <strong class="text-amber-400">multipart/form-data</strong> ou raw binary com header <code class="text-amber-400 font-mono text-sm">Content-Disposition</code>. A resposta traz o <code class="text-amber-400 font-mono text-sm">id</code> da mídia, que você usa em <code class="text-amber-400 font-mono text-sm">featured_media</code> no post.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -516,7 +516,7 @@ curl -s -X POST \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        WordPress trabalha com <strong class="text-amber-400">IDs numéricos</strong>, não strings. Pra atribuir "Tecnologia" a um post, você precisa primeiro descobrir o ID dessa categoria. Os endpoints são <code class="text-amber-400 font-mono text-sm">/wp/v2/categories</code> e <code class="text-amber-400 font-mono text-sm">/wp/v2/tags</code>.
+        WordPress trabalha com <strong class="text-amber-400">IDs numéricos</strong>, nêo strings. Pra atribuir "Tecnologia" a um post, você precisa primeiro descobrir o ID dessa categoria. Os endpoints sêo <code class="text-amber-400 font-mono text-sm">/wp/v2/categories</code> e <code class="text-amber-400 font-mono text-sm">/wp/v2/tags</code>.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Buscar categoria por slug
@@ -528,7 +528,7 @@ curl -s "https://seublog.com/wp-json/wp/v2/categories?slug=tecnologia&_fields=id
 curl -s "https://seublog.com/wp-json/wp/v2/categories?per_page=100&_fields=id,name,slug"</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Se a categoria não existe, crie sob demanda. O endpoint exige autenticação (capability <code class="text-amber-400 font-mono text-sm">manage_categories</code>).
+        Se a categoria nêo existe, crie sob demanda. O endpoint exige autenticaçêo (capability <code class="text-amber-400 font-mono text-sm">manage_categories</code>).
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Criar categoria
@@ -550,7 +550,7 @@ curl -s -X POST \
 # {"id": 34, "name": "WordPress", "slug": "wordpress", "count": 0}</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Com os IDs em mãos, mande no payload do post como <strong>arrays</strong> — mesmo que seja uma única categoria/tag.
+        Com os IDs em mêos, mande no payload do post como <strong>arrays</strong> — mesmo que seja uma única categoria/tag.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Atribuir categorias 7 + 12 e tags 34 + 88 ao post 234
@@ -565,13 +565,13 @@ curl -s -X POST \
 
       <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
-          <span class="mr-2">📊</span> Padrão pra automação
+          <span class="mr-2">📊</span> Padrêo pra automaçêo
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-amber-400">1. Cache local de IDs:</strong> seu script mantém um mapa <code class="font-mono">{slug → id}</code> em memória/Redis e só consulta a API quando o slug é novo.</li>
           <li><strong class="text-amber-400">2. Get-or-create:</strong> primeiro <code class="font-mono">GET ?slug=x</code>; se array vazio, <code class="font-mono">POST</code> pra criar.</li>
           <li><strong class="text-amber-400">3. Slugs estáveis:</strong> normalize antes (lowercase, sem acento) — evita criar "IA" e "ia" como categorias distintas.</li>
-          <li><strong class="text-amber-400">4. Tags primeiro, categorias depois:</strong> categorias podem ter parent/hierarquia, então resolva pai antes do filho.</li>
+          <li><strong class="text-amber-400">4. Tags primeiro, categorias depois:</strong> categorias podem ter parent/hierarquia, entêo resolva pai antes do filho.</li>
         </ul>
       </div>
 
@@ -579,7 +579,7 @@ curl -s -X POST \
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Taxonomy</div>
-          <p class="text-xs text-neutral-400">Sistema de classificação (category, tag, custom).</p>
+          <p class="text-xs text-neutral-400">Sistema de classificaçêo (category, tag, custom).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Slug</div>
@@ -587,11 +587,11 @@ curl -s -X POST \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Get-or-create</div>
-          <p class="text-xs text-neutral-400">Padrão idempotente: busca, e cria se não existe.</p>
+          <p class="text-xs text-neutral-400">Padrêo idempotente: busca, e cria se nêo existe.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-amber-400 mb-1">Hierarquia</div>
-          <p class="text-xs text-neutral-400">Categorias podem ter <code class="font-mono">parent</code>; tags não.</p>
+          <p class="text-xs text-neutral-400">Categorias podem ter <code class="font-mono">parent</code>; tags nêo.</p>
         </div>
       </div>
     </section>
@@ -604,7 +604,7 @@ curl -s -X POST \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O campo <code class="text-amber-400 font-mono text-sm">status</code> controla o ciclo de vida do post. Os três que importam pra automação são <code class="text-amber-400 font-mono text-sm">draft</code> (rascunho), <code class="text-amber-400 font-mono text-sm">publish</code> (no ar) e <code class="text-amber-400 font-mono text-sm">future</code> (agendado). Agendamento é <strong class="text-amber-400">nativo</strong> — não precisa cronjob nem plugin.
+        O campo <code class="text-amber-400 font-mono text-sm">status</code> controla o ciclo de vida do post. Os três que importam pra automaçêo sêo <code class="text-amber-400 font-mono text-sm">draft</code> (rascunho), <code class="text-amber-400 font-mono text-sm">publish</code> (no ar) e <code class="text-amber-400 font-mono text-sm">future</code> (agendado). Agendamento é <strong class="text-amber-400">nativo</strong> — nêo precisa cronjob nem plugin.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -621,7 +621,7 @@ curl -s -X POST \
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">publish — no ar agora</h4>
-            <p class="text-sm text-neutral-400 mb-3">Vai pra home, feed RSS e indexação imediatamente. Sem volta sem dor.</p>
+            <p class="text-sm text-neutral-400 mb-3">Vai pra home, feed RSS e indexaçêo imediatamente. Sem volta sem dor.</p>
             <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">{"status": "publish"}</code></pre>
           </div>
         </div>
@@ -677,7 +677,7 @@ curl -s -u "$USER:$APP_PASS" \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⏰</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O WP-Cron <strong>não é um cron real</strong> — ele dispara quando alguém visita o site. Se seu blog tem tráfego baixo, agendamentos atrasam. Em produção séria, desabilite o WP-Cron interno (<code class="text-primary font-mono text-sm">DISABLE_WP_CRON=true</code> no <code class="text-primary font-mono text-sm">wp-config.php</code>) e configure um <code class="text-primary font-mono text-sm">cron</code> de sistema que chama <code class="text-primary font-mono text-sm">wp-cron.php</code> a cada 5 min.</p>
+        <p class="text-neutral-300">O WP-Cron <strong>nêo é um cron real</strong> — ele dispara quando alguém visita o site. Se seu blog tem tráfego baixo, agendamentos atrasam. Em produçêo séria, desabilite o WP-Cron interno (<code class="text-primary font-mono text-sm">DISABLE_WP_CRON=true</code> no <code class="text-primary font-mono text-sm">wp-config.php</code>) e configure um <code class="text-primary font-mono text-sm">cron</code> de sistema que chama <code class="text-primary font-mono text-sm">wp-cron.php</code> a cada 5 min.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -737,7 +737,7 @@ curl -s -u "$USER:$APP_PASS" \
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-amber-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">4.2 — Ghost API: publicação programática num CMS moderno e headless-friendly</p>
+          <p class="text-neutral-300">4.2 — Ghost API: publicaçêo programática num CMS moderno e headless-friendly</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

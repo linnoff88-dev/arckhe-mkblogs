@@ -165,11 +165,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Toda integração com o X começa no <a href="https://developer.x.com" target="_blank" class="text-purple-400 hover:underline">developer.x.com</a>. Você precisa de uma <strong class="text-purple-400">conta X normal</strong> (com telefone verificado) e um cadastro de developer separado — mesma identidade, contexto diferente. O cadastro pede um caso de uso descrito em inglês.
+        Toda integraçêo com o X começa no <a href="https://developer.x.com" target="_blank" class="text-purple-400 hover:underline">developer.x.com</a>. Você precisa de uma <strong class="text-purple-400">conta X normal</strong> (com telefone verificado) e um cadastro de developer separado — mesma identidade, contexto diferente. O cadastro pede um caso de uso descrito em inglês.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O modelo é em três níveis: <strong class="text-purple-400">Account → Project → App</strong>. A Account é você; um Project agrupa apps relacionados (uma marca, um produto); um App contém as credenciais que sua aplicação usa. Para automação simples, basta um Project com um App.
+        O modelo é em três níveis: <strong class="text-purple-400">Account → Project → App</strong>. A Account é você; um Project agrupa apps relacionados (uma marca, um produto); um App contém as credenciais que sua aplicaçêo usa. Para automaçêo simples, basta um Project com um App.
       </p>
 
       <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
@@ -178,16 +178,16 @@
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-purple-400">Telefone verificado</strong> na conta X — sem isso o Portal recusa o acesso.</li>
-          <li><strong class="text-purple-400">Descrição de uso em inglês</strong> (300+ caracteres): o que sua app faz e por quê.</li>
+          <li><strong class="text-purple-400">Descriçêo de uso em inglês</strong> (300+ caracteres): o que sua app faz e por quê.</li>
           <li><strong class="text-purple-400">Aceite dos Restricted Use Cases</strong> — proibido spam, surveillance, ML scraping massivo.</li>
-          <li><strong class="text-purple-400">Project criado</strong> com nome, caso de uso e descrição pública.</li>
+          <li><strong class="text-purple-400">Project criado</strong> com nome, caso de uso e descriçêo pública.</li>
         </ul>
       </div>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Fluxo no Portal (manual no browser)
 # 1. https://developer.x.com → Sign up
 # 2. Use case: "Building tools for myself" (mais rápido de aprovar)
-# 3. Criar Project: nome, caso, descrição
+# 3. Criar Project: nome, caso, descriçêo
 # 4. Dentro do Project → "+ Add App"
 # 5. Anotar App ID e abrir "Keys and tokens"</code></pre>
 
@@ -207,7 +207,7 @@
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Use Case</div>
-          <p class="text-xs text-neutral-400">Texto explicando o uso — base da aprovação.</p>
+          <p class="text-xs text-neutral-400">Texto explicando o uso — base da aprovaçêo.</p>
         </div>
       </div>
     </section>
@@ -220,7 +220,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O X reformulou os tiers em 2024-2025. O <strong class="text-purple-400">Free tier deixou de permitir <code class="font-mono">POST /tweets</code> em volume útil</strong>: você lê alguns endpoints e posta apenas como teste. Para automação real, há dois caminhos práticos.
+        O X reformulou os tiers em 2024-2025. O <strong class="text-purple-400">Free tier deixou de permitir <code class="font-mono">POST /tweets</code> em volume útil</strong>: você lê alguns endpoints e posta apenas como teste. Para automaçêo real, há dois caminhos práticos.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -259,7 +259,7 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Free tier</div>
-          <p class="text-xs text-neutral-400">Quase só leitura — inviável para automação.</p>
+          <p class="text-xs text-neutral-400">Quase só leitura — inviável para automaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Pay-per-use</div>
@@ -284,7 +284,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Dentro do App, abra <strong class="text-purple-400">User authentication settings</strong> e habilite <strong class="text-purple-400">OAuth 2.0</strong>. Para automação no servidor, escolha tipo <code class="text-purple-400 font-mono text-sm">Confidential client</code> (gera Client Secret) com flow <strong class="text-purple-400">Authorization Code + PKCE</strong>.
+        Dentro do App, abra <strong class="text-purple-400">User authentication settings</strong> e habilite <strong class="text-purple-400">OAuth 2.0</strong>. Para automaçêo no servidor, escolha tipo <code class="text-purple-400 font-mono text-sm">Confidential client</code> (gera Client Secret) com flow <strong class="text-purple-400">Authorization Code + PKCE</strong>.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -296,10 +296,10 @@ const SCOPES = [
   "tweet.read",     // ler tweets
   "tweet.write",    // criar tweets — obrigatório
   "users.read",     // ler dados do usuário autenticado
-  "offline.access"  // receber refresh_token (renovação automática)
+  "offline.access"  // receber refresh_token (renovaçêo automática)
 ] as const;
 
-// URL de autorização — usuário vê tela de consent do X
+// URL de autorizaçêo — usuário vê tela de consent do X
 const authUrl = new URL("https://x.com/i/oauth2/authorize");
 authUrl.searchParams.set("response_type", "code");
 authUrl.searchParams.set("client_id", process.env.X_CLIENT_ID!);
@@ -322,7 +322,7 @@ console.log(authUrl.toString());</code></pre>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Embutir <code class="font-mono">Client Secret</code> no frontend.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reusar <code class="font-mono">code_verifier</code> entre requests.</span></li>
@@ -336,11 +336,11 @@ console.log(authUrl.toString());</code></pre>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">OAuth 2.0</div>
-          <p class="text-xs text-neutral-400">Padrão para autorização delegada.</p>
+          <p class="text-xs text-neutral-400">Padrêo para autorizaçêo delegada.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">PKCE</div>
-          <p class="text-xs text-neutral-400">Code challenge que evita interceptação.</p>
+          <p class="text-xs text-neutral-400">Code challenge que evita interceptaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Callback URL</div>
@@ -361,10 +361,10 @@ console.log(authUrl.toString());</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O cliente oficial-de-fato em Node/TypeScript é <a href="https://github.com/PLhery/node-twitter-api-v2" target="_blank" class="text-purple-400 hover:underline"><code class="font-mono">twitter-api-v2</code></a>. Cobre <strong class="text-purple-400">v2 + v1.1</strong> (necessária para upload de mídia), tem tipagem completa, faz <strong class="text-purple-400">refresh automático</strong> de token e expõe helpers para threads e paginação.
+        O cliente oficial-de-fato em Node/TypeScript é <a href="https://github.com/PLhery/node-twitter-api-v2" target="_blank" class="text-purple-400 hover:underline"><code class="font-mono">twitter-api-v2</code></a>. Cobre <strong class="text-purple-400">v2 + v1.1</strong> (necessária para upload de mídia), tem tipagem completa, faz <strong class="text-purple-400">refresh automático</strong> de token e expõe helpers para threads e paginaçêo.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalação
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Instalaçêo
 npm install twitter-api-v2
 npm install -D @types/node typescript</code></pre>
 
@@ -406,7 +406,7 @@ export async function refresh(refreshToken: string) {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚙️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">A lib distingue <strong>três contextos</strong> de auth (user OAuth2, app-only, user OAuth1.0a) e cada um expõe endpoints diferentes. Memorize: <strong>postar texto</strong> = OAuth 2.0 user; <strong>upload de mídia</strong> = OAuth 1.0a (a v2 ainda não cobre); <strong>buscar tweets públicos</strong> = app-only com Bearer.</p>
+        <p class="text-neutral-300">A lib distingue <strong>três contextos</strong> de auth (user OAuth2, app-only, user OAuth1.0a) e cada um expõe endpoints diferentes. Memorize: <strong>postar texto</strong> = OAuth 2.0 user; <strong>upload de mídia</strong> = OAuth 1.0a (a v2 ainda nêo cobre); <strong>buscar tweets públicos</strong> = app-only com Bearer.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -438,7 +438,7 @@ export async function refresh(refreshToken: string) {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Em 2026 o upload de imagens/vídeos para o X <strong class="text-purple-400">ainda vive na v1.1</strong> — o endpoint <code class="font-mono text-purple-400">media/upload.json</code> não foi migrado. O fluxo é: subir o arquivo, receber um <code class="font-mono text-purple-400">media_id</code>, e referenciá-lo na criação do tweet via v2.
+        Em 2026 o upload de imagens/vídeos para o X <strong class="text-purple-400">ainda vive na v1.1</strong> — o endpoint <code class="font-mono text-purple-400">media/upload.json</code> nêo foi migrado. O fluxo é: subir o arquivo, receber um <code class="font-mono text-purple-400">media_id</code>, e referenciá-lo na criaçêo do tweet via v2.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -490,7 +490,7 @@ export async function postWithMedia(
           <li><strong class="text-purple-400">Imagem:</strong> até 5 MB (PNG, JPG, WebP) — máximo 4 por tweet.</li>
           <li><strong class="text-purple-400">GIF:</strong> até 15 MB — 1 por tweet, exclusivo.</li>
           <li><strong class="text-purple-400">Vídeo:</strong> até 512 MB / 140 s — upload em chunks (init/append/finalize).</li>
-          <li><strong class="text-purple-400">media_id:</strong> válido por ~24 h se não consumido.</li>
+          <li><strong class="text-purple-400">media_id:</strong> válido por ~24 h se nêo consumido.</li>
         </ul>
       </div>
 
@@ -510,7 +510,7 @@ export async function postWithMedia(
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Alt text</div>
-          <p class="text-xs text-neutral-400">Descrição para leitores de tela — sempre setar.</p>
+          <p class="text-xs text-neutral-400">Descriçêo para leitores de tela — sempre setar.</p>
         </div>
       </div>
     </section>
@@ -523,11 +523,11 @@ export async function postWithMedia(
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Thread no X é um <strong class="text-purple-400">encadeamento de tweets</strong> em que cada item responde ao anterior via <code class="font-mono text-purple-400">in_reply_to_tweet_id</code>. Não existe endpoint "criar thread" — você posta um a um, capturando o ID retornado e injetando no próximo.
+        Thread no X é um <strong class="text-purple-400">encadeamento de tweets</strong> em que cada item responde ao anterior via <code class="font-mono text-purple-400">in_reply_to_tweet_id</code>. Nêo existe endpoint "criar thread" — você posta um a um, capturando o ID retornado e injetando no próximo.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A lib oferece um helper <code class="font-mono text-purple-400">v2.tweetThread()</code> que faz o loop por você. Use sempre <strong class="text-purple-400">delay entre tweets</strong> (200-500 ms) para não bater rate limit nem ser flagrado como spam.
+        A lib oferece um helper <code class="font-mono text-purple-400">v2.tweetThread()</code> que faz o loop por você. Use sempre <strong class="text-purple-400">delay entre tweets</strong> (200-500 ms) para nêo bater rate limit nem ser flagrado como spam.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/thread.ts
@@ -557,7 +557,7 @@ export async function postThread(
     postedIds.push(data.id);
     replyTo = data.id;
 
-    // Throttle leve para não disparar anti-spam
+    // Throttle leve para nêo disparar anti-spam
     if (i &lt; items.length - 1) {
       await new Promise(r =&gt; setTimeout(r, 300));
     }
@@ -579,7 +579,7 @@ console.log("Tweets criados:", ids);</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🛡️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Sempre faça <strong>tudo-ou-nada</strong>: se o tweet N falhar no meio da thread, <code class="text-primary font-mono text-sm">DELETE /2/tweets/:id</code> os anteriores. Threads pela metade ficam órfãs e confundem o leitor. Envolva o loop em try/catch e guarde os IDs já postados para rollback.</p>
+        <p class="text-neutral-300">Sempre faça <strong>tudo-ou-nada</strong>: se o tweet N falhar no meio da thread, <code class="text-primary font-mono text-sm">DELETE /2/tweets/:id</code> os anteriores. Threads pela metade ficam órfês e confundem o leitor. Envolva o loop em try/catch e guarde os IDs já postados para rollback.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -613,7 +613,7 @@ console.log("Tweets criados:", ids);</code></pre>
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Developer Portal configurado</strong><span class="text-neutral-400"> — conta dev aprovada, Project criado e App com keys em mãos.</span></div>
+            <div><strong class="text-white">Developer Portal configurado</strong><span class="text-neutral-400"> — conta dev aprovada, Project criado e App com keys em mêos.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
@@ -639,7 +639,7 @@ console.log("Tweets criados:", ids);</code></pre>
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-purple-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">3.4 — Próxima rede social: integração e particularidades</p>
+          <p class="text-neutral-300">3.4 — Próxima rede social: integraçêo e particularidades</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

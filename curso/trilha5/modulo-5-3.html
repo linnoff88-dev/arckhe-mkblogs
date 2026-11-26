@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Módulo 5.3 - Padrão Provider | MkBlogs 🚀</title>
+  <title>Módulo 5.3 - Padrêo Provider | MkBlogs 🚀</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -130,7 +130,7 @@
   <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.3</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Padrão Provider</h1>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Padrêo Provider</h1>
       <p class="text-lg text-neutral-400 max-w-3xl">Arquitetura plug-and-play para múltiplas redes sociais: contrato, factory, implementações reais (Bluesky e X), erros e testes.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
@@ -165,7 +165,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O coração da arquitetura é um <strong class="text-teal-400">contrato TypeScript</strong> que toda rede social precisa cumprir. Bluesky, X, Mastodon, LinkedIn — todos implementam a mesma interface, e o código que agenda posts <strong class="text-teal-400">nunca conhece os detalhes</strong> de cada API.
+        O coraçêo da arquitetura é um <strong class="text-teal-400">contrato TypeScript</strong> que toda rede social precisa cumprir. Bluesky, X, Mastodon, LinkedIn — todos implementam a mesma interface, e o código que agenda posts <strong class="text-teal-400">nunca conhece os detalhes</strong> de cada API.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -220,7 +220,7 @@ export interface SocialProvider {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Interface</div>
-          <p class="text-xs text-neutral-400">Contrato puro, sem implementação.</p>
+          <p class="text-xs text-neutral-400">Contrato puro, sem implementaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">DTOs</div>
@@ -232,7 +232,7 @@ export interface SocialProvider {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Promise</div>
-          <p class="text-xs text-neutral-400">Toda I/O é assíncrona — sem exceção.</p>
+          <p class="text-xs text-neutral-400">Toda I/O é assíncrona — sem exceçêo.</p>
         </div>
       </div>
     </section>
@@ -278,7 +278,7 @@ export function registerAllProviders(): void {
 }</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Uso típico no serviço de publicação:
+        Uso típico no serviço de publicaçêo:
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/services/publish.service.ts
@@ -300,14 +300,14 @@ export class PublishService {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🔁</span> Dica prática
         </h3>
-        <p class="text-neutral-300">A factory devolve uma <strong>nova instância por chamada</strong>. Se a sua implementação for stateless (e deve ser), isso é grátis. Se carregar SDK pesado, troque por singleton com lazy init — mas só depois de medir.</p>
+        <p class="text-neutral-300">A factory devolve uma <strong>nova instância por chamada</strong>. Se a sua implementaçêo for stateless (e deve ser), isso é grátis. Se carregar SDK pesado, troque por singleton com lazy init — mas só depois de medir.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Factory pattern</div>
-          <p class="text-xs text-neutral-400">Centraliza a criação de instâncias.</p>
+          <p class="text-xs text-neutral-400">Centraliza a criaçêo de instâncias.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Registry</div>
@@ -315,7 +315,7 @@ export class PublishService {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Open/Closed</div>
-          <p class="text-xs text-neutral-400">Aberto para extensão, fechado p/ modificação.</p>
+          <p class="text-xs text-neutral-400">Aberto para extensêo, fechado p/ modificaçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Bootstrap</div>
@@ -332,7 +332,7 @@ export class PublishService {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Bluesky usa <strong class="text-teal-400">AT Protocol</strong> e expõe o SDK oficial <code class="text-teal-400 font-mono text-sm">@atproto/api</code>. A autenticação é por <strong class="text-teal-400">app password</strong> (não OAuth) — o usuário gera em <code class="text-teal-400 font-mono text-sm">bsky.app/settings/app-passwords</code>. Upload de mídia exige etapa extra (<code class="text-teal-400 font-mono text-sm">uploadBlob</code>) antes de anexar ao post.
+        Bluesky usa <strong class="text-teal-400">AT Protocol</strong> e expõe o SDK oficial <code class="text-teal-400 font-mono text-sm">@atproto/api</code>. A autenticaçêo é por <strong class="text-teal-400">app password</strong> (nêo OAuth) — o usuário gera em <code class="text-teal-400 font-mono text-sm">bsky.app/settings/app-passwords</code>. Upload de mídia exige etapa extra (<code class="text-teal-400 font-mono text-sm">uploadBlob</code>) antes de anexar ao post.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/bluesky.provider.ts
@@ -429,7 +429,7 @@ export class BlueskyProvider implements SocialProvider {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">📎</span> Dica prática
         </h3>
-        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">RichText.detectFacets()</code> é o que transforma <code class="text-primary font-mono text-sm">@user.bsky.social</code> em menção clicável e URL em link. Sem isso seus posts viram texto puro — e a API ainda aceita, mas o usuário acha que sua app está bugada.</p>
+        <p class="text-neutral-300"><code class="text-primary font-mono text-sm">RichText.detectFacets()</code> é o que transforma <code class="text-primary font-mono text-sm">@user.bsky.social</code> em mençêo clicável e URL em link. Sem isso seus posts viram texto puro — e a API ainda aceita, mas o usuário acha que sua app está bugada.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -461,7 +461,7 @@ export class BlueskyProvider implements SocialProvider {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O X (ex-Twitter) usa <strong class="text-teal-400">OAuth 2.0 com PKCE</strong> e o SDK <code class="text-teal-400 font-mono text-sm">twitter-api-v2</code>. Diferente do Bluesky, threads são feitas encadeando posts via <code class="text-teal-400 font-mono text-sm">reply.in_reply_to_tweet_id</code>. Upload de mídia passa pelo endpoint v1.1 — limitação histórica da API.
+        O X (ex-Twitter) usa <strong class="text-teal-400">OAuth 2.0 com PKCE</strong> e o SDK <code class="text-teal-400 font-mono text-sm">twitter-api-v2</code>. Diferente do Bluesky, threads sêo feitas encadeando posts via <code class="text-teal-400 font-mono text-sm">reply.in_reply_to_tweet_id</code>. Upload de mídia passa pelo endpoint v1.1 — limitaçêo histórica da API.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/providers/x.provider.ts
@@ -523,7 +523,7 @@ export class XProvider implements SocialProvider {
     const client = new TwitterApi(creds.accessToken);
     const v2 = client.v2;
 
-    // Upload via v1.1 (limitação da API)
+    // Upload via v1.1 (limitaçêo da API)
     const mediaIds: string[] = [];
     if (payload.media?.length) {
       for (const m of payload.media) {
@@ -566,7 +566,7 @@ export class XProvider implements SocialProvider {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚠️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O tier gratuito do X tem <strong>limite agressivo</strong> (1.500 posts/mês) e rate limits que mordem em testes. Crie um <code class="text-primary font-mono text-sm">XProviderMock</code> para CI/local e injete via DI — você não vai querer queimar quota em test runs.</p>
+        <p class="text-neutral-300">O tier gratuito do X tem <strong>limite agressivo</strong> (1.500 posts/mês) e rate limits que mordem em testes. Crie um <code class="text-primary font-mono text-sm">XProviderMock</code> para CI/local e injete via DI — você nêo vai querer queimar quota em test runs.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -623,7 +623,7 @@ export class InvalidPayloadError extends ProviderError {}
 export class ProviderUnavailableError extends ProviderError {}</code></pre>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Wrapper que <strong class="text-teal-400">renova o token e re-tenta</strong> uma única vez quando o erro é de expiração. Mais de uma retry vira loop infinito — token quebrado é estado terminal.
+        Wrapper que <strong class="text-teal-400">renova o token e re-tenta</strong> uma única vez quando o erro é de expiraçêo. Mais de uma retry vira loop infinito — token quebrado é estado terminal.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/services/publish-with-retry.ts
@@ -649,7 +649,7 @@ export class PublishWithRetry {
         return provider.post(fresh, payload);   // retry ÚNICO
       }
       if (err instanceof RateLimitError) {
-        // Reagenda na fila — não bloqueia o worker
+        // Reagenda na fila — nêo bloqueia o worker
         throw err;
       }
       throw err;
@@ -687,11 +687,11 @@ try {
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry em loop sem limite — token expirado de verdade não volta.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry em loop sem limite — token expirado de verdade nêo volta.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Engolir erro com <code class="font-mono">catch {}</code> vazio.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar 4xx como falha temporária — payload errado não melhora.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tratar 4xx como falha temporária — payload errado nêo melhora.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Vazar instância do SDK no <code class="font-mono">cause</code> sem sanitizar.</span></li>
           </ul>
         </div>
@@ -713,7 +713,7 @@ try {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Idempotência</div>
-          <p class="text-xs text-neutral-400">Retry seguro só se o post não foi publicado.</p>
+          <p class="text-xs text-neutral-400">Retry seguro só se o post nêo foi publicado.</p>
         </div>
       </div>
     </section>
@@ -726,7 +726,7 @@ try {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Não dá pra bater na API real em CI: rate limit, custo, posts vazando para timeline pública. Use <strong class="text-teal-400">Vitest</strong> com mock do SDK e <strong class="text-teal-400">fixtures</strong> que reproduzem respostas reais capturadas uma vez. Cada provider tem seu arquivo de teste, cobrindo: <em>happy path</em>, refresh, rate limit e payload inválido.
+        Nêo dá pra bater na API real em CI: rate limit, custo, posts vazando para timeline pública. Use <strong class="text-teal-400">Vitest</strong> com mock do SDK e <strong class="text-teal-400">fixtures</strong> que reproduzem respostas reais capturadas uma vez. Cada provider tem seu arquivo de teste, cobrindo: <em>happy path</em>, refresh, rate limit e payload inválido.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// tests/fixtures/x.fixtures.ts
@@ -871,7 +871,7 @@ describe('BlueskyProvider.authenticate', () =&gt; {
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
-            <div><strong class="text-white">Factory com registry</strong><span class="text-neutral-400"> — <code class="font-mono">getProvider(platform)</code> despacha sem acoplar o serviço de publicação.</span></div>
+            <div><strong class="text-white">Factory com registry</strong><span class="text-neutral-400"> — <code class="font-mono">getProvider(platform)</code> despacha sem acoplar o serviço de publicaçêo.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
@@ -893,7 +893,7 @@ describe('BlueskyProvider.authenticate', () =&gt; {
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">5.4 — Agendamento, filas BullMQ e workers de publicação</p>
+          <p class="text-neutral-300">5.4 — Agendamento, filas BullMQ e workers de publicaçêo</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

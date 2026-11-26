@@ -132,7 +132,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.6</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎵 TikTok Content Posting API</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">A integração mais espinhosa das redes: portal de desenvolvedor, app review rigoroso, upload em chunks e dezenas de limites técnicos. Quando vale fazer — e quando deixar manual.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">A integraçêo mais espinhosa das redes: portal de desenvolvedor, app review rigoroso, upload em chunks e dezenas de limites técnicos. Quando vale fazer — e quando deixar manual.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -166,7 +166,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Tudo começa em <a href="https://developers.tiktok.com" target="_blank" class="text-purple-400 hover:underline">developers.tiktok.com</a>. Crie uma <strong class="text-purple-400">conta TikTok comum</strong> primeiro (pessoal ou business), depois faça login no portal e crie um <strong class="text-purple-400">App</strong>. Não use a mesma conta que recebe posts: a conta dev é só pra gerenciar credenciais.
+        Tudo começa em <a href="https://developers.tiktok.com" target="_blank" class="text-purple-400 hover:underline">developers.tiktok.com</a>. Crie uma <strong class="text-purple-400">conta TikTok comum</strong> primeiro (pessoal ou business), depois faça login no portal e crie um <strong class="text-purple-400">App</strong>. Nêo use a mesma conta que recebe posts: a conta dev é só pra gerenciar credenciais.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -177,7 +177,7 @@
 1. developers.tiktok.com → Login → Manage Apps
 2. Create App
    - Name, description, category, icon (512x512)
-   - URL do site (não pode ser localhost em produção)
+   - URL do site (nêo pode ser localhost em produçêo)
 3. Configuration
    - Redirect URI: https://seu-dominio.com/oauth/tiktok/callback
    - Add Products: Login Kit + Content Posting API
@@ -192,7 +192,7 @@ video.publish        # publica direto no feed (precisa de unaudited|audited)</co
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Use a <strong>Sandbox</strong> antes de submeter pra review. Em sandbox os endpoints funcionam só pra contas adicionadas como <code class="text-primary font-mono text-sm">Target users</code> dentro do App — perfeito pra testar fluxo OAuth + upload sem precisar de aprovação.</p>
+        <p class="text-neutral-300">Use a <strong>Sandbox</strong> antes de submeter pra review. Em sandbox os endpoints funcionam só pra contas adicionadas como <code class="text-primary font-mono text-sm">Target users</code> dentro do App — perfeito pra testar fluxo OAuth + upload sem precisar de aprovaçêo.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -224,7 +224,7 @@ video.publish        # publica direto no feed (precisa de unaudited|audited)</co
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Pra sair de sandbox e atingir contas reais, você submete o App pra <strong class="text-purple-400">audit</strong>. TikTok é a plataforma mais rigorosa entre as grandes — recusas são comuns na primeira tentativa. Eles exigem <strong class="text-purple-400">vídeo demo do fluxo</strong>, <strong class="text-purple-400">política de privacidade</strong> publicada, justificativa escrita do uso de cada scope e, frequentemente, um <strong class="text-purple-400">teste interativo</strong> com revisor.
+        Pra sair de sandbox e atingir contas reais, você submete o App pra <strong class="text-purple-400">audit</strong>. TikTok é a plataforma mais rigorosa entre as grandes — recusas sêo comuns na primeira tentativa. Eles exigem <strong class="text-purple-400">vídeo demo do fluxo</strong>, <strong class="text-purple-400">política de privacidade</strong> publicada, justificativa escrita do uso de cada scope e, frequentemente, um <strong class="text-purple-400">teste interativo</strong> com revisor.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -233,23 +233,23 @@ video.publish        # publica direto no feed (precisa de unaudited|audited)</co
 
       <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
-          <span class="mr-2">📋</span> Checklist de submissão
+          <span class="mr-2">📋</span> Checklist de submissêo
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-purple-400">Vídeo demo (2-3 min):</strong> tela cheia mostrando login OAuth, escolha de vídeo, preview, post. Sem cortes suspeitos.</li>
-          <li><strong class="text-purple-400">Privacy Policy URL:</strong> precisa mencionar TikTok, dados coletados, retenção e direito de exclusão.</li>
+          <li><strong class="text-purple-400">Privacy Policy URL:</strong> precisa mencionar TikTok, dados coletados, retençêo e direito de exclusêo.</li>
           <li><strong class="text-purple-400">Terms of Service URL:</strong> público, próprio domínio.</li>
           <li><strong class="text-purple-400">Justificativa de scope:</strong> uma frase clara por scope ("video.publish para permitir agendamento automático que o usuário configura na nossa UI").</li>
-          <li><strong class="text-purple-400">App funcionando:</strong> URL de produção viva — bots do review acessam.</li>
+          <li><strong class="text-purple-400">App funcionando:</strong> URL de produçêo viva — bots do review acessam.</li>
         </ul>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
-          <h4 class="font-bold text-emerald-400 mb-4">✓ Aumenta chance de aprovação</h4>
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Aumenta chance de aprovaçêo</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Vídeo demo nítido, com áudio explicando cada passo.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Privacy Policy específica pra integração TikTok.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Privacy Policy específica pra integraçêo TikTok.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Site funcional com signup público real.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Começar pelo modo <code class="font-mono">unaudited</code> (rascunho).</span></li>
           </ul>
@@ -269,7 +269,7 @@ video.publish        # publica direto no feed (precisa de unaudited|audited)</co
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Audit</div>
-          <p class="text-xs text-neutral-400">Revisão manual + automática antes de liberar produção.</p>
+          <p class="text-xs text-neutral-400">Revisêo manual + automática antes de liberar produçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Unaudited mode</div>
@@ -277,7 +277,7 @@ video.publish        # publica direto no feed (precisa de unaudited|audited)</co
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Audited mode</div>
-          <p class="text-xs text-neutral-400">Publica direto, sem confirmação no celular.</p>
+          <p class="text-xs text-neutral-400">Publica direto, sem confirmaçêo no celular.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Demo video</div>
@@ -382,7 +382,7 @@ Content-Type: application/json
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Quando você não tem CDN pública (ou o vídeo é privado), use <code class="text-purple-400 font-mono text-sm">FILE_UPLOAD</code>. O fluxo é <strong class="text-purple-400">três passos</strong>: <code class="text-purple-400 font-mono text-sm">init</code> (TikTok devolve <code class="text-purple-400 font-mono text-sm">upload_url</code>), <code class="text-purple-400 font-mono text-sm">PUT</code> dos chunks no upload_url, e polling de status até <code class="text-purple-400 font-mono text-sm">PUBLISH_COMPLETE</code>.
+        Quando você nêo tem CDN pública (ou o vídeo é privado), use <code class="text-purple-400 font-mono text-sm">FILE_UPLOAD</code>. O fluxo é <strong class="text-purple-400">três passos</strong>: <code class="text-purple-400 font-mono text-sm">init</code> (TikTok devolve <code class="text-purple-400 font-mono text-sm">upload_url</code>), <code class="text-purple-400 font-mono text-sm">PUT</code> dos chunks no upload_url, e polling de status até <code class="text-purple-400 font-mono text-sm">PUBLISH_COMPLETE</code>.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -468,17 +468,17 @@ Content-Range: bytes 0-9999999/47284736
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        TikTok rejeita silenciosamente vídeos que não batem com a especificação — o status fica <code class="text-purple-400 font-mono text-sm">FAILED</code> com um motivo curto. Antes de subir, valide localmente com <code class="text-purple-400 font-mono text-sm">ffprobe</code>.
+        TikTok rejeita silenciosamente vídeos que nêo batem com a especificaçêo — o status fica <code class="text-purple-400 font-mono text-sm">FAILED</code> com um motivo curto. Antes de subir, valide localmente com <code class="text-purple-400 font-mono text-sm">ffprobe</code>.
       </p>
 
       <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
-          <span class="mr-2">📐</span> Especificação técnica
+          <span class="mr-2">📐</span> Especificaçêo técnica
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-purple-400">Container:</strong> MP4, MOV, WebM (MP4 é o seguro).</li>
           <li><strong class="text-purple-400">Codec:</strong> H.264 (vídeo) + AAC (áudio).</li>
-          <li><strong class="text-purple-400">Duração:</strong> mínimo 3s, máximo 10 minutos (contas verificadas, até 60 min).</li>
+          <li><strong class="text-purple-400">Duraçêo:</strong> mínimo 3s, máximo 10 minutos (contas verificadas, até 60 min).</li>
           <li><strong class="text-purple-400">Tamanho do arquivo:</strong> até 4GB (mas mantenha &lt; 500MB pra evitar timeouts).</li>
           <li><strong class="text-purple-400">Aspect ratio recomendado:</strong> <code class="font-mono">9:16</code> (vertical, 1080×1920). Outros funcionam mas perdem alcance.</li>
           <li><strong class="text-purple-400">Frame rate:</strong> 23-60 fps.</li>
@@ -508,11 +508,11 @@ ffmpeg -i input.mov \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">faststart</div>
-          <p class="text-xs text-neutral-400">Move moov atom pro início — player não precisa baixar tudo.</p>
+          <p class="text-xs text-neutral-400">Move moov atom pro início — player nêo precisa baixar tudo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">ffprobe</div>
-          <p class="text-xs text-neutral-400">Inspeciona container, codec e duração sem decodar.</p>
+          <p class="text-xs text-neutral-400">Inspeciona container, codec e duraçêo sem decodar.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Rate limit</div>
@@ -529,7 +529,7 @@ ffmpeg -i input.mov \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Toda essa burocracia tem custo. Pergunta honesta: <strong class="text-purple-400">o seu volume justifica?</strong> Se você posta 2-3 vídeos por semana, o tempo investido em audit + manutenção da integração paga menos do que publicar manual no celular.
+        Toda essa burocracia tem custo. Pergunta honesta: <strong class="text-purple-400">o seu volume justifica?</strong> Se você posta 2-3 vídeos por semana, o tempo investido em audit + manutençêo da integraçêo paga menos do que publicar manual no celular.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -548,9 +548,9 @@ ffmpeg -i input.mov \
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Volume baixo (&lt; 3/semana) — agendar no celular resolve.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem domínio público nem privacy policy pronta.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conteúdo precisa de trends, sons populares, edição reativa.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>TikTok é só "mais um canal" e não a praça principal.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem tempo pra 1-2 ciclos de revisão até aprovação.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conteúdo precisa de trends, sons populares, ediçêo reativa.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>TikTok é só "mais um canal" e nêo a praça principal.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem tempo pra 1-2 ciclos de revisêo até aprovaçêo.</span></li>
           </ul>
         </div>
       </div>
@@ -559,7 +559,7 @@ ffmpeg -i input.mov \
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🎯</span> Caminho do meio
         </h3>
-        <p class="text-neutral-300">O Postiz já tem integração TikTok pronta — basta colar <code class="text-primary font-mono text-sm">Client Key</code> + <code class="text-primary font-mono text-sm">Client Secret</code> do seu app. Faz sentido <strong>passar pelo audit</strong> (porque você precisa de credenciais reais mesmo usando Postiz), mas pula a parte de escrever o cliente HTTP. É o melhor custo-benefício pra maioria dos casos.</p>
+        <p class="text-neutral-300">O Postiz já tem integraçêo TikTok pronta — basta colar <code class="text-primary font-mono text-sm">Client Key</code> + <code class="text-primary font-mono text-sm">Client Secret</code> do seu app. Faz sentido <strong>passar pelo audit</strong> (porque você precisa de credenciais reais mesmo usando Postiz), mas pula a parte de escrever o cliente HTTP. É o melhor custo-benefício pra maioria dos casos.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -570,7 +570,7 @@ ffmpeg -i input.mov \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Volume crítico</div>
-          <p class="text-xs text-neutral-400">Ponto onde automação paga a complexidade.</p>
+          <p class="text-xs text-neutral-400">Ponto onde automaçêo paga a complexidade.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Postiz como ponte</div>
@@ -609,11 +609,11 @@ ffmpeg -i input.mov \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Limites técnicos mapeados</strong><span class="text-neutral-400"> — MP4/H.264/AAC, 9:16, 3s-10min, validação com <code class="font-mono">ffprobe</code> e normalização com <code class="font-mono">ffmpeg</code>.</span></div>
+            <div><strong class="text-white">Limites técnicos mapeados</strong><span class="text-neutral-400"> — MP4/H.264/AAC, 9:16, 3s-10min, validaçêo com <code class="font-mono">ffprobe</code> e normalizaçêo com <code class="font-mono">ffmpeg</code>.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Decisão calibrada</strong><span class="text-neutral-400"> — sabe quando automatizar (volume + canal principal) e quando deixar manual.</span></div>
+            <div><strong class="text-white">Decisêo calibrada</strong><span class="text-neutral-400"> — sabe quando automatizar (volume + canal principal) e quando deixar manual.</span></div>
           </div>
         </div>
 

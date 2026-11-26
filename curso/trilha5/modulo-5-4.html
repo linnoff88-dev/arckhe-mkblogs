@@ -165,18 +165,18 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        <strong class="text-teal-400">BullMQ</strong> é a fila padrão do ecossistema Node — sucessora do Bull, baseada em Redis. Três classes formam a base: <code class="text-teal-400 font-mono text-sm">Queue</code> (produz jobs), <code class="text-teal-400 font-mono text-sm">Worker</code> (consome) e <code class="text-teal-400 font-mono text-sm">QueueEvents</code> (escuta lifecycle de qualquer processo). Toda comunicação acontece via Redis — nenhum processo conhece o outro diretamente.
+        <strong class="text-teal-400">BullMQ</strong> é a fila padrêo do ecossistema Node — sucessora do Bull, baseada em Redis. Três classes formam a base: <code class="text-teal-400 font-mono text-sm">Queue</code> (produz jobs), <code class="text-teal-400 font-mono text-sm">Worker</code> (consome) e <code class="text-teal-400 font-mono text-sm">QueueEvents</code> (escuta lifecycle de qualquer processo). Toda comunicaçêo acontece via Redis — nenhum processo conhece o outro diretamente.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Para agendamento de posts, a fila resolve dois problemas que <code class="text-teal-400 font-mono text-sm">setTimeout</code> não resolve: <strong class="text-teal-400">durabilidade</strong> (sobreviver a restart do processo) e <strong class="text-teal-400">distribuição</strong> (vários workers consumindo em paralelo).
+        Para agendamento de posts, a fila resolve dois problemas que <code class="text-teal-400 font-mono text-sm">setTimeout</code> nêo resolve: <strong class="text-teal-400">durabilidade</strong> (sobreviver a restart do processo) e <strong class="text-teal-400">distribuiçêo</strong> (vários workers consumindo em paralelo).
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/queue/connection.ts
 import { Queue, Worker, QueueEvents } from 'bullmq';
 import IORedis from 'ioredis';
 
-// Conexão dedicada — BullMQ exige maxRetriesPerRequest: null
+// Conexêo dedicada — BullMQ exige maxRetriesPerRequest: null
 export const connection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
@@ -200,7 +200,7 @@ publishEvents.on('failed', ({ jobId, failedReason }) => {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Nunca compartilhe a mesma <code class="text-primary font-mono text-sm">IORedis</code> entre Queue e código de aplicação. BullMQ exige <code class="text-primary font-mono text-sm">maxRetriesPerRequest: null</code> para suportar comandos blocking (<code class="text-primary font-mono text-sm">BRPOPLPUSH</code>) — se sua API usar a mesma instância para cache, vai quebrar.</p>
+        <p class="text-neutral-300">Nunca compartilhe a mesma <code class="text-primary font-mono text-sm">IORedis</code> entre Queue e código de aplicaçêo. BullMQ exige <code class="text-primary font-mono text-sm">maxRetriesPerRequest: null</code> para suportar comandos blocking (<code class="text-primary font-mono text-sm">BRPOPLPUSH</code>) — se sua API usar a mesma instância para cache, vai quebrar.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -308,7 +308,7 @@ export async function cancelPost(postId: string) {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Idempotência</div>
-          <p class="text-xs text-neutral-400">Mesmo jobId não duplica execução.</p>
+          <p class="text-xs text-neutral-400">Mesmo jobId nêo duplica execuçêo.</p>
         </div>
       </div>
     </section>
@@ -325,7 +325,7 @@ export async function cancelPost(postId: string) {
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O handler resolve o <code class="text-teal-400 font-mono text-sm">Provider</code> certo via factory (módulo 5.3), chama <code class="text-teal-400 font-mono text-sm">publish()</code> e retorna o resultado. Qualquer <code class="text-teal-400 font-mono text-sm">throw</code> dentro do handler dispara o retry — não engula erros.
+        O handler resolve o <code class="text-teal-400 font-mono text-sm">Provider</code> certo via factory (módulo 5.3), chama <code class="text-teal-400 font-mono text-sm">publish()</code> e retorna o resultado. Qualquer <code class="text-teal-400 font-mono text-sm">throw</code> dentro do handler dispara o retry — nêo engula erros.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/workers/publish.worker.ts
@@ -345,7 +345,7 @@ export const publishWorker = new Worker&lt;PublishJob&gt;(
   async (job) =&gt; {
     const { postId, providerId, payload } = job.data;
 
-    // 1. Recuperar credenciais do BD (não passar token via payload!)
+    // 1. Recuperar credenciais do BD (nêo passar token via payload!)
     const account = await prisma.account.findUniqueOrThrow({
       where: { id: postId },
       include: { credentials: true },
@@ -396,7 +396,7 @@ publishWorker.on('completed', (job) =&gt; {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Handler</div>
-          <p class="text-xs text-neutral-400">Função async chamada por job.</p>
+          <p class="text-xs text-neutral-400">Funçêo async chamada por job.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Concurrency</div>
@@ -421,7 +421,7 @@ publishWorker.on('completed', (job) =&gt; {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        APIs de redes sociais caem, dão <code class="text-teal-400 font-mono text-sm">429</code> e <code class="text-teal-400 font-mono text-sm">5xx</code> transiente. Retry imediato piora a situação — <strong class="text-teal-400">backoff exponencial</strong> espalha as tentativas: 1min, 2min, 4min, 8min, 16min. Cinco tentativas cobrem ~30min de instabilidade.
+        APIs de redes sociais caem, dêo <code class="text-teal-400 font-mono text-sm">429</code> e <code class="text-teal-400 font-mono text-sm">5xx</code> transiente. Retry imediato piora a situaçêo — <strong class="text-teal-400">backoff exponencial</strong> espalha as tentativas: 1min, 2min, 4min, 8min, 16min. Cinco tentativas cobrem ~30min de instabilidade.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -436,7 +436,7 @@ async (job) =&gt; {
     const provider = getProvider(job.data.providerId);
     return await provider.publish(job.data.payload, credentials);
   } catch (err: any) {
-    // 401/403: token quebrado — não adianta tentar de novo
+    // 401/403: token quebrado — nêo adianta tentar de novo
     if (err.status === 401 || err.status === 403) {
       await prisma.post.update({
         where: { id: job.data.postId },
@@ -471,13 +471,13 @@ async (job) =&gt; {
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Backoff exponencial com base ≥ 30s (evita martelar API).</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">UnrecoverableError</code> em 4xx que não é 429.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">UnrecoverableError</code> em 4xx que nêo é 429.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Respeitar <code class="font-mono">Retry-After</code> do header.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Logar tentativa atual (<code class="font-mono">job.attemptsMade</code>).</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry fixo de 1 segundo — DDOS no provider.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><code class="font-mono">attempts: Infinity</code> — job zumbi para sempre.</span></li>
@@ -516,11 +516,11 @@ async (job) =&gt; {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Quando um job esgota todas as <code class="text-teal-400 font-mono text-sm">attempts</code>, ele vai para o estado <code class="text-teal-400 font-mono text-sm">failed</code> — esse é o equivalente nativo de DLQ no BullMQ. <strong class="text-teal-400">Falha final = humano precisa olhar</strong>. Sem alerta, o post simplesmente não publica e o usuário descobre na semana seguinte.
+        Quando um job esgota todas as <code class="text-teal-400 font-mono text-sm">attempts</code>, ele vai para o estado <code class="text-teal-400 font-mono text-sm">failed</code> — esse é o equivalente nativo de DLQ no BullMQ. <strong class="text-teal-400">Falha final = humano precisa olhar</strong>. Sem alerta, o post simplesmente nêo publica e o usuário descobre na semana seguinte.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Use <code class="text-teal-400 font-mono text-sm">QueueEvents</code> num processo de monitoramento, ou hook <code class="text-teal-400 font-mono text-sm">on('failed')</code> com <code class="text-teal-400 font-mono text-sm">job.attemptsMade === job.opts.attempts</code> para disparar alerta apenas no esgotamento (não em cada tentativa).
+        Use <code class="text-teal-400 font-mono text-sm">QueueEvents</code> num processo de monitoramento, ou hook <code class="text-teal-400 font-mono text-sm">on('failed')</code> com <code class="text-teal-400 font-mono text-sm">job.attemptsMade === job.opts.attempts</code> para disparar alerta apenas no esgotamento (nêo em cada tentativa).
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// src/workers/dlq-monitor.ts
@@ -552,10 +552,10 @@ events.on('failed', async ({ jobId, failedReason, prev }) =&gt; {
   });
 });
 
-// Reprocessar jobs failed (operação manual via admin)
+// Reprocessar jobs failed (operaçêo manual via admin)
 export async function retryFailedJob(jobId: string) {
   const job = await publishQueue.getJob(jobId);
-  if (!job) throw new Error('job não existe');
+  if (!job) throw new Error('job nêo existe');
   await job.retry();
 }
 
@@ -570,7 +570,7 @@ export async function listFailedJobs(limit = 50) {
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-teal-400">Job silencioso = post perdido:</strong> sem alerta, ninguém sabe que falhou.</li>
-          <li><strong class="text-teal-400">Token revogado em massa:</strong> 200 posts falhando em 5 minutos é incidente, não bug.</li>
+          <li><strong class="text-teal-400">Token revogado em massa:</strong> 200 posts falhando em 5 minutos é incidente, nêo bug.</li>
           <li><strong class="text-teal-400">Padrões revelam bugs:</strong> mesmo provider falhando sempre = problema no adapter.</li>
           <li><strong class="text-teal-400">Reprocesso manual:</strong> admin precisa de UI para listar failed e fazer <code class="font-mono">job.retry()</code>.</li>
         </ul>
@@ -584,7 +584,7 @@ export async function listFailedJobs(limit = 50) {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Alerta</div>
-          <p class="text-xs text-neutral-400">Notificação humana só na falha final.</p>
+          <p class="text-xs text-neutral-400">Notificaçêo humana só na falha final.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">job.retry()</div>
@@ -605,14 +605,14 @@ export async function listFailedJobs(limit = 50) {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        BullMQ resolve o caso "agendar e republicar com retry". Mas quando o fluxo cresce — <strong class="text-teal-400">approval em múltiplas etapas</strong>, <strong class="text-teal-400">timers de dias</strong>, <strong class="text-teal-400">cancelamento condicional</strong>, <strong class="text-teal-400">compensação</strong> (postou no Twitter mas falhou no LinkedIn, o que fazer?) — você está reimplementando workflows em cima de jobs. É hora de olhar para <strong class="text-teal-400">Temporal</strong>.
+        BullMQ resolve o caso "agendar e republicar com retry". Mas quando o fluxo cresce — <strong class="text-teal-400">approval em múltiplas etapas</strong>, <strong class="text-teal-400">timers de dias</strong>, <strong class="text-teal-400">cancelamento condicional</strong>, <strong class="text-teal-400">compensaçêo</strong> (postou no Twitter mas falhou no LinkedIn, o que fazer?) — você está reimplementando workflows em cima de jobs. É hora de olhar para <strong class="text-teal-400">Temporal</strong>.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Temporal oferece <strong class="text-teal-400">workflows duráveis</strong>: o código do workflow é replayed do log de eventos a cada falha, então variáveis locais, <code class="text-teal-400 font-mono text-sm">await sleep('7 days')</code> e signals "simplesmente funcionam" mesmo com restart do worker no meio.
+        Temporal oferece <strong class="text-teal-400">workflows duráveis</strong>: o código do workflow é replayed do log de eventos a cada falha, entêo variáveis locais, <code class="text-teal-400 font-mono text-sm">await sleep('7 days')</code> e signals "simplesmente funcionam" mesmo com restart do worker no meio.
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Exemplo Temporal — workflow de publicação multi-provider
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Exemplo Temporal — workflow de publicaçêo multi-provider
 // src/workflows/publishPost.workflow.ts
 import { proxyActivities, sleep, defineSignal, setHandler } from '@temporalio/workflow';
 import type * as activities from '../activities';
@@ -663,10 +663,10 @@ export async function publishPostWorkflow(input: {
           <div>
             <h4 class="font-semibold text-teal-400 mb-2">Continue com BullMQ se…</h4>
             <ul class="space-y-2 text-neutral-300">
-              <li>• Jobs são single-step (publicar e acabou).</li>
-              <li>• Delays até dias, não meses.</li>
+              <li>• Jobs sêo single-step (publicar e acabou).</li>
+              <li>• Delays até dias, nêo meses.</li>
               <li>• Time já conhece Redis.</li>
-              <li>• Sem necessidade de orquestração entre múltiplas atividades.</li>
+              <li>• Sem necessidade de orquestraçêo entre múltiplas atividades.</li>
             </ul>
           </div>
           <div>
@@ -674,7 +674,7 @@ export async function publishPostWorkflow(input: {
             <ul class="space-y-2 text-neutral-300">
               <li>• Workflows com múltiplas etapas e signals.</li>
               <li>• Timers longos (7 dias, 30 dias) precisam ser duráveis.</li>
-              <li>• Compensação/saga entre serviços externos.</li>
+              <li>• Compensaçêo/saga entre serviços externos.</li>
               <li>• Visibilidade temporal de eventos é requisito.</li>
             </ul>
           </div>
@@ -685,14 +685,14 @@ export async function publishPostWorkflow(input: {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🧭</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Não migre por hype. Temporal adiciona um cluster inteiro (history, matching, frontend, worker) e uma curva de aprendizado real. <strong>Comece com BullMQ</strong>, e migre quando você se pegar implementando "estado de workflow numa tabela do Postgres" — esse é o sinal claro de que cruzou a fronteira.</p>
+        <p class="text-neutral-300">Nêo migre por hype. Temporal adiciona um cluster inteiro (history, matching, frontend, worker) e uma curva de aprendizado real. <strong>Comece com BullMQ</strong>, e migre quando você se pegar implementando "estado de workflow numa tabela do Postgres" — esse é o sinal claro de que cruzou a fronteira.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Workflow</div>
-          <p class="text-xs text-neutral-400">Função durável replayed do event log.</p>
+          <p class="text-xs text-neutral-400">Funçêo durável replayed do event log.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Activity</div>
@@ -739,13 +739,13 @@ export async function publishPostWorkflow(input: {
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-teal-400 mt-1">✓</span>
-            <div><strong class="text-white">Quando migrar para Temporal</strong><span class="text-neutral-400"> — workflows duráveis, timers longos, signals e compensação.</span></div>
+            <div><strong class="text-white">Quando migrar para Temporal</strong><span class="text-neutral-400"> — workflows duráveis, timers longos, signals e compensaçêo.</span></div>
           </div>
         </div>
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">5.5 — Multi-tenancy, billing e operação em produção</p>
+          <p class="text-neutral-300">5.5 — Multi-tenancy, billing e operaçêo em produçêo</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

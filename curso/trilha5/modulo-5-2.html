@@ -166,11 +166,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <strong class="text-teal-400">User</strong> é a raiz do grafo. Tudo (contas sociais, posts, mídia) pertence a um usuário. Use <code class="text-teal-400 font-mono text-sm">uuid</code> como id — IDs sequenciais expõem volume de cadastros e facilitam enumeração. O <code class="text-teal-400 font-mono text-sm">email</code> precisa de <code class="text-teal-400 font-mono text-sm">@unique</code> e o <code class="text-teal-400 font-mono text-sm">passwordHash</code> nunca é exposto na API — só o servidor lê.
+        O <strong class="text-teal-400">User</strong> é a raiz do grafo. Tudo (contas sociais, posts, mídia) pertence a um usuário. Use <code class="text-teal-400 font-mono text-sm">uuid</code> como id — IDs sequenciais expõem volume de cadastros e facilitam enumeraçêo. O <code class="text-teal-400 font-mono text-sm">email</code> precisa de <code class="text-teal-400 font-mono text-sm">@unique</code> e o <code class="text-teal-400 font-mono text-sm">passwordHash</code> nunca é exposto na API — só o servidor lê.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Antes de escrever modelos, declare o <strong class="text-teal-400">datasource</strong> e o <strong class="text-teal-400">generator</strong>. O Prisma só sabe gerar o client se essa configuração existir no topo do <code class="text-teal-400 font-mono text-sm">schema.prisma</code>.
+        Antes de escrever modelos, declare o <strong class="text-teal-400">datasource</strong> e o <strong class="text-teal-400">generator</strong>. O Prisma só sabe gerar o client se essa configuraçêo existir no topo do <code class="text-teal-400 font-mono text-sm">schema.prisma</code>.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// prisma/schema.prisma
@@ -217,7 +217,7 @@ model User {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">uuid()</div>
-          <p class="text-xs text-neutral-400">Default gera UUID v4 — não sequencial, sem leak.</p>
+          <p class="text-xs text-neutral-400">Default gera UUID v4 — nêo sequencial, sem leak.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Relações</div>
@@ -234,7 +234,7 @@ model User {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Cada usuário conecta N contas — Twitter, LinkedIn, Instagram. O <strong class="text-teal-400">SocialAccount</strong> guarda o token OAuth de cada uma. Os campos <code class="text-teal-400 font-mono text-sm">accessToken</code> e <code class="text-teal-400 font-mono text-sm">refreshToken</code> são <strong class="text-teal-400">criptografados em repouso</strong> (AES-GCM com chave fora do banco) antes do INSERT — o Prisma só vê o ciphertext.
+        Cada usuário conecta N contas — Twitter, LinkedIn, Instagram. O <strong class="text-teal-400">SocialAccount</strong> guarda o token OAuth de cada uma. Os campos <code class="text-teal-400 font-mono text-sm">accessToken</code> e <code class="text-teal-400 font-mono text-sm">refreshToken</code> sêo <strong class="text-teal-400">criptografados em repouso</strong> (AES-GCM com chave fora do banco) antes do INSERT — o Prisma só vê o ciphertext.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -277,7 +277,7 @@ model SocialAccount {
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-teal-400">Backup vazado:</strong> dump de Postgres sem ciphertext entrega todas as contas conectadas.</li>
           <li><strong class="text-teal-400">SQL injection:</strong> mesmo se um SELECT vaze, o atacante recebe lixo.</li>
-          <li><strong class="text-teal-400">Princípio do menor privilégio:</strong> a chave AES vive em KMS/secret manager, não no banco.</li>
+          <li><strong class="text-teal-400">Princípio do menor privilégio:</strong> a chave AES vive em KMS/secret manager, nêo no banco.</li>
           <li><strong class="text-teal-400">expiresAt indexado:</strong> permite scan barato de tokens vencendo para refresh em batch.</li>
         </ul>
       </div>
@@ -311,7 +311,7 @@ model SocialAccount {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <strong class="text-teal-400">Post</strong> é o conteúdo na visão do usuário — não na visão da rede. Um único Post pode disparar publicações em várias plataformas (isso é o <code class="text-teal-400 font-mono text-sm">PostTarget</code>, próximo tópico). O campo <code class="text-teal-400 font-mono text-sm">mediaUrls</code> é <code class="text-teal-400 font-mono text-sm">String[]</code> nativo do Postgres — array é mais barato que tabela de junção quando só importa ordem.
+        O <strong class="text-teal-400">Post</strong> é o conteúdo na visêo do usuário — nêo na visêo da rede. Um único Post pode disparar publicações em várias plataformas (isso é o <code class="text-teal-400 font-mono text-sm">PostTarget</code>, próximo tópico). O campo <code class="text-teal-400 font-mono text-sm">mediaUrls</code> é <code class="text-teal-400 font-mono text-sm">String[]</code> nativo do Postgres — array é mais barato que tabela de junçêo quando só importa ordem.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -349,7 +349,7 @@ model Post {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">@db.Text</code> em vez do default <code class="text-primary font-mono text-sm">VARCHAR</code>. Twitter/X cresceu para 25 mil chars em conta paga; Threads tem 500; LinkedIn 3 mil. <code class="text-primary font-mono text-sm">TEXT</code> no Postgres não tem custo extra vs <code class="text-primary font-mono text-sm">VARCHAR(n)</code> e te livra de migration quando algum limite mudar.</p>
+        <p class="text-neutral-300">Use <code class="text-primary font-mono text-sm">@db.Text</code> em vez do default <code class="text-primary font-mono text-sm">VARCHAR</code>. Twitter/X cresceu para 25 mil chars em conta paga; Threads tem 500; LinkedIn 3 mil. <code class="text-primary font-mono text-sm">TEXT</code> no Postgres nêo tem custo extra vs <code class="text-primary font-mono text-sm">VARCHAR(n)</code> e te livra de migration quando algum limite mudar.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -381,7 +381,7 @@ model Post {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Esse é o modelo que separa <strong class="text-teal-400">amador</strong> de <strong class="text-teal-400">produção</strong>. Um <code class="text-teal-400 font-mono text-sm">Post</code> dispara <strong class="text-teal-400">N</strong> publicações reais — uma por rede. Cada <strong class="text-teal-400">PostTarget</strong> tem seu próprio <code class="text-teal-400 font-mono text-sm">status</code>, sua mensagem de erro e o <code class="text-teal-400 font-mono text-sm">platformPostId</code> retornado pela API da rede.
+        Esse é o modelo que separa <strong class="text-teal-400">amador</strong> de <strong class="text-teal-400">produçêo</strong>. Um <code class="text-teal-400 font-mono text-sm">Post</code> dispara <strong class="text-teal-400">N</strong> publicações reais — uma por rede. Cada <strong class="text-teal-400">PostTarget</strong> tem seu próprio <code class="text-teal-400 font-mono text-sm">status</code>, sua mensagem de erro e o <code class="text-teal-400 font-mono text-sm">platformPostId</code> retornado pela API da rede.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -423,11 +423,11 @@ model PostTarget {
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar <code class="font-mono">platformPostId</code> — é o que permite editar/deletar lá depois.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Contar <code class="font-mono">attempts</code> para corte de retry exponencial.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Salvar <code class="font-mono">error</code> completo — o stack trace explica rate limit vs auth.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">@@unique([postId, socialAccountId])</code> impede publicação dupla.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">@@unique([postId, socialAccountId])</code> impede publicaçêo dupla.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar status do Post com status do Target — quebra retry parcial.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Colocar <code class="font-mono">platform</code> aqui — vem do <code class="font-mono">socialAccountId</code>.</span></li>
@@ -440,7 +440,7 @@ model PostTarget {
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-teal-400 mb-1">Tabela de junção rica</div>
+          <div class="font-semibold text-teal-400 mb-1">Tabela de junçêo rica</div>
           <p class="text-xs text-neutral-400">Many-to-many com atributos próprios.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -466,11 +466,11 @@ model PostTarget {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Imagens e vídeos <strong class="text-teal-400">não vão no banco</strong>. Vão para <strong class="text-teal-400">S3</strong> (ou R2/Spaces) e o banco guarda só a <code class="text-teal-400 font-mono text-sm">url</code>, o <code class="text-teal-400 font-mono text-sm">mimeType</code> e o <code class="text-teal-400 font-mono text-sm">size</code>. Persistir bytes de mídia no Postgres custa caro: backup explode, MVCC sofre, vacuum trava.
+        Imagens e vídeos <strong class="text-teal-400">nêo vêo no banco</strong>. Vêo para <strong class="text-teal-400">S3</strong> (ou R2/Spaces) e o banco guarda só a <code class="text-teal-400 font-mono text-sm">url</code>, o <code class="text-teal-400 font-mono text-sm">mimeType</code> e o <code class="text-teal-400 font-mono text-sm">size</code>. Persistir bytes de mídia no Postgres custa caro: backup explode, MVCC sofre, vacuum trava.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <code class="text-teal-400 font-mono text-sm">Media</code> aqui é o registro do upload feito pelo usuário. O <code class="text-teal-400 font-mono text-sm">Post.mediaUrls</code> referencia essas URLs, mas <strong class="text-teal-400">não há FK</strong> — o usuário pode anexar a mesma mídia em N posts e excluir o Post sem perder a Media.
+        O <code class="text-teal-400 font-mono text-sm">Media</code> aqui é o registro do upload feito pelo usuário. O <code class="text-teal-400 font-mono text-sm">Post.mediaUrls</code> referencia essas URLs, mas <strong class="text-teal-400">nêo há FK</strong> — o usuário pode anexar a mesma mídia em N posts e excluir o Post sem perder a Media.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">model Media {
@@ -495,7 +495,7 @@ model PostTarget {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🧹</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Guarde <code class="text-primary font-mono text-sm">key</code> separado da <code class="text-primary font-mono text-sm">url</code>. A URL pode mudar (CDN nova, domínio próprio), mas a chave S3 é estável e é o que você usa no <code class="text-primary font-mono text-sm">DeleteObject</code>. Sem isso, garbage collection de mídia órfã vira parsing de URL — frágil.</p>
+        <p class="text-neutral-300">Guarde <code class="text-primary font-mono text-sm">key</code> separado da <code class="text-primary font-mono text-sm">url</code>. A URL pode mudar (CDN nova, domínio próprio), mas a chave S3 é estável e é o que você usa no <code class="text-primary font-mono text-sm">DeleteObject</code>. Sem isso, garbage collection de mídia órfê vira parsing de URL — frágil.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -527,7 +527,7 @@ model PostTarget {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Schema escrito não vira tabela sozinho. <code class="text-teal-400 font-mono text-sm">prisma migrate</code> gera SQL versionado em <code class="text-teal-400 font-mono text-sm">prisma/migrations/</code> — arquivos que você <strong class="text-teal-400">commita</strong> e que rodam idênticos em dev, staging e produção.
+        Schema escrito nêo vira tabela sozinho. <code class="text-teal-400 font-mono text-sm">prisma migrate</code> gera SQL versionado em <code class="text-teal-400 font-mono text-sm">prisma/migrations/</code> — arquivos que você <strong class="text-teal-400">commita</strong> e que rodam idênticos em dev, staging e produçêo.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -552,7 +552,7 @@ model PostTarget {
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center"><span class="text-teal-400 font-bold">3</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold mb-2">Aplicar em produção</h4>
+            <h4 class="font-semibold mb-2">Aplicar em produçêo</h4>
             <p class="text-sm text-neutral-400 mb-3"><code class="font-mono">deploy</code> só executa migrations já existentes — nunca gera nem modifica.</p>
             <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">npx prisma migrate deploy</code></pre>
           </div>
@@ -587,13 +587,13 @@ model PostTarget {
       </div>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Fluxo típico após editar schema.prisma
-npx prisma format                    # arruma indentação
+npx prisma format                    # arruma indentaçêo
 npx prisma validate                  # checa sintaxe
 npx prisma migrate dev --name xxx    # gera SQL + aplica
 git add prisma/migrations/ prisma/schema.prisma
 git commit -m "feat(db): xxx"
 
-# No CI/CD da produção (no entrypoint do container)
+# No CI/CD da produçêo (no entrypoint do container)
 npx prisma migrate deploy
 npx prisma generate</code></pre>
 
@@ -601,7 +601,7 @@ npx prisma generate</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚠️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">NUNCA edite uma migration depois que ela já rodou em qualquer ambiente — nem de virgula. O Prisma calcula um checksum e qualquer mudança quebra o <code class="text-primary font-mono text-sm">migrate deploy</code> em produção. Errou? Crie uma migration NOVA que corrige (ALTER, DROP, novo INDEX).</p>
+        <p class="text-neutral-300">NUNCA edite uma migration depois que ela já rodou em qualquer ambiente — nem de virgula. O Prisma calcula um checksum e qualquer mudança quebra o <code class="text-primary font-mono text-sm">migrate deploy</code> em produçêo. Errou? Crie uma migration NOVA que corrige (ALTER, DROP, novo INDEX).</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -661,7 +661,7 @@ npx prisma generate</code></pre>
 
         <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
           <h3 class="font-semibold text-teal-400 mb-2">Próximo Módulo:</h3>
-          <p class="text-neutral-300">5.3 — Autenticação e gestão de usuários</p>
+          <p class="text-neutral-300">5.3 — Autenticaçêo e gestêo de usuários</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4">

@@ -159,15 +159,15 @@
     <section id="topico-1" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold">🔌 Padrão Adapter/Provider</h2>
+        <h2 class="text-2xl font-bold">🔌 Padrêo Adapter/Provider</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Cada rede social tem uma API diferente: <strong class="text-emerald-400">X usa OAuth 2.0 PKCE</strong>, <strong class="text-emerald-400">LinkedIn pede UGC posts</strong>, <strong class="text-emerald-400">Instagram exige container ID</strong>. Sem abstração, o código vira um <em>switch</em> gigante. O padrão <strong class="text-emerald-400">Adapter</strong> resolve isso: uma classe por rede, todas implementando a mesma interface.
+        Cada rede social tem uma API diferente: <strong class="text-emerald-400">X usa OAuth 2.0 PKCE</strong>, <strong class="text-emerald-400">LinkedIn pede UGC posts</strong>, <strong class="text-emerald-400">Instagram exige container ID</strong>. Sem abstraçêo, o código vira um <em>switch</em> gigante. O padrêo <strong class="text-emerald-400">Adapter</strong> resolve isso: uma classe por rede, todas implementando a mesma interface.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O resto da aplicação fala com a interface, não com a API específica. Adicionar TikTok amanhã = criar <code class="text-emerald-400 font-mono text-sm">TikTokProvider</code> e registrar no factory — zero mudança no agendador, na fila ou no frontend.
+        O resto da aplicaçêo fala com a interface, nêo com a API específica. Adicionar TikTok amanhê = criar <code class="text-emerald-400 font-mono text-sm">TikTokProvider</code> e registrar no factory — zero mudança no agendador, na fila ou no frontend.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Interface comum — contrato que TODA rede implementa
@@ -181,7 +181,7 @@ export interface SocialProvider {
   getMetrics(account: SocialAccount, externalId: string): Promise&lt;Metrics&gt;;
 }
 
-// Implementação concreta — uma por rede
+// Implementaçêo concreta — uma por rede
 export class XProvider implements SocialProvider {
   readonly platform = 'x' as const;
 
@@ -201,7 +201,7 @@ export function getProvider(platform: string): SocialProvider {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Mantenha a interface <strong>pequena</strong>. Se uma rede tiver feature exclusiva (ex: enquetes no X), não polua a interface comum — exponha via método específico no provider (<code class="text-primary font-mono text-sm">XProvider.createPoll()</code>) e cheque <code class="text-primary font-mono text-sm">instanceof</code> no caller. Interface inchada vira lixo de <code class="text-primary font-mono text-sm">throw new Error("not supported")</code>.</p>
+        <p class="text-neutral-300">Mantenha a interface <strong>pequena</strong>. Se uma rede tiver feature exclusiva (ex: enquetes no X), nêo polua a interface comum — exponha via método específico no provider (<code class="text-primary font-mono text-sm">XProvider.createPoll()</code>) e cheque <code class="text-primary font-mono text-sm">instanceof</code> no caller. Interface inchada vira lixo de <code class="text-primary font-mono text-sm">throw new Error("not supported")</code>.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -220,7 +220,7 @@ export function getProvider(platform: string): SocialProvider {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Open/Closed</div>
-          <p class="text-xs text-neutral-400">Aberto para extensão (nova rede), fechado para mudança.</p>
+          <p class="text-xs text-neutral-400">Aberto para extensêo (nova rede), fechado para mudança.</p>
         </div>
       </div>
     </section>
@@ -233,14 +233,14 @@ export function getProvider(platform: string): SocialProvider {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Publicar post não é uma chamada síncrona. O usuário aperta "agendar para amanhã 9h" e o sistema precisa <strong class="text-emerald-400">lembrar</strong> de publicar, <strong class="text-emerald-400">tentar de novo se falhar</strong>, e <strong class="text-emerald-400">não derrubar a app</strong> quando a API da rede estiver lenta. Filas resolvem os três.
+        Publicar post nêo é uma chamada síncrona. O usuário aperta "agendar para amanhê 9h" e o sistema precisa <strong class="text-emerald-400">lembrar</strong> de publicar, <strong class="text-emerald-400">tentar de novo se falhar</strong>, e <strong class="text-emerald-400">nêo derrubar a app</strong> quando a API da rede estiver lenta. Filas resolvem os três.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
         <strong class="text-emerald-400">BullMQ</strong> (Redis) cobre 95% dos casos: delay nativo, retry com backoff exponencial, jobs agendados via cron. <strong class="text-emerald-400">Temporal</strong> entra quando você precisa de workflows duradouros (ex: thread no X com 10 tweets sequenciais com falha parcial).
       </p>
 
-      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Agendar publicação para horário futuro
+      <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Agendar publicaçêo para horário futuro
 await postQueue.add(
   'publish-post',
   { postId: '42', target: 'linkedin' },
@@ -269,7 +269,7 @@ new Worker('post-queue', async (job) =&gt; {
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar <code class="font-mono">setTimeout</code> em memória — morre no restart.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retry infinito sem backoff — quebra o Redis e a API.</span></li>
@@ -283,7 +283,7 @@ new Worker('post-queue', async (job) =&gt; {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Job</div>
-          <p class="text-xs text-neutral-400">Unidade de trabalho enfileirada para execução posterior.</p>
+          <p class="text-xs text-neutral-400">Unidade de trabalho enfileirada para execuçêo posterior.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Delay</div>
@@ -312,7 +312,7 @@ new Worker('post-queue', async (job) =&gt; {
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O fluxo padrão é: usuário sobe arquivo → backend gera <strong class="text-emerald-400">signed URL</strong> → frontend faz PUT direto no S3/R2/Cloudinary → backend salva a URL final no Post. Nada de proxy pela aplicação — desperdiça banda e timeout.
+        O fluxo padrêo é: usuário sobe arquivo → backend gera <strong class="text-emerald-400">signed URL</strong> → frontend faz PUT direto no S3/R2/Cloudinary → backend salva a URL final no Post. Nada de proxy pela aplicaçêo — desperdiça banda e timeout.
       </p>
 
       <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
@@ -320,10 +320,10 @@ new Worker('post-queue', async (job) =&gt; {
           <span class="mr-2">📊</span> Provedores e quando usar
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
-          <li><strong class="text-emerald-400">AWS S3:</strong> padrão da indústria, barato, integra com CloudFront. Ideal para volume alto e equipe que já está na AWS.</li>
+          <li><strong class="text-emerald-400">AWS S3:</strong> padrêo da indústria, barato, integra com CloudFront. Ideal para volume alto e equipe que já está na AWS.</li>
           <li><strong class="text-emerald-400">Cloudflare R2:</strong> compatível com API S3, <strong>sem egress fee</strong>. Vence em custo se você serve muita imagem via CDN.</li>
           <li><strong class="text-emerald-400">Cloudinary:</strong> além de armazenar, transforma (resize, crop, format) via URL. Útil para gerar mil tamanhos sem pipeline próprio.</li>
-          <li><strong class="text-emerald-400">Local (dev):</strong> <code class="font-mono">/uploads</code> em volume Docker. Zero infra para começar, mas não serve em produção multi-réplica.</li>
+          <li><strong class="text-emerald-400">Local (dev):</strong> <code class="font-mono">/uploads</code> em volume Docker. Zero infra para começar, mas nêo serve em produçêo multi-réplica.</li>
         </ul>
       </div>
 
@@ -351,7 +351,7 @@ await fetch(uploadUrl, {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Instagram <strong>baixa</strong> a imagem do seu storage no momento da publicação. Se você usa bucket privado com signed URL curta, a URL pode expirar antes do Meta puxar — gere com <code class="text-primary font-mono text-sm">expiresIn</code> de pelo menos 1h, ou marque o objeto como público com ACL fixa.</p>
+        <p class="text-neutral-300">Instagram <strong>baixa</strong> a imagem do seu storage no momento da publicaçêo. Se você usa bucket privado com signed URL curta, a URL pode expirar antes do Meta puxar — gere com <code class="text-primary font-mono text-sm">expiresIn</code> de pelo menos 1h, ou marque o objeto como público com ACL fixa.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -362,7 +362,7 @@ await fetch(uploadUrl, {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Signed URL</div>
-          <p class="text-xs text-neutral-400">URL temporária com permissão embutida na query string.</p>
+          <p class="text-xs text-neutral-400">URL temporária com permissêo embutida na query string.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Direct upload</div>
@@ -387,7 +387,7 @@ await fetch(uploadUrl, {
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A separação <code class="text-emerald-400 font-mono text-sm">Post</code> (conteúdo lógico) × <code class="text-emerald-400 font-mono text-sm">PostTarget</code> (publicação por rede) é o que permite <strong class="text-emerald-400">um post → várias redes</strong> com status independente em cada uma.
+        A separaçêo <code class="text-emerald-400 font-mono text-sm">Post</code> (conteúdo lógico) × <code class="text-emerald-400 font-mono text-sm">PostTarget</code> (publicaçêo por rede) é o que permite <strong class="text-emerald-400">um post → várias redes</strong> com status independente em cada uma.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// schema.prisma — núcleo da modelagem
@@ -509,7 +509,7 @@ model Media {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Sempre ofereça <strong>"texto base + override por rede"</strong>. O usuário escreve uma versão geral, e pode customizar (mais hashtags no Instagram, formato thread no X) sem perder o resto. UX que diferencia ferramenta amadora de profissional.</p>
+        <p class="text-neutral-300">Sempre ofereça <strong>"texto base + override por rede"</strong>. O usuário escreve uma versêo geral, e pode customizar (mais hashtags no Instagram, formato thread no X) sem perder o resto. UX que diferencia ferramenta amadora de profissional.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -520,10 +520,10 @@ model Media {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Optimistic UI</div>
-          <p class="text-xs text-neutral-400">Atualiza tela antes do servidor confirmar — sensação fluida.</p>
+          <p class="text-xs text-neutral-400">Atualiza tela antes do servidor confirmar — sensaçêo fluida.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-emerald-400 mb-1">Componentização</div>
+          <div class="font-semibold text-emerald-400 mb-1">Componentizaçêo</div>
           <p class="text-xs text-neutral-400">Editor, preview, calendário cada um isolado e reutilizável.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -541,7 +541,7 @@ model Media {
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Algumas redes (Meta principalmente) confirmam publicação de forma <strong class="text-emerald-400">assíncrona</strong>: você manda o post, recebe um ID temporário, e só algum tempo depois um webhook avisa "publicou OK" ou "rejeitou por política de conteúdo". Sem expor um endpoint de webhook, você fica adivinhando status.
+        Algumas redes (Meta principalmente) confirmam publicaçêo de forma <strong class="text-emerald-400">assíncrona</strong>: você manda o post, recebe um ID temporário, e só algum tempo depois um webhook avisa "publicou OK" ou "rejeitou por política de conteúdo". Sem expor um endpoint de webhook, você fica adivinhando status.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -550,7 +550,7 @@ model Media {
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// Endpoint público para receber callbacks
 app.post('/webhooks/instagram', async (req, res) =&gt; {
-  // 1. Validar assinatura HMAC (NÃO confiar no payload sem isso)
+  // 1. Validar assinatura HMAC (NêO confiar no payload sem isso)
   const sig = req.headers['x-hub-signature-256'];
   const expected = 'sha256=' + crypto
     .createHmac('sha256', process.env.META_APP_SECRET)
@@ -578,9 +578,9 @@ app.post('/webhooks/instagram', async (req, res) =&gt; {
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em IP de origem como autenticação.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em IP de origem como autenticaçêo.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fazer chamada síncrona ao DB lento no handler.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Retornar 500 quando o evento é desconhecido — vira retry storm.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de expor o endpoint via HTTPS público.</span></li>
@@ -600,7 +600,7 @@ app.post('/webhooks/instagram', async (req, res) =&gt; {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">At-least-once</div>
-          <p class="text-xs text-neutral-400">Webhook pode chegar duplicado — handler aguenta repetição.</p>
+          <p class="text-xs text-neutral-400">Webhook pode chegar duplicado — handler aguenta repetiçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-emerald-400 mb-1">Real-time UI</div>

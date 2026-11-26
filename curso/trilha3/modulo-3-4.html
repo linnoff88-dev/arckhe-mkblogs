@@ -165,7 +165,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Diferente das outras APIs da trilha, o LinkedIn <strong class="text-purple-400">exige uma Company Page</strong> para criar um app — não dá pra usar perfil pessoal como dono. Sem Page, nem o botão "Create app" aparece. Crie uma Page placeholder se for o caso (pode ser da sua marca pessoal).
+        Diferente das outras APIs da trilha, o LinkedIn <strong class="text-purple-400">exige uma Company Page</strong> para criar um app — nêo dá pra usar perfil pessoal como dono. Sem Page, nem o botêo "Create app" aparece. Crie uma Page placeholder se for o caso (pode ser da sua marca pessoal).
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -220,7 +220,7 @@ Redirect URLs: http://localhost:5000/integrations/social/linkedin</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        App criado não significa app utilizável. Cada API do LinkedIn é entregue como <strong class="text-purple-400">produto</strong> que você precisa requisitar separado. Para publicar posts, o produto obrigatório é <strong class="text-purple-400">Share on LinkedIn</strong> (perfil pessoal) e/ou <strong class="text-purple-400">Community Management API</strong> (Page).
+        App criado nêo significa app utilizável. Cada API do LinkedIn é entregue como <strong class="text-purple-400">produto</strong> que você precisa requisitar separado. Para publicar posts, o produto obrigatório é <strong class="text-purple-400">Share on LinkedIn</strong> (perfil pessoal) e/ou <strong class="text-purple-400">Community Management API</strong> (Page).
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -234,7 +234,7 @@ Redirect URLs: http://localhost:5000/integrations/social/linkedin</code></pre>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-purple-400">Sign In with LinkedIn using OpenID Connect:</strong> autentica usuários (login). Auto-aprovado.</li>
           <li><strong class="text-purple-400">Share on LinkedIn:</strong> publica em <em>perfil pessoal</em>. Auto-aprovado. É o mínimo viável.</li>
-          <li><strong class="text-purple-400">Community Management API:</strong> publica em <em>Company Pages</em>. Aprovação manual, review humano.</li>
+          <li><strong class="text-purple-400">Community Management API:</strong> publica em <em>Company Pages</em>. Aprovaçêo manual, review humano.</li>
           <li><strong class="text-purple-400">Marketing Developer Platform:</strong> Ads e analytics. Restrito a partners.</li>
         </ul>
       </div>
@@ -243,19 +243,19 @@ Redirect URLs: http://localhost:5000/integrations/social/linkedin</code></pre>
 # Products → Status pode ser:
 #   Pending    → aguardando review
 #   Added      → liberado, scopes disponíveis
-#   Rejected   → revisão necessária
+#   Rejected   → revisêo necessária
 
 # Validar scopes liberados (depois de Added)
 curl -X GET "https://api.linkedin.com/v2/me" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 # 200 OK → scope w_member_social ativo
-# 403 ACCESS_DENIED → produto não liberado ainda</code></pre>
+# 403 ACCESS_DENIED → produto nêo liberado ainda</code></pre>
 
       <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⏳</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Comece com <strong>Share on LinkedIn</strong> só. Configure tudo no Postiz, valide o fluxo, e só depois peça Community Management. Pedir tudo de uma vez é tentação — mas se o review da Community recusar, atrasa também o resto.</p>
+        <p class="text-neutral-300">Comece com <strong>Share on LinkedIn</strong> só. Configure tudo no Postiz, valide o fluxo, e só depois peça Community Management. Pedir tudo de uma vez é tentaçêo — mas se o review da Community recusar, atrasa também o resto.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -266,7 +266,7 @@ curl -X GET "https://api.linkedin.com/v2/me" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Auto-approved</div>
-          <p class="text-xs text-neutral-400">Liberação imediata sem review humano.</p>
+          <p class="text-xs text-neutral-400">Liberaçêo imediata sem review humano.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Review manual</div>
@@ -283,11 +283,11 @@ curl -X GET "https://api.linkedin.com/v2/me" \
     <section id="topico-3" class="mb-16">
       <div class="flex items-center space-x-4 mb-6">
         <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold">🎫 Scopes: pessoal vs organização</h2>
+        <h2 class="text-2xl font-bold">🎫 Scopes: pessoal vs organizaçêo</h2>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Scope é a permissão granular que o usuário concede no consent screen. O LinkedIn separa rigidamente <strong class="text-purple-400">perfil pessoal</strong> de <strong class="text-purple-400">Company Page</strong> — são scopes distintos, endpoints distintos e produtos distintos. Pedir o errado retorna <code class="text-purple-400 font-mono text-sm">403</code> sem mensagem clara.
+        Scope é a permissêo granular que o usuário concede no consent screen. O LinkedIn separa rigidamente <strong class="text-purple-400">perfil pessoal</strong> de <strong class="text-purple-400">Company Page</strong> — sêo scopes distintos, endpoints distintos e produtos distintos. Pedir o errado retorna <code class="text-purple-400 font-mono text-sm">403</code> sem mensagem clara.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Scopes essenciais para o Postiz
@@ -303,7 +303,7 @@ w_organization_social   # publicar na Page
 r_organization_social   # ler posts da Page
 rw_organization_admin   # gerenciar settings da Page
 
-# === Composição final do parâmetro scope ===
+# === Composiçêo final do parâmetro scope ===
 # Pessoa só:
 scope=openid%20profile%20email%20w_member_social
 
@@ -321,7 +321,7 @@ scope=openid%20profile%20email%20w_member_social%20w_organization_social</code><
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedir <code class="font-mono">w_organization_social</code> sem ter Community Management aprovado.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar scopes deprecados (<code class="font-mono">r_liteprofile</code>) com OIDC.</span></li>
@@ -335,7 +335,7 @@ scope=openid%20profile%20email%20w_member_social%20w_organization_social</code><
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Scope</div>
-          <p class="text-xs text-neutral-400">Permissão atômica concedida pelo usuário.</p>
+          <p class="text-xs text-neutral-400">Permissêo atômica concedida pelo usuário.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">w_ vs r_</div>
@@ -360,14 +360,14 @@ scope=openid%20profile%20email%20w_member_social%20w_organization_social</code><
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O LinkedIn usa <strong class="text-purple-400">Authorization Code Flow</strong> padrão do OAuth 2.0. Três etapas: enviar usuário para <code class="text-purple-400 font-mono text-sm">/authorization</code>, receber <code class="text-purple-400 font-mono text-sm">code</code> no callback e trocar <code class="text-purple-400 font-mono text-sm">code</code> por <code class="text-purple-400 font-mono text-sm">access_token</code> + <code class="text-purple-400 font-mono text-sm">refresh_token</code>.
+        O LinkedIn usa <strong class="text-purple-400">Authorization Code Flow</strong> padrêo do OAuth 2.0. Três etapas: enviar usuário para <code class="text-purple-400 font-mono text-sm">/authorization</code>, receber <code class="text-purple-400 font-mono text-sm">code</code> no callback e trocar <code class="text-purple-400 font-mono text-sm">code</code> por <code class="text-purple-400 font-mono text-sm">access_token</code> + <code class="text-purple-400 font-mono text-sm">refresh_token</code>.
       </p>
 
       <div class="space-y-4 mb-6">
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold mb-2">Redirecionar para autorização</h4>
+            <h4 class="font-semibold mb-2">Redirecionar para autorizaçêo</h4>
             <p class="text-sm text-neutral-400 mb-3">Postiz monta a URL e redireciona o browser do usuário. O <code class="font-mono">state</code> é anti-CSRF.</p>
             <pre class="bg-dark-900 rounded-lg p-3 overflow-x-auto"><code class="text-sm text-neutral-300 font-mono">https://www.linkedin.com/oauth/v2/authorization
   ?response_type=code
@@ -418,14 +418,14 @@ scope=openid%20profile%20email%20w_member_social%20w_organization_social</code><
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🔒</span> Dica prática
         </h3>
-        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">state</code> nonce deve ser único por tentativa de auth e amarrado à sessão (ex: hash do <code class="text-primary font-mono text-sm">session_id</code>). Se o callback vier com <code class="text-primary font-mono text-sm">state</code> diferente do guardado, rejeite — é tentativa de CSRF.</p>
+        <p class="text-neutral-300">O <code class="text-primary font-mono text-sm">state</code> nonce deve ser único por tentativa de auth e amarrado à sessêo (ex: hash do <code class="text-primary font-mono text-sm">session_id</code>). Se o callback vier com <code class="text-primary font-mono text-sm">state</code> diferente do guardado, rejeite — é tentativa de CSRF.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Authorization Code</div>
-          <p class="text-xs text-neutral-400">Fluxo padrão server-side do OAuth 2.0.</p>
+          <p class="text-xs text-neutral-400">Fluxo padrêo server-side do OAuth 2.0.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">state nonce</div>
@@ -537,11 +537,11 @@ curl -X POST "https://api.linkedin.com/rest/posts" \
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O <code class="text-purple-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-purple-400">60 dias</strong>. Quando expira, qualquer chamada retorna <code class="text-purple-400 font-mono text-sm">401</code>. O <code class="text-purple-400 font-mono text-sm">refresh_token</code> permite renovar sem nova autorização do usuário — <strong class="text-purple-400">por até 1 ano</strong>. Depois disso, o usuário precisa autenticar de novo.
+        O <code class="text-purple-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-purple-400">60 dias</strong>. Quando expira, qualquer chamada retorna <code class="text-purple-400 font-mono text-sm">401</code>. O <code class="text-purple-400 font-mono text-sm">refresh_token</code> permite renovar sem nova autorizaçêo do usuário — <strong class="text-purple-400">por até 1 ano</strong>. Depois disso, o usuário precisa autenticar de novo.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Postiz precisa de uma rotina que <strong class="text-purple-400">checa expiração</strong> e renova proativamente — não esperar a chamada de publicar falhar. Salvar <code class="text-purple-400 font-mono text-sm">expires_at</code> calculado (<code class="text-purple-400 font-mono text-sm">now + expires_in</code>) e refrescar 7 dias antes é o padrão seguro.
+        Postiz precisa de uma rotina que <strong class="text-purple-400">checa expiraçêo</strong> e renova proativamente — nêo esperar a chamada de publicar falhar. Salvar <code class="text-purple-400 font-mono text-sm">expires_at</code> calculado (<code class="text-purple-400 font-mono text-sm">now + expires_in</code>) e refrescar 7 dias antes é o padrêo seguro.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Renovar access_token
@@ -575,19 +575,19 @@ curl -X GET "https://api.linkedin.com/v2/userinfo" \
         <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir <code class="font-mono">expires_at</code> calculado (não só <code class="font-mono">expires_in</code>).</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Persistir <code class="font-mono">expires_at</code> calculado (nêo só <code class="font-mono">expires_in</code>).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Renovar proativamente em job cron — antes de publicar.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Salvar o novo <code class="font-mono">refresh_token</code> a cada refresh (rotaciona).</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Notificar usuário aos 11 meses para re-autenticar.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumir que <code class="font-mono">refresh_token</code> é eterno — vence em 1 ano.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar 401 pra renovar — post agendado falha calado.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Guardar tokens em texto plano — use criptografia at-rest.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar refresh em paralelo pra mesma conta — gera race e revogação.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rodar refresh em paralelo pra mesma conta — gera race e revogaçêo.</span></li>
           </ul>
         </div>
       </div>
@@ -607,7 +607,7 @@ curl -X GET "https://api.linkedin.com/v2/userinfo" \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Proactive refresh</div>
-          <p class="text-xs text-neutral-400">Renovar antes de expirar, não depois.</p>
+          <p class="text-xs text-neutral-400">Renovar antes de expirar, nêo depois.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-purple-400 mb-1">Token rotation</div>
@@ -630,7 +630,7 @@ curl -X GET "https://api.linkedin.com/v2/userinfo" \
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">App criado no Developer Portal</strong><span class="text-neutral-400"> — vinculado a uma Company Page com Client ID/Secret em mãos.</span></div>
+            <div><strong class="text-white">App criado no Developer Portal</strong><span class="text-neutral-400"> — vinculado a uma Company Page com Client ID/Secret em mêos.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
@@ -650,7 +650,7 @@ curl -X GET "https://api.linkedin.com/v2/userinfo" \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
-            <div><strong class="text-white">Refresh token gerenciado</strong><span class="text-neutral-400"> — renovação proativa, rotação salva, alerta antes dos 365 dias.</span></div>
+            <div><strong class="text-white">Refresh token gerenciado</strong><span class="text-neutral-400"> — renovaçêo proativa, rotaçêo salva, alerta antes dos 365 dias.</span></div>
           </div>
         </div>
 

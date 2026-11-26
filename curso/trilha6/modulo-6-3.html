@@ -170,7 +170,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Logs dispersos em containers individuais são <strong class="text-rose-400">inúteis em pânico</strong>. Quando o site cai às 2h da manhã, você quer abrir UMA tela e buscar por <code class="text-rose-400 font-mono text-sm">"error"</code> nos últimos 15 minutos — não rodar <code class="text-rose-400 font-mono text-sm">docker logs</code> em 6 containers diferentes.
+        Logs dispersos em containers individuais sêo <strong class="text-rose-400">inúteis em pânico</strong>. Quando o site cai às 2h da manhê, você quer abrir UMA tela e buscar por <code class="text-rose-400 font-mono text-sm">"error"</code> nos últimos 15 minutos — nêo rodar <code class="text-rose-400 font-mono text-sm">docker logs</code> em 6 containers diferentes.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -202,17 +202,17 @@ volumes:
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Defina <strong>retenção</strong> desde o dia 1. Logs crescem rápido: 100MB/dia x 90 dias = 9GB. Para Loki, configure <code class="text-primary font-mono text-sm">retention_period: 720h</code> (30 dias). Para Better Stack, ajuste no painel — o plano grátis retém só 3 dias.</p>
+        <p class="text-neutral-300">Defina <strong>retençêo</strong> desde o dia 1. Logs crescem rápido: 100MB/dia x 90 dias = 9GB. Para Loki, configure <code class="text-primary font-mono text-sm">retention_period: 720h</code> (30 dias). Para Better Stack, ajuste no painel — o plano grátis retém só 3 dias.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Agregação</div>
+          <div class="font-semibold text-rose-400 mb-1">Agregaçêo</div>
           <p class="text-xs text-neutral-400">Todos os logs em UM lugar, com busca unificada.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
-          <div class="font-semibold text-rose-400 mb-1">Retenção</div>
+          <div class="font-semibold text-rose-400 mb-1">Retençêo</div>
           <p class="text-xs text-neutral-400">Quantos dias guardar antes de descartar.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
@@ -242,7 +242,7 @@ volumes:
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold">1</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Criar conta e adicionar monitor</h4>
-            <p class="text-sm text-neutral-300">Tipo <code class="font-mono">HTTP(s)</code>, URL do site, intervalo 5 min. Configure também <code class="font-mono">/api/health</code> para validar dependências, não só o HTML.</p>
+            <p class="text-sm text-neutral-300">Tipo <code class="font-mono">HTTP(s)</code>, URL do site, intervalo 5 min. Configure também <code class="font-mono">/api/health</code> para validar dependências, nêo só o HTML.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -265,7 +265,7 @@ volumes:
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Monitor sintético externo (UptimeRobot) <strong>e</strong> healthcheck interno (Docker) não se substituem. O externo detecta DNS quebrado, certificado expirado, firewall bloqueando — coisas que o container interno acha "ok". Use os dois.</p>
+        <p class="text-neutral-300">Monitor sintético externo (UptimeRobot) <strong>e</strong> healthcheck interno (Docker) nêo se substituem. O externo detecta DNS quebrado, certificado expirado, firewall bloqueando — coisas que o container interno acha "ok". Use os dois.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -297,7 +297,7 @@ volumes:
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Logs respondem "o que aconteceu". Métricas respondem <strong class="text-rose-400">"qual a tendência"</strong>. CPU subiu 30% na última hora? Memória crescendo lentamente desde ontem? Sem métricas você só percebe quando trava. O combo <strong class="text-rose-400">Prometheus</strong> (coleta + storage) + <strong class="text-rose-400">Grafana</strong> (dashboard) é padrão de mercado.
+        Logs respondem "o que aconteceu". Métricas respondem <strong class="text-rose-400">"qual a tendência"</strong>. CPU subiu 30% na última hora? Memória crescendo lentamente desde ontem? Sem métricas você só percebe quando trava. O combo <strong class="text-rose-400">Prometheus</strong> (coleta + storage) + <strong class="text-rose-400">Grafana</strong> (dashboard) é padrêo de mercado.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># docker-compose.monitoring.yml
@@ -353,7 +353,7 @@ scrape_configs:
           <li><strong class="text-blue-400">ID 1860</strong> — Node Exporter Full: CPU, RAM, disco, rede, load average. Importar e plugar — funciona out-of-the-box.</li>
           <li><strong class="text-blue-400">ID 893</strong> — Docker containers: por container, uso de recursos e status.</li>
           <li><strong class="text-blue-400">ID 9628</strong> — PostgreSQL: conexões, locks, queries lentas, cache hit ratio.</li>
-          <li><strong class="text-blue-400">Retenção:</strong> 30 dias bastam para a maioria. Mais que isso? VictoriaMetrics em vez de Prometheus puro.</li>
+          <li><strong class="text-blue-400">Retençêo:</strong> 30 dias bastam para a maioria. Mais que isso? VictoriaMetrics em vez de Prometheus puro.</li>
         </ul>
       </div>
 
@@ -365,7 +365,7 @@ scrape_configs:
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Pull model</div>
-          <p class="text-xs text-neutral-400">Prometheus puxa, não recebe push — mais resiliente.</p>
+          <p class="text-xs text-neutral-400">Prometheus puxa, nêo recebe push — mais resiliente.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">PromQL</div>
@@ -386,7 +386,7 @@ scrape_configs:
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Métricas que ninguém olha não previnem incidente. Configure <strong class="text-rose-400">Alertmanager</strong> (companheiro do Prometheus) para disparar quando CPU passa de 90% por 5 min, disco passa de 85% ou um serviço some. <strong class="text-rose-400">Telegram</strong> é o canal mais rápido para alertas pessoais — webhook em 30s.
+        Métricas que ninguém olha nêo previnem incidente. Configure <strong class="text-rose-400">Alertmanager</strong> (companheiro do Prometheus) para disparar quando CPU passa de 90% por 5 min, disco passa de 85% ou um serviço some. <strong class="text-rose-400">Telegram</strong> é o canal mais rápido para alertas pessoais — webhook em 30s.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># alertmanager.yml
@@ -429,14 +429,14 @@ groups:
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Definir <code class="font-mono">severity</code> (warning / critical) e rotear por canal.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar <code class="font-mono">for: 5m</code> para evitar disparos por spike momentâneo.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agrupar alertas (<code class="font-mono">group_by</code>) para não receber 50 mensagens iguais.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agrupar alertas (<code class="font-mono">group_by</code>) para nêo receber 50 mensagens iguais.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Testar o alerta <strong>antes</strong> do incidente real — disparo manual.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Alertar para tudo — fadiga de alerta mata atenção.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Alertar para tudo — fadiga de alerta mata atençêo.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Disparar critical para CPU em pico de 10s.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mandar alerta sem <code class="font-mono">summary</code> claro do que está errado.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Configurar bot do Telegram com token público no repo.</span></li>
@@ -448,7 +448,7 @@ groups:
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Severity</div>
-          <p class="text-xs text-neutral-400">warning (olhar amanhã) vs critical (acordar agora).</p>
+          <p class="text-xs text-neutral-400">warning (olhar amanhê) vs critical (acordar agora).</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Webhook</div>
@@ -456,7 +456,7 @@ groups:
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Silencing</div>
-          <p class="text-xs text-neutral-400">Silenciar alertas durante manutenção planejada.</p>
+          <p class="text-xs text-neutral-400">Silenciar alertas durante manutençêo planejada.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Runbook</div>
@@ -473,7 +473,7 @@ groups:
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Logs e métricas mostram <strong class="text-rose-400">sintomas de infra</strong>. Sentry mostra <strong class="text-rose-400">exceções da aplicação</strong> com stack trace completo, contexto do request, breadcrumbs e quantos usuários foram afetados. Plano grátis: 5k erros/mês — sobra para projeto pequeno.
+        Logs e métricas mostram <strong class="text-rose-400">sintomas de infra</strong>. Sentry mostra <strong class="text-rose-400">exceções da aplicaçêo</strong> com stack trace completo, contexto do request, breadcrumbs e quantos usuários foram afetados. Plano grátis: 5k erros/mês — sobra para projeto pequeno.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Setup em app Node/Next (3 linhas no entry point)
@@ -495,10 +495,10 @@ GIT_SHA=$(git rev-parse --short HEAD)</code></pre>
           <span class="mr-2">🎯</span> Recursos críticos do Sentry
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
-          <li><strong class="text-blue-400">DSN:</strong> URL única do projeto. Sensível mas não secreta — pode aparecer em frontend (com domain whitelist).</li>
+          <li><strong class="text-blue-400">DSN:</strong> URL única do projeto. Sensível mas nêo secreta — pode aparecer em frontend (com domain whitelist).</li>
           <li><strong class="text-blue-400">Source maps:</strong> upload no deploy para Sentry traduzir <code class="font-mono">main.abc123.js:1:8842</code> em arquivo + linha original.</li>
           <li><strong class="text-blue-400">Release tracking:</strong> tag <code class="font-mono">release</code> mostra qual deploy quebrou — comparar erro antes/depois fica trivial.</li>
-          <li><strong class="text-blue-400">Issue grouping:</strong> erros similares colapsam em UMA issue com contagem — não 500 e-mails do mesmo bug.</li>
+          <li><strong class="text-blue-400">Issue grouping:</strong> erros similares colapsam em UMA issue com contagem — nêo 500 e-mails do mesmo bug.</li>
         </ul>
       </div>
 
@@ -506,7 +506,7 @@ GIT_SHA=$(git rev-parse --short HEAD)</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⚠️</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Configure <code class="text-primary font-mono text-sm">beforeSend</code> para <strong>scrubbar dados sensíveis</strong> (senha, token, cartão) antes do erro sair. Sentry tem PII scrubbing default, mas confiar é arriscado — filtre você mesmo o que sai pela rede.</p>
+        <p class="text-neutral-300">Configure <code class="text-primary font-mono text-sm">beforeSend</code> para <strong>scrubbar dados sensíveis</strong> (senha, token, cartêo) antes do erro sair. Sentry tem PII scrubbing default, mas confiar é arriscado — filtre você mesmo o que sai pela rede.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -525,7 +525,7 @@ GIT_SHA=$(git rev-parse --short HEAD)</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Release</div>
-          <p class="text-xs text-neutral-400">Tag de versão para isolar regressões.</p>
+          <p class="text-xs text-neutral-400">Tag de versêo para isolar regressões.</p>
         </div>
       </div>
     </section>
@@ -557,7 +557,7 @@ docker run -d \
 
       <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
-          <span class="mr-2">📢</span> Boas práticas de comunicação
+          <span class="mr-2">📢</span> Boas práticas de comunicaçêo
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
           <li><strong class="text-blue-400">Transparência ganha confiança:</strong> esconder incidente é pior que admitir — clientes percebem do mesmo jeito.</li>
@@ -573,15 +573,15 @@ docker run -d \
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Hospedar status page em infra <strong>diferente</strong> do app.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mostrar uptime de 90 dias — histórico vira confiança.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Permitir inscrição por e-mail/RSS para clientes sérios.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Permitir inscriçêo por e-mail/RSS para clientes sérios.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Divulgar a URL no rodapé do site e na docs.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hospedar a status page no mesmo VPS do app.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esconder incidentes para "não assustar" — só piora.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esconder incidentes para "nêo assustar" — só piora.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Marcar "all systems operational" sem checar de verdade.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer de atualizar quando o incidente termina.</span></li>
           </ul>
@@ -596,7 +596,7 @@ docker run -d \
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">Incident</div>
-          <p class="text-xs text-neutral-400">Evento com início, updates e resolução documentados.</p>
+          <p class="text-xs text-neutral-400">Evento com início, updates e resoluçêo documentados.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-rose-400 mb-1">SLA / SLO</div>
@@ -619,7 +619,7 @@ docker run -d \
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Logs centralizados</strong><span class="text-neutral-400"> — Loki self-hosted ou Better Stack SaaS, com retenção definida desde o dia 1.</span></div>
+            <div><strong class="text-white">Logs centralizados</strong><span class="text-neutral-400"> — Loki self-hosted ou Better Stack SaaS, com retençêo definida desde o dia 1.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
@@ -627,7 +627,7 @@ docker run -d \
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>
-            <div><strong class="text-white">Métricas em produção</strong><span class="text-neutral-400"> — Prometheus + node_exporter + Grafana com dashboards prontos (1860, 893, 9628).</span></div>
+            <div><strong class="text-white">Métricas em produçêo</strong><span class="text-neutral-400"> — Prometheus + node_exporter + Grafana com dashboards prontos (1860, 893, 9628).</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-rose-400 mt-1">✓</span>

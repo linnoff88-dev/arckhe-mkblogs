@@ -162,13 +162,13 @@
       <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
         <span class="mr-2">🎯</span> Por onde começar
       </h3>
-      <p class="text-neutral-300"><strong class="text-blue-400">Comece pelo Bluesky pra validar</strong> o fluxo end-to-end. É a rede mais simples (handle + App Password, sem OAuth, sem dashboard de developer), então qualquer falha que aparecer aqui é problema do Postiz — não do provider. Depois que um agendamento Bluesky chegar publicado, aí sim parta para X, LinkedIn e Mastodon.</p>
+      <p class="text-neutral-300"><strong class="text-blue-400">Comece pelo Bluesky pra validar</strong> o fluxo end-to-end. É a rede mais simples (handle + App Password, sem OAuth, sem dashboard de developer), entêo qualquer falha que aparecer aqui é problema do Postiz — nêo do provider. Depois que um agendamento Bluesky chegar publicado, aí sim parta para X, LinkedIn e Mastodon.</p>
     </div>
 
-    <!-- FLUXO GERAL DE CONEXÃO -->
+    <!-- FLUXO GERAL DE CONEXêO -->
     <section class="mb-16">
       <h2 class="text-2xl font-bold mb-6 flex items-center">
-        <span class="mr-3">🗺️</span> Fluxo geral de conexão
+        <span class="mr-3">🗺️</span> Fluxo geral de conexêo
       </h2>
       <p class="text-neutral-300 mb-6 leading-relaxed">
         Independente da rede, conectar uma conta no Postiz segue cinco passos. As variações (OAuth vs. App Password, scopes, custos) entram nos detalhes — mas a coluna vertebral é sempre essa.
@@ -193,7 +193,7 @@
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Aprovar scopes</h4>
-            <p class="text-sm text-neutral-400">Confirmar permissões mínimas: ler perfil, publicar posts, anexar mídia. Recusar scope extra que a rede não exigir.</p>
+            <p class="text-sm text-neutral-400">Confirmar permissões mínimas: ler perfil, publicar posts, anexar mídia. Recusar scope extra que a rede nêo exigir.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -207,7 +207,7 @@
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Canal aparece como ativo</h4>
-            <p class="text-sm text-neutral-400">A conta vira opção no compositor de posts. Status verde = pronta para agendar.</p>
+            <p class="text-sm text-neutral-400">A conta vira opçêo no compositor de posts. Status verde = pronta para agendar.</p>
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Bluesky é o caminho mais curto: <strong class="text-blue-400">handle</strong> (algo como <code class="text-blue-400 font-mono text-sm">seunome.bsky.social</code>) mais um <strong class="text-blue-400">App Password</strong> gerado nas configurações da própria rede. Não tem OAuth, não tem developer portal, não tem aprovação. Login direto via API ATProto.
+        Bluesky é o caminho mais curto: <strong class="text-blue-400">handle</strong> (algo como <code class="text-blue-400 font-mono text-sm">seunome.bsky.social</code>) mais um <strong class="text-blue-400">App Password</strong> gerado nas configurações da própria rede. Nêo tem OAuth, nêo tem developer portal, nêo tem aprovaçêo. Login direto via API ATProto.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -256,7 +256,7 @@ POST https://bsky.social/xrpc/com.atproto.server.createSession
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">App Password</div>
-          <p class="text-xs text-neutral-400">Senha escopada por aplicação, revogável a qualquer hora.</p>
+          <p class="text-xs text-neutral-400">Senha escopada por aplicaçêo, revogável a qualquer hora.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">createSession</div>
@@ -277,7 +277,7 @@ POST https://bsky.social/xrpc/com.atproto.server.createSession
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O detalhe que assusta: postar via API exige o <strong class="text-blue-400">Basic plan</strong>, que custa <strong class="text-blue-400">US$ 200/mês</strong> e libera 3.000 posts mensais — ou usar provedores <strong class="text-blue-400">pay-per-use</strong> que revendem cotas. O Free tier só lê dados, não publica.
+        O detalhe que assusta: postar via API exige o <strong class="text-blue-400">Basic plan</strong>, que custa <strong class="text-blue-400">US$ 200/mês</strong> e libera 3.000 posts mensais — ou usar provedores <strong class="text-blue-400">pay-per-use</strong> que revendem cotas. O Free tier só lê dados, nêo publica.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -291,9 +291,9 @@ POST https://bsky.social/xrpc/com.atproto.server.createSession
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar postar com o Free tier — não publica.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esperar postar com o Free tier — nêo publica.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reusar tokens de uma app antiga do Twitter v1.1.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Setar callback como <code class="font-mono">localhost</code> em prod.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Estourar rate limit sem backoff (vira ban temporário).</span></li>
@@ -312,11 +312,11 @@ https://seu-dominio.com/api/auth/callback/x</code></pre>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">OAuth 2.0</div>
-          <p class="text-xs text-neutral-400">Padrão de autorização delegada via redirect.</p>
+          <p class="text-xs text-neutral-400">Padrêo de autorizaçêo delegada via redirect.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">PKCE</div>
-          <p class="text-xs text-neutral-400">Proof Key — proteção contra interceptação do code.</p>
+          <p class="text-xs text-neutral-400">Proof Key — proteçêo contra interceptaçêo do code.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Basic plan</div>
@@ -341,7 +341,7 @@ https://seu-dominio.com/api/auth/callback/x</code></pre>
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Pegadinha: o <code class="text-blue-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-blue-400">60 dias</strong>, e o <code class="text-blue-400 font-mono text-sm">refresh_token</code> precisa do produto <strong class="text-blue-400">Marketing Developer Platform</strong> (aprovação manual). Sem ele, o Postiz força reconexão a cada dois meses.
+        Pegadinha: o <code class="text-blue-400 font-mono text-sm">access_token</code> do LinkedIn vive <strong class="text-blue-400">60 dias</strong>, e o <code class="text-blue-400 font-mono text-sm">refresh_token</code> precisa do produto <strong class="text-blue-400">Marketing Developer Platform</strong> (aprovaçêo manual). Sem ele, o Postiz força reconexêo a cada dois meses.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Scopes mínimos para postar como pessoa
@@ -359,7 +359,7 @@ rw_organization_admin</code></pre>
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">⏰</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Anote no calendário a data de expiração do token LinkedIn (60 dias após conectar). O Postiz avisa via dashboard, mas se você só checa o app uma vez por semana, perde a janela e seu post agendado falha em silêncio. Reconecte uns 5 dias antes.</p>
+        <p class="text-neutral-300">Anote no calendário a data de expiraçêo do token LinkedIn (60 dias após conectar). O Postiz avisa via dashboard, mas se você só checa o app uma vez por semana, perde a janela e seu post agendado falha em silêncio. Reconecte uns 5 dias antes.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -374,7 +374,7 @@ rw_organization_admin</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Token expiry</div>
-          <p class="text-xs text-neutral-400">60 dias por padrão sem refresh aprovado.</p>
+          <p class="text-xs text-neutral-400">60 dias por padrêo sem refresh aprovado.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-blue-400 mb-1">Company Page</div>
@@ -391,7 +391,7 @@ rw_organization_admin</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Mastodon é federado: não tem "um Mastodon", tem milhares de <strong class="text-blue-400">instâncias</strong> (mastodon.social, fosstodon.org, hachyderm.io...). Cada uma é um servidor independente com seu próprio OAuth. O Postiz pede a URL da sua instância <strong class="text-blue-400">antes</strong> do login.
+        Mastodon é federado: nêo tem "um Mastodon", tem milhares de <strong class="text-blue-400">instâncias</strong> (mastodon.social, fosstodon.org, hachyderm.io...). Cada uma é um servidor independente com seu próprio OAuth. O Postiz pede a URL da sua instância <strong class="text-blue-400">antes</strong> do login.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -414,7 +414,7 @@ push           # notificações (opcional)
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🐘</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Não confunda seu <strong>handle federado</strong> (<code class="text-primary font-mono text-sm">@voce@fosstodon.org</code>) com a <strong>URL da instância</strong> (<code class="text-primary font-mono text-sm">https://fosstodon.org</code>). Postiz pede a URL — a instância onde sua conta vive, não o identificador público.</p>
+        <p class="text-neutral-300">Nêo confunda seu <strong>handle federado</strong> (<code class="text-primary font-mono text-sm">@voce@fosstodon.org</code>) com a <strong>URL da instância</strong> (<code class="text-primary font-mono text-sm">https://fosstodon.org</code>). Postiz pede a URL — a instância onde sua conta vive, nêo o identificador público.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -446,7 +446,7 @@ push           # notificações (opcional)
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Com pelo menos dois canais conectados, abra o <strong class="text-blue-400">compositor</strong> (botão <code class="text-blue-400 font-mono text-sm">+ New Post</code>). Escreva texto curto, anexe uma imagem, marque dois ou mais canais e agende para <strong class="text-blue-400">amanhã às 9h</strong> — horário em que você consegue conferir se publicou de verdade.
+        Com pelo menos dois canais conectados, abra o <strong class="text-blue-400">compositor</strong> (botêo <code class="text-blue-400 font-mono text-sm">+ New Post</code>). Escreva texto curto, anexe uma imagem, marque dois ou mais canais e agende para <strong class="text-blue-400">amanhê às 9h</strong> — horário em que você consegue conferir se publicou de verdade.
       </p>
 
       <div class="space-y-4 mb-6">
@@ -468,14 +468,14 @@ push           # notificações (opcional)
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Selecionar canais</h4>
-            <p class="text-sm text-neutral-400">Marque os badges das contas (Bluesky + Mastodon recomendados pro primeiro teste — não consomem cota paga).</p>
+            <p class="text-sm text-neutral-400">Marque os badges das contas (Bluesky + Mastodon recomendados pro primeiro teste — nêo consomem cota paga).</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
             <h4 class="font-semibold mb-2">Definir data/hora</h4>
-            <p class="text-sm text-neutral-400">"Schedule" → calendário → amanhã 9h. Confirme o fuso horário no canto do compositor.</p>
+            <p class="text-sm text-neutral-400">"Schedule" → calendário → amanhê 9h. Confirme o fuso horário no canto do compositor.</p>
           </div>
         </div>
         <div class="flex items-start space-x-4">
@@ -491,7 +491,7 @@ push           # notificações (opcional)
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">🕘</span> Dica prática
         </h3>
-        <p class="text-neutral-300">No dia seguinte, faça as três checagens: 1) o calendário do Postiz mudou o status para <code class="text-primary font-mono text-sm">posted</code>; 2) a URL pública do post aparece como link no cartão; 3) você consegue clicar e ver o conteúdo na rede social real. Sem os três, não confie no agendador ainda.</p>
+        <p class="text-neutral-300">No dia seguinte, faça as três checagens: 1) o calendário do Postiz mudou o status para <code class="text-primary font-mono text-sm">posted</code>; 2) a URL pública do post aparece como link no cartêo; 3) você consegue clicar e ver o conteúdo na rede social real. Sem os três, nêo confie no agendador ainda.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -534,12 +534,12 @@ push           # notificações (opcional)
           <li><strong class="text-blue-400">Bluesky:</strong> likes, reposts, replies. Sem impressions na API pública — só engajamento absoluto.</li>
           <li><strong class="text-blue-400">X:</strong> impressions, likes, reposts, replies, bookmarks. Requer plano Basic+ para puxar via API.</li>
           <li><strong class="text-blue-400">LinkedIn:</strong> impressions, reactions, comments, shares. Métricas detalhadas só em Company Pages.</li>
-          <li><strong class="text-blue-400">Mastodon:</strong> favourites, boosts, replies. Sem impressions — o protocolo não rastreia visualização.</li>
+          <li><strong class="text-blue-400">Mastodon:</strong> favourites, boosts, replies. Sem impressions — o protocolo nêo rastreia visualizaçêo.</li>
         </ul>
       </div>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono"># Status que aparecem no dashboard de cada post
-scheduled    # na fila, ainda não saiu
+scheduled    # na fila, ainda nêo saiu
 posting      # job rodando agora
 posted       # publicado com sucesso, URL disponível
 failed       # erro do provider — clique para ver stack trace
@@ -550,13 +550,13 @@ expired      # token expirou antes do horário (reconectar)</code></pre>
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Olhar a aba Analytics 24h após o post (números amadurecem).</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Comparar engagement absoluto, não taxas entre redes diferentes.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investigar todo status <code class="font-mono">failed</code> — não ignore.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Comparar engagement absoluto, nêo taxas entre redes diferentes.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Investigar todo status <code class="font-mono">failed</code> — nêo ignore.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Exportar CSV mensalmente para arquivo histórico.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar em impressions logo após postar — atrasa horas.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar X (write pago) com Bluesky em valor absoluto.</span></li>
@@ -597,15 +597,15 @@ expired      # token expirou antes do horário (reconectar)</code></pre>
         <div class="space-y-4 mb-8">
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">Bluesky conectado</strong><span class="text-neutral-400"> — handle + App Password, sem OAuth, validação rápida do fluxo end-to-end.</span></div>
+            <div><strong class="text-white">Bluesky conectado</strong><span class="text-neutral-400"> — handle + App Password, sem OAuth, validaçêo rápida do fluxo end-to-end.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">X via OAuth</strong><span class="text-neutral-400"> — redirect, PKCE, callback registrado, decisão consciente de Basic US$ 200/mês vs. pay-per-use.</span></div>
+            <div><strong class="text-white">X via OAuth</strong><span class="text-neutral-400"> — redirect, PKCE, callback registrado, decisêo consciente de Basic US$ 200/mês vs. pay-per-use.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">LinkedIn integrado</strong><span class="text-neutral-400"> — Sign in with LinkedIn + Share, scopes mínimos, ciência da expiração de 60 dias.</span></div>
+            <div><strong class="text-white">LinkedIn integrado</strong><span class="text-neutral-400"> — Sign in with LinkedIn + Share, scopes mínimos, ciência da expiraçêo de 60 dias.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
@@ -613,7 +613,7 @@ expired      # token expirou antes do horário (reconectar)</code></pre>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
-            <div><strong class="text-white">Primeiro post agendado</strong><span class="text-neutral-400"> — texto + imagem, multicanal, fila BullMQ, amanhã 9h confirmado.</span></div>
+            <div><strong class="text-white">Primeiro post agendado</strong><span class="text-neutral-400"> — texto + imagem, multicanal, fila BullMQ, amanhê 9h confirmado.</span></div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>

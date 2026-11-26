@@ -131,7 +131,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MÓDULO 5.1</span>
       <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚙️ Stack e setup</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">A fundação técnica do clone Postiz: NestJS, Prisma, BullMQ, monorepo com pnpm e configuração via variáveis de ambiente validadas com zod.</p>
+      <p class="text-lg text-neutral-400 max-w-3xl">A fundaçêo técnica do clone Postiz: NestJS, Prisma, BullMQ, monorepo com pnpm e configuraçêo via variáveis de ambiente validadas com zod.</p>
 
       <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
         <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
@@ -165,11 +165,11 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O Postiz original usa <strong class="text-teal-400">NestJS</strong> — e não por moda. Quando o app cresce para 8+ módulos (auth, posts, integrations, billing, queue, etc.), Express vira espaguete: você inventa sua própria estrutura, seu próprio DI, sua própria forma de testar. Nest entrega tudo isso pronto: <strong class="text-teal-400">decorators</strong>, <strong class="text-teal-400">injeção de dependência</strong> e <strong class="text-teal-400">módulos</strong> são primeira classe.
+        O Postiz original usa <strong class="text-teal-400">NestJS</strong> — e nêo por moda. Quando o app cresce para 8+ módulos (auth, posts, integrations, billing, queue, etc.), Express vira espaguete: você inventa sua própria estrutura, seu próprio DI, sua própria forma de testar. Nest entrega tudo isso pronto: <strong class="text-teal-400">decorators</strong>, <strong class="text-teal-400">injeçêo de dependência</strong> e <strong class="text-teal-400">módulos</strong> sêo primeira classe.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Compare a mesma rota nos dois frameworks. No Express, o controller carrega serviço, validação e resposta tudo junto. No Nest, cada coisa no seu lugar — e o <code class="text-teal-400 font-mono text-sm">PostsService</code> é injetado automaticamente pelo container DI.
+        Compare a mesma rota nos dois frameworks. No Express, o controller carrega serviço, validaçêo e resposta tudo junto. No Nest, cada coisa no seu lugar — e o <code class="text-teal-400 font-mono text-sm">PostsService</code> é injetado automaticamente pelo container DI.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// apps/backend/src/posts/posts.controller.ts
@@ -201,7 +201,7 @@ export class PostsController {
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
           <span class="mr-2">💡</span> Dica prática
         </h3>
-        <p class="text-neutral-300">Nest é <strong>opinionado de propósito</strong>. Não tente "expressar" um projeto Nest — abrace o padrão Module/Controller/Service. Quando você inventar uma terceira camada porque "fica mais limpo", está perdendo justamente o motivo de ter escolhido Nest.</p>
+        <p class="text-neutral-300">Nest é <strong>opinionado de propósito</strong>. Nêo tente "expressar" um projeto Nest — abrace o padrêo Module/Controller/Service. Quando você inventar uma terceira camada porque "fica mais limpo", está perdendo justamente o motivo de ter escolhido Nest.</p>
       </div>
 
       <h3 class="text-lg font-semibold mb-4">Conceitos-chave</h3>
@@ -212,15 +212,15 @@ export class PostsController {
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Decorators</div>
-          <p class="text-xs text-neutral-400"><code class="font-mono">@Controller</code>, <code class="font-mono">@Get</code>, <code class="font-mono">@Injectable</code> dão semântica.</p>
+          <p class="text-xs text-neutral-400"><code class="font-mono">@Controller</code>, <code class="font-mono">@Get</code>, <code class="font-mono">@Injectable</code> dêo semântica.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Módulos</div>
-          <p class="text-xs text-neutral-400">Unidade de organização — importa, exporta, encapsula.</p>
+          <p class="text-xs text-neutral-400">Unidade de organizaçêo — importa, exporta, encapsula.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Pipes/Guards</div>
-          <p class="text-xs text-neutral-400">Validação e auth como middlewares declarativos.</p>
+          <p class="text-xs text-neutral-400">Validaçêo e auth como middlewares declarativos.</p>
         </div>
       </div>
     </section>
@@ -304,7 +304,7 @@ pnpm dlx prisma generate</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Agendamento de posts <strong class="text-teal-400">não pode</strong> viver no processo HTTP. Se o request termina antes do horário, o post some. A solução são filas: BullMQ guarda o job no Redis com <code class="text-teal-400 font-mono text-sm">delay</code>, e um <strong class="text-teal-400">worker</strong> separado processa quando chega a hora.
+        Agendamento de posts <strong class="text-teal-400">nêo pode</strong> viver no processo HTTP. Se o request termina antes do horário, o post some. A soluçêo sêo filas: BullMQ guarda o job no Redis com <code class="text-teal-400 font-mono text-sm">delay</code>, e um <strong class="text-teal-400">worker</strong> separado processa quando chega a hora.
       </p>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
@@ -334,7 +334,7 @@ await publishQueue.add(
   }
 );
 
-// Worker (processo separado em produção)
+// Worker (processo separado em produçêo)
 new Worker(
   'publish',
   async (job) => {
@@ -356,15 +356,15 @@ new Worker(
           <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Worker em processo separado (<code class="font-mono">apps/worker</code>).</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">removeOnComplete</code>/<code class="font-mono">removeOnFail</code> para não inchar o Redis.</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Idempotência: jobs podem rodar 2x — não duplique o post.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><code class="font-mono">removeOnComplete</code>/<code class="font-mono">removeOnFail</code> para nêo inchar o Redis.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Idempotência: jobs podem rodar 2x — nêo duplique o post.</span></li>
             <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Monitorar com Bull Board ou QueueEvents.</span></li>
           </ul>
         </div>
         <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ O que NÃO fazer</h4>
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NêO fazer</h4>
           <ul class="space-y-3 text-neutral-300 text-sm">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Worker no mesmo processo HTTP em produção.</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Worker no mesmo processo HTTP em produçêo.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Esquecer <code class="font-mono">maxRetriesPerRequest: null</code> no ioredis.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Jobs sem <code class="font-mono">attempts</code> — uma falha e o post some.</span></li>
             <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Guardar payload gigante no job — passe só o ID.</span></li>
@@ -388,7 +388,7 @@ new Worker(
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">DLQ</div>
-          <p class="text-xs text-neutral-400">Jobs falhados ficam para inspeção manual.</p>
+          <p class="text-xs text-neutral-400">Jobs falhados ficam para inspeçêo manual.</p>
         </div>
       </div>
     </section>
@@ -401,7 +401,7 @@ new Worker(
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Backend, frontend e worker no <strong class="text-teal-400">mesmo repo</strong>, com código compartilhado em <code class="text-teal-400 font-mono text-sm">libs/</code>. Tipos do Prisma, DTOs e validação zod ficam em um pacote consumido pelos três apps — sem duplicação, sem desincronização.
+        Backend, frontend e worker no <strong class="text-teal-400">mesmo repo</strong>, com código compartilhado em <code class="text-teal-400 font-mono text-sm">libs/</code>. Tipos do Prisma, DTOs e validaçêo zod ficam em um pacote consumido pelos três apps — sem duplicaçêo, sem desincronizaçêo.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">mkblogs/
@@ -440,7 +440,7 @@ new Worker(
           <span class="mr-2">📊</span> Por que três apps?
         </h3>
         <ul class="space-y-3 text-neutral-300 text-sm">
-          <li><strong class="text-teal-400">apps/backend:</strong> API HTTP. Não toca em filas — só enfileira.</li>
+          <li><strong class="text-teal-400">apps/backend:</strong> API HTTP. Nêo toca em filas — só enfileira.</li>
           <li><strong class="text-teal-400">apps/worker:</strong> processo que consome filas. Escala separado do HTTP.</li>
           <li><strong class="text-teal-400">apps/frontend:</strong> Next.js. Fala só com o backend via REST/tRPC.</li>
           <li><strong class="text-teal-400">libs/shared:</strong> DTOs, tipos, schemas zod. Importado por todos.</li>
@@ -455,7 +455,7 @@ new Worker(
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">apps vs libs</div>
-          <p class="text-xs text-neutral-400">Apps rodam; libs são consumidas por apps.</p>
+          <p class="text-xs text-neutral-400">Apps rodam; libs sêo consumidas por apps.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Workspace</div>
@@ -526,7 +526,7 @@ pnpm -r build                         # build recursivo em todos</code></pre>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">workspace:*</div>
-          <p class="text-xs text-neutral-400">Aponta para versão local do pacote.</p>
+          <p class="text-xs text-neutral-400">Aponta para versêo local do pacote.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">--filter</div>
@@ -538,7 +538,7 @@ pnpm -r build                         # build recursivo em todos</code></pre>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">Content-addressable</div>
-          <p class="text-xs text-neutral-400">Cada versão de pacote é armazenada uma vez.</p>
+          <p class="text-xs text-neutral-400">Cada versêo de pacote é armazenada uma vez.</p>
         </div>
       </div>
     </section>
@@ -551,7 +551,7 @@ pnpm -r build                         # build recursivo em todos</code></pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Config via <code class="text-teal-400 font-mono text-sm">.env</code> não é suficiente. Sem validação, um typo em <code class="text-teal-400 font-mono text-sm">DATABASE_URL</code> só estoura no primeiro request em produção. A solução: <strong class="text-teal-400">validar com zod no boot</strong> — se algo está errado, o app nem sobe.
+        Config via <code class="text-teal-400 font-mono text-sm">.env</code> nêo é suficiente. Sem validaçêo, um typo em <code class="text-teal-400 font-mono text-sm">DATABASE_URL</code> só estoura no primeiro request em produçêo. A soluçêo: <strong class="text-teal-400">validar com zod no boot</strong> — se algo está errado, o app nem sobe.
       </p>
 
       <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto mb-6 border border-dark-600"><code class="text-sm text-neutral-300 font-mono">// libs/shared/src/env.schema.ts
@@ -624,11 +624,11 @@ bootstrap();</code></pre>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">zod</div>
-          <p class="text-xs text-neutral-400">Validação com inferência de tipos TS.</p>
+          <p class="text-xs text-neutral-400">Validaçêo com inferência de tipos TS.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">.env.example</div>
-          <p class="text-xs text-neutral-400">Contrato versionado de configuração.</p>
+          <p class="text-xs text-neutral-400">Contrato versionado de configuraçêo.</p>
         </div>
         <div class="bg-dark-800 border border-dark-600 rounded-lg p-4">
           <div class="font-semibold text-teal-400 mb-1">coerce</div>
